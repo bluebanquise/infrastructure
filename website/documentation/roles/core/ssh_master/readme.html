@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SSH master &mdash; BlueBanquise Documentation 1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> BlueBanquise Documentation
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../vocabulary.html">2. Vocabulary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install_first_management.html">3. Install first management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn_ansible.html">4. Learn Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">5. Configure BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">6. Deploy BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">7. Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">8. References</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">BlueBanquise Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>SSH master</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/roles/core/ssh_master/readme.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ssh-master">
+<h1>SSH master<a class="headerlink" href="#ssh-master" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This role configure the ssh access of know hosts to make this access through nodes main network.</p>
+</div>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
+<p>This role will generate a Configuration file in <em>/root/.ssh/config</em>.</p>
+<p>This file will contains all hosts of the Ansible inventory (or all hosts of the current iceberg if using icebergs mode), with the following parameters:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Host freya
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    Hostname %h-ice1-1
+</pre></div>
+</div>
+<p>This ensure no issues when redeploying an hosts.</p>
+<p>Also, note that for this example host, <strong>freya</strong>, the target hostname for ssh is %h-ice1-1, which means <strong>freya-ice1-1</strong>. This can be seen when invoking ssh with verbosity:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[root@odin ]# ssh freya -vvv
+OpenSSH_7.8p1, OpenSSL 1.1.1 FIPS  11 Sep 2018
+debug1: Reading configuration data /root/.ssh/config
+debug1: /root/.ssh/config line 10: Applying options for freya
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug3: /etc/ssh/ssh_config line 52: Including file /etc/ssh/ssh_config.d/05-redhat.conf depth 0
+debug1: Reading configuration data /etc/ssh/ssh_config.d/05-redhat.conf
+debug3: /etc/ssh/ssh_config.d/05-redhat.conf line 2: Including file /etc/crypto-policies/back-ends/openssh.config depth 1
+debug1: Reading configuration data /etc/crypto-policies/back-ends/openssh.config
+debug3: gss kex names ok: [gss-gex-sha1-,gss-group14-sha1-]
+debug3: kex names ok: [curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1]
+debug1: /etc/ssh/ssh_config.d/05-redhat.conf line 8: Applying options for *
+debug2: resolving &quot;freya-ice1-1&quot; port 22
+debug2: ssh_connect_direct
+debug1: Connecting to freya-ice1-1 [10.11.2.1] port 22.
+</pre></div>
+</div>
+<p>You can see here ssh is not trying to reach <strong>freya</strong> but is using <strong>freya-ice-1-1</strong>. This has been made to ensure whatever the direct resolution is in /etc/hosts file or DNS, ssh and so Ansible will always use the management network of the target host.</p>
+<p>Note that this file generation is kind of “sensible”, and will surely be the first one to break in case of uncoherent inventory. If this happens, check your inventory, fix it, and remove manually /root/.ssh/config and relaunch its generation.</p>
+</div>
+<div class="section" id="to-be-done">
+<h2>To be done<a class="headerlink" href="#to-be-done" title="Permalink to this headline">¶</a></h2>
+<p>Add ProxyJump for icebergs</p>
+</div>
+<div class="section" id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Benoît Leveugle, Johnny Keats
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

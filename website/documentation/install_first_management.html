@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. Install first management &mdash; BlueBanquise Documentation 1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Learn Ansible" href="learn_ansible.html" />
+    <link rel="prev" title="2. Vocabulary" href="vocabulary.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BlueBanquise Documentation
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vocabulary.html">2. Vocabulary</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Install first management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-operating-system">3.1. Install operating system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-for-ansible">3.2. Prepare for Ansible</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repositories">3.2.1. Repositories</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#operating-system">3.2.1.1. Operating system</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bluebanquise">3.2.1.2. BlueBanquise</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#install-ansible">3.2.2. Install Ansible</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="learn_ansible.html">4. Learn Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configure_bluebanquise.html">5. Configure BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy_bluebanquise.html">6. Deploy BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roles.html">7. Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">8. References</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BlueBanquise Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>3. Install first management</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/install_first_management.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="install-first-management">
+<h1>3. Install first management<a class="headerlink" href="#install-first-management" title="Permalink to this headline">¶</a></h1>
+<p>First step is to install first management node manually.</p>
+<p>We will then learn how to use Ansible, and then only focus on the stack itself.</p>
+<div class="section" id="install-operating-system">
+<h2>3.1. Install operating system<a class="headerlink" href="#install-operating-system" title="Permalink to this headline">¶</a></h2>
+<p>Install Centos 7 or 8 using parameters you need.</p>
+<p>The following parameters are recommended:</p>
+<ul class="simple">
+<li><p>&gt;= 2 CPU/vCPU</p></li>
+<li><p>&gt;= 2 Gb RAM</p></li>
+<li><p>&gt;= 16Gb HDD</p></li>
+</ul>
+<p>And the following parameters are the strict minimal if you wish to test the stack in VMs:</p>
+<ul class="simple">
+<li><p>&gt;= 1 vCPU</p></li>
+<li><p>&gt;= 512 Mb RAM</p></li>
+<li><p>&gt;= 6Gb HDD</p></li>
+</ul>
+<p>In this last configuration, DVD iso will be mounted from /dev/cdrom instead of being copied to save space.</p>
+<p>It is recommended to only choose minimal install during packages selections (core or minimal server). Also, it is recommended to let system in English, and only set your keyboard and time zone to your country.</p>
+</div>
+<div class="section" id="prepare-for-ansible">
+<h2>3.2. Prepare for Ansible<a class="headerlink" href="#prepare-for-ansible" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="repositories">
+<h3>3.2.1. Repositories<a class="headerlink" href="#repositories" title="Permalink to this headline">¶</a></h3>
+<p>Once system is installed and rebooted, login, and disable firewall. Current stack does not support firewall configuration on management nodes (but it is scheduled for later releases).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl stop firewalld
+systemctl disable firewalld
+</pre></div>
+</div>
+<p>Then prepare repositories.</p>
+<div class="section" id="operating-system">
+<h4>3.2.1.1. Operating system<a class="headerlink" href="#operating-system" title="Permalink to this headline">¶</a></h4>
+<p>Download:</p>
+<ul class="simple">
+<li><p>Centos 7 Everything DVD iso from <a class="reference external" href="http://isoredirect.centos.org/centos/7/isos/x86_64/">http://isoredirect.centos.org/centos/7/isos/x86_64/</a> . Iso name is CentOS-7-x86_64-Everything-1810.iso.</p></li>
+<li><p>Or Centos 8 DVD 1 iso from <a class="reference external" href="http://isoredirect.centos.org/centos/8/isos/x86_64/">http://isoredirect.centos.org/centos/8/isos/x86_64/</a> . Iso name is CentOS-8-x86_64-1905-dvd1.iso.</p></li>
+</ul>
+<p><strong>If on standard system:</strong></p>
+<p>Mount iso and copy content to web server directory: (replace centos/7.6 by centos/8.0, redhat/8.0, redhat/7.7, etc depending of your system)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir -p /var/www/html/repositories/centos/7.6/x86_64/os/
+mount CentOS-7-x86_64-Everything-1810.iso /mnt
+cp -a /mnt/* /var/www/html/repositories/centos/7.6/x86_64/os/
+umount /mnt
+restorecon -Rv /var/www/html/repositories/centos/7.6/x86_64/os
+</pre></div>
+</div>
+<p><strong>If in test VM:</strong></p>
+<p>Simply mount iso from /dev/cdrom to save space:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir -p /var/www/html/repositories/centos/7.6/x86_64/os/
+mount /dev/cdrom /var/www/html/repositories/centos/7.6/x86_64/os/
+</pre></div>
+</div>
+<p>Now, create first repository manually. Procedure is different between Centos 7 and 8.</p>
+<p><strong>Centos/RHEL 7:</strong></p>
+<p>Create file <em>/etc/yum.repos.d/os.repo</em> with the following content:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[os]
+name=os
+baseurl=file:///var/www/html/repositories/centos/7.6/x86_64/os/
+gpgcheck=0
+enabled=1
+</pre></div>
+</div>
+<p><strong>Centos/RHEL 8:</strong></p>
+<p>Create file <em>/etc/yum.repos.d/BaseOS.repo</em> with the following content:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[BaseOS]
+name=BaseOS
+baseurl=file:///var/www/html/repositories/redhat/8.0/x86_64/os/BaseOS
+gpgcheck=0
+enabled=1
+</pre></div>
+</div>
+<p>Then create file <em>/etc/yum.repos.d/AppStream.repo</em> with the following content:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[AppStream]
+name=AppStream
+baseurl=file:///var/www/html/repositories/redhat/8.0/x86_64/os/AppStream
+gpgcheck=0
+enabled=1
+</pre></div>
+</div>
+<p><strong>Both:</strong></p>
+<p>Now ensure repository is available:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum repolist
+</pre></div>
+</div>
+<p>Repositories structure follows a specific pattern:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>           Distribution    Version   Architecture    Repository
+                 +             +       +               +
+                 <span class="p">|</span>             +---+   <span class="p">|</span>               <span class="p">|</span>
+                 +-----------+     <span class="p">|</span>   <span class="p">|</span>      +--------+
+                             <span class="p">|</span>     <span class="p">|</span>   <span class="p">|</span>      <span class="p">|</span>
+                             v     v   v      v
+/var/www/html/repositories/centos/7.6/x86_64/os
+</pre></div>
+</div>
+<p>Note: this patern parameters (distribution, version, architecture) must match the one provided in the equipment_profile file seen later.</p>
+</div>
+<div class="section" id="bluebanquise">
+<h4>3.2.1.2. BlueBanquise<a class="headerlink" href="#bluebanquise" title="Permalink to this headline">¶</a></h4>
+<p>Download BlueBanquise rpms from official repository.</p>
+<p>Go to <a class="reference external" href="https://bluebanquise.com">https://bluebanquise.com</a>, go to repositories/download, and get the content of the whole directory corresponding to your distribution and architecture.</p>
+<p>Then copy this content into /var/www/html/repositories/centos/7.6/x86_64/bluebanquise/ locally.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir -p /var/www/html/repositories/centos/7.6/x86_64/bluebanquise/
+cp -a /root/bluebanquise_from_web/* /var/www/html/repositories/centos/7.6/x86_64/bluebanquise/
+restorecon -Rv /var/www/html/repositories/centos/7.6/x86_64/bluebanquise
+</pre></div>
+</div>
+<p>And create file <em>/etc/yum.repos.d/bluebanquise.repo</em> with the following content:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[bluebanquise]
+name=bluebanquise
+baseurl=file:///var/www/html/repositories/centos/7.6/x86_64/bluebanquise/
+gpgcheck=0
+enabled=1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="install-ansible">
+<h3>3.2.2. Install Ansible<a class="headerlink" href="#install-ansible" title="Permalink to this headline">¶</a></h3>
+<p>Time to install Ansible.</p>
+<p>Install epel first, to get Ansible:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum install epel-release
+yum repolist
+</pre></div>
+</div>
+<p>Then install Ansible:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum install ansible
+</pre></div>
+</div>
+<p>And check Ansible is working:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansible --version
+</pre></div>
+</div>
+<p>It must be <strong>&gt;= 2.8.2</strong> .</p>
+<p>It is now time, if you do not know how Ansible works, to learn basis of Ansible.</p>
+<p>If you already know Ansible, or want to skip this recommended training, directly go to the Configure BlueBanquise section.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="learn_ansible.html" class="btn btn-neutral float-right" title="4. Learn Ansible" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="vocabulary.html" class="btn btn-neutral float-left" title="2. Vocabulary" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Benoît Leveugle, Johnny Keats
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
