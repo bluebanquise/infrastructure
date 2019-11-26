@@ -40,8 +40,10 @@
 
 <h2>The need</h2>
 
-While building a small HPC center in the FabLab <a href="https://www.lafabriqueduloch.org">La Fabrique du Loch</a>, at <a href="https://en.wikipedia.org/wiki/Auray">Auray</a> – France, we needed something simple, to manage our cluster and our workstations, but also very flexible as we are working with enterprises and universities (some wants Centos, others Ubuntu, etc).
-We also wanted something with less scripts as possible, to easily maintain the product and spend less time managing the cluster to save spare time doing interesting things.
+While building a small HPC center in the FabLab <a href="https://www.lafabriqueduloch.org">La Fabrique du Loch</a>, at <a href="https://en.wikipedia.org/wiki/Auray">Auray</a> – France, we needed something simple, to manage our cluster and our workstations, but also very flexible as we are working with enterprises and universities (some wants Centos, others Ubuntu, etc).<br>
+<br>
+We also wanted something with less scripts as possible, to easily maintain the product and spend less time managing the cluster to save spare time doing interesting things.<br>
+<br>
 This is how Banquise and then <span style="color: #108bde">Blue</span>Banquise were born.
 
 <h2>What it can do</h2>
@@ -58,9 +60,9 @@ In its current state, stack can deploy on mixed Linux distributions and platform
   <li>OpenSuse Leap 15.1 with very limited features (PXE able only)</li>
 </ul>
 Depending of the demand, Ubuntu or OpenSuse can be fully implemented.
-
-Tested platform were <b>x86_64</b> for Centos/RHEL/OpenSuse Leap and <b>arm64/x86_64</b> for Ubuntu.
-
+<br>
+Tested platform were <b>x86_64</b> for Centos/RHEL/OpenSuse Leap and <b>arm64/x86_64</b> for Ubuntu.<br>
+<br>
 This hability to handle multiple Linux distributions at the same time allows to easily handle exotic hardware or customer needs.
 
 <h3>Stack data</h3>
@@ -115,10 +117,10 @@ The stack also as few native mechanisms under the hood. These features are a nee
 
 <h4>Multi Icebergs</h4>
 
-This feature is sometime called multi islands in HPC or Cloud.
-
-<span style="color: #108bde">Blue</span>Banquise can split cluster into independent and autonomous groups of equipments. These new subclusters are called <b>icebergs</b>, each iceberg being managed by a group of management nodes and isolated from the others (but can be reached through interconnect if exist and asked).
-
+This feature is sometime called multi islands in HPC or Cloud.<br>
+<br>
+<span style="color: #108bde">Blue</span>Banquise can split cluster into independent and autonomous groups of equipments. These new subclusters are called <b>icebergs</b>, each iceberg being managed by a group of management nodes and isolated from the others (but can be reached through interconnect if exist and asked).<br>
+<br>
 This feature is mainly used:
 
 <ul>
@@ -129,12 +131,12 @@ This feature is mainly used:
 
 <h4>Accelerated mode</h4>
 
-Ansible is famous for its simplicity, but also for being slow, even with Mitogen.
-
-Accelerated mode is a POC we designed to heavily accelerate critical templates rendering. It is based on some retro engineering we made on Ansible. It also reduces memory usage.
-
-Accelerated mode is just a basic trick we found in the inventory, that requires no Ansible modifications.
-
+Ansible is famous for its simplicity, but also for being slow, even with Mitogen.<br>
+<br>
+Accelerated mode is a POC we designed to heavily accelerate critical templates rendering. It is based on some retro engineering we made on Ansible. It also reduces memory usage.<br>
+<br>
+Accelerated mode is just a basic trick we found in the inventory, that requires no Ansible modifications.<br>
+<br>
 Note that this features is only at POC state for the time being, as it needs extended developments in roles templates. We are waiting for the stack being more "mature" to fully implement it.
 
 
