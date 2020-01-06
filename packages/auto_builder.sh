@@ -28,7 +28,7 @@ echo " Working directory: $working_directory"
 mkdir -p $working_directory
 
 # Packages versions
-ipxe_bluebanquise_version=1.0.6
+ipxe_bluebanquise_version=1.1.0
 
 # Number of cores
 nb_cores=1
@@ -67,7 +67,7 @@ if [ ! -f $working_directory/sources/bluebanquise/README.md ]; then
 fi
 git pull
 
-#if false; then
+if false; then
 
 cd $working_directory/sources/bluebanquise/packages/
 if [ ! -f $working_directory/sources/nyancat-1.5.2.tar.gz ]; then
@@ -155,7 +155,7 @@ rm -f atftp-0.7.2/redhat/atftp.spec
 tar cvzf atftp.tar.gz atftp-0.7.2
 rpmbuild -ta atftp.tar.gz
 
-#fi
+fi
 
 # iPXE
 mkdir $working_directory/sources/ipxe/
