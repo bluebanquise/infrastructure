@@ -193,17 +193,18 @@ make -j $nb_cores bin-x86_64-efi/snp.efi EMBED=bluebanquise_standard.ipxe DEBUG=
 make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp,vesafb
 make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp,vesafb
 
+rm -Rf /dev/shm/efiiso/efi/boot
+mkdir -p /dev/shm/efiiso/efi/boot
+cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
+mkisofs -o standard_efi.iso -J -r /dev/shm/efiiso
+cp standard_efi.iso $working_directory/build/ipxe/bin/x86_64/standard_efi.iso
+
 mv bin-x86_64-efi/ipxe.efi $working_directory/build/ipxe/bin/x86_64/standard_ipxe.efi
 mv bin-x86_64-efi/snponly.efi $working_directory/build/ipxe/bin/x86_64/standard_snponly_ipxe.efi
 mv bin-x86_64-efi/snp.efi $working_directory/build/ipxe/bin/x86_64/standard_snp_ipxe.efi
 mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/standard_undionly.kpxe
 mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/standard_pcbios.iso
 mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/standard_pcbios.usb
-rm -Rf /dev/shm/efiiso/efi/boot
-mkdir -p /dev/shm/efiiso/efi/boot
-cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
-mkisofs -o standard_efi.iso -J -r /dev/shm/efiiso
-cp standard_efi.iso $working_directory/build/ipxe/bin/x86_64/standard_efi.iso
 
 # Doing dhcpretry
 make -j $nb_cores bin-x86_64-efi/ipxe.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
@@ -213,18 +214,18 @@ make -j $nb_cores bin-x86_64-efi/snp.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG
 make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
 make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
 
-mv bin-x86_64-efi/ipxe.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_ipxe.efi
-mv bin-x86_64-efi/snponly.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_snponly_ipxe.efi
-mv bin-x86_64-efi/snp.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_snp_ipxe.efi
-mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/dhcpretry_undionly.kpxe
-mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
-mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb
 rm -Rf /dev/shm/efiiso/efi/boot
 mkdir -p /dev/shm/efiiso/efi/boot
 cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
 mkisofs -o dhcpretry_efi.iso -J -r /dev/shm/efiiso
 cp dhcpretry_efi.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_efi.iso
 
+mv bin-x86_64-efi/ipxe.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_ipxe.efi
+mv bin-x86_64-efi/snponly.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_snponly_ipxe.efi
+mv bin-x86_64-efi/snp.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_snp_ipxe.efi
+mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/dhcpretry_undionly.kpxe
+mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
+mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb
 
 cd $working_directory/build/ipxe/
 mkdir ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version
