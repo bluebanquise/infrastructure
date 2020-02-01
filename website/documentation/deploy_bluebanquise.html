@@ -20,11 +20,20 @@
   <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -184,9 +193,9 @@
 <div class="section" id="get-management1-playbook">
 <h3>6.1.1. Get management1 playbook<a class="headerlink" href="#get-management1-playbook" title="Permalink to this headline">¶</a></h3>
 <p>We are going to use the provided default playbook. This playbook will install most of the CORE roles. Enough to deploy first stage of the cluster.</p>
-<p>Copy example playbook management1 to /etc/ansible/playbooks/:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir /etc/ansible/playbooks/
-cp -a /etc/ansible/resources/examples/simple_cluster/playbooks/management1.yml /etc/ansible/playbooks/
+<p>Copy example playbook management1 to /etc/bluebanquise/playbooks/:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir /etc/bluebanquise/playbooks/
+cp -a /etc/bluebanquise/resources/examples/simple_cluster/playbooks/management1.yml /etc/bluebanquise/playbooks/
 </pre></div>
 </div>
 <p>Then, we will ask Ansible to read this playbook, and execute all roles listed inside on management1 node (check hosts target at top of the file).</p>
@@ -201,8 +210,8 @@ cp -a /etc/ansible/resources/examples/simple_cluster/playbooks/management1.yml /
 <p>As you can notice, some tags are set inside the playbook, or even in some roles for specific tasks. The idea of tags is simple: you can tag a role/a task, and then when using ansible-playbook, only play related tags role/task. Or do the opposit: play all, and skip a role/task.</p>
 <p>To so, use with Ansible playbook:</p>
 <ul class="simple">
-<li><p><strong>–tags</strong> with tags listed with comma separator: mytag1,mytag2,mytag3</p></li>
-<li><p><strong>–skip-tags</strong> with same pattern</p></li>
+<li><strong>–tags</strong> with tags listed with comma separator: mytag1,mytag2,mytag3</li>
+<li><strong>–skip-tags</strong> with same pattern</li>
 </ul>
 <p>More can be found <a class="reference external" href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html">here</a> on tags.</p>
 </div>
@@ -211,7 +220,7 @@ cp -a /etc/ansible/resources/examples/simple_cluster/playbooks/management1.yml /
 <p>Extra vars allows to pass variables with maximum precedence at execution time, for any purpose (debug, test, or simply need).</p>
 <p>To do so, use:</p>
 <ul class="simple">
-<li><p><strong>–extra-vars</strong> with ” ” and space separated variables: –extra-vars “myvar1=true myvar2=77 myvar3=hello”</p></li>
+<li><strong>–extra-vars</strong> with ” ” and space separated variables: –extra-vars “myvar1=true myvar2=77 myvar3=hello”</li>
 </ul>
 </div>
 </div>
@@ -219,20 +228,20 @@ cp -a /etc/ansible/resources/examples/simple_cluster/playbooks/management1.yml /
 <h3>6.1.3. Apply management1 configuration<a class="headerlink" href="#apply-management1-configuration" title="Permalink to this headline">¶</a></h3>
 <p>Lets apply now the whole configuration on management1. It can takes some time depending of your CPU and your hard drive.</p>
 <p>We first ensure our NIC are up, so the repositories part is working.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansible-playbook /etc/ansible/playbooks/management1.yml --tags set_hostname,nic
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ansible-playbook /etc/bluebanquise/playbooks/management1.yml --tags set_hostname,nic
 </pre></div>
 </div>
 <p>Then start your main interface manually. Here enp0s3:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ifup enp0s3
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ifup enp0s3
 </pre></div>
 </div>
 <p>Once interface is up (check using <em>ip a</em> command), replay the whole playbook:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansible-playbook /etc/ansible/playbooks/management1.yml
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ansible-playbook /etc/bluebanquise/playbooks/management1.yml
 </pre></div>
 </div>
 <p>And wait…</p>
 <p>If all goes well, you can check that all services are up and running:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl status httpd
+<div class="highlight-bash"><div class="highlight"><pre><span></span>systemctl status httpd
 systemctl status atftpd
 systemctl status dhcpd
 systemctl status named
@@ -249,7 +258,7 @@ systemctl status named
 If your device cannot boot on LAN, use iso or usb image provided on management1 in /var/www/html/preboot_execution_environment/bin/[x86_64|arm64]. These images will start a LAN boot automatically.</p>
 <p>In <strong>BlueBanquise</strong>, PXE process has been made so that any kind of hardware able to boot PXE, USB or CDrom can start deployment.</p>
 <p>You can get more information and a detailed schema in the pxe_stack role section of this documentation. Simply put, the PXE chain is the following (files are in /var/www/html/preboot_execution_environment):</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>DHCP request
+<div class="highlight-text"><div class="highlight"><pre><span></span>DHCP request
   |
 IP obtained, next-server obtained
   |
@@ -275,7 +284,7 @@ iPXE chain to task specified in myhostname.ipxe (deploy os, boot on disk, etc)
 <p>To manipulate nodes PXE boot, a command, <em>bootset</em>, is available.</p>
 <p>We are going to deploy login1 and c001, c002, c003 and c004.</p>
 <p>Let’s use bootset to ask them to deploy OS at next PXE boot:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bootset -n login1,c<span class="o">[</span><span class="m">001</span>-004<span class="o">]</span> -b osdeploy
+<div class="highlight-bash"><div class="highlight"><pre><span></span>bootset -n login1,c<span class="o">[</span><span class="m">001</span>-004<span class="o">]</span> -b osdeploy
 </pre></div>
 </div>
 <p>Note that this osdeploy state will be automatically updated once OS is deployed on remote nodes, and set to disk.</p>
@@ -294,13 +303,13 @@ iPXE chain to task specified in myhostname.ipxe (deploy os, boot on disk, etc)
 <p>Applying configuration on other nodes is simple.</p>
 <p>Ensure first you can ssh passwordless on each of the freshly deployed nodes. If not, check your ssh public key in authentication.yml in the inventory match your management1 public key, update it, and manually spread your key for this time on remote hosts using ssh-copy-id.</p>
 <p>If yes, copy example playbooks:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp -a /etc/ansible/resources/examples/simple_cluster/playbooks/computes.yml /etc/ansible/playbooks/
-cp -a /etc/ansible/resources/examples/simple_cluster/playbooks/login1.yml /etc/ansible/playbooks/
+<div class="highlight-bash"><div class="highlight"><pre><span></span>cp -a /etc/bluebanquise/resources/examples/simple_cluster/playbooks/computes.yml /etc/bluebanquise/playbooks/
+cp -a /etc/bluebanquise/resources/examples/simple_cluster/playbooks/login1.yml /etc/bluebanquise/playbooks/
 </pre></div>
 </div>
 <p>And execute them, using extra var target to target them:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansible-playbook /etc/ansible/login1.yml
-ansible-playbook /etc/ansible/computes.yml --extra-vars <span class="s2">&quot;target=c001,c002,c003,c004&quot;</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ansible-playbook /etc/bluebanquise/login1.yml
+ansible-playbook /etc/bluebanquise/computes.yml --extra-vars <span class="s2">&quot;target=c001,c002,c003,c004&quot;</span>
 </pre></div>
 </div>
 <p>You can see that Ansible will work on computes nodes in parallel, using more CPU on the management1 node.</p>

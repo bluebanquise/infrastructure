@@ -20,11 +20,20 @@
   <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../../',
+              VERSION:'1.0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -165,39 +174,39 @@
 <h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
 <p>To use this role for all 3 types of nodes, simply add a vars in the playbook when loading the role. Extra vers is <strong>slurm_profile</strong>.</p>
 <p>For a controler (server), use:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">role</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
-  <span class="nt">tags</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
-  <span class="nt">vars</span><span class="p">:</span>
-    <span class="nt">slurm_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">controler</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
+  <span class="l l-Scalar l-Scalar-Plain">tags</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">slurm_profile</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">controler</span>
 </pre></div>
 </div>
 <p>For a compute node (client), use:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">role</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
-  <span class="nt">tags</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
-  <span class="nt">vars</span><span class="p">:</span>
-    <span class="nt">slurm_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
+  <span class="l l-Scalar l-Scalar-Plain">tags</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">slurm_profile</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">node</span>
 </pre></div>
 </div>
 <p>And for a login (passive client), use:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">role</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
-  <span class="nt">tags</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
-  <span class="nt">vars</span><span class="p">:</span>
-    <span class="nt">slurm_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passive</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
+  <span class="l l-Scalar l-Scalar-Plain">tags</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">HPC_slurm</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">slurm_profile</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">passive</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="to-be-done">
 <h2>To be done<a class="headerlink" href="#to-be-done" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>slurmdbd + mariadb</p></li>
-<li><p>static file</p></li>
+<li>slurmdbd + mariadb</li>
+<li>static file</li>
 </ul>
 </div>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>1.0.1: Documentation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
-<li><p>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li>1.0.1: Documentation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
+<li>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
 </ul>
 </div>
 </div>

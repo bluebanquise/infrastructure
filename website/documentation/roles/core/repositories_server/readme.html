@@ -20,11 +20,20 @@
   <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../../',
+              VERSION:'1.0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -165,7 +174,7 @@
 <h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
 <p>This role simply install an http server. Repositories files manupulations have to be done manually by system administrator.</p>
 <p>Note that repositories structure follows a specific pattern:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>           Distribution    Version   Architecture    Repository
+<div class="highlight-bash"><div class="highlight"><pre><span></span>           Distribution    Version   Architecture    Repository
                  +             +       +               +
                  <span class="p">|</span>             +---+   <span class="p">|</span>               <span class="p">|</span>
                  +-----------+     <span class="p">|</span>   <span class="p">|</span>      +--------+
@@ -175,15 +184,15 @@
 </pre></div>
 </div>
 <p>System administrator should create these directories manually, and put packages inside.</p>
-<p>Then, repositories that will be setup on clients are stored by default in <em>/etc/ansible/inventory/group_vars/all/general_settings/repositories.yml</em>.</p>
-<p>Keep in mind that it is possible to precedence this file in equipment_profiles groupes, and so put a repository file in for example <em>/etc/ansible/inventory/group_vars/equipment_supermicro_sandy_compute</em> that will be considered by these nodes over the default one. This can be useful to define diferent repositories for diferent equipments.</p>
+<p>Then, repositories that will be setup on clients are stored by default in <em>/etc/bluebanquise/inventory/group_vars/all/general_settings/repositories.yml</em>.</p>
+<p>Keep in mind that it is possible to precedence this file in equipment_profiles groupes, and so put a repository file in for example <em>/etc/bluebanquise/inventory/group_vars/equipment_supermicro_sandy_compute</em> that will be considered by these nodes over the default one. This can be useful to define diferent repositories for diferent equipments.</p>
 </div>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>1.0.2: Regrouped all distribs into a main file. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
-<li><p>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
-<li><p>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li>1.0.2: Regrouped all distribs into a main file. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
+<li>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
+<li>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
 </ul>
 </div>
 </div>

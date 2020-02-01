@@ -20,11 +20,20 @@
   <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../../',
+              VERSION:'1.0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -173,20 +182,20 @@ Features like shared_network, opt82, opt61 or snp/snponly roms are provided here
 To do so, add a variable in the network definition.</p>
 <p>For example to add ice1-1 and ice1-2 into the same shared network, define them this way:</p>
 <p>Ice1-1:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">networks</span><span class="p">:</span>
-  <span class="nt">ice1-1</span><span class="p">:</span>
-    <span class="nt">subnet</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.0</span>
-    <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">16</span>
-    <span class="nt">shared_network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wolf</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">networks</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">ice1-1</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">subnet</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">prefix</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">16</span>
+    <span class="l l-Scalar l-Scalar-Plain">shared_network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wolf</span>
     <span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
 </div>
 <p>And ice1-2:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">networks</span><span class="p">:</span>
-  <span class="nt">ice1-2</span><span class="p">:</span>
-    <span class="nt">subnet</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.30.0.0</span>
-    <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">16</span>
-    <span class="nt">shared_network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wolf</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">networks</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">ice1-2</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">subnet</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.30.0.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">prefix</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">16</span>
+    <span class="l l-Scalar l-Scalar-Plain">shared_network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wolf</span>
     <span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
 </div>
@@ -196,20 +205,20 @@ To do so, add a variable in the network definition.</p>
 <h3><strong>opt 61 and opt 82</strong><a class="headerlink" href="#opt-61-and-opt-82" title="Permalink to this headline">¶</a></h3>
 <p>It is possible to use advanced dhcp features to identify an host. The following parameters are available, for the host and its BMC. Note that only one of these must be set for an host/BMC at the same time:</p>
 <ul class="simple">
-<li><p>mac: identify based on MAC address. Same than standard dhcp server.</p></li>
-<li><p>dhcp_client_identifier: identify based on a patern (string, etc) to recognise an host. Also known as option 61.</p></li>
-<li><p>host_identifier: identify based on an option (agent.circuit-id, agent.remote-id, etc) to recognise an host. Also known as option 82.</p></li>
-<li><p>option_match: identify based on multiple options in combinaison to recognise an host. Also known as option 82 with hack.</p></li>
+<li>mac: identify based on MAC address. Same than standard dhcp server.</li>
+<li>dhcp_client_identifier: identify based on a patern (string, etc) to recognise an host. Also known as option 61.</li>
+<li>host_identifier: identify based on an option (agent.circuit-id, agent.remote-id, etc) to recognise an host. Also known as option 82.</li>
+<li>match: identify based on multiple options in combinaison to recognise an host. Also known as option 82 with hack.</li>
 </ul>
-<p>If using option_match, because this features is using a specific ‘hack’ in the dhcp server, you <strong>must</strong> define this host in a shared network, even if this shared network contains a single network (see this very well made page for more information: <a class="reference external" href="http://www.miquels.cistron.nl/isc-dhcpd/">http://www.miquels.cistron.nl/isc-dhcpd/</a>).</p>
+<p>If using match, because this features is using a specific ‘hack’ in the dhcp server, you <strong>must</strong> define this host in a shared network, even if this shared network contains a single network (see this very well made page for more information: <a class="reference external" href="http://www.miquels.cistron.nl/isc-dhcpd/">http://www.miquels.cistron.nl/isc-dhcpd/</a>).</p>
 </div>
 </div>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>1.0.2: Added Ubuntu 18.04 compatibility. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
-<li><p>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
-<li><p>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li>1.0.2: Added Ubuntu 18.04 compatibility. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
+<li>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
+<li>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
 </ul>
 </div>
 </div>

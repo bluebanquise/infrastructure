@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>NIC with nmcli &mdash; BlueBanquise Documentation 1.0.1 documentation</title>
+  <title>Cloning &mdash; BlueBanquise Documentation 1.0.1 documentation</title>
   
 
   
@@ -145,13 +145,13 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
-      <li>NIC with nmcli</li>
+      <li>Cloning</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../../_sources/roles/addons/nic_nmcli/readme.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/roles/addons/clone/readme.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -164,32 +164,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="nic-with-nmcli">
-<h1>NIC with nmcli<a class="headerlink" href="#nic-with-nmcli" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="cloning">
+<h1>Cloning<a class="headerlink" href="#cloning" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>This role configure network interfaces to provide desired ip, prefix, gateway, etc.</p>
-<p>This role is still under work, as nmcli is not supported in RHEL 8 for now, and that this role need to handle much more features.</p>
+<p>This role provides ipxe files for Clonezilla live usage.</p>
 </div>
 <div class="section" id="instructions">
 <h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
-<p>NA</p>
+<p>The Clonezilla Live iso is needed for this role to run properly. The following iso version was used for validating this role: <strong>clonezilla-live-20191024-eoan-amd64.iso</strong></p>
+<p>The iso must be mounted in the <em>preboot_execution_environment/clone/clonezilla</em> folder or the content copied inside this directory.</p>
+<p>Call bootset using -b clone -i myimage to clone a node into myimage, and -b deploy_clone -i myimage to deploy myimage on the target node.</p>
+<p>By default, sda device is targeted, and clone parameters are:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>ocs-sr -q2 -batch -j2 -z1 -i 2096 -fsck-src-part-y -senc -p reboot savedisk myimage.img sda
+</pre></div>
 </div>
-<div class="section" id="to-be-done">
-<h2>To be done<a class="headerlink" href="#to-be-done" title="Permalink to this headline">¶</a></h2>
-<p>Add more features, as nmcli Ansible module can do much more.</p>
-<ul class="simple">
-<li>VLANs</li>
-<li>LACP/Bond</li>
-<li>Non network linked NIC</li>
-<li>Multi IP</li>
-</ul>
+<p>It is possible to force other clone parameters by setting extra-parameters during bootset invocation. For example, to clone sdb disk, use:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>bootset -n mynode -i myimage -b clone -e &quot;ocs-sr -q2 -batch -j2 -z1 -i 2096 -fsck-src-part-y -senc -p reboot savedisk myimage.img sdb&quot;
+</pre></div>
+</div>
+<p>Refer to clonezilla live documentation about other parameters.</p>
+<p>Same apply to deploy clone. By Default, sda is targeted, and restore clone parameters are:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>ocs-sr -g auto -e1 auto -e2 -r -j2 -batch -p reboot restoredisk myimage.img sda
+</pre></div>
+</div>
+<p>It is possible to replace these parameters using extra parameters when invoking bootset.</p>
 </div>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>1.0.2: Adding Ubuntu 18.04 compatibility. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
-<li>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
 <li>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
 </ul>
 </div>

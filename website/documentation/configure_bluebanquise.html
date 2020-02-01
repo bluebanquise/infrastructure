@@ -20,11 +20,20 @@
   <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -191,21 +200,21 @@
 <div class="section" id="get-bluebanquise">
 <h2>5.1. Get BlueBanquise<a class="headerlink" href="#get-bluebanquise" title="Permalink to this headline">¶</a></h2>
 <p>Install needed basic packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum install wget createrepo git
+<div class="highlight-bash"><div class="highlight"><pre><span></span>yum install wget createrepo git
 </pre></div>
 </div>
-<p>Now, backup and clean your previous Ansible configuration:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar cvzf /root/my_old_ansible.tar.gz /etc/ansible
-rm -Rf /etc/ansible/*
+<p>Now, download latest <strong>BlueBanquise</strong> version from git:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git clone https://github.com/oxedions/bluebanquise.git /etc/bluebanquise
 </pre></div>
 </div>
-<p>And download latest <strong>BlueBanquise</strong> version from git into Ansible directory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /etc/ansible
-git clone https://github.com/oxedions/bluebanquise.git .
+<p>ansible will read ANSIBLE_CONFIG, ansible.cfg in the current working directory, .ansible.cfg in the home directory or /etc/ansible/ansible.cfg, whichever it finds first.</p>
+<p>To use /etc/bluebanquise/ansible.cfg, either change the current working directory or set ANSIBLE_CONFIG:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ANSIBLE_CONFIG</span><span class="o">=</span>/etc/bluebanquise/ansible.cfg
+<span class="nb">cd</span> /etc/bluebanquise
 </pre></div>
 </div>
 <p>Finally, edit /etc/hosts file, and add “management1” (or whatever your current management node hostname) on localhost line:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 management1
+<div class="highlight-text"><div class="highlight"><pre><span></span>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 management1
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 </pre></div>
 </div>
@@ -217,14 +226,14 @@ git clone https://github.com/oxedions/bluebanquise.git .
 <img alt="_images/example_cluster_small.svg" src="_images/example_cluster_small.svg" /><div class="section" id="important-before-we-start">
 <h3>5.2.1. Important before we start<a class="headerlink" href="#important-before-we-start" title="Permalink to this headline">¶</a></h3>
 <p>Ansible will read <strong>ALL</strong> files in the inventory. <strong>NEVER do a backup of a file here!</strong></p>
-<p>Backup in another location, outside of /etc/ansible/inventory.</p>
+<p>Backup in another location, outside of /etc/bluebanquise/inventory.</p>
 </div>
 <div class="section" id="check-example-inventory">
 <h3>5.2.2. Check example inventory<a class="headerlink" href="#check-example-inventory" title="Permalink to this headline">¶</a></h3>
-<p>An inventory example is provided in /etc/ansible/resources/examples/simple_cluster/ as a base for our work.</p>
+<p>An inventory example is provided in /etc/bluebanquise/resources/examples/simple_cluster/ as a base for our work.</p>
 <p>This example is based on the picture provided just above.</p>
 <p>Lets copy it to use it as our new inventory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp -a /etc/ansible/resources/examples/simple_cluster/inventory /etc/ansible/inventory
+<div class="highlight-bash"><div class="highlight"><pre><span></span>cp -a /etc/bluebanquise/resources/examples/simple_cluster/inventory /etc/bluebanquise/inventory
 </pre></div>
 </div>
 </div>
@@ -235,67 +244,67 @@ git clone https://github.com/oxedions/bluebanquise.git .
 <div class="section" id="management-node">
 <h4>5.2.3.1. Management node<a class="headerlink" href="#management-node" title="Permalink to this headline">¶</a></h4>
 <p>Open file cluster/nodes/managements.yml:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mg_managements</span><span class="p">:</span>
-  <span class="nt">children</span><span class="p">:</span>
-    <span class="nt">equipment_typeM</span><span class="p">:</span>
-      <span class="nt">hosts</span><span class="p">:</span>
-        <span class="nt">management1</span><span class="p">:</span>
-          <span class="nt">bmc</span><span class="p">:</span>
-            <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bmanagement1</span>
-            <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.100.1</span>
-            <span class="nt">mac</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f6</span>
-            <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>
-          <span class="nt">network_interfaces</span><span class="p">:</span>
-            <span class="nt">enp0s3</span><span class="p">:</span>
-              <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
-              <span class="nt">mac</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f5</span>
-              <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>
-            <span class="nt">ib0</span><span class="p">:</span>
-              <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.20.0.1</span>
-              <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">interconnect-1</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mg_managements</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">children</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">equipment_typeM</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">management1</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">bmc</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bmanagement1</span>
+            <span class="l l-Scalar l-Scalar-Plain">ip4</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.100.1</span>
+            <span class="l l-Scalar l-Scalar-Plain">mac</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f6</span>
+            <span class="l l-Scalar l-Scalar-Plain">network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>
+          <span class="l l-Scalar l-Scalar-Plain">network_interfaces</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">enp0s3</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">ip4</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
+              <span class="l l-Scalar l-Scalar-Plain">mac</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f5</span>
+              <span class="l l-Scalar l-Scalar-Plain">network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>
+            <span class="l l-Scalar l-Scalar-Plain">ib0</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">ip4</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.20.0.1</span>
+              <span class="l l-Scalar l-Scalar-Plain">network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">interconnect-1</span>
 </pre></div>
 </div>
 <p>This file contains our management node configuration. Let’s review it, to understand it.</p>
 <p>First, the groups:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mg_managements</span><span class="p">:</span>         <span class="c1"># This is the main group (also called master group), it is very useful with advanced configuration</span>
-  <span class="nt">children</span><span class="p">:</span>             <span class="c1"># This is an Ansible instruction, indicating the below group is included in mg_managements group</span>
-    <span class="nt">equipment_typeM</span><span class="p">:</span>    <span class="c1"># This is the equipment group of the management node. It always starts by &#39;equipment_&#39;</span>
-      <span class="nt">hosts</span><span class="p">:</span>            <span class="c1"># This is an Ansible instruction, to list below the hosts member of this group</span>
-        <span class="nt">management1</span><span class="p">:</span>    <span class="c1"># This is the hostname</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mg_managements</span><span class="p p-Indicator">:</span>         <span class="c1"># This is the main group (also called master group), it is very useful with advanced configuration</span>
+  <span class="l l-Scalar l-Scalar-Plain">children</span><span class="p p-Indicator">:</span>             <span class="c1"># This is an Ansible instruction, indicating the below group is included in mg_managements group</span>
+    <span class="l l-Scalar l-Scalar-Plain">equipment_typeM</span><span class="p p-Indicator">:</span>    <span class="c1"># This is the equipment group of the management node. It always starts by &#39;equipment_&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span>            <span class="c1"># This is an Ansible instruction, to list below the hosts member of this group</span>
+        <span class="l l-Scalar l-Scalar-Plain">management1</span><span class="p p-Indicator">:</span>    <span class="c1"># This is the hostname</span>
 </pre></div>
 </div>
 <p>Now the BMC (if exist):</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mg_managements</span><span class="p">:</span>
-  <span class="nt">children</span><span class="p">:</span>
-    <span class="nt">equipment_typeM</span><span class="p">:</span>
-      <span class="nt">hosts</span><span class="p">:</span>
-        <span class="nt">management1</span><span class="p">:</span>
-          <span class="nt">bmc</span><span class="p">:</span>                      <span class="c1"># This instruction defines an attached BMC</span>
-            <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bmanagement1</span>      <span class="c1"># This is the hostname of the BMC</span>
-            <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.100.1</span>        <span class="c1"># This is the ipv4 of the BMC</span>
-            <span class="nt">mac</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f6</span>  <span class="c1"># This is the MAC hardware address of the BMC (for DHCP)</span>
-            <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>         <span class="c1"># This is the logical network this interface is connected to. Logical networks will be seen later.</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mg_managements</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">children</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">equipment_typeM</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">management1</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">bmc</span><span class="p p-Indicator">:</span>                      <span class="c1"># This instruction defines an attached BMC</span>
+            <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bmanagement1</span>      <span class="c1"># This is the hostname of the BMC</span>
+            <span class="l l-Scalar l-Scalar-Plain">ip4</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.100.1</span>        <span class="c1"># This is the ipv4 of the BMC</span>
+            <span class="l l-Scalar l-Scalar-Plain">mac</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f6</span>  <span class="c1"># This is the MAC hardware address of the BMC (for DHCP)</span>
+            <span class="l l-Scalar l-Scalar-Plain">network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>         <span class="c1"># This is the logical network this interface is connected to. Logical networks will be seen later.</span>
 </pre></div>
 </div>
 <p>Then the network interfaces and their associated networks:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mg_managements</span><span class="p">:</span>
-  <span class="nt">children</span><span class="p">:</span>
-    <span class="nt">equipment_typeM</span><span class="p">:</span>
-      <span class="nt">hosts</span><span class="p">:</span>
-        <span class="nt">management1</span><span class="p">:</span>
-          <span class="nt">bmc</span><span class="p">:</span>
-            <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bmanagement1</span>
-            <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.100.1</span>
-            <span class="nt">mac</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f6</span>
-            <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>
-          <span class="nt">network_interfaces</span><span class="p">:</span>         <span class="c1"># This is an instruction, to define bellow all host&#39;s NIC (Network Interface Controllers)</span>
-            <span class="nt">enp0s3</span><span class="p">:</span>                   <span class="c1"># This is the NIC name (&#39;ip a&#39; command to get NIC list)</span>
-              <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>          <span class="c1"># This is the expected ipv4 for this NIC</span>
-              <span class="nt">mac</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f5</span>  <span class="c1"># This is the NIC MAC address, for the DHCP</span>
-              <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>         <span class="c1"># This is the logical network this interface is linked to</span>
-            <span class="nt">ib0</span><span class="p">:</span>                      <span class="c1"># This is another interface, not in the dhcp so no MAC is provided</span>
-              <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.20.0.1</span>
-              <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">interconnect-1</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mg_managements</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">children</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">equipment_typeM</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">management1</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">bmc</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bmanagement1</span>
+            <span class="l l-Scalar l-Scalar-Plain">ip4</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.100.1</span>
+            <span class="l l-Scalar l-Scalar-Plain">mac</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f6</span>
+            <span class="l l-Scalar l-Scalar-Plain">network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>
+          <span class="l l-Scalar l-Scalar-Plain">network_interfaces</span><span class="p p-Indicator">:</span>         <span class="c1"># This is an instruction, to define bellow all host&#39;s NIC (Network Interface Controllers)</span>
+            <span class="l l-Scalar l-Scalar-Plain">enp0s3</span><span class="p p-Indicator">:</span>                   <span class="c1"># This is the NIC name (&#39;ip a&#39; command to get NIC list)</span>
+              <span class="l l-Scalar l-Scalar-Plain">ip4</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>          <span class="c1"># This is the expected ipv4 for this NIC</span>
+              <span class="l l-Scalar l-Scalar-Plain">mac</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:dc:f8:f5</span>  <span class="c1"># This is the NIC MAC address, for the DHCP</span>
+              <span class="l l-Scalar l-Scalar-Plain">network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>         <span class="c1"># This is the logical network this interface is linked to</span>
+            <span class="l l-Scalar l-Scalar-Plain">ib0</span><span class="p p-Indicator">:</span>                      <span class="c1"># This is another interface, not in the dhcp so no MAC is provided</span>
+              <span class="l l-Scalar l-Scalar-Plain">ip4</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.20.0.1</span>
+              <span class="l l-Scalar l-Scalar-Plain">network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">interconnect-1</span>
 </pre></div>
 </div>
 <p>It should not be too difficult to understand this file.</p>
@@ -303,19 +312,19 @@ git clone https://github.com/oxedions/bluebanquise.git .
 <div class="section" id="other-nodes">
 <h4>5.2.3.2. Other nodes<a class="headerlink" href="#other-nodes" title="Permalink to this headline">¶</a></h4>
 <p>Now, review computes nodes and logins nodes in respectively files cluster/nodes/computes.yml and cluster/nodes/logins.yml. Same rules apply. You can also add more nodes, or if you have for example multiple type of equipment for computes nodes or login nodes, add another equipment group this way:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mg_computes</span><span class="p">:</span>
-  <span class="nt">children</span><span class="p">:</span>
-    <span class="nt">equipment_typeC</span><span class="p">:</span>
-      <span class="nt">hosts</span><span class="p">:</span>
-        <span class="nt">c001</span><span class="p">:</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">mg_computes</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">children</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">equipment_typeC</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">c001</span><span class="p p-Indicator">:</span>
         <span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span>
-    <span class="nt">equipment_typeD</span><span class="p">:</span>
-      <span class="nt">hosts</span><span class="p">:</span>
-        <span class="nt">c005</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">equipment_typeD</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">c005</span><span class="p p-Indicator">:</span>
         <span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span>
-    <span class="nt">equipment_typeE</span><span class="p">:</span>
-      <span class="nt">hosts</span><span class="p">:</span>
-        <span class="nt">c010</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">equipment_typeE</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">c010</span><span class="p p-Indicator">:</span>
         <span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span>
 </pre></div>
 </div>
@@ -329,24 +338,24 @@ git clone https://github.com/oxedions/bluebanquise.git .
 <p>Before reviewing the file, please read this <strong>IMPORTANT</strong> information: in <strong>BlueBanquise</strong> there are two kind of networks: administration networks, and the others.</p>
 <p>An administration network is used to deploy and manage the nodes. It will be for example used to run a DHCP server, handle the PXE stack, etc, and also all the Ansible ssh connections. Administration networks have a strict naming convention, which by default is: <strong>iceX-Y</strong> with X the iceberg number, and Y the subnet number in this iceberg X. In our case, we are working on iceberg1 (default when disabling icebergs mechanism), and we only have one subnet, so our administration network will be ice1-1. If we would need another subnet, its name would have been ice1-2, etc. Interconnect-1 is not an administration network.</p>
 <p>Open file group_vars/all/networks/ice1-1.yml and let’s check its content:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">networks</span><span class="p">:</span>                                             <span class="c1"># This defines a new network</span>
-  <span class="nt">ice1-1</span><span class="p">:</span>                                             <span class="c1"># Network name</span>
-    <span class="nt">subnet</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.0</span>                                 <span class="c1"># Network subnet</span>
-    <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">16</span>                                        <span class="c1"># Network prefix</span>
-    <span class="nt">netmask</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">255.255.0.0</span>                              <span class="c1"># Network netmask, must comply with prefix</span>
-    <span class="nt">broadcast</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.255.255</span>                          <span class="c1"># Broadcast, deduced from subnet and prefix/netmask</span>
-    <span class="nt">dhcp_unknown_range</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.254.1 10.10.254.254</span>     <span class="c1"># This is the range of ip where unknown nodes (i.e. not in the inventory) will be placed if asking for an ip</span>
-    <span class="nt">gateway</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>                                <span class="c1"># Optional, define a gateway</span>
-    <span class="nt">is_in_dhcp</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>                                  <span class="c1"># If you want this network to be in the dhcp (only apply to management networks)</span>
-    <span class="nt">is_in_dns</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>                                   <span class="c1"># If you want this network to be in the dns</span>
-    <span class="nt">services_ip</span><span class="p">:</span>                                      <span class="c1"># IPs or virtual IPs to bind to for each service. In our case, all services will be running on management1 so 10.10.0.1 for all</span>
-      <span class="nt">pxe_ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
-      <span class="nt">ntp_ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
-      <span class="nt">dns_ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
-      <span class="nt">repository_ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
-      <span class="nt">authentication_ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
-      <span class="nt">time_ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
-      <span class="nt">log_ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">networks</span><span class="p p-Indicator">:</span>                                             <span class="c1"># This defines a new network</span>
+  <span class="l l-Scalar l-Scalar-Plain">ice1-1</span><span class="p p-Indicator">:</span>                                             <span class="c1"># Network name</span>
+    <span class="l l-Scalar l-Scalar-Plain">subnet</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.0</span>                                 <span class="c1"># Network subnet</span>
+    <span class="l l-Scalar l-Scalar-Plain">prefix</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">16</span>                                        <span class="c1"># Network prefix</span>
+    <span class="l l-Scalar l-Scalar-Plain">netmask</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">255.255.0.0</span>                              <span class="c1"># Network netmask, must comply with prefix</span>
+    <span class="l l-Scalar l-Scalar-Plain">broadcast</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.255.255</span>                          <span class="c1"># Broadcast, deduced from subnet and prefix/netmask</span>
+    <span class="l l-Scalar l-Scalar-Plain">dhcp_unknown_range</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.254.1 10.10.254.254</span>     <span class="c1"># This is the range of ip where unknown nodes (i.e. not in the inventory) will be placed if asking for an ip</span>
+    <span class="l l-Scalar l-Scalar-Plain">gateway</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>                                <span class="c1"># Optional, define a gateway</span>
+    <span class="l l-Scalar l-Scalar-Plain">is_in_dhcp</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>                                  <span class="c1"># If you want this network to be in the dhcp (only apply to management networks)</span>
+    <span class="l l-Scalar l-Scalar-Plain">is_in_dns</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>                                   <span class="c1"># If you want this network to be in the dns</span>
+    <span class="l l-Scalar l-Scalar-Plain">services_ip</span><span class="p p-Indicator">:</span>                                      <span class="c1"># IPs or virtual IPs to bind to for each service. In our case, all services will be running on management1 so 10.10.0.1 for all</span>
+      <span class="l l-Scalar l-Scalar-Plain">pxe_ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
+      <span class="l l-Scalar l-Scalar-Plain">ntp_ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
+      <span class="l l-Scalar l-Scalar-Plain">dns_ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
+      <span class="l l-Scalar l-Scalar-Plain">repository_ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
+      <span class="l l-Scalar l-Scalar-Plain">authentication_ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
+      <span class="l l-Scalar l-Scalar-Plain">time_ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
+      <span class="l l-Scalar l-Scalar-Plain">log_ip</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.1</span>
 </pre></div>
 </div>
 <p>All explanations are given above.</p>
@@ -379,7 +388,7 @@ git clone https://github.com/oxedions/bluebanquise.git .
 <h4>5.2.5.5. General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h4>
 <p>File group_vars/all/general_settings/general.yml configure few main parameters:</p>
 <ul class="simple">
-<li><p>Time zone (very important)</p></li>
+<li>Time zone (very important)</li>
 </ul>
 <p>Do not bother about the other parameters.</p>
 <p>And that is all for general configuration. Finally, let’s check the default parameters.</p>
@@ -392,13 +401,13 @@ git clone https://github.com/oxedions/bluebanquise.git .
 <p>The idea here is the following: group_vars/all/all_equipment/ folder contains all the default parameters for all nodes. Here authentication, and equipment_profile. You have to tune these parameters to match your exact “global” need, and then tune dedicated parameters for each equipment group.</p>
 <div class="section" id="equipment-profile">
 <h4>5.2.6.1. Equipment profile<a class="headerlink" href="#equipment-profile" title="Permalink to this headline">¶</a></h4>
-<p>For example, open file /etc/ansible/inventory/group_vars/all/all_equipment/equipment_profile.yml, and check access_control variable. It is set to true:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">equipment_profile</span><span class="p">:</span>
-  <span class="nt">access_control</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<p>For example, open file /etc/bluebanquise/inventory/group_vars/all/all_equipment/equipment_profile.yml, and check access_control variable. It is set to true:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">equipment_profile</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">access_control</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 <p>Ok, but so all nodes will get this value. Let’s check computes nodes, that are in equipment_typeC group. Let’s check c001:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@<span class="o">]</span><span class="c1"># ansible-inventory --host c001 --yaml | grep access_control</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>root@<span class="o">]</span><span class="c1"># ansible-inventory --host c001 --yaml | grep access_control</span>
   access_control: <span class="nb">true</span>
 <span class="o">[</span>root@<span class="o">]</span><span class="c1">#</span>
 </pre></div>
@@ -406,7 +415,7 @@ git clone https://github.com/oxedions/bluebanquise.git .
 <p>Not good. We need to change that.</p>
 <p>Open file group_vars/equipment_typeC/equipment_profile.yml and set access_control to false (line is just commented, uncomment it).</p>
 <p>Now check again:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@<span class="o">]</span><span class="c1"># ansible-inventory --host c001 --yaml | grep access_control</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>root@<span class="o">]</span><span class="c1"># ansible-inventory --host c001 --yaml | grep access_control</span>
   access_control: <span class="nb">false</span>
 <span class="o">[</span>root@<span class="o">]</span><span class="c1">#</span>
 </pre></div>
