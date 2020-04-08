@@ -67,7 +67,7 @@ if [ ! -f $working_directory/sources/bluebanquise/README.md ]; then
 fi
 git pull
 
-if false; then
+#if false; then
 
 cd $working_directory/sources/bluebanquise/packages/
 if [ ! -f $working_directory/sources/nyancat-1.5.2.tar.gz ]; then
@@ -118,7 +118,7 @@ mkdir $working_directory/build/munge
 cd $working_directory/build/munge
 cp $working_directory/sources/munge-0.5.13.tar.xz .
 rpmbuild -ta munge-0.5.13.tar.xz
-if [ $distribution_version -eq 7 ]; then
+if [ $distribution_version -eq 8 ]; then
 dnf install /root/rpmbuild/RPMS/x86_64/munge* -y
 fi
 if [ $distribution_version -eq 7 ]; then
@@ -155,7 +155,7 @@ rm -f atftp-0.7.2/redhat/atftp.spec
 tar cvzf atftp.tar.gz atftp-0.7.2
 rpmbuild -ta atftp.tar.gz
 
-fi
+#fi
 
 # iPXE
 mkdir $working_directory/sources/ipxe/
