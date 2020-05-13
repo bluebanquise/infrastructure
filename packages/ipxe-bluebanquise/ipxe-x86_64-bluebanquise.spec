@@ -21,7 +21,7 @@
 Name:     ipxe-x86_64-bluebanquise
 Summary:  ipxe-x86_64-bluebanquise
 Release:  1%{dist}
-Version:  1.1.0
+Version:  XXX
 License:  MIT and GPL
 Group:    System Environment/Base
 Source:   https://github.com/oxedions/bluebanquise/ipxe-x86_64-bluebanquise.tar.gz
@@ -48,7 +48,7 @@ Description:
 
 %install
 
-working_directory=/root/bbbuilder
+working_directory=XXX
 
 # x86_64
 mkdir -p $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/x86_64
