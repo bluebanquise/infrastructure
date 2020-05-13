@@ -23,6 +23,7 @@ distribution=$(grep ^NAME /etc/os-release | awk -F '"' '{print $2}')
 distribution_version=$(grep ^VERSION_ID /etc/os-release | awk -F '"' '{print $2}')
 distribution_architecture=$(uname --m)
 echo " Found $distribution $distribution_version $distribution_architecture"
+
 working_directory=/root/bbbuilder
 echo " Working directory: $working_directory"
 mkdir -p $working_directory
@@ -31,7 +32,7 @@ mkdir -p $working_directory
 ipxe_bluebanquise_version=1.1.0
 
 # Number of cores
-nb_cores=1
+nb_cores=4
 
 set -x
 echo "Cleaning"
@@ -40,23 +41,28 @@ mkdir -p $working_directory/build
 mkdir $working_directory/sources
 
 echo " Installing needed packages... may take some time."
-if [ $distribution_version -eq 8 ]; then
-  if [ $distribution_architecture == 'x86_64' ]; then
-    dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel -y
-    alternatives --set python /usr/bin/python3
+if [ "$distribution" = 'openSUSE Leap' ]; then
+  if [ "$distribution_version" = "15.1" ]; then
+    zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb
   fi
-  if [ $distribution_architecture == 'aarch64' ]; then
-    dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel -y
-    alternatives --set python /usr/bin/python3
+else
+  if [ $distribution_version -eq 8 ]; then
+    if [ $distribution_architecture == 'x86_64' ]; then
+      dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel -y
+      alternatives --set python /usr/bin/python3
+    fi
+    if [ $distribution_architecture == 'aarch64' ]; then
+      dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel -y
+      alternatives --set python /usr/bin/python3
+    fi
   fi
-fi
-
-if [ $distribution_version -eq 7 ]; then
-  if [ $distribution_architecture == 'x86_64' ]; then
-    yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel -y
-  fi
-  if [ $distribution_architecture == 'aarch64' ]; then
-    yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel -y
+  if [ $distribution_version -eq 7 ]; then
+    if [ $distribution_architecture == 'x86_64' ]; then
+      yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel -y
+    fi
+    if [ $distribution_architecture == 'aarch64' ]; then
+      yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel -y
+    fi
   fi
 fi
 
@@ -67,7 +73,7 @@ if [ ! -f $working_directory/sources/bluebanquise/README.md ]; then
 fi
 git pull
 
-#if false; then
+if false; then
 
 cd $working_directory/sources/bluebanquise/packages/
 if [ ! -f $working_directory/sources/nyancat-1.5.2.tar.gz ]; then
@@ -155,7 +161,7 @@ rm -f atftp-0.7.2/redhat/atftp.spec
 tar cvzf atftp.tar.gz atftp-0.7.2
 rpmbuild -ta atftp.tar.gz
 
-#fi
+fi
 
 # iPXE
 mkdir $working_directory/sources/ipxe/

@@ -1,7 +1,27 @@
+# Leap 15.0:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150000
+%define dist .osl15.0
+%endif
+
+# Leap 15.1:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150100
+%define dist .osl15.1
+%endif
+
+# Leap 15.2:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150200
+%define dist .osl15.2
+%endif
+
+# Leap 15.3:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150300
+%define dist .osl15.3
+%endif
+
 Name:     ipxe-x86_64-bluebanquise
 Summary:  ipxe-x86_64-bluebanquise
 Release:  1%{dist}
-Version:  XXX
+Version:  1.1.0
 License:  MIT and GPL
 Group:    System Environment/Base
 Source:   https://github.com/oxedions/bluebanquise/ipxe-x86_64-bluebanquise.tar.gz
@@ -28,7 +48,7 @@ Description:
 
 %install
 
-working_directory=XXX
+working_directory=/root/bbbuilder
 
 # x86_64
 mkdir -p $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/x86_64
