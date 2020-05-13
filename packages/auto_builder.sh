@@ -32,7 +32,7 @@ mkdir -p $working_directory
 ipxe_bluebanquise_version=1.1.0
 
 # Number of cores
-nb_cores=4
+nb_cores=14
 
 set -x
 echo "Cleaning"
@@ -69,7 +69,7 @@ fi
 mkdir $working_directory/sources/bluebanquise
 cd $working_directory/sources/bluebanquise
 if [ ! -f $working_directory/sources/bluebanquise/README.md ]; then
-  git clone https://github.com/oxedions/bluebanquise-infrastructure.git .
+  git clone https://github.com/bluebanquise/bluebanquise-infrastructure.git .
 fi
 git pull
 
