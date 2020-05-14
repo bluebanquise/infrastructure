@@ -1,3 +1,23 @@
+# Leap 15.0:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150000
+%define dist .osl15.0
+%endif
+
+# Leap 15.1:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150100
+%define dist .osl15.1
+%endif
+
+# Leap 15.2:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150200
+%define dist .osl15.2
+%endif
+
+# Leap 15.3:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150300
+%define dist .osl15.3
+%endif
+
 Name:          nyancat
 Summary:       nyancat
 Version:       1.5.2
