@@ -43,7 +43,7 @@ mkdir $working_directory/sources
 echo " Installing needed packages... may take some time."
 if [ "$distribution" = 'openSUSE Leap' ]; then
   if [ "$distribution_version" = "15.1" ]; then
-    zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb
+    zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
   fi
 else
   if [ $distribution_version -eq 8 ]; then
@@ -89,14 +89,14 @@ tar cvzf nyancat.tar.gz nyancat-1.5.2
 rpmbuild -ta nyancat.tar.gz
 
 if [ $distribution_architecture == 'x86_64' ]; then
-# Prometheus
-cd $working_directory/sources/bluebanquise/packages/
-tar cvzf alertmanager-0.18.0.tar.gz alertmanager-0.18.0
-rpmbuild -ta alertmanager-0.18.0.tar.gz
-tar cvzf node_exporter-0.18.1.tar.gz node_exporter-0.18.1
-rpmbuild -ta node_exporter-0.18.1.tar.gz
-tar cvzf prometheus-2.11.1.tar.gz prometheus-2.11.1
-rpmbuild -ta prometheus-2.11.1.tar.gz
+  # Prometheus
+  cd $working_directory/sources/bluebanquise/packages/
+  tar cvzf alertmanager-0.18.0.tar.gz alertmanager-0.18.0
+  rpmbuild -ta alertmanager-0.18.0.tar.gz
+  tar cvzf node_exporter-0.18.1.tar.gz node_exporter-0.18.1
+  rpmbuild -ta node_exporter-0.18.1.tar.gz
+  tar cvzf prometheus-2.11.1.tar.gz prometheus-2.11.1
+  rpmbuild -ta prometheus-2.11.1.tar.gz
 fi
 
 # Ansible CMDB
@@ -111,57 +111,78 @@ tar xvzf ansible-cmdb-1.30.tar.gz
 tar cvzf ansible-cmdb-1.30.tar.gz ansible-cmdb-1.30
 rpmbuild -ta ansible-cmdb-1.30.tar.gz
 
+fi
+
 # Slurm
-if [ ! -f $working_directory/sources/slurm-19.05.4.tar.bz2 ]; then
-  wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-19.05.4.tar.bz2
-fi
-#wget https://github.com/SchedMD/slurm/archive/slurm-18-08-8-1.tar.gz
-if [ ! -f $working_directory/sources/munge-0.5.13.tar.xz ]; then
-  wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-0.5.13/munge-0.5.13.tar.xz
-fi
+if [ "$distribution" != 'openSUSE Leap' ]; then
+  if [ ! -f $working_directory/sources/slurm-20.02.2.tar.bz2]; then
+    wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-20.02.2.tar.bz2
+  fi
 
-mkdir $working_directory/build/munge
-cd $working_directory/build/munge
-cp $working_directory/sources/munge-0.5.13.tar.xz .
-rpmbuild -ta munge-0.5.13.tar.xz
-if [ $distribution_version -eq 8 ]; then
-dnf install /root/rpmbuild/RPMS/x86_64/munge* -y
-fi
-if [ $distribution_version -eq 7 ]; then
-yum install /root/rpmbuild/RPMS/x86_64/munge* -y
-fi
+  mkdir $working_directory/build/slurm
+  cd $working_directory/build/slurm
+  cp  $working_directory/sources/slurm-20.02.2.tar.bz2 .
+  rpmbuild -ta slurm-19.05.4.tar.bz2
 
-mkdir $working_directory/build/slurm
-cd $working_directory/build/slurm
-cp  $working_directory/sources/slurm-19.05.4.tar.bz2 .
-tar xjvf slurm-19.05.4.tar.bz2
-sed -i '1s/^/%global _hardened_ldflags\ "-Wl,-z,lazy"\n/' slurm-19.05.4/slurm.spec
-sed -i '1s/^/%global _hardened_cflags\ "-Wl,-z,lazy"\n/' slurm-19.05.4/slurm.spec
-sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-19.05.4/slurm.spec
-sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-19.05.4/slurm.spec
-tar cjvf slurm-19.05.4.tar.bz2 slurm-19.05.4
+else
 
-rpmbuild -ta slurm-19.05.4.tar.bz2
+  if [ ! -f $working_directory/sources/slurm-19.05.4.tar.bz2 ]; then
+    wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-19.05.4.tar.bz2
+  fi
+  #wget https://github.com/SchedMD/slurm/archive/slurm-18-08-8-1.tar.gz
+  if [ ! -f $working_directory/sources/munge-0.5.13.tar.xz ]; then
+    wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-0.5.13/munge-0.5.13.tar.xz
+  fi
+
+  mkdir $working_directory/build/munge
+  cd $working_directory/build/munge
+  cp $working_directory/sources/munge-0.5.13.tar.xz .
+  rpmbuild -ta munge-0.5.13.tar.xz
+  if [ $distribution_version -eq 8 ]; then
+    dnf install /root/rpmbuild/RPMS/x86_64/munge* -y
+  fi
+  if [ $distribution_version -eq 7 ]; then
+    yum install /root/rpmbuild/RPMS/x86_64/munge* -y
+  fi
+
+  mkdir $working_directory/build/slurm
+  cd $working_directory/build/slurm
+  cp  $working_directory/sources/slurm-19.05.4.tar.bz2 .
+  tar xjvf slurm-19.05.4.tar.bz2
+  sed -i '1s/^/%global _hardened_ldflags\ "-Wl,-z,lazy"\n/' slurm-19.05.4/slurm.spec
+  sed -i '1s/^/%global _hardened_cflags\ "-Wl,-z,lazy"\n/' slurm-19.05.4/slurm.spec
+  sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-19.05.4/slurm.spec
+  sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-19.05.4/slurm.spec
+  tar cjvf slurm-19.05.4.tar.bz2 slurm-19.05.4
+
+  rpmbuild -ta slurm-19.05.4.tar.bz2
+
+fi
 
 # Atftp
-if [ $distribution_version -eq 7 ]; then
-ln -s /usr/bin/aclocal /usr/bin/aclocal-1.16
-ln -s /usr/bin/autoconf /usr/bin/autoconf-1.16
-ln -s /usr/bin/automake /usr/bin/automake-1.16
-fi
-mkdir -p $working_directory/build/atftp/
-if [ ! -f $working_directory/sources/atftp-0.7.2.tar.gz ]; then
-  wget -P $working_directory/sources/ https://freefr.dl.sourceforge.net/project/atftp/atftp-0.7.2.tar.gz
-fi
-cd $working_directory/build/atftp/
-cp $working_directory/sources/atftp-0.7.2.tar.gz .
-tar xvzf atftp-0.7.2.tar.gz
-/usr/bin/cp -f $working_directory/sources/bluebanquise/packages/atftp/* atftp-0.7.2/
-rm -f atftp-0.7.2/redhat/atftp.spec
-tar cvzf atftp.tar.gz atftp-0.7.2
-rpmbuild -ta atftp.tar.gz
+
+if [ "$distribution" != 'openSUSE Leap' ]; then
+
+  if [ $distribution_version -eq 7 ]; then
+  ln -s /usr/bin/aclocal /usr/bin/aclocal-1.16
+  ln -s /usr/bin/autoconf /usr/bin/autoconf-1.16
+  ln -s /usr/bin/automake /usr/bin/automake-1.16
+  fi
+  mkdir -p $working_directory/build/atftp/
+  if [ ! -f $working_directory/sources/atftp-0.7.2.tar.gz ]; then
+    wget -P $working_directory/sources/ https://freefr.dl.sourceforge.net/project/atftp/atftp-0.7.2.tar.gz
+  fi
+  cd $working_directory/build/atftp/
+  cp $working_directory/sources/atftp-0.7.2.tar.gz .
+  tar xvzf atftp-0.7.2.tar.gz
+  /usr/bin/cp -f $working_directory/sources/bluebanquise/packages/atftp/* atftp-0.7.2/
+  rm -f atftp-0.7.2/redhat/atftp.spec
+  tar cvzf atftp.tar.gz atftp-0.7.2
+  rpmbuild -ta atftp.tar.gz
 
 fi
+
+#fi
 
 # iPXE
 mkdir $working_directory/sources/ipxe/
