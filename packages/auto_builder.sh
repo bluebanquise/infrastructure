@@ -29,10 +29,10 @@ echo " Working directory: $working_directory"
 mkdir -p $working_directory
 
 # Packages versions
-ipxe_bluebanquise_version=1.1.0
+ipxe_bluebanquise_version=1.1.2
 
 # Number of cores
-nb_cores=14
+nb_cores=8
 
 set -x
 echo "Cleaning"
@@ -48,7 +48,9 @@ if [ "$distribution" = 'openSUSE Leap' ]; then
 else
   if [ $distribution_version -eq 8 ]; then
     if [ $distribution_architecture == 'x86_64' ]; then
-      dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel -y
+      dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core -y
+      dnf config-manager --set-enabled PowerTools
+      dnf install freeipmi-devel -y
       alternatives --set python /usr/bin/python3
     fi
     if [ $distribution_architecture == 'aarch64' ]; then
@@ -91,12 +93,12 @@ rpmbuild -ta nyancat.tar.gz
 if [ $distribution_architecture == 'x86_64' ]; then
   # Prometheus
   cd $working_directory/sources/bluebanquise/packages/
-  tar cvzf alertmanager-0.18.0.tar.gz alertmanager-0.18.0
-  rpmbuild -ta alertmanager-0.18.0.tar.gz
-  tar cvzf node_exporter-0.18.1.tar.gz node_exporter-0.18.1
-  rpmbuild -ta node_exporter-0.18.1.tar.gz
-  tar cvzf prometheus-2.11.1.tar.gz prometheus-2.11.1
-  rpmbuild -ta prometheus-2.11.1.tar.gz
+  tar cvzf alertmanager-0.21.0.tar.gz alertmanager-0.21.0
+  rpmbuild -ta alertmanager-0.21.0.tar.gz
+  tar cvzf node_exporter-1.0.1.tar.gz node_exporter-1.0.1
+  rpmbuild -ta node_exporter-1.0.1.tar.gz
+  tar cvzf prometheus-2.19.2.tar.gz prometheus-2.19.2
+  rpmbuild -ta prometheus-2.19.2.tar.gz
 fi
 
 # Ansible CMDB
@@ -114,30 +116,30 @@ rpmbuild -ta ansible-cmdb-1.30.tar.gz
 fi
 
 # Slurm
-if [ "$distribution" != 'openSUSE Leap' ]; then
-  if [ ! -f $working_directory/sources/slurm-20.02.2.tar.bz2]; then
-    wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-20.02.2.tar.bz2
-  fi
+#if [ "$distribution" != 'openSUSE Leap' ]; then
+#  if [ ! -f $working_directory/sources/slurm-20.02.3.tar.bz2]; then
+#    wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-20.02.3.tar.bz2
+#  fi
+#
+#  mkdir $working_directory/build/slurm
+#  cd $working_directory/build/slurm
+#  cp  $working_directory/sources/slurm-20.02.3.tar.bz2 .
+#  rpmbuild -ta slurm-20.02.3.tar.bz2
+#
+#else
 
-  mkdir $working_directory/build/slurm
-  cd $working_directory/build/slurm
-  cp  $working_directory/sources/slurm-20.02.2.tar.bz2 .
-  rpmbuild -ta slurm-19.05.4.tar.bz2
-
-else
-
-  if [ ! -f $working_directory/sources/slurm-19.05.4.tar.bz2 ]; then
-    wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-19.05.4.tar.bz2
+  if [ ! -f $working_directory/sources/slurm-19.05.7.tar.bz2 ]; then
+    wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-19.05.7.tar.bz2
   fi
   #wget https://github.com/SchedMD/slurm/archive/slurm-18-08-8-1.tar.gz
-  if [ ! -f $working_directory/sources/munge-0.5.13.tar.xz ]; then
-    wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-0.5.13/munge-0.5.13.tar.xz
+  if [ ! -f $working_directory/sources/munge-0.5.14.tar.xz ]; then
+    wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-0.5.14/munge-0.5.14.tar.xz
   fi
 
   mkdir $working_directory/build/munge
   cd $working_directory/build/munge
-  cp $working_directory/sources/munge-0.5.13.tar.xz .
-  rpmbuild -ta munge-0.5.13.tar.xz
+  cp $working_directory/sources/munge-0.5.14.tar.xz .
+  rpmbuild -ta munge-0.5.14.tar.xz
   if [ $distribution_version -eq 8 ]; then
     dnf install /root/rpmbuild/RPMS/x86_64/munge* -y
   fi
@@ -147,17 +149,17 @@ else
 
   mkdir $working_directory/build/slurm
   cd $working_directory/build/slurm
-  cp  $working_directory/sources/slurm-19.05.4.tar.bz2 .
-  tar xjvf slurm-19.05.4.tar.bz2
-  sed -i '1s/^/%global _hardened_ldflags\ "-Wl,-z,lazy"\n/' slurm-19.05.4/slurm.spec
-  sed -i '1s/^/%global _hardened_cflags\ "-Wl,-z,lazy"\n/' slurm-19.05.4/slurm.spec
-  sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-19.05.4/slurm.spec
-  sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-19.05.4/slurm.spec
-  tar cjvf slurm-19.05.4.tar.bz2 slurm-19.05.4
+  cp  $working_directory/sources/slurm-19.05.7.tar.bz2 .
+  tar xjvf slurm-19.05.7.tar.bz2
+  sed -i '1s/^/%global _hardened_ldflags\ "-Wl,-z,lazy"\n/' slurm-19.05.7/slurm.spec
+  sed -i '1s/^/%global _hardened_cflags\ "-Wl,-z,lazy"\n/' slurm-19.05.7/slurm.spec
+  sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-19.05.7/slurm.spec
+  sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-19.05.7/slurm.spec
+  tar cjvf slurm-19.05.7.tar.bz2 slurm-19.05.7
 
-  rpmbuild -ta slurm-19.05.4.tar.bz2
+  rpmbuild -ta slurm-19.05.7.tar.bz2
 
-fi
+#fi
 
 # Atftp
 
@@ -181,6 +183,33 @@ if [ "$distribution" != 'openSUSE Leap' ]; then
   rpmbuild -ta atftp.tar.gz
 
 fi
+
+# Powerman
+
+if [ ! -f $working_directory/sources/powerman-2.3.26.tar.gz ]; then
+  wget -P $working_directory/sources/ https://github.com/chaos/powerman/releases/download/2.3.26/powerman-2.3.26.tar.gz
+fi
+mkdir -p $working_directory/build/powerman
+cd $working_directory/build/powerman
+cp $working_directory/sources/powerman-2.3.26.tar.gz .
+tar xvzf powerman-2.3.26.tar.gz
+/usr/bin/cp -f $working_directory/sources/bluebanquise/packages/powerman/* powerman-2.3.26/
+rm -f powerman-2.3.26/examples/powerman_el72.spec
+tar cvzf powerman-2.3.26.tar.gz powerman-2.3.26
+rpmbuild -ta powerman-2.3.26.tar.gz
+
+# Conman
+
+if [ ! -f $working_directory/sources/conman-0.3.0.tar.xz ]; then
+  wget -P $working_directory/sources/ https://github.com/dun/conman/releases/download/conman-0.3.0/conman-0.3.0.tar.xz
+fi
+mkdir -p $working_directory/build/conman
+cd $working_directory/build/conman
+cp $working_directory/sources/conman-0.3.0.tar.xz .
+tar xJvf conman-0.3.0.tar.xz
+/usr/bin/cp -f $working_directory/sources/bluebanquise/packages/conman/* conman-0.3.0/
+tar cvJf conman-0.3.0.tar.xz conman-0.3.0
+rpmbuild -ta conman-0.3.0.tar.xz
 
 #fi
 

@@ -1,10 +1,10 @@
 Name:     prometheus
 Summary:  prometheus
 Release:  1%{?dist}
-Version:  2.11.1
+Version:  2.19.2
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/prometheus/prometheus/releases/download/v2.11.1/prometheus-2.11.1.tar.gz
+Source:   https://github.com/prometheus/prometheus/releases/download/v2.19.2/prometheus-2.19.2.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
@@ -24,15 +24,15 @@ Prometheus and related tools for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget https://github.com/prometheus/prometheus/releases/download/v2.11.1/prometheus-2.11.1.linux-amd64.tar.gz
+wget https://github.com/prometheus/prometheus/releases/download/v2.19.2/prometheus-2.19.2.linux-amd64.tar.gz
 
 # Extract
-tar xvzf prometheus-2.11.1.linux-amd64.tar.gz
+tar xvzf prometheus-2.19.2.linux-amd64.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a prometheus-2.11.1.linux-amd64/prometheus $RPM_BUILD_ROOT/usr/local/bin/
-cp -a prometheus-2.11.1.linux-amd64/promtool $RPM_BUILD_ROOT/usr/local/bin/
+cp -a prometheus-2.19.2.linux-amd64/prometheus $RPM_BUILD_ROOT/usr/local/bin/
+cp -a prometheus-2.19.2.linux-amd64/promtool $RPM_BUILD_ROOT/usr/local/bin/
 
 # Add services
 mkdir -p $RPM_BUILD_ROOT/etc/systemd/system/
