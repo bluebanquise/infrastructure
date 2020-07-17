@@ -48,7 +48,7 @@ if [ "$distribution" = 'openSUSE Leap' ]; then
 else
   if [ $distribution_version -eq 8 ]; then
     if [ $distribution_architecture == 'x86_64' ]; then
-      dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core -y
+      dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel -y
       dnf config-manager --set-enabled PowerTools
       dnf install freeipmi-devel -y
       alternatives --set python /usr/bin/python3
@@ -75,7 +75,7 @@ if [ ! -f $working_directory/sources/bluebanquise/README.md ]; then
 fi
 git pull
 
-if false; then
+#if false; then
 
 cd $working_directory/sources/bluebanquise/packages/
 if [ ! -f $working_directory/sources/nyancat-1.5.2.tar.gz ]; then
@@ -113,7 +113,7 @@ tar xvzf ansible-cmdb-1.30.tar.gz
 tar cvzf ansible-cmdb-1.30.tar.gz ansible-cmdb-1.30
 rpmbuild -ta ansible-cmdb-1.30.tar.gz
 
-fi
+#fi
 
 # Slurm
 #if [ "$distribution" != 'openSUSE Leap' ]; then
@@ -132,14 +132,14 @@ fi
     wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-19.05.7.tar.bz2
   fi
   #wget https://github.com/SchedMD/slurm/archive/slurm-18-08-8-1.tar.gz
-  if [ ! -f $working_directory/sources/munge-0.5.14.tar.xz ]; then
-    wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-0.5.14/munge-0.5.14.tar.xz
+  if [ ! -f $working_directory/sources/munge-0.5.13.tar.xz ]; then
+    wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-0.5.13/munge-0.5.13.tar.xz
   fi
 
   mkdir $working_directory/build/munge
   cd $working_directory/build/munge
-  cp $working_directory/sources/munge-0.5.14.tar.xz .
-  rpmbuild -ta munge-0.5.14.tar.xz
+  cp $working_directory/sources/munge-0.5.13.tar.xz .
+  rpmbuild -ta munge-0.5.13.tar.xz
   if [ $distribution_version -eq 8 ]; then
     dnf install /root/rpmbuild/RPMS/x86_64/munge* -y
   fi
@@ -183,6 +183,8 @@ if [ "$distribution" != 'openSUSE Leap' ]; then
   rpmbuild -ta atftp.tar.gz
 
 fi
+
+#fi
 
 # Powerman
 
