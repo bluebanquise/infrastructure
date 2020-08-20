@@ -99,6 +99,12 @@ if [ $distribution_architecture == 'x86_64' ]; then
   rpmbuild -ta node_exporter-1.0.1.tar.gz
   tar cvzf prometheus-2.19.2.tar.gz prometheus-2.19.2
   rpmbuild -ta prometheus-2.19.2.tar.gz
+  tar cvzf ipmi_exporter-v1.3.0.linux-amd64.tar.gz ipmi_exporter-1.3.0
+  rpmbuild -ta ipmi_exporter-v1.3.0.linux-amd64.tar.gz
+  tar cvzf snmp_exporter-0.18.0.linux-amd64.tar.gz snmp_exporter-0.18.0
+  rpmbuild -ta snmp_exporter-0.18.0.linux-amd64.tar.gz
+  tar cvzf karma-linux-amd64.tar.gz karma-0.68
+  rpmbuild -ta karma-linux-amd64.tar.gz
 fi
 
 # Ansible CMDB

@@ -1,0 +1,14 @@
+[Unit]
+Description=karma
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=karma
+Group=karma
+Type=simple
+WorkingDirectory=/etc/karma/
+ExecStart=/usr/local/bin/karma --config.file=/etc/karma/karma.yml
+
+[Install]
+WantedBy=multi-user.target
