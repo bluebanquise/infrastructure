@@ -1,10 +1,10 @@
 Name:     snmp_exporter
 Summary:  snmp_exporter
 Release:  1%{?dist}
-Version:  0.18.0
+Version:  %{_software_version}
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/prometheus/snmp_exporter/releases/download/v0.18.0/snmp_exporter-0.18.0.linux-amd64.tar.gz
+Source:   https://github.com/prometheus/snmp_exporter/releases/download/v%{_software_version}/snmp_exporter.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
@@ -24,14 +24,14 @@ snmp_exporter for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget https://github.com/prometheus/snmp_exporter/releases/download/v0.18.0/snmp_exporter-0.18.0.linux-amd64.tar.gz
+wget https://github.com/prometheus/snmp_exporter/releases/download/v%{_software_version}/snmp_exporter-%{_software_version}.linux-amd64.tar.gz
 
 # Extract
-tar xvzf snmp_exporter-0.18.0.linux-amd64.tar.gz
+tar xvzf snmp_exporter-%{_software_version}.linux-amd64.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a snmp_exporter-0.18.0.linux-amd64/snmp_exporter $RPM_BUILD_ROOT/usr/local/bin/
+cp -a snmp_exporter-%{_software_version}.linux-amd64/snmp_exporter $RPM_BUILD_ROOT/usr/local/bin/
 
 # Add services
 mkdir -p $RPM_BUILD_ROOT/etc/systemd/system/
