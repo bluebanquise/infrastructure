@@ -4,7 +4,7 @@ Release:  1%{?dist}
 Version:  %{_software_version}
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma.tar.gz
+Source:   https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma-linux-amd64.tar.gz
 URL:      https://github.com/prymitive
 Packager: Oxedions <oxedions@gmail.com>
 

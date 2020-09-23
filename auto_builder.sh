@@ -40,9 +40,9 @@ echo " Creating source directory..."
 mkdir -p $working_directory/sources/
 
 echo " Sourcing parameters."
-source parameters.sh
+source parameters.conf
 echo " Sourcing versions."
-source versions.sh
+source versions.conf
 
 while [ true ]
 do
@@ -139,8 +139,8 @@ case $value in
 
             cp -a $root_directory/packages/karma $working_directory/build/prometheus/karma
             mv karma karma-$karma_version
-            tar cvzf karma.tar.gz karma-$karma_version
-            rpmbuild -ta karma.tar.gz --define "_software_version $karma_version"
+            tar cvzf karma-linux-amd64.tar.gz karma-$karma_version
+            rpmbuild -ta karma-linux-amd64.tar.gz --define "_software_version $karma_version"
 
         fi
         set +x
