@@ -53,7 +53,14 @@ echo
 echo " 0 - Install needed requirements to build packages"
 echo " Build packages:"
 echo "     1 - Nyancat"
-echo " 2 - Exit."
+echo "     2 - Prometheus and related tools"
+echo "     3 - AnsibleCMDB"
+echo "     4 - Slurm and Munge"
+echo "     5 - Atftp"
+echo "     6 - Powerman"
+echo "     7 - Conman"
+echo "     8 - iPXE roms"
+echo " 9 - Exit."
 
 read value
 case $value in
@@ -362,7 +369,11 @@ case $value in
         #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version/ipxe-x86_64-bluebanquise.spec
         sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version/ipxe-x86_64-bluebanquise.spec
         tar cvzf ipxe-x86_64-bluebanquise.tar.gz ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version
-        rpmbuild -ta ipxe-x86_64-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release $ipxe_bluebanquise_release"
+#        if [ -z "$ipxe_bluebanquise_version" ]
+#          rpmbuild -ta ipxe-x86_64-bluebanquise.tar.gz --target=noarch --define "_software_version 1" --define "_software_release $ipxe_bluebanquise_release"
+#        else
+          rpmbuild -ta ipxe-x86_64-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release"
+#        fi
 
         fi
 
