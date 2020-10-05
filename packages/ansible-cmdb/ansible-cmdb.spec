@@ -4,7 +4,7 @@ Release:  1%{?dist}
 Version:  %{_software_version}
 License:  GPLv3
 Group:    System Environment/Base
-Source:   https://github.com/fboender/ansible-cmdb/releases/download/%{_software_version}/ansible-cmdb.tar.gz
+Source:   https://github.com/fboender/ansible-cmdb/releases/download/%{_software_version}/ansible-cmdb-%{_software_version}.tar.gz
 URL:      https://github.com/fboender/ansible-cmdb/
 Packager: Oxedions <oxedions@gmail.com>
 %define __spec_install_post %{nil}

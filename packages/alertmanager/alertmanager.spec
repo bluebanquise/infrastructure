@@ -4,7 +4,7 @@ Release:  1%{?dist}
 Version:  %{_software_version}
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/prometheus/alertmanager/releases/download/v%{_software_version}/alertmanager.tar.gz
+Source:   https://github.com/prometheus/alertmanager/releases/download/v%{_software_version}/alertmanager-%{_software_version}.linux-amd64.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
