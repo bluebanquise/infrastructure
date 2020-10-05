@@ -13,8 +13,8 @@
 
 Name:     ipxe-x86_64-bluebanquise
 Summary:  ipxe-x86_64-bluebanquise
-Release:  1%{dist}
-Version:  XXX
+Release:  %{_software_release}%{dist}
+Version:  %{_software_version}
 License:  MIT and GPL
 Group:    System Environment/Base
 Source:   https://github.com/oxedions/bluebanquise/ipxe-x86_64-bluebanquise.tar.gz

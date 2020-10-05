@@ -1,30 +1,8 @@
-#!ipxe
-
-echo . . . . . . . . . . . . . :::!~!!!!!:. . . . . . . . .
-echo . . . . . . . . . . . .xUHWH!!.!!?M88WHX:. . . . . . .
-echo . . . . . . . . . . .X*#M@$!!. !X!M$$$$$$WWx:. . . . .
-echo . . . . . . . . . .:!!!!!!?H!.:!$!$$$$$$$$$$8X:. . . .
-echo . . . . . . . . . !!~. ~:~!!.:~!$!#$$$$$$$$$$8X:. . ..
-echo . . . . . . . . .:!~::!H!<. .~.U$X!?R$$$$$$$$MM!. . ..
-echo . . . . . . . . .~!~!!!!~~. :XW$$$U!!?$$$$$$RMM!. . ..
-echo . . . . . . . . . .!:~~~. :!M"T#$$$$WX??#MRRMMM!. . ..
-echo . . . . . . . . . .~?WuxiW*`. .`"#$$$$8!!!!??!!!. . ..
-echo . . . . . . . . .:X-.M$$$$. . . .`"T#$T~!8$WUXU~. . ..
-echo . . . . . . . . :%`. ~#$$$m:. . . . ~!~.?$$$$$$. . . .
-echo . . . . . . . :!`.-. .~T$$$$8xx. . xWW-.~""##*". . . .
-echo . . . . . . -~~:<`.!. . ~?T#$$@@W@*?$$. . . /`. . . ..
-echo . . W$@@M!!!. !~~.!!. . . :XUW$W!~.`"~:. . :. . . . ..
-echo . . M"~~`.:x%`!!. !H:. .!WM$$$$Ti.:. !WUn+!`. . . . ..
-echo . . :::~:!!`:X~. :.?H.!u."$$$B$$$!W:U!T$$M~. . . . . .
-echo . . .~~. .:X@!.-~. .?@WTWo("*$$$W$TH$!.`. . . . . . ..
-echo . . Wi.~!X$?!-~. . :.?$$$B$Wu("**$RM!. . . . . . . . .
-echo . . $R@i.~~.!. . .:. .~$$$$$B$$en:``. . . . . . . . ..
-echo . . ?MXT@Wx.~. . :. . .~"##*$$$$M~. . . . . . . . . ..
 echo
-echo +----------------------------------------------------+
-echo | . . . . . . . iPXE embed - standard. . . . . . . . |
-echo | . . . . . BlueBanquise - Benoit Leveugle . . . . . |
-echo +----------------------------------------------------+
+echo . . . +----------------------------------------------------+ . . .
+echo . . . | . . . . . . . iPXE embed - standard. . . . . . . . | . . .
+echo . . . | . . . . . BlueBanquise - Benoit Leveugle . . . . . | . . .
+echo . . . +----------------------------------------------------+ . . .
 
 set user-class BlueBanquise
 
@@ -49,9 +27,19 @@ echo | user-class:   ${user-class:string}
 echo |
 echo +----------------------------------------------------+
 echo
+
 echo (waiting 5s and chain...)
 sleep 5
 
+echo Trying to chain... 1/3
+chain http://${next-server}/preboot_execution_environment/convergence.ipxe || goto retry1 
+
+:retry1
+sleep 2
+echo Trying to chain... 2/3
+chain http://${next-server}/preboot_execution_environment/convergence.ipxe || goto retry2
+
+:retry2
+sleep 2
+echo Trying to chain... 3/3
 chain http://${next-server}/preboot_execution_environment/convergence.ipxe || shell
-
-

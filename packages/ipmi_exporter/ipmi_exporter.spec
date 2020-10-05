@@ -1,10 +1,10 @@
 Name:     ipmi_exporter
 Summary:  ipmi_exporter
 Release:  1%{?dist}
-Version:  1.3.0
+Version:  %{_software_version}
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/soundcloud/ipmi_exporter/releases/download/v1.3.0/ipmi_exporter-v1.3.0.linux-amd64.tar.gz
+Source:   https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-v%{_software_version}.linux-amd64.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
@@ -24,14 +24,14 @@ ipmi_exporter for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget https://github.com/soundcloud/ipmi_exporter/releases/download/v1.3.0/ipmi_exporter-v1.3.0.linux-amd64.tar.gz
+wget https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-v%{_software_version}.linux-amd64.tar.gz
 
 # Extract
-tar xvzf ipmi_exporter-v1.3.0.linux-amd64.tar.gz
+tar xvzf ipmi_exporter-v%{_software_version}.linux-amd64.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a ipmi_exporter-v1.3.0.linux-amd64/ipmi_exporter $RPM_BUILD_ROOT/usr/local/bin/
+cp -a ipmi_exporter-v%{_software_version}.linux-amd64/ipmi_exporter $RPM_BUILD_ROOT/usr/local/bin/
 
 # Add services
 mkdir -p $RPM_BUILD_ROOT/etc/systemd/system/

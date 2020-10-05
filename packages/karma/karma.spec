@@ -1,10 +1,10 @@
 Name:     karma
 Summary:  karma
 Release:  1%{?dist}
-Version:  0.68
+Version:  %{_software_version}
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/prymitive/karma/releases/download/v0.68/karma-linux-amd64.tar.gz
+Source:   https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma-linux-amd64.tar.gz
 URL:      https://github.com/prymitive
 Packager: Oxedions <oxedions@gmail.com>
 
@@ -24,7 +24,7 @@ karma for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget https://github.com/prymitive/karma/releases/download/v0.68/karma-linux-amd64.tar.gz
+wget https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma-linux-amd64.tar.gz
 
 # Extract
 tar xvzf karma-linux-amd64.tar.gz

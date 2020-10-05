@@ -1,10 +1,10 @@
 Name:     alertmanager
 Summary:  alertmanager
 Release:  1%{?dist}
-Version:  0.21.0
+Version:  %{_software_version}
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/prometheus/alertmanager/releases/download/v0.21.0/alertmanager-0.21.0.tar.gz
+Source:   https://github.com/prometheus/alertmanager/releases/download/v%{_software_version}/alertmanager-%{_software_version}.linux-amd64.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
@@ -24,15 +24,15 @@ Alertmanager and related tools for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget https://github.com/prometheus/alertmanager/releases/download/v0.21.0/alertmanager-0.21.0.linux-amd64.tar.gz
+wget https://github.com/prometheus/alertmanager/releases/download/v%{_software_version}/alertmanager-%{_software_version}.linux-amd64.tar.gz
 
 # Extract
-tar xvzf alertmanager-0.21.0.linux-amd64.tar.gz
+tar xvzf alertmanager-%{_software_version}.linux-amd64.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a alertmanager-0.21.0.linux-amd64/alertmanager $RPM_BUILD_ROOT/usr/local/bin/
-cp -a alertmanager-0.21.0.linux-amd64/amtool $RPM_BUILD_ROOT/usr/local/bin/
+cp -a alertmanager-%{_software_version}.linux-amd64/alertmanager $RPM_BUILD_ROOT/usr/local/bin/
+cp -a alertmanager-%{_software_version}.linux-amd64/amtool $RPM_BUILD_ROOT/usr/local/bin/
 
 # Add services
 mkdir -p $RPM_BUILD_ROOT/etc/systemd/system/

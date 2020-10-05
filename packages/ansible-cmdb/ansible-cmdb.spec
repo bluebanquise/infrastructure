@@ -1,10 +1,10 @@
 Name:     ansible-cmdb
 Summary:  ansible-cmdb
 Release:  1%{?dist}
-Version:  1.30
+Version:  %{_software_version}
 License:  GPLv3
 Group:    System Environment/Base
-Source:   https://github.com/fboender/ansible-cmdb/releases/download/1.30/ansible-cmdb-1.30.tar.gz
+Source:   https://github.com/fboender/ansible-cmdb/releases/download/%{_software_version}/ansible-cmdb-%{_software_version}.tar.gz
 URL:      https://github.com/fboender/ansible-cmdb/
 Packager: Oxedions <oxedions@gmail.com>
 %define __spec_install_post %{nil}
