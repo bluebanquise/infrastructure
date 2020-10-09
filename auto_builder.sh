@@ -60,7 +60,8 @@ echo "     5 - Atftp"
 echo "     6 - Powerman"
 echo "     7 - Conman"
 echo "     8 - iPXE roms"
-echo " 9 - Exit."
+echo "     10 - bluebanquise"
+echo " 11 - Exit."
 
 read value
 case $value in
@@ -445,7 +446,36 @@ case $value in
        set +x
     ;;
 
-    9) ######################################################################################
+
+    10) ######################################################################################
+
+        set -x
+
+        rm -Rf $working_directory/build/bluebanquise
+        mkdir -p $working_directory/build/bluebanquise
+        echo "Tag to checkout will be asked."
+        echo "Tag will be used as version for rpm."
+        cd $working_directory/build/bluebanquise
+        mkdir bluebanquise
+        cd bluebanquise
+        git clone https://github.com/bluebanquise/bluebanquise.git .
+        git fetch --all --tags
+        echo
+        echo "Available tags:"
+        git tag
+        echo
+        read -p "Please enter tag to be used: " bb_tag
+        git checkout tags/$bb_tag -b build
+        cd ../
+        mv bluebanquise bluebanquise-$bb_tag
+        tar cvzf bluebanquise-$bb_tag.tar.gz bluebanquise-$bb_tag
+        rpmbuild -ta bluebanquise-$bb_tag.tar.gz --define "version $bb_tag"
+
+        set +x
+    ;;
+
+
+    11) ######################################################################################
         echo "  Exiting."
         exit
     ;;
