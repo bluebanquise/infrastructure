@@ -61,7 +61,7 @@ echo "     6 - Powerman"
 echo "     7 - Conman"
 echo "     8 - iPXE roms"
 echo "     11 - Documentation"
-echo " 9 - Exit."
+echo " Q - Quit."
 
 read value
 case $value in
@@ -465,7 +465,7 @@ case $value in
     ;;
 
 
-    9) ######################################################################################
+    Q) ######################################################################################
         echo "  Exiting."
         exit
     ;;
