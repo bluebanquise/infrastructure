@@ -61,7 +61,7 @@ echo "     6 - Powerman"
 echo "     7 - Conman"
 echo "     8 - iPXE roms"
 echo "     9 - fbtftp"
-echo " 10 - Exit."
+echo " Q - Quit."
 
 read value
 case $value in
@@ -474,7 +474,7 @@ case $value in
        set +x
     ;;
 
-    10) ######################################################################################
+    Q) ######################################################################################
         echo "  Exiting."
         exit
     ;;
