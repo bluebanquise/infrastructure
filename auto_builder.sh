@@ -449,8 +449,7 @@ case $value in
     11) #####################################################################################
        set -x
 
-        pip3 install sphinx
-        pip3 install sphinx_rtd_theme
+        pip3 install sphinx sphinx_rtd_theme
 
         #rm -Rf $working_directory/build/documentation
         mkdir -p $working_directory/build/documentation
