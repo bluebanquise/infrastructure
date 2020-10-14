@@ -61,6 +61,7 @@ echo "     6 - Powerman"
 echo "     7 - Conman"
 echo "     8 - iPXE roms"
 echo "     10 - bluebanquise"
+echo "     11 - Documentation"
 echo " Q - Quit."
 
 read value
@@ -446,7 +447,6 @@ case $value in
        set +x
     ;;
 
-
     10) ######################################################################################
 
         set -x
@@ -472,7 +472,23 @@ case $value in
         rpmbuild -ta bluebanquise-$bb_tag.tar.gz --define "version $bb_tag"
 
         set +x
-    ;;
+        
+    11) #####################################################################################
+        set -x
+
+        pip3 install sphinx sphinx_rtd_theme
+
+        #rm -Rf $working_directory/build/documentation
+        mkdir -p $working_directory/build/documentation
+        cd $working_directory/build/documentation
+        git clone https://github.com/bluebanquise/bluebanquise.git .
+        cd resources/documentation/
+        make html
+        tar cvJf documentation.tar.xz _build/html
+        cp documentation.tar.xz $working_directory/../
+
+        set +x
+        ;;
 
 
     Q) ######################################################################################
