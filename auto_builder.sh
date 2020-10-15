@@ -61,6 +61,8 @@ echo "     6 - Powerman"
 echo "     7 - Conman"
 echo "     8 - iPXE roms"
 echo "     9 - fbtftp"
+echo "     10 - bluebanquise"
+echo "     11 - Documentation"
 echo " Q - Quit."
 
 read value
@@ -473,6 +475,49 @@ case $value in
        rpmbuild -ta fbtftp_server-$fbtftp_server_version.tar.gz --define "_software_version $fbtftp_server_version"
        set +x
     ;;
+
+    10) ######################################################################################
+
+        set -x
+
+        rm -Rf $working_directory/build/bluebanquise
+        mkdir -p $working_directory/build/bluebanquise
+        echo "Tag to checkout will be asked."
+        echo "Tag will be used as version for rpm."
+        cd $working_directory/build/bluebanquise
+        mkdir bluebanquise
+        cd bluebanquise
+        git clone https://github.com/bluebanquise/bluebanquise.git .
+        git fetch --all --tags
+        echo
+        echo "Available tags:"
+        git tag
+        echo
+        read -p "Please enter tag to be used: " bb_tag
+        git checkout tags/$bb_tag -b build
+        cd ../
+        mv bluebanquise bluebanquise-$bb_tag
+        tar cvzf bluebanquise-$bb_tag.tar.gz bluebanquise-$bb_tag
+        rpmbuild -ta bluebanquise-$bb_tag.tar.gz --define "version $bb_tag"
+
+        set +x
+        
+    11) #####################################################################################
+        set -x
+
+        pip3 install sphinx sphinx_rtd_theme
+
+        #rm -Rf $working_directory/build/documentation
+        mkdir -p $working_directory/build/documentation
+        cd $working_directory/build/documentation
+        git clone https://github.com/bluebanquise/bluebanquise.git .
+        cd resources/documentation/
+        make html
+        tar cvJf documentation.tar.xz _build/html
+        cp documentation.tar.xz $working_directory/../
+
+        set +x
+        ;;
 
     Q) ######################################################################################
         echo "  Exiting."
