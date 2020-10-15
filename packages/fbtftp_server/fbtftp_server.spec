@@ -8,6 +8,8 @@ URL:      https://github.com/bluebanquise/
 Source:   https://bluebanquise.com/sources/fbtftp_server-%{_software_version}.tar.gz
 Packager: Benoit Leveugle <benoit.leveugle@gmail.com>
 
+Requires: fbtftp
+
 %define debug_package %{nil}
 
 %description
