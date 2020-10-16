@@ -109,7 +109,7 @@ case $value in
         cd $working_directory/build/nyancat
         cp $working_directory/sources/nyancat-1.5.2.tar.gz .
         tar xvzf nyancat-1.5.2.tar.gz
-        /usr/bin/cp -af $working_directory/sources/bluebanquise/packages/nyancat-1.5.2/* nyancat-1.5.2/
+        /usr/bin/cp -af $root_directory/packages/nyancat-1.5.2/* nyancat-1.5.2/
         tar cvzf nyancat.tar.gz nyancat-1.5.2
         rpmbuild -ta nyancat.tar.gz
         set +x
@@ -152,8 +152,8 @@ case $value in
 
             cp -a $root_directory/packages/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
             mv ipmi_exporter ipmi_exporter-$ipmi_exporter_version
-            tar cvzf ipmi_exporter-$ipmi_exporter_version.linux-amd64.tar.gz ipmi_exporter-$ipmi_exporter_version
-            rpmbuild -ta ipmi_exporter-$ipmi_exporter_version.linux-amd64.tar.gz --define "_software_version $ipmi_exporter_version"
+            tar cvzf ipmi_exporter-v$ipmi_exporter_version.linux-amd64.tar.gz ipmi_exporter-$ipmi_exporter_version
+            rpmbuild -ta ipmi_exporter-v$ipmi_exporter_version.linux-amd64.tar.gz --define "_software_version $ipmi_exporter_version"
 
             cp -a $root_directory/packages/snmp_exporter $working_directory/build/prometheus/snmp_exporter
             mv snmp_exporter snmp_exporter-$snmp_exporter_version
@@ -501,13 +501,14 @@ case $value in
         rpmbuild -ta bluebanquise-$bb_tag.tar.gz --define "version $bb_tag"
 
         set +x
+    ;;
         
     11) #####################################################################################
         set -x
 
         pip3 install sphinx sphinx_rtd_theme
 
-        #rm -Rf $working_directory/build/documentation
+        rm -Rf $working_directory/build/documentation
         mkdir -p $working_directory/build/documentation
         cd $working_directory/build/documentation
         git clone https://github.com/bluebanquise/bluebanquise.git .
