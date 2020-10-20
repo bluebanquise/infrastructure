@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="has-navbar-fixed-top"><head>
-<title>BlueBanquise - Features</title> 
+<title>BlueBanquise - Features</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -139,7 +139,7 @@ Modularity and flexibility
 
 <div class="columns is-vcentered">
   <div class="column">
-<span style="color: #108bde">Blue</span>Banquise design was made to ensure full modularity.
+<span style="color: #108bde">Blue</span>Banquise can be seen as an Ansible collection of roles, which ensure full modularity.
 <br>Even elements of the core can be replaced by others.
 <br>
 <br>
@@ -173,12 +173,11 @@ In its current state, stack can deploy on mixed Linux distributions and platform
 
 <ul>
   <li>Centos/RHEL 7.X and 8.X, with all features available.</li>
-  <li>Ubuntu 18.04, with limited features.</li>
-  <li>OpenSuse Leap 15.1, with very limited features.</li>
+  <li>OpenSuse Leap 15.1, with limited features (client only).</li>
 </ul>
-Depending of the demand, Ubuntu or OpenSuse can be fully implemented.
+Depending of the demand, Ubuntu, Debian or OpenSuse could be fully implemented.
 <br>
-Tested platform were <b>x86_64</b> for Centos/RHEL/OpenSuse Leap and <b>arm64/x86_64</b> for Ubuntu.<br>
+Tested platform were <b>x86_64</b> for Centos/RHEL/OpenSuse Leap, but stack should be able to deploy on <b>arm64</b>.<br>
 <br>
 This ability to handle multiple Linux distributions and architectures at the same time, allows to easily handle exotic hardware or customer needs.
 
@@ -201,10 +200,11 @@ The following roles are available:
 
 <ul>
   <li> <b>hosts_file</b>: generate the /etc/hosts file</li>
+  <li> <b>nic</b>: configure network interfaces for static configuration</li>
+  <li> <b>firewall</b>: configure firewall</li>
   <li> <b>dhcp_server</b>: generate dhcp server configuration</li>
   <li> <b>dns_server/dns_client</b>: generate dns server or client configuration</li>
   <li> <b>log_server/log_client</b>: generate rsyslog server or client configuration</li>
-  <li> <b>nic</b>: configure network interfaces for static configuration</li>
   <li> <b>pxe_stack</b>: deploy and generate whole PXE stack</li>
   <ul>
     <li> Tftp based on atftp (with verbosity on by default)</li>
@@ -264,21 +264,6 @@ This feature is mainly used:
   <li>When there is a need to scale to very large number of hosts.</li>
 </ul>
 <br>
-<h4>Accelerated mode</h4>
-
-Ansible is famous for its simplicity, but also for being slow, even with Mitogen.<br>
-<br>
-Accelerated mode is a POC we designed to heavily accelerate critical templates rendering. It is based on some retro engineering made on Ansible.<br>
-Accelerated mode is just a basic trick found in the inventory, that requires no Ansible modifications.<br>
-<br>
-Note that this feature is only at POC state for the time being, as it needs extended developments in roles templates. We are waiting for the stack being more "mature" to fully implement it.
-
-
-
-
-
-
-
 
           </div>
         </div>
