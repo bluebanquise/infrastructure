@@ -1,47 +1,39 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Hosts file &mdash; BlueBanquise Documentation 1.0.1 documentation</title>
+  <title>Hosts file &mdash; BlueBanquise Documentation 1.3.0 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../../',
-              VERSION:'1.0.1',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -57,7 +49,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> BlueBanquise Documentation
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> BlueBanquise Documentation
           
 
           
@@ -68,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                1.3
+              </div>
             
           
 
@@ -83,6 +79,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -96,15 +93,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../vocabulary.html">2. Vocabulary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../install_first_management.html">3. Install first management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../learn_ansible.html">4. Learn Ansible</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">5. Configure BlueBanquise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">6. Deploy BlueBanquise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">7. Roles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references.html">8. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers.html">5. Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">6. Configure BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">7. Deploy BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../multiple_icebergs.html">8. Manage multiple icebergs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitoring.html">9. Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stories.html">10. Stories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">11. Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">12. References</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -143,7 +145,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Hosts file</li>
     
@@ -172,31 +174,69 @@
 </div>
 <div class="section" id="instructions">
 <h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
-<p>This role will gather all hosts from the inventory, and add them, using all their known internal network connections ip, into <em>/etc/hosts</em> file.</p>
-<p>System administrator can reduce the scope of this gathering using <strong>hosts_file.range</strong> variable in <em>/etc/bluebanquise/inventory/group_vars/all/general_settings/general.yml</em>.
-Setting <strong>range</strong> to <em>all</em> will use all Ansible inventory hosts, while setting <strong>range</strong> to <em>iceberg</em> will reduce the gathering to the current host iceberg.</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">hosts_file</span><span class="p p-Indicator">:</span>  <span class="l l-Scalar l-Scalar-Plain">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+<p>This role will gather all hosts from the inventory, and add them, using all
+their known internal network connections ip, into <em>/etc/hosts</em> file.</p>
+<p>In case of multiple icebergs system, administrator can reduce the scope of this
+gathering using <strong>hosts_file.range</strong> variable in
+<em>group_vars/all/general_settings/general.yml</em>.
+Setting <strong>range</strong> to <em>all</em> will use all Ansible inventory hosts, while setting
+<strong>range</strong> to <em>iceberg</em> will reduce the gathering to the current host iceberg.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">hosts_file</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
   <span class="l l-Scalar l-Scalar-Plain">range</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span> <span class="c1"># can be all (all hosts) or iceberg (iceberg only)</span>
 </pre></div>
 </div>
-<p>Another feature is available in this hosts role. In case of multiple icebergs, system administrator may need to define a global network, shared by all nodes of a specific group. This is especially needed in HPC for computational nodes to communicates through an interconnect network.</p>
-<p>If using such global network, it is possible to ask this role to define <strong>direct</strong> hosts resolutions of a specific Ansible group to be not on their regular management network, but be set directly on the global network (mostly used in combinaison with slurm and mpi stacks).</p>
-<p>To do so, uncomment and edit variable <strong>global_network_settings</strong> in file <em>/etc/bluebanquise/inventory/group_vars/all/general_settings/network.yml</em>. Note that the role will ignore this variable if it is commented, and will try to use it if not commented.</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">global_network_settings</span><span class="p p-Indicator">:</span>  <span class="l l-Scalar l-Scalar-Plain">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
-  <span class="l l-Scalar l-Scalar-Plain">global_network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">interconnect-1</span>  <span class="c1"># Define the global network, must exist in networks files</span>
-  <span class="l l-Scalar l-Scalar-Plain">global_network_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mg_computes</span>  <span class="c1"># Define which group of nodes should use global_network direct resolution</span>
-</pre></div>
+<p>External hosts defined in <em>group_vars/all/general_settings/external.yml</em>
+at variable <strong>external_hosts</strong> will be automatically added in the <em>/etc/hosts</em>
+file.</p>
 </div>
-<p>Last point, external hosts defined in <em>group_vars/all/general_settings/external.yml</em> at variable <strong>external_hosts</strong> will be automatically added in the <em>/etc/hosts</em> file.</p>
+<div class="section" id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<p>Mandatory inventory vars:</p>
+<p><strong>hostvars[host]</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>network_interfaces</dt><dd><ul>
+<li><p>.ip4</p></li>
+<li><p>.mac</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Optional inventory vars:</p>
+<p><strong>hostvars[hosts]</strong></p>
+<ul class="simple">
+<li><p>alias</p></li>
+<li><p>global_alias</p></li>
+<li><dl class="simple">
+<dt>bmc</dt><dd><ul>
+<li><p>.ip4</p></li>
+<li><p>.mac</p></li>
+<li><p>.name</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>Files generated:</p>
+<ul class="simple">
+<li><p>/etc/hosts</p></li>
+</ul>
 </div>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>1.0.4: Rewrite whole macro, add BMC alias. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
-<li>1.0.3: Accelerated mode. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
-<li>1.0.2: Added role version. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
-<li>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
-<li>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
+<li><p>1.0.7: Clean code. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.6: Update to new network_interfaces syntax. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.5: Clean. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.4: Rewrite whole macro, add BMC alias. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.3: Accelerated mode. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.2: Added role version. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
 </ul>
 </div>
 </div>
@@ -212,11 +252,19 @@ Setting <strong>range</strong> to <em>all</em> will use all Ansible inventory ho
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, Benoît Leveugle, Johnny Keats
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -227,7 +275,6 @@ Setting <strong>range</strong> to <em>all</em> will use all Ansible inventory ho
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

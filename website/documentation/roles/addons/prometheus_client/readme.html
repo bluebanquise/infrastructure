@@ -1,47 +1,39 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Prometheus client &mdash; BlueBanquise Documentation 1.0.1 documentation</title>
+  <title>Prometheus client &mdash; BlueBanquise Documentation 1.3.0 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../../',
-              VERSION:'1.0.1',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -57,7 +49,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> BlueBanquise Documentation
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> BlueBanquise Documentation
           
 
           
@@ -68,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                1.3
+              </div>
             
           
 
@@ -83,6 +79,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -96,15 +93,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../vocabulary.html">2. Vocabulary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../install_first_management.html">3. Install first management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../learn_ansible.html">4. Learn Ansible</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">5. Configure BlueBanquise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">6. Deploy BlueBanquise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">7. Roles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references.html">8. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers.html">5. Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">6. Configure BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">7. Deploy BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../multiple_icebergs.html">8. Manage multiple icebergs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitoring.html">9. Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stories.html">10. Stories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">11. Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">12. References</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -143,7 +145,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Prometheus client</li>
     
@@ -168,11 +170,56 @@
 <h1>Prometheus client<a class="headerlink" href="#prometheus-client" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>This role deploy node_exporter for Prometheus queries.</p>
+<p>This role deploy exporters on clients for Prometheus queries.</p>
 </div>
 <div class="section" id="instructions">
 <h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
-<p>Node_exporter is available at <a class="reference external" href="http://localhost:9100">http://localhost:9100</a></p>
+<p>Each role has its own http port. For example, Node_exporter is available at
+<a class="reference external" href="http://localhost:9100">http://localhost:9100</a> .</p>
+<p>In order for this role to install and start exporters on the host, a
+configuration is required in the Ansible inventory.</p>
+<p>A file is needed for each equipment_profile group that should be monitored.</p>
+<p>For example, to have equipment_typeC nodes installing and testing the
+node_exporter, you will need to create file
+inventory/group_vars/equipment_typeC/monitoring.yml with the following content:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">monitoring</span><span class="p">:</span>
+  <span class="nt">exporters</span><span class="p">:</span>
+    <span class="nt">node_exporter</span><span class="p">:</span>
+      <span class="nt">package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node_exporter</span>
+      <span class="nt">service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node_exporter</span>
+      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9100</span>
+</pre></div>
+</div>
+<p>And for example, on your management nodes, you may wish to have more exporters
+setup to monitor much more things. This would be here, assuming managements
+nodes are from equipment group equipment_typeM, a file
+inventory/group_vars/equipment_typeM/monitoring.yml with the following content:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">monitoring</span><span class="p">:</span>
+  <span class="nt">exporters</span><span class="p">:</span>
+    <span class="nt">node_exporter</span><span class="p">:</span>
+      <span class="nt">package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node_exporter</span>
+      <span class="nt">service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node_exporter</span>
+      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9100</span>
+    <span class="nt">ha_cluster_exporter</span><span class="p">:</span>
+      <span class="nt">package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ha_cluster_exporter</span>
+      <span class="nt">service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ha_cluster_exporter</span>
+      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9664</span>
+    <span class="nt">slurm_exporter</span><span class="p">:</span>
+      <span class="nt">package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">slurm_exporter</span>
+      <span class="nt">service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">slurm_exporter</span>
+      <span class="nt">scrape_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5m</span>
+      <span class="nt">scrape_timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5m</span>
+      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9817</span>
+</pre></div>
+</div>
+<p>You can see here that it is possible to customize the scrape_interval and
+scrape_timeout.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the ipmi_exporter and snmp_exporter do not need to be included here
+as their behavior are different (they act as relay for other targets) and so are
+directly deployed by the prometheus_server role.</p>
+</div>
 </div>
 <div class="section" id="to-be-done">
 <h2>To be done<a class="headerlink" href="#to-be-done" title="Permalink to this headline">¶</a></h2>
@@ -181,8 +228,8 @@
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>1.0.0: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
-<li>1.0.0: Role creation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
+<li><p>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.0: Role creation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
 </ul>
 </div>
 </div>
@@ -198,11 +245,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, Benoît Leveugle, Johnny Keats
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -213,7 +268,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

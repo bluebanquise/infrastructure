@@ -1,56 +1,218 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style type="text/css">
-	@font-face {
-		font-family: 'Roboto';
-		src:  url('https://bluebanquise.com/fonts/Roboto-Regular.ttf')  format('truetype');
-	}
-	@font-face {
-		font-family: 'OpenSans-Light';
-		src:  url('https://bluebanquise.com/fonts/OpenSans-Light.ttf')  format('truetype');
-	}
-	@font-face {
-		font-family: 'OpenSans';
-		src:  url('https://bluebanquise.com/fonts/OpenSans-Regular.ttf')  format('truetype');
-	}
-</style>
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<html class="has-navbar-fixed-top"><head>
+<title>BlueBanquise - Home</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/bulma-docs.min.css">
+  <script defer src="/js/all.js"></script>
+<!-- from https://codepen.io/hunzaboy/pen/yoPKQW -->
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+  // Get all "navbar-burger" elements
+  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  // Check if there are any nav burgers
+  if ($navbarBurgers.length > 0) {
+    // Add a click event on each of them
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+        // Get the target from the "data-target" attribute
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+      });
+    });
+  }
+  });
+	</script>
+  <style>
+  .navbar-item.is-mega {
+    position: static;
+
+    .is-mega-menu-title {
+      margin-bottom: 0;
+      padding: .375rem 1rem;
+    }
+  }
+  </style>
 </head>
-<body>
+  <body class="layout-default">
 
-<!--<div class="titlecenter"><span style="color: #777777">Alg</span>oric &nbsp;&nbsp;-&nbsp;&nbsp; <span style="color: #108bde">Blue</span>Banquise</div>-->
-<ul class="top">
-  <li><a class="logo" href="index.html"><span style="color: #108bde">Blue</span>Banquise</a></li>
-  <li><a class="active" href="index.html">Home</a></li>
-  <li><a href="project.html">Project</a></li>
-  <li><a href="download.html">Download</a></li>
-  <li><a href="documentation.html">Documentation</a></li>
-  <li><a href="algoric.html">Algoric</a></li>
-  <li class="right"><a href="about_contact.html">About and contacts</a></li>
-  <li class="right"><a href="https://github.com/bluebanquise/bluebanquise"><i class="fa fa-github" style="color:white"></i></a></li>
-</ul>
+    <nav class="navbar has-shadow is-spaced is-fixed-top">
+      <div class="container">
 
-<div style="padding:2% 1%; max-width: 900px; margin: auto;">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bluebanquise.com">
+            <img src="/images/BlueBanquise_logo_large.svg" alt="BlueBanquise, an Ansible stack">
+          </a>
+          <a class="navbar-item is-hidden-desktop" href="https://github.com/bluebanquise/bluebanquise" target="_blank">
+            <span class="icon" style="color: #333;">
+              <i class="fab fa-github"></i>
+            </span>
+          </a>
+          <div class="navbar-burger burger" data-target="navMenubd-example"> 
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
 
- <h1>Home</h1>
+        <div id="navMenubd-example" class="navbar-menu">
+          <div class="navbar-start">
+            <div class="navbar-item has-dropdown is-hoverable">
+              <!-- <a class="navbar-link " href="project.html"> -->
+                <div class="navbar-link">
+                The stack
+                </div>
+              <!-- </a> -->
+              <div class="navbar-dropdown ">
+                <a class="navbar-item " href="/the_stack/the_project.html">
+                  The project
+                </a>
+                <a class="navbar-item " href="/the_stack/features.html">
+                  Features
+                </a>
+              </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <!-- <a class="navbar-link " href="https://bluebanquise.com/project.html"> -->
+                <div class="navbar-link">
+                Resources
+                </div>
+              <!-- </a> -->
+              <div class="navbar-dropdown ">
+                <a class="navbar-item " href="/resources/documentation.html">
+                  Documentation
+                </a>
+                <a class="navbar-item " href="/resources/download.html">
+                  Download
+                </a>
+              </div>
+            </div>
+            <a class="navbar-item " href="/about.html">
+              About
+            </a>
+            <div class="navbar-end">
+              <a class="navbar-item is-hidden-desktop-only" href="https://github.com/bluebanquise/bluebanquise" target="_blank">
+                <span class="icon" style="color: #333;">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-    <div style="text-align:center;">
-    <img src="pictures/BlueBanquise_logo.svg" alt="BlueBanquise Logo" height="300px"/>
-    </div>
-    <p><span style="color: #108bde">Blue</span>Banquise is an opensource project, based on the wish to provide a simple but flexible stack to deploy and manage cluster of servers or workstations.</p>
-    <p>The stack is using <a href="https://docs.ansible.com/ansible/latest/index.html">Ansible</a>, and relies heavily on inventory merge hash_behaviour and groups.</p>
-    <p><span style="color: #108bde">Blue</span>Banquise was originally made for the Algoric HPC center, before opening to all.</p>
-    <p>System administrator should find here all needed documentation, files, or contacts to take the most of the stack.</p>
-    <br>
-    <br>
-    <br>
-    <p>Project partners:<p>
-    <img src="pictures/partners_BMD.svg" alt="BenjaminMuylDesign" height="40px"/>
-    <img src="pictures/FabriqueLoch_logo.svg" alt="LaFabriqueDuLoch" height="100px"/>
+    <section class="hero is-medium intro">
+      <div class="hero-body">
+        <div class="container">
+          <div class="intro-columns">
+            <div class="intro-column is-content">
+              <div class="intro-content">
+                <h1 class="title intro-title">
+                  <strong>BlueBanquise</strong> is an open source cluster deployement and management stack.
+                </h1><br>
+                <p class="subtitle is-4">
+                  <strong>Ansible</strong> based, fully modular, simple.
+                </p>
+              </div>
+            </div>
+            <div class="intro-column is-content intro-title">
+              <div style="text-align:center;" height="100px">
+                <img src="images/multiple_icebergs.svg" alt="BlueBanquise Logo">
+              </div>
+            </div>
+          </div>
+        </div>
 
-</body>
+        <div class="bd-focus">
+          <nav class="columns">
+            <a class="bd-focus-item column has-text-centered" href="/the_stack/features.html#modernity">
+              <p class="title is-4">
+                <strong>Modern</strong>
+              </p>
+              <p class="subtitle is-6"><strong>Ansible</strong> and <strong>Python</strong> based</p>
+              <figure class="bd-focus-icon">
+                <span class="bd-focus-desktop icon is-large" style="color: #333;">
+                  <i class="fab fa-3x fa-python"></i>
+                </span>
+              </figure>
+            </a>
+            <a class="bd-focus-item column has-text-centered" href="/the_stack/features.html#compatibility">
+              <p class="title is-4">
+                <strong>Compatible</strong>
+              </p>
+              <p class="subtitle is-6">
+                Works on <strong>many</strong> kind of hardware
+              </p>
+              <figure class="bd-focus-icon">
+                <span class="bd-focus-mobile icon is-large" style="color: #333;">
+                  <i class="fas fa-1x fa-laptop"></i>
+                </span>
+                <span class="bd-focus-tablet icon is-large" style="color: #333;">
+                  <i class="fas fa-2x fa-desktop"></i>
+                </span>
+                <span class="bd-focus-desktop icon is-large" style="color: #333;">
+                  <i class="fas fa-3x fa-server"></i>
+                </span>
+              </figure>
+            </a>
+            <a class="bd-focus-item column has-text-centered" href="/the_stack/features.html#modularity">
+              <p class="title is-4">
+                <strong>Modular</strong>
+              </p>
+              <p class="subtitle is-6">
+                Build your <strong>own</strong> cluster
+              </p>
+              <figure class="bd-focus-cubes bd-focus-icon">
+                <span class="bd-focus-cube bd-focus-cube-1 icon is-large" style="color: #333;">
+                  <i class="fas fa-2x fa-cube"></i>
+                </span>
+                <span class="bd-focus-cube bd-focus-cube-2 icon is-large" style="color: #333;">
+                  <i class="fas fa-2x fa-cube"></i>
+                </span>
+                <span class="bd-focus-cube bd-focus-cube-3 icon is-large" style="color: #333;">
+                  <i class="fas fa-2x fa-cube"></i>
+                </span>
+              </figure>
+            </a>
+            <a class="bd-focus-item column has-text-centered" href="https://github.com/bluebanquise/" target="_blank">
+              <p class="title is-4">
+                <strong>Free</strong>
+              </p>
+              <p class="subtitle is-6">
+                Open source on <strong>GitHub</strong>
+              </p>
+              <figure class="bd-focus-icon">
+                <span class="bd-focus-github icon is-large" style="color: #333;">
+                  <i class="fab fa-3x fa-github"></i>
+                </span>
+              </figure>
+            </a>
+          </nav>
+        </div>
+      </div>
+      <section class="bd-partnrs-list">
+        <div class="bd-partner bd-is-sponsor">
+          <p class="bd-partner-title has-text-centered">
+          Project partners
+          <div class="bd-partner-sponsors">
+            <div class="bd-partner-sponsor">
+              <a class="bd-sponsor-item" href="http://www.bmuyl.com/" target="_blank" rel="nofollow" title="">
+                <img src="images/partners_BMD.svg" alt="" height="40">
+              </a>
+            </div>
+            <div class="bd-partner-sponsor">
+              <a class="bd-sponsor-item" href="https://www.lafabriqueduloch.org" target="_blank" rel="nofollow" title="">
+                <img src="images/FabriqueLoch_logo.svg" alt="" height="100">
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </body>
 </html>

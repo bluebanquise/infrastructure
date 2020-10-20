@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top"><head>
+<title>BlueBanquise - Features</title> 
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/bulma-docs.min.css">
+  <script defer src="/js/all.js"></script>
+<!-- from https://codepen.io/hunzaboy/pen/yoPKQW -->
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+  // Get all "navbar-burger" elements
+  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  // Check if there are any nav burgers
+  if ($navbarBurgers.length > 0) {
+    // Add a click event on each of them
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+        // Get the target from the "data-target" attribute
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+      });
+    });
+  }
+  });
+	</script>
+  <style>
+  .navbar-item.is-mega {
+    position: static;
+
+    .is-mega-menu-title {
+      margin-bottom: 0;
+      padding: .375rem 1rem;
+    }
+  }
+  </style>
+</head>
+  <body class="layout-default">
+
+    <nav class="navbar has-shadow is-spaced is-fixed-top">
+      <div class="container">
+
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bluebanquise.com">
+            <img src="/images/BlueBanquise_logo_large.svg" alt="BlueBanquise, an Ansible stack">
+          </a>
+          <a class="navbar-item is-hidden-desktop" href="https://github.com/bluebanquise/bluebanquise" target="_blank">
+            <span class="icon" style="color: #333;">
+              <i class="fab fa-github"></i>
+            </span>
+          </a>
+          <div class="navbar-burger burger" data-target="navMenubd-example">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div id="navMenubd-example" class="navbar-menu">
+          <div class="navbar-start">
+            <div class="navbar-item has-dropdown is-hoverable">
+              <!-- <a class="navbar-link " href="project.html"> -->
+                <div class="navbar-link">
+                The stack
+                </div>
+              <!-- </a> -->
+              <div class="navbar-dropdown ">
+                <a class="navbar-item " href="/the_stack/the_project.html">
+                  The project
+                </a>
+                <a class="navbar-item " href="/the_stack/features.html">
+                  Features
+                </a>
+              </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <!-- <a class="navbar-link " href="https://bluebanquise.com/project.html"> -->
+                <div class="navbar-link">
+                Resources
+                </div>
+              <!-- </a> -->
+              <div class="navbar-dropdown ">
+                <a class="navbar-item " href="/resources/documentation.html">
+                  Documentation
+                </a>
+                <a class="navbar-item " href="/resources/download.html">
+                  Download
+                </a>
+              </div>
+            </div>
+            <a class="navbar-item " href="/about.html">
+              About
+            </a>
+            <div class="navbar-end">
+              <a class="navbar-item is-hidden-desktop-only" href="https://github.com/bluebanquise/bluebanquise" target="_blank">
+                <span class="icon" style="color: #333;">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+<main class="bd-main">
+  <div class="bd-side-background"></div>
+  <div class="bd-main-container container">
+    <div class="bd-duo">
+      <div class="bd-lead">
+        <header class="bd-header">
+          <div class="bd-header-titles">
+            <h1 class="title">
+              Features
+            </h1>
+            <p class="subtitle is-4">
+              A core, some addons, all <strong>modular</strong>
+            </p>
+          </div>
+        </header>
+        <div class="bd-content">
+          <div class="content">
+<span style="color: #108bde">Blue</span>Banquise is a generic stack, made to handle simple workstations IT room, HPC cluster, enterprise network, etc.
+<br>
+We try to keep it as simple as possible, having advanced features optional and hidden.
+<br>
+<br>
+<a id="modularity"></a>
+The stack provides many features. This page will attempt to expose them.
+<br>
+<br>
+
+<h2 class="title">
+Modularity and flexibility
+</h2>
+
+<div class="columns is-vcentered">
+  <div class="column">
+<span style="color: #108bde">Blue</span>Banquise design was made to ensure full modularity.
+<br>Even elements of the core can be replaced by others.
+<br>
+<br>
+The Ansible inventories structure used can handle a wide range of cluster and network architectures, and allows adding more variables as desired.
+  </div>
+  <div class="column is-8">
+    <img src="/images/modularity_roles.svg" alt="BlueBanquise, an Ansible stack">
+  </div>
+</div>
+<a id="modernity"></a>
+<br>
+<br>
+
+<h2 class="title">
+Modern
+</h2>
+
+The whole stack is based on <b>python</b> 3.6+ and <b>Ansible</b>, for better long term investment.
+<br>
+The PXE stack is Legacy or EFI compatible.
+<br>
+<br>
+A focus is made on reducing scripting to the minimum.<a id="compatibility"></a>
+<br>
+<br>
+<h2>Technical details</h2>
+
+<h3>Supported OS and platform</h3>
+
+In its current state, stack can deploy on mixed Linux distributions and platform (in the same cluster), including:
+
+<ul>
+  <li>Centos/RHEL 7.X and 8.X, with all features available.</li>
+  <li>Ubuntu 18.04, with limited features.</li>
+  <li>OpenSuse Leap 15.1, with very limited features.</li>
+</ul>
+Depending of the demand, Ubuntu or OpenSuse can be fully implemented.
+<br>
+Tested platform were <b>x86_64</b> for Centos/RHEL/OpenSuse Leap and <b>arm64/x86_64</b> for Ubuntu.<br>
+<br>
+This ability to handle multiple Linux distributions and architectures at the same time, allows to easily handle exotic hardware or customer needs.
+
+<h3>Data</h3>
+
+All stack data are stored in plain text files, in YAML format, using Ansible inventory folders structure.
+<br>
+<br>
+No binaries + no databases = <b>fully editable and tunable with minimal knowledge</b>.
+
+<h3>Roles</h3>
+
+The stack provides many Ansible roles, seen as independent modules. Roles are nearly all autonomous from each other's, to be easily switched with others.
+<br>
+<br>
+The following roles are available:
+<br>
+<br>
+<h4>Core</h4>
+
+<ul>
+  <li> <b>hosts_file</b>: generate the /etc/hosts file</li>
+  <li> <b>dhcp_server</b>: generate dhcp server configuration</li>
+  <li> <b>dns_server/dns_client</b>: generate dns server or client configuration</li>
+  <li> <b>log_server/log_client</b>: generate rsyslog server or client configuration</li>
+  <li> <b>nic</b>: configure network interfaces for static configuration</li>
+  <li> <b>pxe_stack</b>: deploy and generate whole PXE stack</li>
+  <ul>
+    <li> Tftp based on atftp (with verbosity on by default)</li>
+    <li> Http based on Apache for all repositories and images</li>
+    <li> iPXE custom ROMs with menu, to handle all exotic hardware</li>
+    <ul>
+      <li> EFI / Legacy</li>
+      <li> PXE / iPXE native ROM</li>
+      <li> CD or USB boot to PXE when no native PXE available (or stupidly made BIOS/EFI)</li>
+    </ul>
+  </ul>
+  <li> <b>repositories_server/repositories_client</b>: generate server or client configuration</li>
+  <li> <b>nfs_server/nfs_client</b>: generate nfs server or client configuration</li>
+  <li> <b>set_hostname</b>: set hostname of the target</li>
+  <li> <b>ssh_master</b>: generate management ssh configuration</li>
+  <li> <b>ssh_slave</b>: add ssh public keys on targets</li>
+  <li> <b>time</b>: generate server or client time configuration</li>
+  <li> <b>ansible</b>: install ansible package</li>
+  <li> <b>display_tuning</b>: add some tuning for bash and screen</li>
+  <li> <b>conman</b>: generate conman configuration, for ipmi consols logging</li>
+</ul>
+
+<h4>Advanced Core</h4>
+<ul>
+  <li> <b>advanced_dhcp_server</b>: generate advanced dhcp server configuration, for more complexe clusters</li>
+</ul>
+
+<h4>Addons</h4>
+<ul>
+  <li> <b>clone</b>: allows to clone systems with clonezilla</li>
+  <li> <b>diskless</b>: allows to boot remote hosts in diskless mode (nfs or livenet)</li>
+  <li> <b>prometheus_server/prometheus_client</b>: generate a prometheus configuration for monitoring</li>
+  <li> <b>slurm</b>: generate server and client slurm job scheduler configuration</li>
+  <li> <b>openldap_server/openldap_client</b>: generate a very <b>unsecure</b> and simple ldap configuration</li>
+  <li> <b>ofed/ofed_sm</b>: install OFED for infiniband support</li>
+  <li> <b>clustershell</b>: generate clustershells groups</li>
+  <li> <b>report</b>: generate a small report on the stack inventory, for debugging purposes</li>
+  <li> <b>users_basic</b>: add users on hosts, using a very basic useradd</li>
+</ul>
+
+<h3>Specific advanced features</h3>
+
+The stack also as few native mechanisms under the hood. These features are a need for us, so we added them.
+<br>
+<br>
+<h4>Multi Icebergs</h4>
+
+This feature is sometime called multi islands in HPC or Cloud.<br>
+<br>
+<span style="color: #108bde">Blue</span>Banquise can split cluster into independent and autonomous groups of equipment. These new subclusters are called <b>icebergs</b>, each iceberg being managed by a group of management nodes and isolated from the others (but can be reached through interconnect if exist and asked).<br>
+<br>
+This feature is mainly used:
+
+<ul>
+  <li>When there is a need to separated parts of the cluster (our case, to provide dedicated small sub-clusters to some customers).</li>
+  <li>When there is a need to run an old cluster aside a new one keeping both in production.</li>
+  <li>When there is a need to scale to very large number of hosts.</li>
+</ul>
+<br>
+<h4>Accelerated mode</h4>
+
+Ansible is famous for its simplicity, but also for being slow, even with Mitogen.<br>
+<br>
+Accelerated mode is a POC we designed to heavily accelerate critical templates rendering. It is based on some retro engineering made on Ansible.<br>
+Accelerated mode is just a basic trick found in the inventory, that requires no Ansible modifications.<br>
+<br>
+Note that this feature is only at POC state for the time being, as it needs extended developments in roles templates. We are waiting for the stack being more "mature" to fully implement it.
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+  </body>
+</html>

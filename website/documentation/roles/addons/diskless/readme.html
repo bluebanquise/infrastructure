@@ -1,47 +1,39 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Diskless &mdash; BlueBanquise Documentation 1.0.1 documentation</title>
+  <title>Diskless &mdash; BlueBanquise Documentation 1.3.0 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../../',
-              VERSION:'1.0.1',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -57,7 +49,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> BlueBanquise Documentation
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> BlueBanquise Documentation
           
 
           
@@ -68,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                1.3
+              </div>
             
           
 
@@ -83,6 +79,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -96,15 +93,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../vocabulary.html">2. Vocabulary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../install_first_management.html">3. Install first management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../learn_ansible.html">4. Learn Ansible</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">5. Configure BlueBanquise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">6. Deploy BlueBanquise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">7. Roles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references.html">8. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers.html">5. Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">6. Configure BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">7. Deploy BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../multiple_icebergs.html">8. Manage multiple icebergs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitoring.html">9. Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stories.html">10. Stories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">11. Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">12. References</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -143,7 +145,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Diskless</li>
     
@@ -169,16 +171,234 @@
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This role provides needed tools to deploy a basic diskless cluster.</p>
-</div>
-<div class="section" id="instructions">
-<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
-<p>Once the role is deployed, it is possible to use the disklessset tool to interactivley create new diskless images.</p>
 <p>Two type of images are available:</p>
 <ul class="simple">
-<li>Livenet images are full ram images, without persistance but need less infrastructure.</li>
-<li>NFS images are full nfs rw images, with psersistance, very simple to use, but need more infrastructure.</li>
+<li><p>Livenet images are full ram images, without persistance but need less infrastructure.</p></li>
+<li><p>NFS images are full nfs rw images, with psersistance, very simple to use, but need more infrastructure.</p></li>
 </ul>
 <p>It is important to understand that this role is independant of the pxe_stack core role, and so each tools do not communicate.</p>
+<p>Validated on RHEL8.</p>
+</div>
+<div class="section" id="basic-instructions">
+<h2>Basic instructions<a class="headerlink" href="#basic-instructions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Apply your playbook with the “diskless” role activated (see <em>Example playbook</em> part):</p></li>
+<li><p>Copy the kernels in /boot you want to use for your images.</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>cp /boot/&lt;kernels to use for diskless nodes&gt; /var/www/html/preboot_execution_environment/diskless/kernels/
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Launch <em>disklessset</em> and verify that the kernels are present in the tool, then quit.</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># disklessset
+BlueBanquise Diskless manager
+ 1 - List available kernels
+ 2 - Generate a new initramfs
+ 3 - Generate a new diskless image
+ 4 - Manage/list existing diskless images
+ 5 - Remove a diskless image
+--&gt;: 1
+[INFO] Loading kernels from /var/www/html/preboot_execution_environment/diskless/kernels/
+
+Available kernels:
+  │
+  └── vmlinuz-4.18.0-193.6.3.el8_2.x86_64
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Launch <em>disklessset</em> and ask an initramfs creation for this kernel</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># disklessset
+BlueBanquise Diskless manager
+ 1 - List available kernels
+ 2 - Generate a new initramfs
+ 3 - Generate a new diskless image
+ 4 - Manage/list existing diskless images
+ 5 - Remove a diskless image
+--&gt;: 2
+[INFO] Loading kernels from /var/www/html/preboot_execution_environment/diskless/kernels/
+
+Select kernel:
+ 1 - vmlinuz-4.18.0-193.6.3.el8_2.x86_64
+--&gt;: 1
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Using <em>disklessset</em>, verify that this creation went well: “initiramfs present” must now be present after the kernel.</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># disklessset
+BlueBanquise Diskless manager
+ 1 - List available kernels
+ 2 - Generate a new initramfs
+ 3 - Generate a new diskless image
+ 4 - Manage/list existing diskless images
+ 5 - Remove a diskless image
+--&gt;: 1
+[INFO] Loading kernels from /var/www/html/preboot_execution_environment/diskless/kernels/
+
+Available kernels:
+    │
+    └── vmlinuz-4.18.0-193.6.3.el8_2.x86_64 - initramfs present
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Launch <em>disklessset</em> and create the livenet image. The command will guide you from here.</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># disklessset
+BlueBanquise Diskless manager
+ 1 - List available kernels
+ 2 - Generate a new initramfs
+ 3 - Generate a new diskless image
+ 4 - Manage/list existing diskless images
+ 5 - Remove a diskless image
+--&gt;: 3
+
+Starting new image creation phase.
+Many questions will be asked, a recap will be provided before starting procedure.
+</pre></div>
+</div>
+<p>Select livenet image:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Select image type:
+ 1 - nfs
+ 2 - livenet
+--&gt;: 2
+[INFO] Loading kernels from /var/www/html/preboot_execution_environment/diskless/kernels/
+</pre></div>
+</div>
+<p>Select the kernel you want to use wit this image from the list of available kernels:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Select kernel:
+ 1 - vmlinuz-4.18.0-193.6.3.el8_2.x86_64
+--&gt;: 1
+Please enter image name ?
+--&gt;: livenet1
+Please enter clear root password of the new image: root
+[INFO] Entering livenet dedicated part.
+</pre></div>
+</div>
+<p>Choose a standard image, and give a size.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Please select livenet image generation profile:
+ 1 - Standard: core (~1.2Gb)
+ 2 - Small: openssh, dnf and NetworkManager (~248Mb)
+ 3 - Minimal: openssh only (~129Mb)
+--&gt;: 1
+Please choose image size (e.g. 5G):
+(supported units: M=1024*1024, G=1024*1024*1024)
+--&gt;: 5G
+</pre></div>
+</div>
+<p>Check that everything is alright before continuing:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Do you want to create a new livenet image with the following parameters:
+  Image name:           livenet1
+  Kernel version:       vmlinuz-4.18.0-193.6.3.el8_2.x86_64
+  Root password:        root
+  Image profile:        1
+  Image size:           5120M
+Confirm ? Enter yes or no: yes
+[INFO] Cleaning and creating image folders.
+[INFO] Generating new ipxe boot file.
+[INFO] Creating empty image file, format and mount it.
+5242880+0 records in
+5242880+0 records out
+5368709120 bytes (5.4 GB, 5.0 GiB) copied, 10.3195 s, 520 MB/s
+meta-data=/root/diskless/workdir//LiveOS/rootfs.img isize=512    agcount=4, agsize=327680 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1
+data     =                       bsize=4096   blocks=1310720, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[INFO] Generating cache link for dnf.
+[INFO] Installing system into image.
+...
+</pre></div>
+</div>
+<p>Image is now generated. See Customizing Livenet image in next section on how to customize
+image before using it.</p>
+<ol class="arabic simple" start="7">
+<li><p>Using the command <em>bootset</em>, set the image one node will use.</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># bootset -n c001 -b diskless -i livenet1
+</pre></div>
+</div>
+<p>The -n parameter can be a nodeset.</p>
+<ol class="arabic simple" start="8">
+<li><p>Reboot the diskless node to make it boot onto the new image.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Example Playbook</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- hosts: mngt0-1
+  roles:
+    - pxe_stack
+    - diskless
+</pre></div>
+</div>
+</div>
+<div class="section" id="customizing-livenet-image">
+<h2>Customizing Livenet image<a class="headerlink" href="#customizing-livenet-image" title="Permalink to this headline">¶</a></h2>
+<p>The image name used in the examples below is <em>space_image</em>.</p>
+<p>The disklessset tool allows to customize livenet images before booting them,
+by mounting images and providing simple chroot inventory. System administrator
+can then tune or execute playbooks inside images.</p>
+<p>Start the tool, select menu “4 - Manage existing diskless images”, then
+“5 - Manage livenet images”.</p>
+<p>The next menu allows you to mount, unmount, or resize image.</p>
+<p>Mount the image first. Images are mounted in
+/var/tmp/diskless/workdir/space_image/mnt.</p>
+<p>It is now possible to copy files, install rpms, or tune any aspects of the
+mounted image.</p>
+<p>The tool also generated a temporary Ansible inventory in
+/var/tmp/diskless/workdir/space_image/inventory/ .</p>
+<p>To execute an Ansible playbook into the image, generate a new playbook
+with the following head:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Computes diskless playbook</span>
+  <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/tmp/diskless/workdir/space_image/mnt</span>
+  <span class="nt">connection</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">chroot</span>
+  <span class="nt">vars</span><span class="p">:</span>
+    <span class="nt">j2_current_iceberg</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">iceberg1</span>                <span class="c1">#&lt;&lt;&lt; UPDATE IF NEEDED</span>
+    <span class="nt">j2_node_main_network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>                <span class="c1">#&lt;&lt;&lt; UPDATE</span>
+    <span class="nt">start_service</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+    <span class="nt">image_equipment_profile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">equipment_typeC</span>    <span class="c1">#&lt;&lt;&lt; UPDATE</span>
+
+  <span class="nt">pre_tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Add current host to defined equipment_profile</span>
+      <span class="nt">add_host</span><span class="p">:</span>
+        <span class="nt">hostname</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">inventory_hostname</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="nt">groups</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">image_equipment_profile</span><span class="nv"> </span><span class="s">}}&quot;</span>
+
+  <span class="nt">roles</span><span class="p">:</span>
+  <span class="c1"># ADD HERE YOUR ROLES</span>
+</pre></div>
+</div>
+<p>Now, update the needed values in this file:</p>
+<ul class="simple">
+<li><p><strong>j2_current_iceberg</strong>: Except if you are using multiple icebergs advanced feature, you should let this to <cite>iceberg1</cite>.</p></li>
+<li><p><strong>j2_node_main_network</strong>: Set here your main network to be used. This will allow the roles to determine the services ip to bind to.</p></li>
+<li><p><strong>image_equipment_profile</strong>: Set here your equipment_profile to be used. This will allow the roles to determine key values, for example find the repositories path to be used (distribution version, etc).</p></li>
+</ul>
+<p>And add your desired roles under <strong>roles:</strong> in the file, like for
+any standard playbook.</p>
+<p>Then execute it into the mounted image using the following command:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ansible-playbook computes.yml \
+-i /etc/bluebanquise/inventory/ -i /etc/bluebanquise/internal/ -i /var/tmp/diskless/workdir/space_image/inventory/ \
+--skip-tags identify
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>The multiple <cite>-i</cite> defines Ansible inventories to gather. By default, in BlueBanquise, the first two inventories are used. We simply add the third one, corresponding to the mounting point.</p></li>
+<li><p>The <cite>-e</cite> (extra vars) are here to specify to the stack which iceberg and main network are to be used in the configuration of the node. (System cannot know on which nodes the image will be used).</p></li>
+<li><p>The <cite>–skip-tags identify</cite> prevents hostname and static ip to be set, since the image should be generic for multiple hosts.</p></li>
+</ul>
+<p>Before closing, also remember to clean dnf cache into the image chroot to save space.</p>
+<p>Now, using df command, check used space of the image, to resize it later if whished.</p>
+<p>Using disklessset now, choose option 2 to unmount the image and squashfs it again.</p>
+<p>It is possible now to use the tool to resize image, to reduce it to the desired value (to save ram on target host).
+Always keep at least 100MB in / for temporary files and few logs generated during run.</p>
 </div>
 <div class="section" id="to-be-done">
 <h2>To be done<a class="headerlink" href="#to-be-done" title="Permalink to this headline">¶</a></h2>
@@ -187,7 +407,8 @@
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
+<li><p>1.1.0: Role update. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;, Bruno Travouillon &lt;<a class="reference external" href="mailto:devel&#37;&#52;&#48;travouillon&#46;fr">devel<span>&#64;</span>travouillon<span>&#46;</span>fr</a>&gt;</p></li>
+<li><p>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
 </ul>
 </div>
 </div>
@@ -203,11 +424,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, Benoît Leveugle, Johnny Keats
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -218,7 +447,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
