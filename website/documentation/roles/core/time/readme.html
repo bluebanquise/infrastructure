@@ -1,47 +1,39 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Time server &mdash; BlueBanquise Documentation 1.0.1 documentation</title>
+  <title>Time server &mdash; BlueBanquise Documentation 1.3.0 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../../',
-              VERSION:'1.0.1',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -57,7 +49,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> BlueBanquise Documentation
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> BlueBanquise Documentation
           
 
           
@@ -68,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                1.3
+              </div>
             
           
 
@@ -83,6 +79,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -96,15 +93,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../vocabulary.html">2. Vocabulary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../install_first_management.html">3. Install first management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../learn_ansible.html">4. Learn Ansible</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">5. Configure BlueBanquise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">6. Deploy BlueBanquise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">7. Roles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references.html">8. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers.html">5. Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configure_bluebanquise.html">6. Configure BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deploy_bluebanquise.html">7. Deploy BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../multiple_icebergs.html">8. Manage multiple icebergs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../monitoring.html">9. Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stories.html">10. Stories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../roles.html">11. Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">12. References</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -143,7 +145,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Time server</li>
     
@@ -172,35 +174,73 @@
 </div>
 <div class="section" id="instructions">
 <h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
-<p>This role will react diffrently if in multi icebergs mode or not.</p>
-<p>By default, in non multiple icebergs, server will be the time source reference. If using multiple icebergs hierarchy, then server can be a time reference if at top of the icebergs hierarchy, or simply a time relay with an higher stratum, if not a top server. This stratum calculation is done using <strong>iceberg_level</strong> variable defined in <strong>/etc/bluebanquise/inventory/cluster/icebergs/icebergX</strong> files.</p>
-<p>It is possible to use file <em>/etc/bluebanquise/inventory/group_vars/all/general_settings/external.yml</em> to connect client or server to external time sources (server or pool or servers):</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">external_time</span><span class="p p-Indicator">:</span>  <span class="l l-Scalar l-Scalar-Plain">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+<p>This role will react differently if in multi icebergs mode or not.</p>
+<p>By default, in non multiple icebergs, server will be the time source reference.
+If using multiple icebergs hierarchy, then server can be a time reference if at
+top of the icebergs hierarchy, or simply a time relay with an higher stratum,
+if not a top server. This stratum calculation is done using <strong>iceberg_level</strong>
+variable defined in <strong>/etc/bluebanquise/inventory/cluster/icebergs/icebergX</strong>
+files.</p>
+<p>It is possible to configure external time sources for clients or servers in
+<em>/etc/bluebanquise/inventory/group_vars/all/general_settings/external.yml</em>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">external_time</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
   <span class="l l-Scalar l-Scalar-Plain">time_server</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span> <span class="c1"># List of possible time servers</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.fr.pool.ntp.org</span>
-    <span class="l l-Scalar l-Scalar-Plain">pool</span><span class="p p-Indicator">:</span> <span class="c1"># List of possible time pools</span>
+    <span class="nt">pool</span><span class="p">:</span> <span class="c1"># List of possible time pools</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pool.ntp.org</span>
-<span class=" -Error">  </span><span class="l l-Scalar l-Scalar-Plain">time_client</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">pool</span><span class="p p-Indicator">:</span>
+    <span class="nt">server</span><span class="p">:</span> <span class="c1"># List of possible time servers</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.pool.ntp.org</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1.pool.ntp.org</span>
+<span class=" -Error">  </span><span class="nt">time_client</span><span class="p">:</span>
+    <span class="nt">pool</span><span class="p">:</span>
+    <span class="nt">server</span><span class="p">:</span>
 </pre></div>
 </div>
-<p>If set to <strong>time_server</strong>, server/pool will be added in the server configuration. Of set to <strong>time_client</strong>, these will be added in client configuration. It is possible for example to not install a time server and simply bind to an external server/pool using this file.</p>
-<p>In case of a need, to force time synchronisation on client side, use:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>chronyc -a makestep
+<p>If <strong>time_server</strong> is defined, the pool or server will be added in the server
+configuration. If <strong>time_client</strong> is defined, the pool or server will be added
+in the client configuration. It is possible to not install any time server but
+simply bind to an external pool/server using this file.</p>
+<p><strong>pool</strong> and <strong>servers</strong> are mutually exclusive. If you define both, the role
+will default to <strong>pool</strong> to write the Chrony configuration.</p>
+<p>In case of a need, to force time synchronization on client side, use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chronyc -a makestep
 </pre></div>
 </div>
+</div>
+<div class="section" id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<p>Mandatory inventory vars:</p>
+<p><strong>hostvars[inventory_hostname]</strong></p>
+<ul class="simple">
+<li><p>network_interfaces[item]</p></li>
+<li><p>networks[item].prefix</p></li>
+</ul>
+<p>Optional inventory vars:</p>
+<p><strong>hostvars[inventory_hostname]</strong></p>
+<ul class="simple">
+<li><p>external_time</p></li>
+<li><p>external_pool</p></li>
+</ul>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>/etc/chrony.conf file</p></li>
+<li><p>chrony package</p></li>
+<li><p>time zone set from inventory</p></li>
+</ul>
 </div>
 <div class="section" id="to-be-done">
 <h2>To be done<a class="headerlink" href="#to-be-done" title="Permalink to this headline">¶</a></h2>
-<p>Icebergs with stratums levels.</p>
+<p>Icebergs with stratum levels.</p>
 </div>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</li>
-<li>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</li>
+<li><p>1.0.4: Add iburst to allow faster boot time recovery, update macro. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.3: Update to new network_interfaces syntax. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.2: Clean. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.1: Documentation. johnnykeats &lt;<a class="reference external" href="mailto:johnny&#46;keats&#37;&#52;&#48;outlook&#46;com">johnny<span>&#46;</span>keats<span>&#64;</span>outlook<span>&#46;</span>com</a>&gt;</p></li>
+<li><p>1.0.0: Role creation. Benoit Leveugle &lt;<a class="reference external" href="mailto:benoit&#46;leveugle&#37;&#52;&#48;gmail&#46;com">benoit<span>&#46;</span>leveugle<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p></li>
 </ul>
 </div>
 </div>
@@ -216,11 +256,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, Benoît Leveugle, Johnny Keats
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -231,7 +279,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

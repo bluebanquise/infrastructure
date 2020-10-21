@@ -1,0 +1,449 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>8. Manage multiple icebergs &mdash; BlueBanquise Documentation 1.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. Monitoring" href="monitoring.html" />
+    <link rel="prev" title="7. Deploy BlueBanquise" href="deploy_bluebanquise.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> BlueBanquise Documentation
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vocabulary.html">2. Vocabulary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install_first_management.html">3. Install first management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn_ansible.html">4. Learn Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containers.html">5. Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configure_bluebanquise.html">6. Configure BlueBanquise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy_bluebanquise.html">7. Deploy BlueBanquise</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Manage multiple icebergs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#iceberg-elements">8.1. Iceberg elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-top-iceberg">8.2. Configuring top iceberg</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#understanding-mechanism">8.2.1. Understanding mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enabling-iceberg-mechanism">8.2.2. Enabling iceberg mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-iceberg-1">8.2.3. Create iceberg 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-iceberg-2">8.2.4. Create iceberg 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deploy-management-configuration">8.2.5. Deploy management configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="monitoring.html">9. Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stories.html">10. Stories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roles.html">11. Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">12. References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BlueBanquise Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><span class="section-number">8. </span>Manage multiple icebergs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/multiple_icebergs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="manage-multiple-icebergs">
+<h1><span class="section-number">8. </span>Manage multiple icebergs<a class="headerlink" href="#manage-multiple-icebergs" title="Permalink to this headline">¶</a></h1>
+<p>Now that the simple configuration has been tested and done, it is possible,
+to extend the cluster, to activate the multiple icebergs mechanism.</p>
+<p>Icebergs mechanism allows to split cluster into parts, in order to:</p>
+<ul class="simple">
+<li><p>Distribute load over multiple managements nodes.</p></li>
+<li><p>Isolate part of the cluster from the others.</p></li>
+</ul>
+<p>It is important to understand what is an iceberg in BlueBanquise.</p>
+<div class="section" id="iceberg-elements">
+<h2><span class="section-number">8.1. </span>Iceberg elements<a class="headerlink" href="#iceberg-elements" title="Permalink to this headline">¶</a></h2>
+<p>Each iceberg is composed of:</p>
+<ul class="simple">
+<li><p>A set of dedicated management nodes (can be bare metal servers, VMs, containers, etc.).</p></li>
+<li><p>Some hosts part of this iceberg, and managed by the iceberg management nodes.</p></li>
+<li><p>Iceberg isolated management networks, called <strong>iceX-Y</strong> by default, with X the iceberg number (starting from 1).</p></li>
+<li><p>An Ansible group, with all management nodes and hosts part of the iceberg.</p></li>
+</ul>
+<p>Icebergs are connected together using a simple hierarchical pattern:
+an iceberg can be a <strong>top</strong>, meaning it is the top in the hierarchy,
+or be a <strong>standard</strong> iceberg, meaning it will refer to a master iceberg
+(the <strong>top</strong> iceberg in 2 levels hierarchy, or another <strong>standard</strong> iceberg if more levels).</p>
+<p>The following schema resume the notion:</p>
+<img alt="_images/multiple_icebergs_schema.svg" src="_images/multiple_icebergs_schema.svg" /><p>Few notes about this schema:</p>
+<ul class="simple">
+<li><p>Icebergs can be connected to any administration networks.</p></li>
+<li><p>Managements of a standard iceberg are expected to be connected to both administration network,
+i.e. on one of their internal iceberg administration network, but also on one of the administration network of their master iceberg.</p></li>
+<li><p>Services will work as a chain. For example, time will come from the top iceberg (or an external source) and each time server will take as source the time server of its master iceberg.</p></li>
+</ul>
+<p>Note that this architecture is flexible, and can be adapted to create isolated icebergs (i.e. having multiple fully isolated clusters in the same BlueBanquise configuration).</p>
+<p>Note also that using iceberg related groups, it is possible to define variables dedicated to each iceberg (for example, define a different time zone, a different domain name, etc.). However, and this is <strong>important</strong>, variables defined at <em>group_vars/equipment_X</em> level should never be used in icebergs groups, i.e. <em>group_vars/icebergX</em>, as it is impossible to determine the “winner” between both values.</p>
+</div>
+<div class="section" id="configuring-top-iceberg">
+<h2><span class="section-number">8.2. </span>Configuring top iceberg<a class="headerlink" href="#configuring-top-iceberg" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="understanding-mechanism">
+<h3><span class="section-number">8.2.1. </span>Understanding mechanism<a class="headerlink" href="#understanding-mechanism" title="Permalink to this headline">¶</a></h3>
+<p>By default, iceberg mechanism is deactivated, and so all hosts are considered member of iceberg1.</p>
+<p>Sorry, as a physician, I start counting at 1 when speaking of physical things, and so icebergs are numbered at 1 by default. However, nothing prevent using 0 as a start point when activating icebergs mechanism.</p>
+<p>This automation is achieved by j2 variable j2_current_iceberg:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>j2_current_iceberg: &quot;{% if not icebergs_system %}{{ iceberg_naming+&#39;1&#39; }}{% else %}{{ group_names | select(&#39;match&#39;,&#39;^&#39;+iceberg_naming+&#39;[0-9]+&#39;) | list | unique | sort | first | join }}{% endif %}&quot;
+</pre></div>
+</div>
+<p>If icebergs_system is set to false, then iceberg is iceberg_naming+’1’ = iceberg1.
+If set to true, then j2_current_iceberg will look check groups the current hosts is member of, and look for a group with pattern iceberg_naming+’[0-9]+’, and use it to determine current iceberg.</p>
+<p>Then, other values will be deduced from this:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>j2_current_iceberg_number: &quot;{{ j2_current_iceberg | replace(iceberg_naming,&#39; &#39;) | trim }}&quot;
+j2_current_iceberg_network: &quot;{{ management_networks_naming + (j2_current_iceberg_number|string) }}&quot;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>j2_current_iceberg_number is simply the j2_current_iceberg without the “iceberg” string, so the iceberg number, here “1”.</p></li>
+<li><p>j2_current_iceberg_network is the addition of the default network naming and the iceberg number, so here “ice1”.</p></li>
+</ul>
+<p>Note also that 2 variables are here to simplify developments of templates:</p>
+<ul class="simple">
+<li><p>j2_icebergs_groups_list: “{{ groups | select(‘match’,’^’+iceberg_naming+’[0-9]+’) | list }}”</p></li>
+<li><p>j2_number_of_icebergs: “{{ groups | select(‘match’,’^’+iceberg_naming+’[0-9]+’) | list | length }}”</p></li>
+</ul>
+<p>Refer to file icebergs.yml in j2_variables in group_vars/all (do not edit them if you do not master the stack).</p>
+</div>
+<div class="section" id="enabling-iceberg-mechanism">
+<h3><span class="section-number">8.2.2. </span>Enabling iceberg mechanism<a class="headerlink" href="#enabling-iceberg-mechanism" title="Permalink to this headline">¶</a></h3>
+<p>Note: do not play any role from now, until hosts are in their iceberg group.</p>
+<p>To activate icebergs mechanism, open file group_vars/all/general_settings/general.yml, set <strong>icebergs_system</strong> to <em>true</em>.</p>
+</div>
+<div class="section" id="create-iceberg-1">
+<h3><span class="section-number">8.2.3. </span>Create iceberg 1<a class="headerlink" href="#create-iceberg-1" title="Permalink to this headline">¶</a></h3>
+<p>We now need to create the iceberg1 group, define its variables, and add hosts into it.</p>
+<p>Create dedicated folder in inventory/cluster/:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir /etc/bluebanquise/inventory/cluster/icebergs/
+</pre></div>
+</div>
+<p>Then create file /etc/bluebanquise/inventory/cluster/icebergs/iceberg1, and add the following content:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[iceberg1:vars]
+iceberg_master = top
+iceberg_level = 1
+
+[iceberg1]
+</pre></div>
+</div>
+<p>This will create an Ansible group called iceberg1, with 2 associated variables.</p>
+<ul class="simple">
+<li><p>iceberg_master defines if the iceberg is a top, or a standard iceberg linked to a master.</p></li>
+<li><p>iceberg_level defines the level of this iceberg in the services chain. This is for example used to calculate stratum value of time servers, etc.</p></li>
+</ul>
+<p>Note: iceberg_level could be automatically calculated. However, having it has a variable allows the system administrator to tune it to desired ways.</p>
+<p>Let’s check current groups status:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[root@mngt1-1 ~]# ansible-inventory --graph
+@all:
+...
+  |--@iceberg1:
+  |--@ungrouped:
+[root@mngt1-1 ~]#
+</pre></div>
+</div>
+<p>iceberg1 group has been created, and is empty. Now add management(s) and nodes of the current iceberg into it.</p>
+<p>To do so, edit again file /etc/bluebanquise/inventory/cluster/icebergs/iceberg1 and under [iceberg1] simply add hosts:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[iceberg1:vars]
+iceberg_master = top
+iceberg_level = 1
+
+[iceberg1]
+management1
+login1
+c[001:004]
+</pre></div>
+</div>
+<p>Note: it is possible to add ranges of nodes, like in this example c[001:004]. This is a different syntax than clustershell.</p>
+<p>Check again groups:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[root@mngt1-1 ~]# ansible-inventory --graph
+@all:
+...
+  |--@iceberg1:
+  |  |--management1
+  |  |--login1
+  |  |--c001
+  |  |--c002
+  |  |--c003
+  |  |--c004
+  |--@ungrouped:
+[root@mngt1-1 ~]#
+</pre></div>
+</div>
+<p>And push again configuration using the default playbook for each host. It is possible to see what is going to be modified using –diff –check at ansible-playbook invocation.</p>
+<p>There should not be major modifications in configuration.</p>
+</div>
+<div class="section" id="create-iceberg-2">
+<h3><span class="section-number">8.2.4. </span>Create iceberg 2<a class="headerlink" href="#create-iceberg-2" title="Permalink to this headline">¶</a></h3>
+<p>Create now a second iceberg, with iceberg1 as master.</p>
+<p>Create file /etc/bluebanquise/inventory/cluster/icebergs/iceberg2, with the following content:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[iceberg2:vars]
+iceberg_master = iceberg1
+iceberg_level = 2
+
+[iceberg2]
+</pre></div>
+</div>
+<p>This new iceberg is not a top iceberg, and so refer to its master, here iceberg1.</p>
+<p>Configure a new management, called management2, that will be in charge of iceberg2.
+According to icebergs definition, management2 must be connected to both ice1-1 network and ice2-1 network.</p>
+<p>For convenience, create a dedicated folder in cluster directory to store all nodes related to each iceberg, and move current nodes into iceberg1 directory.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>mkdir -p /etc/bluebanquise/inventory/cluster/nodes/iceberg1/
+mkdir /etc/bluebanquise/inventory/cluster/nodes/iceberg2/
+mv /etc/bluebanquise/inventory/cluster/*.yml /etc/bluebanquise/inventory/cluster/nodes/iceberg1/
+</pre></div>
+</div>
+<p>A warning may be displayed during playbook execution for now, because nodes/iceberg2/ is still empty.</p>
+<p>Now create management2 file /etc/bluebanquise/inventory/cluster/nodes/iceberg2/management.yml:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mg_managements</span><span class="p">:</span>
+  <span class="nt">children</span><span class="p">:</span>
+    <span class="nt">equipment_typeM</span><span class="p">:</span>
+      <span class="nt">hosts</span><span class="p">:</span>
+        <span class="nt">management2</span><span class="p">:</span>
+          <span class="nt">bmc</span><span class="p">:</span>
+            <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bmanagement2</span>
+            <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.100.2</span>
+            <span class="nt">mac</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:0d:41:97</span>
+            <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>
+          <span class="nt">network_interfaces</span><span class="p">:</span>
+            <span class="nt">enp0s3</span><span class="p">:</span>
+              <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.10.0.2</span>
+              <span class="nt">mac</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:de:41:21</span>
+              <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice1-1</span>
+            <span class="nt">enp0s8</span><span class="p">:</span>
+              <span class="nt">ip4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.12.0.1</span>
+              <span class="nt">mac</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">08:00:27:de:42:23</span>
+              <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ice2-1</span>
+</pre></div>
+</div>
+<p>This host is connected to both icebergs, and will be pushed from ice1-1 and act as a pusher (management) on ice2-1.</p>
+<p>And add management2 to iceberg2, by editing /etc/bluebanquise/inventory/cluster/icebergs/iceberg2 and adding management2 under [iceberg2]:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[iceberg2:vars]
+iceberg_master = iceberg1
+iceberg_level = 2
+
+[iceberg2]
+management2
+</pre></div>
+</div>
+<p>Play again playbooks on management1, so management2 is added into dhcp, pxe, dns, hosts, etc. configuration files.</p>
+<p>Once done, use standard pxe boot procedure to deploy OS on management2.</p>
+<p>Now, few steps has to be followed in a specific order in order to deploy configuration on it.</p>
+</div>
+<div class="section" id="deploy-management-configuration">
+<h3><span class="section-number">8.2.5. </span>Deploy management configuration<a class="headerlink" href="#deploy-management-configuration" title="Permalink to this headline">¶</a></h3>
+<p>First, it is needed that management2 mount over nfs the repositories and the BlueBanquise configuration from management1.</p>
+<p>Ensure management2 is part of a group that will mount the repositories and ansible, in nfs.yml. If no, you can create a custom group for that, that would regroup all non top iceberg management.</p>
+<p>Copy current management1 playbook:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>cp /etc/bluebanquise/playbooks/management1.yml /etc/bluebanquise/playbooks/management2.yml
+</pre></div>
+</div>
+<p>and change target host inside to match management2.</p>
+<p>Once done, deploy repositories_client role, by forcing management2 to be temporary part of iceberg1:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ansible-playbook /etc/bluebanquise/playbooks/management2.yml -t repositories_client --extra-vars j2_current_iceberg=iceberg1
+</pre></div>
+</div>
+<p>Then deploy repositories_server role, and nfs_client role, so that management2 can get repositories localy and distribute them for iceberg2:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ansible-playbook /etc/bluebanquise/playbooks/management2.yml -t repositories_server,nfs_client --extra-vars j2_current_iceberg=iceberg1
+</pre></div>
+</div>
+<p>Now, management2 can be autonomous. Deploy the whole configuration on it:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ansible-playbook /etc/bluebanquise/playbooks/management2.yml
+</pre></div>
+</div>
+<p>And proceed as usual to add more hosts into iceberg2 and deploy them, this time from management2.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="monitoring.html" class="btn btn-neutral float-right" title="9. Monitoring" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="deploy_bluebanquise.html" class="btn btn-neutral float-left" title="7. Deploy BlueBanquise" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, Benoît Leveugle, Johnny Keats
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
