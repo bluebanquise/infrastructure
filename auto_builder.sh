@@ -89,7 +89,7 @@ case $value in
           fi
           if [ $distribution_version -eq 7 ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
-              yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel -y
+              yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel wget git gcc-c++ python-setuptools python3-setuptools net-snmp-devel curl-devel freeipmi-devel -y
             fi
             if [ $distribution_architecture == 'aarch64' ]; then
               yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel -y
@@ -117,21 +117,27 @@ case $value in
 
     2) ######################################################################################
         set -x
-        if [ ! -f $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz ]; then
+
+        if [ $distribution_version -eq 8 ]; then
+          if [ ! -f $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz ]; then
             wget -P $working_directory/sources/ https://github.com/prometheus/client_python/archive/v$prometheus_client_version.tar.gz
             mv $working_directory/sources/v$prometheus_client_version.tar.gz $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz
+          fi
         fi
         rm -Rf $working_directory/build/prometheus
         mkdir -p $working_directory/build/prometheus
         cd $working_directory/build/prometheus
-        cp $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz .
-        tar xvzf prometheus_client-$prometheus_client_version.tar.gz
-        cd client_python-$prometheus_client_version
-        python setup.py bdist_rpm --spec-only
-        cd ..
-        mv client_python-$prometheus_client_version prometheus_client-$prometheus_client_version
-        tar cvzf prometheus_client-$prometheus_client_version.tar.gz prometheus_client-$prometheus_client_version
-        rpmbuild -ta prometheus_client-$prometheus_client_version.tar.gz
+
+        if [ $distribution_version -eq 8 ]; then
+          cp $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz .
+          tar xvzf prometheus_client-$prometheus_client_version.tar.gz
+          cd client_python-$prometheus_client_version
+          python setup.py bdist_rpm --spec-only
+          cd ..
+          mv client_python-$prometheus_client_version prometheus_client-$prometheus_client_version
+          tar cvzf prometheus_client-$prometheus_client_version.tar.gz prometheus_client-$prometheus_client_version
+          rpmbuild -ta prometheus_client-$prometheus_client_version.tar.gz
+        fi
 
         if [ $distribution_architecture == 'x86_64' ]; then
 
