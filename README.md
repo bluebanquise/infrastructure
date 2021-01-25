@@ -1,2 +1,3 @@
-# bluebanquise-infrastructure
-Infrastructure around BlueBanquise
+# BlueBanquise Infrastructure
+
+This repository hold packages needed files and building script, and also automatic tests scripts.
