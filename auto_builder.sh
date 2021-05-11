@@ -77,14 +77,18 @@ case $value in
         else
           if [ $distribution_version -eq 8 ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
+              dnf install 'dnf-command(config-manager)'
               dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel -y
               dnf config-manager --set-enabled PowerTools
               dnf install freeipmi-devel -y
 #              alternatives --set python /usr/bin/python3
             fi
             if [ $distribution_architecture == 'aarch64' ]; then
-              dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel -y
-              alternatives --set python /usr/bin/python3
+              dnf install 'dnf-command(config-manager)'
+              dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel curl-devel net-snmp-devel dnf-plugins-core -y
+              dnf config-manager --set-enabled powertools
+              dnf install freeipmi-devel -y
+#              alternatives --set python /usr/bin/python3
             fi
           fi
           if [ $distribution_version -eq 7 ]; then
@@ -197,33 +201,37 @@ case $value in
         if [ ! -f $working_directory/sources/slurm-$slurm_version.tar.bz2 ]; then
           wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-$slurm_version.tar.bz2
         fi
-        #wget https://github.com/SchedMD/slurm/archive/slurm-18-08-8-1.tar.gz
+
         if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz ]; then
           wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
         fi
 
+        rm -Rf $working_directory/build/munge
         mkdir $working_directory/build/munge
         cd $working_directory/build/munge
         cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
+        wget https://github.com/dun.gpg -O $working_directory/build/munge/dun.gpg
+        wget https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc -O $working_directory/build/munge/munge-$munge_version.tar.xz.asc
         rpmbuild -ta munge-$munge_version.tar.xz
 
         # We need to install munge to build slurm
         if [ $distribution_version -eq 8 ]; then
-          dnf install /root/rpmbuild/RPMS/x86_64/munge* -y
+          dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
         fi
         if [ $distribution_version -eq 7 ]; then
-          yum install /root/rpmbuild/RPMS/x86_64/munge* -y
+          yum install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
         fi
 
+        rm -Rf $working_directory/build/slurm
         mkdir $working_directory/build/slurm
         cd $working_directory/build/slurm
         cp  $working_directory/sources/slurm-$slurm_version.tar.bz2 $working_directory/build/slurm
-        tar xjvf slurm-$slurm_version.tar.bz2
-        sed -i '1s/^/%global _hardened_ldflags\ "-Wl,-z,lazy"\n/' slurm-$slurm_version/slurm.spec
-        sed -i '1s/^/%global _hardened_cflags\ "-Wl,-z,lazy"\n/' slurm-$slurm_version/slurm.spec
-        sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-$slurm_version/slurm.spec
-        sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-$slurm_version/slurm.spec
-        tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
+#        tar xjvf slurm-$slurm_version.tar.bz2
+#        sed -i '1s/^/%global _hardened_ldflags\ "-Wl,-z,lazy"\n/' slurm-$slurm_version/slurm.spec
+#        sed -i '1s/^/%global _hardened_cflags\ "-Wl,-z,lazy"\n/' slurm-$slurm_version/slurm.spec
+#        sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-$slurm_version/slurm.spec
+#        sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-$slurm_version/slurm.spec
+#        tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
 
         rpmbuild -ta slurm-$slurm_version.tar.bz2
 
@@ -328,128 +336,87 @@ case $value in
         cat $root_directory/packages/ipxe-bluebanquise/bluebanquise_dhcpretry.ipxe >> src/bluebanquise_dhcpretry.ipxe
 
         if [ $distribution_architecture == 'x86_64' ]; then
+           ipxe_arch=x86_64
+           debug_flags=$debug_flags
+        elif [ $distribution_architecture == 'aarch64' ]; then
+           ipxe_arch=arm64
+           debug_flags=intel,dhcp
+        fi
 
-        mkdir $working_directory/build/ipxe/bin/x86_64/ -p
+        mkdir $working_directory/build/ipxe/bin/$ipxe_arch/ -p
 
-        grub2-mkstandalone -O x86_64-efi -o grub2_efi_autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
-        grub2-mkstandalone -O x86_64-efi -o grub2_shell.img "boot/grub/grub.cfg=grub2-shell.cfg"
+        grub2-mkstandalone -O $ipxe_arch-efi -o grub2_efi_autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
+        grub2-mkstandalone -O $ipxe_arch-efi -o grub2_shell.img "boot/grub/grub.cfg=grub2-shell.cfg"
 
-        mv grub2_efi_autofind.img $working_directory/build/ipxe/bin/x86_64/
-        mv grub2_shell.img $working_directory/build/ipxe/bin/x86_64/
+        mv grub2_efi_autofind.img $working_directory/build/ipxe/bin/$ipxe_arch/
+        mv grub2_shell.img $working_directory/build/ipxe/bin/$ipxe_arch/
 
         cd src
 
         # Not sure it worh enabling https without injecting certificates...
         sed -i 's/#undef\       DOWNLOAD_PROTO_HTTPS/#define\   DOWNLOAD_PROTO_HTTPS/g' config/general.h
-
         sed -i 's/\/\/#define\  CONSOLE_FRAMEBUFFER/#define\  CONSOLE_FRAMEBUFFER/g' config/console.h
 
-        make -j $nb_cores bin-x86_64-efi/ipxe.efi EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin-x86_64-efi/snponly.efi EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin-x86_64-efi/snp.efi EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp,vesafb
+        if [ $distribution_architecture == 'x86_64' ]; then
+          make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+        fi
+        make -j $nb_cores bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+        make -j $nb_cores bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+        make -j $nb_cores bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+#        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+#        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
 
-        rm -Rf /dev/shm/efiiso/efi/boot
-        mkdir -p /dev/shm/efiiso/efi/boot
-        cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
-        mkisofs -o standard_efi.iso -J -r /dev/shm/efiiso
-        cp standard_efi.iso $working_directory/build/ipxe/bin/x86_64/standard_efi.iso
-
-        mv bin-x86_64-efi/ipxe.efi $working_directory/build/ipxe/bin/x86_64/standard_ipxe.efi
-        mv bin-x86_64-efi/snponly.efi $working_directory/build/ipxe/bin/x86_64/standard_snponly_ipxe.efi
-        mv bin-x86_64-efi/snp.efi $working_directory/build/ipxe/bin/x86_64/standard_snp_ipxe.efi
-        mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/standard_undionly.kpxe
-        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/standard_pcbios.iso
-        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/standard_pcbios.usb
-
-        # Doing dhcpretry
-        make -j $nb_cores bin-x86_64-efi/ipxe.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin-x86_64-efi/snponly.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin-x86_64-efi/snp.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
-        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp,vesafb
-
-        rm -Rf /dev/shm/efiiso/efi/boot
-        mkdir -p /dev/shm/efiiso/efi/boot
-        cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
-        mkisofs -o dhcpretry_efi.iso -J -r /dev/shm/efiiso
-        cp dhcpretry_efi.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_efi.iso
-
-        mv bin-x86_64-efi/ipxe.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_ipxe.efi
-        mv bin-x86_64-efi/snponly.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_snponly_ipxe.efi
-        mv bin-x86_64-efi/snp.efi $working_directory/build/ipxe/bin/x86_64/dhcpretry_snp_ipxe.efi
-        mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/dhcpretry_undionly.kpxe
-        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
-        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb
-
-        cd $working_directory/build/ipxe/
-        mkdir ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version
-        cp $root_directory//packages/ipxe-bluebanquise/ipxe-x86_64-bluebanquise.spec ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version
-        #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version/ipxe-x86_64-bluebanquise.spec
-        sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version/ipxe-x86_64-bluebanquise.spec
-        tar cvzf ipxe-x86_64-bluebanquise.tar.gz ipxe-x86_64-bluebanquise-$ipxe_bluebanquise_version
-        rpmbuild -ta ipxe-x86_64-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release"
-
+        if [ $distribution_architecture == 'x86_64' ]; then
+          rm -Rf /dev/shm/efiiso/efi/boot
+          mkdir -p /dev/shm/efiiso/efi/boot
+          cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
+          mkisofs -o standard_efi.iso -J -r /dev/shm/efiiso
+          cp standard_efi.iso $working_directory/build/ipxe/bin/x86_64/standard_efi.iso
         fi
 
-        if [ $distribution_architecture == 'aarch64' ]; then
-
-        mkdir $working_directory/build/ipxe/bin/arm64/ -p
-
-        grub2-mkstandalone -O arm64-efi -o grub2_efi_autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
-        grub2-mkstandalone -O arm64-efi -o grub2_shell.img "boot/grub/grub.cfg=grub2-shell.cfg"
-
-        mv grub2_efi_autofind.img $working_directory/build/ipxe/bin/arm64/
-        mv grub2_shell.img $working_directory/build/ipxe/bin/arm64/
-
-        cd src
-        sed -i 's/#undef\       DOWNLOAD_PROTO_HTTPS/#define\   DOWNLOAD_PROTO_HTTPS/g' config/general.h
-        sed -i 's/\/\/#define\  CONSOLE_FRAMEBUFFER/#define\  CONSOLE_FRAMEBUFFER/g' config/console.h
-        make -j $nb_cores bin-arm64-efi/ipxe.efi EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp
-        make -j $nb_cores bin-arm64-efi/snponly.efi EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp
-        make -j $nb_cores bin-arm64-efi/snp.efi EMBED=bluebanquise_standard.ipxe DEBUG=intel,dhcp
-
-        rm -Rf /root/dev/shm/efiiso/efi/boot
-        mkdir -p /root/dev/shm/efiiso/efi/boot
-        cp bin-arm64-efi/ipxe.efi /root/dev/shm/efiiso/efi/boot/bootx64.efi
-        mkisofs -o standard_efi.iso -J -r /root/dev/shm/efiiso
-        cp standard_efi.iso $working_directory/build/ipxe/bin/arm64/standard_efi.iso
-
-
-        mv bin-arm64-efi/ipxe.efi $working_directory/build/ipxe/bin/arm64/standard_ipxe.efi
-        mv bin-arm64-efi/snponly.efi $working_directory/build/ipxe/bin/arm64/standard_snponly_ipxe.efi
-        mv bin-arm64-efi/snp.efi $working_directory/build/ipxe/bin/arm64/standard_snp_ipxe.efi
+        mv bin-$ipxe_arch-efi/ipxe.efi $working_directory/build/ipxe/bin/$ipxe_arch/standard_ipxe.efi
+        mv bin-$ipxe_arch-efi/snponly.efi $working_directory/build/ipxe/bin/$ipxe_arch/standard_snponly_ipxe.efi
+        mv bin-$ipxe_arch-efi/snp.efi $working_directory/build/ipxe/bin/$ipxe_arch/standard_snp_ipxe.efi
+        if [ $distribution_architecture == 'x86_64' ]; then
+          mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/standard_undionly.kpxe
+        fi
+#        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/standard_pcbios.iso
+#        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/standard_pcbios.usb
 
         # Doing dhcpretry
-        make -j $nb_cores bin-arm64-efi/ipxe.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp
-        make -j $nb_cores bin-arm64-efi/snponly.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp
-        make -j $nb_cores bin-arm64-efi/snp.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=intel,dhcp
+        if [ $distribution_architecture == 'x86_64' ]; then
+          make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        fi
+        make -j $nb_cores bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        make -j $nb_cores bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        make -j $nb_cores bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+#        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+#        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
 
-        rm -Rf /root/dev/shm/efiiso/efi/boot
-        mkdir -p /root/dev/shm/efiiso/efi/boot
-        cp bin-arm64-efi/ipxe.efi /root/dev/shm/efiiso/efi/boot/bootx64.efi
-        mkisofs -o dhcpretry_efi.iso -J -r /root/dev/shm/efiiso
-        cp dhcpretry_efi.iso $working_directory/build/ipxe/bin/arm64/dhcpretry_efi.iso
-
-
-        mv bin-arm64-efi/ipxe.efi $working_directory/build/ipxe/bin/arm64/dhcpretry_ipxe.efi
-        mv bin-arm64-efi/snponly.efi $working_directory/build/ipxe/bin/arm64/dhcpretry_snponly_ipxe.efi
-        mv bin-arm64-efi/snp.efi $working_directory/build/ipxe/bin/arm64/dhcpretry_snp_ipxe.efi
-
-
-        cd $working_directory/build/ipxe/
-        mkdir ipxe-arm64-bluebanquise-$ipxe_bluebanquise_version
-        cp $working_directory/sources/bluebanquise/packages/ipxe-bluebanquise/ipxe-arm64-bluebanquise.spec ipxe-arm64-bluebanquise-$ipxe_bluebanquise_version/
-        #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-arm64-bluebanquise-$ipxe_bluebanquise_version/ipxe-arm64-bluebanquise.spec
-        sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-arm64-bluebanquise-$ipxe_bluebanquise_version/ipxe-arm64-bluebanquise.spec
-        tar cvzf ipxe-arm64-bluebanquise.tar.gz ipxe-arm64-bluebanquise-$ipxe_bluebanquise_version
-        rpmbuild -ta ipxe-arm64-bluebanquise.tar.gz --target=noarch
-
+        if [ $distribution_architecture == 'x86_64' ]; then
+          rm -Rf /dev/shm/efiiso/efi/boot
+          mkdir -p /dev/shm/efiiso/efi/boot
+          cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
+          mkisofs -o dhcpretry_efi.iso -J -r /dev/shm/efiiso
+          cp dhcpretry_efi.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_efi.iso
         fi
 
+        mv bin-$ipxe_arch-efi/ipxe.efi $working_directory/build/ipxe/bin/$ipxe_arch/dhcpretry_ipxe.efi
+        mv bin-$ipxe_arch-efi/snponly.efi $working_directory/build/ipxe/bin/$ipxe_arch/dhcpretry_snponly_ipxe.efi
+        mv bin-$ipxe_arch-efi/snp.efi $working_directory/build/ipxe/bin/$ipxe_arch/dhcpretry_snp_ipxe.efi
+        if [ $distribution_architecture == 'x86_64' ]; then
+          mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/dhcpretry_undionly.kpxe
+        fi
+#        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
+#        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb
+
+        cd $working_directory/build/ipxe/
+        mkdir ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
+        cp $root_directory//packages/ipxe-bluebanquise/ipxe-$ipxe_arch-bluebanquise.spec ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
+        #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
+        sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
+        tar cvzf ipxe-$ipxe_arch-bluebanquise.tar.gz ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
+        rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release"
 
        set +x
     ;;
@@ -478,7 +445,7 @@ case $value in
 
        cp -a $root_directory/packages/fbtftp_server $working_directory/build/fbtftp/fbtftp_server-$fbtftp_server_version
        tar cvzf fbtftp_server-$fbtftp_server_version.tar.gz fbtftp_server-$fbtftp_server_version
-       rpmbuild -ta fbtftp_server-$fbtftp_server_version.tar.gz --define "_software_version $fbtftp_server_version"
+       rpmbuild -ta fbtftp_server-$fbtftp_server_version.tar.gz --define "_software_version $fbtftp_server_version" --target=noarch
        set +x
     ;;
 

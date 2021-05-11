@@ -1,7 +1,20 @@
+# Leap 15.1:
+%if 0%{?is_opensuse} && 0%{?sle_version} == 150100
+%define dist .lp151
+%endif
+
+%if 0%{?is_opensuse} 
+%define tftp_path /srv/tftpboot/
+%define http_path /srv/www/htdocs/
+%else
+%define tftp_path /var/lib/tftpboot/
+%define http_path /var/www/html/
+%endif
+
 Name:     ipxe-arm64-bluebanquise
 Summary:  ipxe-arm64-bluebanquise
-Release:  1%{dist}
-Version:  XXX
+Release:  %{_software_release}%{dist}
+Version:  %{_software_version}
 License:  MIT and GPL
 Group:    System Environment/Base
 Source:   https://github.com/oxedions/bluebanquise/ipxe-arm64-bluebanquise.tar.gz
@@ -31,31 +44,26 @@ Description:
 working_directory=XXX
 
 # arm64
-mkdir -p $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/arm64
-cp $working_directory/build/ipxe/bin/arm64/grub2_efi_autofind.img $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/arm64/grub2_efi_autofind.img
-cp $working_directory/build/ipxe/bin/arm64/grub2_shell.img $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/arm64/grub2_shell.img
-cp $working_directory/build/ipxe/bin/arm64/standard_efi.iso $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/arm64/standard_efi.iso
-cp $working_directory/build/ipxe/bin/arm64/dhcpretry_efi.iso $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/arm64/dhcpretry_efi.iso
+mkdir -p $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/arm64
+cp $working_directory/build/ipxe/bin/arm64/grub2_efi_autofind.img $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/arm64/grub2_efi_autofind.img
+cp $working_directory/build/ipxe/bin/arm64/grub2_shell.img $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/arm64/grub2_shell.img
 
-
-mkdir -p $RPM_BUILD_ROOT/var/lib/tftpboot/arm64
-cp $working_directory/build/ipxe/bin/arm64/standard_ipxe.efi $RPM_BUILD_ROOT/var/lib/tftpboot/arm64/standard_ipxe.efi
-cp $working_directory/build/ipxe/bin/arm64/standard_snponly_ipxe.efi $RPM_BUILD_ROOT/var/lib/tftpboot/arm64/standard_snponly_ipxe.efi
-cp $working_directory/build/ipxe/bin/arm64/standard_snp_ipxe.efi $RPM_BUILD_ROOT/var/lib/tftpboot/arm64/standard_snp_ipxe.efi
-cp $working_directory/build/ipxe/bin/arm64/dhcpretry_ipxe.efi $RPM_BUILD_ROOT/var/lib/tftpboot/arm64/dhcpretry_ipxe.efi
-cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snponly_ipxe.efi $RPM_BUILD_ROOT/var/lib/tftpboot/arm64/dhcpretry_snponly_ipxe.efi
-cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snp_ipxe.efi $RPM_BUILD_ROOT/var/lib/tftpboot/arm64/dhcpretry_snp_ipxe.efi
+mkdir -p $RPM_BUILD_ROOT/%{tftp_path}/arm64
+cp $working_directory/build/ipxe/bin/arm64/standard_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/standard_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/standard_snponly_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/standard_snponly_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/standard_snp_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/standard_snp_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/dhcpretry_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/dhcpretry_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snponly_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/dhcpretry_snponly_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snp_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/dhcpretry_snp_ipxe.efi
 
 %files
 %defattr(-,root,root,-)
-/var/www/html/preboot_execution_environment/bin/arm64/grub2_efi_autofind.img
-/var/www/html/preboot_execution_environment/bin/arm64/grub2_shell.img
-/var/www/html/preboot_execution_environment/bin/arm64/standard_efi.iso
-/var/www/html/preboot_execution_environment/bin/arm64/dhcpretry_efi.iso
-/var/lib/tftpboot/arm64/standard_ipxe.efi
-/var/lib/tftpboot/arm64/standard_snponly_ipxe.efi
-/var/lib/tftpboot/arm64/standard_snp_ipxe.efi
-/var/lib/tftpboot/arm64/dhcpretry_ipxe.efi
-/var/lib/tftpboot/arm64/dhcpretry_snponly_ipxe.efi
-/var/lib/tftpboot/arm64/dhcpretry_snp_ipxe.efi
+%{http_path}/preboot_execution_environment/bin/arm64/grub2_efi_autofind.img
+%{http_path}/preboot_execution_environment/bin/arm64/grub2_shell.img
+%{tftp_path}/arm64/standard_ipxe.efi
+%{tftp_path}/arm64/standard_snponly_ipxe.efi
+%{tftp_path}/arm64/standard_snp_ipxe.efi
+%{tftp_path}/arm64/dhcpretry_ipxe.efi
+%{tftp_path}/arm64/dhcpretry_snponly_ipxe.efi
+%{tftp_path}/arm64/dhcpretry_snp_ipxe.efi
 
