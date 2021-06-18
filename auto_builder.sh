@@ -74,6 +74,8 @@ case $value in
           if [ "$distribution_version" = "15.1" ]; then
             zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
+	elif [ "$distribution" = 'Ubuntu' ]; then
+	    apt-get install -y liblzma-dev mkisofs
         else
           if [ $distribution_version -eq 8 ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
@@ -337,7 +339,7 @@ case $value in
 
         if [ $distribution_architecture == 'x86_64' ]; then
            ipxe_arch=x86_64
-           debug_flags=$debug_flags
+           debug_flags=intel,dhcp,vesafb
         elif [ $distribution_architecture == 'aarch64' ]; then
            ipxe_arch=arm64
            debug_flags=intel,dhcp
@@ -345,9 +347,13 @@ case $value in
 
         mkdir $working_directory/build/ipxe/bin/$ipxe_arch/ -p
 
-        grub2-mkstandalone -O $ipxe_arch-efi -o grub2_efi_autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
-        grub2-mkstandalone -O $ipxe_arch-efi -o grub2_shell.img "boot/grub/grub.cfg=grub2-shell.cfg"
-
+        if [ $distribution == "Ubuntu" ]; then
+            grub-mkstandalone -O $ipxe_arch-efi -o grub2_efi_autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
+            grub-mkstandalone -O $ipxe_arch-efi -o grub2_shell.img "boot/grub/grub.cfg=grub2-shell.cfg"
+        else
+            grub2-mkstandalone -O $ipxe_arch-efi -o grub2_efi_autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
+            grub2-mkstandalone -O $ipxe_arch-efi -o grub2_shell.img "boot/grub/grub.cfg=grub2-shell.cfg"
+        fi
         mv grub2_efi_autofind.img $working_directory/build/ipxe/bin/$ipxe_arch/
         mv grub2_shell.img $working_directory/build/ipxe/bin/$ipxe_arch/
 
@@ -416,7 +422,14 @@ case $value in
         #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
         sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
         tar cvzf ipxe-$ipxe_arch-bluebanquise.tar.gz ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
-        rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release"
+        rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release" --define "build .ubuntu18"
+
+       if [ $distribution == "Ubuntu" ]; then
+           cd /dev/shm
+           alien --to-deb /root/rpmbuild/RPMS/noarch/ipxe*
+           mkdir -p /root/debbuild/DEBS/noarch/
+           mv *.deb /root/debbuild/DEBS/noarch/
+       fi
 
        set +x
     ;;
@@ -438,14 +451,21 @@ case $value in
        cp $working_directory/sources/fbtftp-$fbtftp_version.tar.gz .
        tar xvzf fbtftp-$fbtftp_version.tar.gz
        cd fbtftp-$fbtftp_version
-       python setup.py bdist_rpm --spec-only
+       python3 setup.py bdist_rpm --spec-only
        cd ..
        tar cvzf fbtftp-$fbtftp_version.tar.gz fbtftp-$fbtftp_version
        rpmbuild -ta fbtftp-$fbtftp_version.tar.gz
 
-       cp -a $root_directory/packages/fbtftp_server $working_directory/build/fbtftp/fbtftp_server-$fbtftp_server_version
-       tar cvzf fbtftp_server-$fbtftp_server_version.tar.gz fbtftp_server-$fbtftp_server_version
-       rpmbuild -ta fbtftp_server-$fbtftp_server_version.tar.gz --define "_software_version $fbtftp_server_version" --target=noarch
+       cp -a $root_directory/packages/fbtftp_server fbtftp-server-$fbtftp_server_version
+       tar cvzf fbtftp-server-$fbtftp_server_version.tar.gz fbtftp-server-$fbtftp_server_version
+       rpmbuild -ta fbtftp-server-$fbtftp_server_version.tar.gz --define "_software_version $fbtftp_server_version" --target=noarch
+      
+       if [ $distribution == "Ubuntu" ]; then
+	   cd /dev/shm
+           alien --to-deb /root/rpmbuild/RPMS/noarch/fbtftp-*
+	   mkdir -p /root/debbuild/DEBS/noarch/
+	   mv *.deb /root/debbuild/DEBS/noarch/
+       fi 
        set +x
     ;;
 
