@@ -75,7 +75,7 @@ case $value in
             zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
 	elif [ "$distribution" = 'Ubuntu' ]; then
-	    apt-get install -y liblzma-dev mkisofs
+	    apt-get install -y liblzma-dev mkisofs rpm alien grub-efi-amd64
         else
           if [ $distribution_version -eq 8 ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
@@ -422,14 +422,21 @@ case $value in
         #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
         sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
         tar cvzf ipxe-$ipxe_arch-bluebanquise.tar.gz ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
-        rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release" --define "build .ubuntu18"
-
-       if [ $distribution == "Ubuntu" ]; then
+	if [ $distribution == "Ubuntu" ]; then
+          if [ $distribution_version == "18.04" ]; then
+            rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release" --define "dist .ubuntu18"
+	  elif [ $distribution_version == "20.04" ]; then
+	    rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release" --define "dist .ubuntu20"
+	  fi
+	else
+          rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release"
+	fi
+        if [ $distribution == "Ubuntu" ]; then
            cd /dev/shm
-           alien --to-deb /root/rpmbuild/RPMS/noarch/ipxe*
+           alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/ipxe*
            mkdir -p /root/debbuild/DEBS/noarch/
            mv *.deb /root/debbuild/DEBS/noarch/
-       fi
+        fi
 
        set +x
     ;;
@@ -462,7 +469,7 @@ case $value in
       
        if [ $distribution == "Ubuntu" ]; then
 	   cd /dev/shm
-           alien --to-deb /root/rpmbuild/RPMS/noarch/fbtftp-*
+           alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/fbtftp-*
 	   mkdir -p /root/debbuild/DEBS/noarch/
 	   mv *.deb /root/debbuild/DEBS/noarch/
        fi 

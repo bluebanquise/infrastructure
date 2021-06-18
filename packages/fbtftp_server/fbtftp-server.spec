@@ -20,6 +20,9 @@ https://github.com/facebook/fbtftp/tree/master/examples
 
 %setup -q
 
+%post
+systemctl daemon-reload
+
 %build
 
 %install
