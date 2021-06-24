@@ -63,6 +63,7 @@ echo "     8 - iPXE roms"
 echo "     9 - fbtftp"
 echo "     10 - bluebanquise"
 echo "     11 - Documentation"
+echo "     12 - grubby"
 echo " Q - Quit."
 
 read value
@@ -75,7 +76,7 @@ case $value in
             zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
 	elif [ "$distribution" = 'Ubuntu' ]; then
-	    apt-get install -y liblzma-dev mkisofs rpm alien grub-efi-amd64
+	    apt-get install -y liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev
         else
           if [ $distribution_version -eq 8 ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
@@ -519,6 +520,34 @@ case $value in
 
         set +x
         ;;
+
+    12) #####################################################################################
+
+        set -x
+        if [ ! -f $working_directory/sources/grubby-$grubby_version.tar.gz ]; then
+            wget -P $working_directory/sources/ https://github.com/rhboot/grubby/archive/refs/tags/$grubby_version.tar.gz
+            mv $working_directory/sources/$grubby_version.tar.gz $working_directory/sources/grubby-$grubby_version.tar.gz
+        fi
+        rm -Rf $working_directory/build/grubby
+        mkdir -p $working_directory/build/grubby
+        cd $working_directory/build/grubby
+        cp $working_directory/sources/grubby-$grubby_version.tar.gz .
+        tar xvzf grubby-$grubby_version.tar.gz
+	cd grubby-$grubby_version
+        make	
+        $(which cp) -af $root_directory/packages/grubby/* .
+	cd ../
+        tar cvzf grubby-$grubby_version.tar.gz grubby-$grubby_version
+        rpmbuild -ta grubby-$grubby_version.tar.gz --define "_software_version $grubby_version"
+        if [ $distribution == "Ubuntu" ]; then
+           cd /dev/shm
+           alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/grubby-*
+           mkdir -p /root/debbuild/DEBS/noarch/
+           mv *.deb /root/debbuild/DEBS/noarch/
+        fi
+        set +x
+    ;;
+
 
     Q) ######################################################################################
         echo "  Exiting."
