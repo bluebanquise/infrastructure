@@ -64,6 +64,7 @@ echo "     9 - fbtftp"
 echo "     10 - bluebanquise"
 echo "     11 - Documentation"
 echo "     12 - grubby"
+echo "     13 - ara"
 echo " Q - Quit."
 
 read value
@@ -548,6 +549,31 @@ case $value in
         set +x
     ;;
 
+    13) #####################################################################################
+
+        set -x
+        if [ ! -f $working_directory/sources/ara-$ara_version.tar.gz ]; then
+            wget -P $working_directory/sources/ https://github.com/ansible-community/ara/archive/refs/tags/$ara_version.tar.gz
+            mv $working_directory/sources/$ara_version.tar.gz $working_directory/sources/ara-$ara_version.tar.gz
+        fi
+        rm -Rf $working_directory/build/ara
+        mkdir -p $working_directory/build/ara
+        cd $working_directory/build/ara
+        cp $working_directory/sources/ara-$ara_version.tar.gz .
+        tar xvzf ara-$ara_version.tar.gz
+	cd ara-$ara_version
+        python3 setup.py bdist_rpm --spec-only	
+	cd ../
+        tar cvzf ara-$ara_version.tar.gz ara-$ara_version
+        rpmbuild -ta ara-$ara_version.tar.gz
+        if [ $distribution == "Ubuntu" ]; then
+           cd /dev/shm
+           alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/ara-*
+           mkdir -p /root/debbuild/DEBS/noarch/
+           mv *.deb /root/debbuild/DEBS/noarch/
+        fi
+        set +x
+    ;;
 
     Q) ######################################################################################
         echo "  Exiting."
