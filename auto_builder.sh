@@ -77,7 +77,7 @@ case $value in
             zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
 	elif [ "$distribution" = 'Ubuntu' ]; then
-	    apt-get install -y liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl libssl-dev
+	    apt-get install -y liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev  libssl-dev python3-setuptools
 	    # Possibly missing python3-mysqldb libmysqld-dev
         else
           if [ $distribution_version -eq 8 ]; then
@@ -118,7 +118,7 @@ case $value in
         cd $working_directory/build/nyancat
         cp $working_directory/sources/nyancat-1.5.2.tar.gz .
         tar xvzf nyancat-1.5.2.tar.gz
-        /usr/bin/cp -af $root_directory/packages/nyancat-1.5.2/* nyancat-1.5.2/
+        $(which cp) -af $root_directory/packages/nyancat-1.5.2/* nyancat-1.5.2/
         tar cvzf nyancat.tar.gz nyancat-1.5.2
         rpmbuild -ta nyancat.tar.gz
         set +x
@@ -194,7 +194,7 @@ case $value in
         cd $working_directory/build/ansible-cmdb
         cp $working_directory/sources/ansible-cmdb-$ansible_cmdb_version.tar.gz $working_directory/build/ansible-cmdb/
         tar xvzf ansible-cmdb-$ansible_cmdb_version.tar.gz
-        /usr/bin/cp -af $root_directory/packages/ansible-cmdb/* ansible-cmdb-$ansible_cmdb_version/
+        $(which cp) -af $root_directory/packages/ansible-cmdb/* ansible-cmdb-$ansible_cmdb_version/
         tar cvzf ansible-cmdb-$ansible_cmdb_version.tar.gz ansible-cmdb-$ansible_cmdb_version
         rpmbuild -ta ansible-cmdb-$ansible_cmdb_version.tar.gz --define "_software_version $ansible_cmdb_version"
         set +x
@@ -213,7 +213,7 @@ case $value in
 
 	if [ $distribution != "Ubuntu" ]; then
           rm -Rf $working_directory/build/munge
-          mkdir $working_directory/build/munge
+          mkdir -p $working_directory/build/munge
           cd $working_directory/build/munge
           cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
           wget https://github.com/dun.gpg -O $working_directory/build/munge/dun.gpg
@@ -230,7 +230,7 @@ case $value in
 	fi
 
         rm -Rf $working_directory/build/slurm
-        mkdir $working_directory/build/slurm
+        mkdir -p $working_directory/build/slurm
         cd $working_directory/build/slurm
         cp  $working_directory/sources/slurm-$slurm_version.tar.bz2 $working_directory/build/slurm
 #        tar xjvf slurm-$slurm_version.tar.bz2
@@ -241,22 +241,23 @@ case $value in
 #        tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
         if [ $distribution == "Ubuntu" ]; then
           tar xjvf slurm-$slurm_version.tar.bz2
-          sed -i 's|%{!?_unitdir|#%{!?_unitdir|' slurm-20.11.8/slurm.spec
-          sed -i 's|BuildRequires:\ systemd|#BuildRequires:\ systemd|' slurm-20.11.8/slurm.spec
-          sed -i 's|BuildRequires:\ munge-devel|#BuildRequires:\ munge-devel|' slurm-20.11.8/slurm.spec
-          sed -i 's|BuildRequires:\ python3|#BuildRequires:\ python3|' slurm-20.11.8/slurm.spec
-          sed -i 's|BuildRequires:\ readline-devel|#BuildRequires:\ readline-devel|' slurm-20.11.8/slurm.spec
-          sed -i 's|BuildRequires:\ perl(ExtUtils::MakeMaker)|#BuildRequires:\ perl(ExtUtils::MakeMaker)|' slurm-20.11.8/slurm.spec
-          sed -i 's|BuildRequires:\ pam-devel|#BuildRequires:\ pam-devel|' slurm-20.11.8/slurm.spec
+          sed -i 's|%{!?_unitdir|#%{!?_unitdir|' slurm-$slurm_version/slurm.spec
+          sed -i 's|BuildRequires:\ systemd|#BuildRequires:\ systemd|' slurm-$slurm_version/slurm.spec
+          sed -i 's|BuildRequires:\ munge-devel|#BuildRequires:\ munge-devel|' slurm-$slurm_version/slurm.spec
+          sed -i 's|BuildRequires:\ python3|#BuildRequires:\ python3|' slurm-$slurm_version/slurm.spec
+          sed -i 's|BuildRequires:\ readline-devel|#BuildRequires:\ readline-devel|' slurm-$slurm_version/slurm.spec
+          sed -i 's|BuildRequires:\ perl(ExtUtils::MakeMaker)|#BuildRequires:\ perl(ExtUtils::MakeMaker)|' slurm-$slurm_version/slurm.spec
+          sed -i 's|BuildRequires:\ pam-devel|#BuildRequires:\ pam-devel|' slurm-$slurm_version/slurm.spec
+	  tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
 	fi
 
         rpmbuild -ta slurm-$slurm_version.tar.bz2
 
         if [ $distribution == "Ubuntu" ]; then
            cd /dev/shm
-           alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/slurm*
-           mkdir -p /root/debbuild/DEBS/noarch/
-           mv *.deb /root/debbuild/DEBS/noarch/
+           alien --to-deb /root/rpmbuild/RPMS/x86_64/slurm*
+           mkdir -p /root/debbuild/DEBS/x86_64/
+           mv *.deb /root/debbuild/DEBS/x86_64/
         fi
 
         set +x
@@ -573,8 +574,7 @@ case $value in
 
         set -x
         if [ ! -f $working_directory/sources/ara-$ara_version.tar.gz ]; then
-            wget -P $working_directory/sources/ https://github.com/ansible-community/ara/archive/refs/tags/$ara_version.tar.gz
-            mv $working_directory/sources/$ara_version.tar.gz $working_directory/sources/ara-$ara_version.tar.gz
+            wget -P $working_directory/sources/ https://files.pythonhosted.org/packages/$ara_link/ara-$ara_version.tar.gz
         fi
         rm -Rf $working_directory/build/ara
         mkdir -p $working_directory/build/ara
@@ -588,7 +588,7 @@ case $value in
         rpmbuild -ta ara-$ara_version.tar.gz
         if [ $distribution == "Ubuntu" ]; then
            cd /dev/shm
-           alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/ara-*
+           alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/ara-*
            mkdir -p /root/debbuild/DEBS/noarch/
            mv *.deb /root/debbuild/DEBS/noarch/
         fi
