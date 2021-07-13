@@ -211,21 +211,23 @@ case $value in
           wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
         fi
 
-        rm -Rf $working_directory/build/munge
-        mkdir $working_directory/build/munge
-        cd $working_directory/build/munge
-        cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
-        wget https://github.com/dun.gpg -O $working_directory/build/munge/dun.gpg
-        wget https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc -O $working_directory/build/munge/munge-$munge_version.tar.xz.asc
-        rpmbuild -ta munge-$munge_version.tar.xz
+	if [ $distribution != "Ubuntu" ]; then
+          rm -Rf $working_directory/build/munge
+          mkdir $working_directory/build/munge
+          cd $working_directory/build/munge
+          cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
+          wget https://github.com/dun.gpg -O $working_directory/build/munge/dun.gpg
+          wget https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc -O $working_directory/build/munge/munge-$munge_version.tar.xz.asc
+          rpmbuild -ta munge-$munge_version.tar.xz
 
-        # We need to install munge to build slurm
-        if [ $distribution_version -eq 8 ]; then
-          dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
-        fi
-        if [ $distribution_version -eq 7 ]; then
-          yum install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
-        fi
+          # We need to install munge to build slurm
+          if [ $distribution_version -eq 8 ]; then
+            dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
+          fi
+          if [ $distribution_version -eq 7 ]; then
+            yum install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
+          fi
+	fi
 
         rm -Rf $working_directory/build/slurm
         mkdir $working_directory/build/slurm
@@ -237,8 +239,25 @@ case $value in
 #        sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-$slurm_version/slurm.spec
 #        sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-$slurm_version/slurm.spec
 #        tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
+        if [ $distribution == "Ubuntu" ]; then
+          tar xjvf slurm-$slurm_version.tar.bz2
+          sed -i 's|%{!?_unitdir|#%{!?_unitdir|' slurm-20.11.8/slurm.spec
+          sed -i 's|BuildRequires:\ systemd|#BuildRequires:\ systemd|' slurm-20.11.8/slurm.spec
+          sed -i 's|BuildRequires:\ munge-devel|#BuildRequires:\ munge-devel|' slurm-20.11.8/slurm.spec
+          sed -i 's|BuildRequires:\ python3|#BuildRequires:\ python3|' slurm-20.11.8/slurm.spec
+          sed -i 's|BuildRequires:\ readline-devel|#BuildRequires:\ readline-devel|' slurm-20.11.8/slurm.spec
+          sed -i 's|BuildRequires:\ perl(ExtUtils::MakeMaker)|#BuildRequires:\ perl(ExtUtils::MakeMaker)|' slurm-20.11.8/slurm.spec
+          sed -i 's|BuildRequires:\ pam-devel|#BuildRequires:\ pam-devel|' slurm-20.11.8/slurm.spec
+	fi
 
         rpmbuild -ta slurm-$slurm_version.tar.bz2
+
+        if [ $distribution == "Ubuntu" ]; then
+           cd /dev/shm
+           alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/slurm*
+           mkdir -p /root/debbuild/DEBS/noarch/
+           mv *.deb /root/debbuild/DEBS/noarch/
+        fi
 
         set +x
     ;;
