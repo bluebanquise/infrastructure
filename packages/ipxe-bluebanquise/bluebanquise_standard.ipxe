@@ -2,6 +2,7 @@ echo
 echo . . . +----------------------------------------------------+ . . .
 echo . . . | . . . . . . . iPXE embed - standard. . . . . . . . | . . .
 echo . . . | . . . . . BlueBanquise - Benoit Leveugle . . . . . | . . .
+echo . . . | . . IPXECOMMIT . . . | . . .
 echo . . . +----------------------------------------------------+ . . .
 
 set user-class BlueBanquise

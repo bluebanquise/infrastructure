@@ -351,13 +351,20 @@ case $value in
 
         # Customizing
         # Building embed ipxe files
+	last_commit=$(cd wd/sources/ipxe; git log | grep commit | sed -n 1p | awk -F ' ' '{print $2}'; cd ../../../;)
         echo "#!ipxe" > src/bluebanquise_standard.ipxe
+	echo "cpair --foreground 6 0" >> src/bluebanquise_standard.ipxe
         cat $root_directory/packages/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_standard.ipxe
         cat $root_directory/packages/ipxe-bluebanquise/bluebanquise_standard.ipxe >> src/bluebanquise_standard.ipxe
+        sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_standard.ipxe
+	echo "cpair 0" >> src/bluebanquise_standard.ipxe
 
         echo "#!ipxe" > src/bluebanquise_dhcpretry.ipxe
-        cat $root_directory/packages/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_dhcpretry.ipxe
+        echo "cpair --foreground 6 0" >> src/bluebanquise_standard.ipxe
+	cat $root_directory/packages/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_dhcpretry.ipxe
         cat $root_directory/packages/ipxe-bluebanquise/bluebanquise_dhcpretry.ipxe >> src/bluebanquise_dhcpretry.ipxe
+	sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_dhcpretry.ipxe
+	echo "cpair 0" >> src/bluebanquise_standard.ipxe
 
         if [ $distribution_architecture == 'x86_64' ]; then
            ipxe_arch=x86_64
@@ -382,8 +389,12 @@ case $value in
         cd src
 
         # Not sure it worh enabling https without injecting certificates...
-        sed -i 's/#undef\       DOWNLOAD_PROTO_HTTPS/#define\   DOWNLOAD_PROTO_HTTPS/g' config/general.h
-        sed -i 's/\/\/#define\  CONSOLE_FRAMEBUFFER/#define\  CONSOLE_FRAMEBUFFER/g' config/console.h
+
+       sed -i 's/.*DOWNLOAD_PROTO_HTTPS.*/#define DOWNLOAD_PROTO_HTTPS/' config/general.h
+       sed -i 's/.*PING_CMD.*/#define PING_CMD/' config/general.h
+       sed -i 's/.*CONSOLE_CMD.*/#define CONSOLE_CMD/' config/general.h
+       sed -i 's/.*CONSOLE_FRAMEBUFFER.*/#define CONSOLE_FRAMEBUFFER/' config/console.h
+
 
         if [ $distribution_architecture == 'x86_64' ]; then
           make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
