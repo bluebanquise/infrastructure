@@ -11,7 +11,7 @@ Source0:	https://github.com/dun/conman/releases/download/%{name}-%{version}/%{na
 BuildRequires:	freeipmi-devel >= 1.0.4
 #BuildRequires:	tcp_wrappers-devel
 BuildRequires:	systemd
-Requires:	expect
+Requires:	expect, freeipmi
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
