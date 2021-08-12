@@ -343,7 +343,7 @@ case $value in
         # git pull
 
         rm -Rf $working_directory/build/ipxe/
-        mkdir $working_directory/build/ipxe/
+        mkdir -p $working_directory/build/ipxe/
         cd $working_directory/build/ipxe/
         cp -a $working_directory/sources/ipxe/* $working_directory/build/ipxe/
 
