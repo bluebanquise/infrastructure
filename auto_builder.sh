@@ -395,7 +395,10 @@ case $value in
        sed -i 's/.*PING_CMD.*/#define PING_CMD/' config/general.h
        sed -i 's/.*CONSOLE_CMD.*/#define CONSOLE_CMD/' config/general.h
        sed -i 's/.*CONSOLE_FRAMEBUFFER.*/#define CONSOLE_FRAMEBUFFER/' config/console.h
-
+       #sed -i 's/.*IMAGE_BZIMAGE.*/#define IMAGE_BZIMAGE/' config/general.h
+       sed -i 's/.*IMAGE_ZLIB.*/#define IMAGE_ZLIB/' config/general.h
+       sed -i 's/.*IMAGE_GZIP.*/#define IMAGE_GZIP/' config/general.h
+       sed -i 's/.*IMAGE_EFI.*/#define IMAGE_EFI/' config/general.h
 
         if [ $distribution_architecture == 'x86_64' ]; then
           make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
