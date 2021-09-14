@@ -361,11 +361,18 @@ case $value in
 	echo "cpair 0" >> src/bluebanquise_standard.ipxe
 
         echo "#!ipxe" > src/bluebanquise_dhcpretry.ipxe
-        echo "cpair --foreground 6 0" >> src/bluebanquise_standard.ipxe
+        echo "cpair --foreground 6 0" >> src/bluebanquise_dhcpretry.ipxe
 	cat $root_directory/packages/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_dhcpretry.ipxe
         cat $root_directory/packages/ipxe-bluebanquise/bluebanquise_dhcpretry.ipxe >> src/bluebanquise_dhcpretry.ipxe
 	sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_dhcpretry.ipxe
-	echo "cpair 0" >> src/bluebanquise_standard.ipxe
+	echo "cpair 0" >> src/bluebanquise_dhcpretry.ipxe
+
+        echo "#!ipxe" > src/bluebanquise_noshell.ipxe
+        echo "cpair --foreground 6 0" >> src/bluebanquise_noshell.ipxe
+        cat $root_directory/packages/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_noshell.ipxe
+        cat $root_directory/packages/ipxe-bluebanquise/bluebanquise_noshell.ipxe >> src/bluebanquise_noshell.ipxe
+        sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_noshell.ipxe
+        echo "cpair 0" >> src/bluebanquise_noshell.ipxe
 
         if [ $distribution_architecture == 'x86_64' ]; then
            ipxe_arch=x86_64
@@ -400,6 +407,7 @@ case $value in
        sed -i 's/.*IMAGE_GZIP.*/#define IMAGE_GZIP/' config/general.h
        #sed -i 's/.*IMAGE_EFI.*/#define IMAGE_EFI/' config/general.h
 
+       ############################################################################################### STANDARD
         if [ $distribution_architecture == 'x86_64' ]; then
           make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
         fi
@@ -426,7 +434,7 @@ case $value in
 #        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/standard_pcbios.iso
 #        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/standard_pcbios.usb
 
-        # Doing dhcpretry
+        ############################################################################################### DHCPRETRY
         if [ $distribution_architecture == 'x86_64' ]; then
           make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
         fi
@@ -452,6 +460,37 @@ case $value in
         fi
 #        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
 #        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb
+
+
+
+        ############################################################################################### NOSHELL
+        if [ $distribution_architecture == 'x86_64' ]; then
+          make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
+        fi
+        make -j $nb_cores bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
+        make -j $nb_cores bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
+        make -j $nb_cores bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
+#        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+#        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+
+        if [ $distribution_architecture == 'x86_64' ]; then
+          rm -Rf /dev/shm/efiiso/efi/boot
+          mkdir -p /dev/shm/efiiso/efi/boot
+          cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
+          mkisofs -o noshell_efi.iso -J -r /dev/shm/efiiso
+          cp noshell_efi.iso $working_directory/build/ipxe/bin/x86_64/noshell_efi.iso
+        fi
+
+        mv bin-$ipxe_arch-efi/ipxe.efi $working_directory/build/ipxe/bin/$ipxe_arch/noshell_ipxe.efi
+        mv bin-$ipxe_arch-efi/snponly.efi $working_directory/build/ipxe/bin/$ipxe_arch/noshell_snponly_ipxe.efi
+        mv bin-$ipxe_arch-efi/snp.efi $working_directory/build/ipxe/bin/$ipxe_arch/noshell_snp_ipxe.efi
+        if [ $distribution_architecture == 'x86_64' ]; then
+          mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/noshell_undionly.kpxe
+        fi
+#        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
+#        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb
+
+        ###############################################################################################
 
         cd $working_directory/build/ipxe/
         mkdir ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version

@@ -51,6 +51,7 @@ cp $working_directory/build/ipxe/bin/x86_64/standard_efi.iso $RPM_BUILD_ROOT/%{h
 #cp $working_directory/build/ipxe/bin/x86_64/standard_pcbios.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/standard_pcbios.iso
 #cp $working_directory/build/ipxe/bin/x86_64/standard_pcbios.usb $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/standard_pcbios.usb
 cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_efi.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_efi.iso
+cp $working_directory/build/ipxe/bin/x86_64/noshell_efi.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/noshell_efi.iso
 #cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_pcbios.iso
 #cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_pcbios.usb
 
@@ -64,6 +65,10 @@ cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_ipxe.efi $RPM_BUILD_ROOT/%
 cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_undionly.kpxe $RPM_BUILD_ROOT/%{tftp_path}/x86_64/dhcpretry_undionly.kpxe
 cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_snponly_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/x86_64/dhcpretry_snponly_ipxe.efi
 cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_snp_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/x86_64/dhcpretry_snp_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/noshell_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/x86_64/noshell_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/noshell_undionly.kpxe $RPM_BUILD_ROOT/%{tftp_path}/x86_64/noshell_undionly.kpxe
+cp $working_directory/build/ipxe/bin/x86_64/noshell_snponly_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/x86_64/noshell_snponly_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/noshell_snp_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/x86_64/noshell_snp_ipxe.efi
 
 %files
 %defattr(-,root,root,-)
@@ -73,6 +78,7 @@ cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_snp_ipxe.efi $RPM_BUILD_RO
 #%{http_path}/preboot_execution_environment/bin/x86_64/standard_pcbios.iso
 #%{http_path}/preboot_execution_environment/bin/x86_64/standard_pcbios.usb
 %{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_efi.iso
+%{http_path}/preboot_execution_environment/bin/x86_64/noshell_efi.iso
 #%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_pcbios.iso
 #%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_pcbios.usb
 %{tftp_path}/x86_64/standard_ipxe.efi
@@ -83,4 +89,9 @@ cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_snp_ipxe.efi $RPM_BUILD_RO
 %{tftp_path}/x86_64/dhcpretry_undionly.kpxe
 %{tftp_path}/x86_64/dhcpretry_snponly_ipxe.efi
 %{tftp_path}/x86_64/dhcpretry_snp_ipxe.efi
+%{tftp_path}/x86_64/noshell_ipxe.efi
+%{tftp_path}/x86_64/noshell_undionly.kpxe
+%{tftp_path}/x86_64/noshell_snponly_ipxe.efi
+%{tftp_path}/x86_64/noshell_snp_ipxe.efi
+
 
