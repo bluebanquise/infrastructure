@@ -1,6 +1,14 @@
 # Leap 15.1:
-%if 0%{?is_opensuse} && 0%{?sle_version} == 150100
+%if 0%{?sle_version} == 150100
 %define dist .lp151
+%endif
+# Leap 15.2:
+%if 0%{?sle_version} == 150200
+%define dist .lp152
+%endif
+# Leap 15.3:
+%if 0%{?sle_version} == 150300
+%define dist .lp153
 %endif
 
 %if 0%{?is_opensuse} 
