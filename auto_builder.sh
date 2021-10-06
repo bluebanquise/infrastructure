@@ -1,3 +1,4 @@
+#!/bin/bash
 # Force script to stop if any error
 set -e
 
@@ -72,11 +73,11 @@ case $value in
 
     0) ######################################################################################
         echo " Installing needed packages... may take some time."
-        if [ "$distribution" = 'openSUSE Leap' ]; then
-          if [ "$distribution_version" = "15.1" ]; then
+        if [ "$distribution" == 'openSUSE Leap' ]; then
+          if [ "$distribution_version" == "15.1" ]; then
             zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
-	elif [ "$distribution" = 'Ubuntu' ]; then
+	elif [ "$distribution" == 'Ubuntu' ]; then
 	    apt-get install -y liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev  libssl-dev python3-setuptools
 	    # Possibly missing python3-mysqldb libmysqld-dev
         else
