@@ -40,10 +40,11 @@ mkdir -p $working_directory
 echo " Creating source directory..."
 mkdir -p $working_directory/sources/
 
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 echo " Sourcing parameters."
-source parameters.conf
+source $SCRIPT_DIR/parameters.conf
 echo " Sourcing versions."
-source versions.conf
+source $SCRIPT_DIR/versions.conf
 
 while [ true ]
 do
