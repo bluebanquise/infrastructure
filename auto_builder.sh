@@ -504,16 +504,16 @@ case $value in
         #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
         sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
         tar cvzf ipxe-$ipxe_arch-bluebanquise.tar.gz ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
-	if [ $distribution == "Ubuntu" ]; then
-          if [ $distribution_version == "18.04" ]; then
+	if [ "$distribution" == "Ubuntu" ]; then
+          if [ "$distribution_version" == "18.04" ]; then
             rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release" --define "dist .ubuntu18"
-	  elif [ $distribution_version == "20.04" ]; then
+	  elif [ "$distribution_version" == "20.04" ]; then
 	    rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release" --define "dist .ubuntu20"
 	  fi
 	else
           rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release"
 	fi
-        if [ $distribution == "Ubuntu" ]; then
+        if [ "$distribution" == "Ubuntu" ]; then
            cd /dev/shm
            alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/ipxe*
            mkdir -p /root/debbuild/DEBS/noarch/
