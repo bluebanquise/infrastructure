@@ -32,7 +32,8 @@ distribution_architecture=$(uname --m)
 echo " Found $distribution $distribution_version $distribution_architecture"
 
 echo " Creating working directory..."
-root_directory=$(pwd)
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+root_directory=$SCRIPT_DIR
 working_directory=$(pwd)/wd/
 echo " Working directory: $working_directory"
 mkdir -p $working_directory
@@ -40,36 +41,39 @@ mkdir -p $working_directory
 echo " Creating source directory..."
 mkdir -p $working_directory/sources/
 
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 echo " Sourcing parameters."
-source $SCRIPT_DIR/parameters.conf
+source $root_directory/parameters.conf
 echo " Sourcing versions."
-source $SCRIPT_DIR/versions.conf
+source $root_directory/versions.conf
 
-while [ true ]
-do
 
-echo
-echo " Select operation:"
-echo
-echo " 0 - Install needed requirements to build packages"
-echo " Build packages:"
-echo "     1 - Nyancat"
-echo "     2 - Prometheus and related tools"
-echo "     3 - AnsibleCMDB"
-echo "     4 - Slurm and Munge"
-echo "     5 - Atftp"
-echo "     6 - Powerman"
-echo "     7 - Conman"
-echo "     8 - iPXE roms"
-echo "     9 - fbtftp"
-echo "     10 - bluebanquise"
-echo "     11 - Documentation"
-echo "     12 - grubby"
-#echo "     13 - ara"
-echo " Q - Quit."
+if [ -z $1 ]
+then
+  echo
+  echo " Select operation:"
+  echo
+  echo " 0 - Install needed requirements to build packages"
+  echo " Build packages:"
+  echo "     1 - Nyancat"
+  echo "     2 - Prometheus and related tools"
+  echo "     3 - AnsibleCMDB"
+  echo "     4 - Slurm and Munge"
+  echo "     5 - Atftp"
+  echo "     6 - Powerman"
+  echo "     7 - Conman"
+  echo "     8 - iPXE roms"
+  echo "     9 - fbtftp"
+  echo "     10 - bluebanquise"
+  echo "     11 - Documentation"
+  echo "     12 - grubby"
+  echo "     14 - MLL"
 
-read value
+  read value
+
+else
+  value=$1
+fi
+
 case $value in
 
     0) ######################################################################################
@@ -673,14 +677,7 @@ case $value in
 	set +x
     ;;
 
-    Q) ######################################################################################
-        echo "  Exiting."
-        exit
-    ;;
-
 esac
-
-done
 
 exit
 
