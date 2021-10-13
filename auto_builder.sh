@@ -20,7 +20,7 @@ echo "    .   'C/ |    |    |   |    |mrf  ,"
 echo "    \), .. .'OOO-'. ..'OOO'OOO-'. ..\(,"
 echo
 echo "  BlueBanquise packages builder"
-echo "    (c) 2019-2020 Benoit Leveugle"
+echo "    (c) 2019-2021 Benoit Leveugle"
 echo
 
 ### TO BE DONE: test if invocation is done in the script dir
@@ -90,6 +90,7 @@ fi
 case $value in
 
     0) ######################################################################################
+        set -x
         echo " Installing needed packages... may take some time."
         if [ "$distribution" == 'openSUSE Leap' ]; then
           if [ "$distribution_version" == "15.1" ]; then
@@ -126,6 +127,7 @@ case $value in
             fi
           fi
         fi
+        set +x
     ;;
 
     1) ######################################################################################
