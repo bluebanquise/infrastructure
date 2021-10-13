@@ -44,8 +44,8 @@ if [ $distribution_architecture == 'x86_64' ]; then
 
     cp -a $root_directory/packages/prometheus/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
     mv ipmi_exporter ipmi_exporter-$ipmi_exporter_version
-    tar cvzf ipmi_exporter-v$ipmi_exporter_version.linux-amd64.tar.gz ipmi_exporter-$ipmi_exporter_version
-    rpmbuild -ta ipmi_exporter-v$ipmi_exporter_version.linux-amd64.tar.gz --define "_software_version $ipmi_exporter_version"
+    tar cvzf ipmi_exporter-$ipmi_exporter_version.linux-amd64.tar.gz ipmi_exporter-$ipmi_exporter_version
+    rpmbuild -ta ipmi_exporter-$ipmi_exporter_version.linux-amd64.tar.gz --define "_software_version $ipmi_exporter_version"
 
     cp -a $root_directory/packages/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
     mv snmp_exporter snmp_exporter-$snmp_exporter_version
