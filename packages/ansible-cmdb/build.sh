@@ -7,7 +7,7 @@ if [ ! -f $working_directory/sources/ansible-cmdb-$ansible_cmdb_version.tar.gz ]
     wget -P $working_directory/sources/ https://github.com/fboender/ansible-cmdb/releases/download/$ansible_cmdb_version/ansible-cmdb-$ansible_cmdb_version.tar.gz
 fi
 rm -Rf $working_directory/build/ansible-cmdb
-mkdir $working_directory/build/ansible-cmdb
+mkdir -p $working_directory/build/ansible-cmdb
 cd $working_directory/build/ansible-cmdb
 cp $working_directory/sources/ansible-cmdb-$ansible_cmdb_version.tar.gz $working_directory/build/ansible-cmdb/
 tar xvzf ansible-cmdb-$ansible_cmdb_version.tar.gz
