@@ -26,18 +26,20 @@ echo
 ### TO BE DONE: test if invocation is done in the script dir
 
 echo " Detecting distribution..."
-distribution=$(grep ^NAME /etc/os-release | awk -F '"' '{print $2}')
-distribution_version=$(grep ^VERSION_ID /etc/os-release | awk -F '"' '{print $2}')
-distribution_architecture=$(uname --m)
 if [ -z $2 ]
 then
+   distribution=$(grep ^NAME /etc/os-release | awk -F '"' '{print $2}')
+else
    distribution=$2
 fi
 if [ -z $3 ]
 then
+   distribution_version=$(grep ^VERSION_ID /etc/os-release | awk -F '"' '{print $2}')
+else
    distribution_version=$3
 fi
 
+distribution_architecture=$(uname --m)
 echo " Settings set to $distribution $distribution_version $distribution_architecture"
 
 
