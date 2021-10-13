@@ -18,7 +18,7 @@ if [ $distribution_version -eq 8 ]; then
   cp $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz .
   tar xvzf prometheus_client-$prometheus_client_version.tar.gz
   cd client_python-$prometheus_client_version
-  python setup.py bdist_rpm --spec-only
+  python3 setup.py bdist_rpm --spec-only
   cd ..
   mv client_python-$prometheus_client_version prometheus_client-$prometheus_client_version
   tar cvzf prometheus_client-$prometheus_client_version.tar.gz prometheus_client-$prometheus_client_version
