@@ -24,11 +24,11 @@ ipmi_exporter for the BlueBanquise stack
 wget https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-%{_software_version}.linux-amd64.tar.gz
 
 # Extract
-tar xvzf ipmi_exporter-v%{_software_version}.linux-amd64.tar.gz
+tar xvzf ipmi_exporter-%{_software_version}.linux-amd64.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a ipmi_exporter-v%{_software_version}.linux-amd64/ipmi_exporter $RPM_BUILD_ROOT/usr/local/bin/
+cp -a ipmi_exporter-%{_software_version}.linux-amd64/ipmi_exporter $RPM_BUILD_ROOT/usr/local/bin/
 
 %pre
 
