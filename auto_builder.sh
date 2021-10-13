@@ -231,11 +231,7 @@ case $value in
     10) ######################################################################################
         if [ -z $4 ]
         then
-          echo
-          echo "Available tags:"
-          git tag
-          echo
-          read -p "Please enter tag to be used: " bb_tag
+          echo "Error, please add a tag"
         else
           bb_tag=$4
         fi
