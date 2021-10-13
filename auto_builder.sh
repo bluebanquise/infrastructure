@@ -114,20 +114,7 @@ case $value in
     ;;
 
     1) ######################################################################################
-        set -x
-        if [ ! -f $working_directory/sources/nyancat-1.5.2.tar.gz ]; then
-            wget -P $working_directory/sources/ https://github.com/klange/nyancat/archive/1.5.2.tar.gz
-            mv $working_directory/sources/1.5.2.tar.gz $working_directory/sources/nyancat-1.5.2.tar.gz
-        fi
-        rm -Rf $working_directory/build/nyancat
-        mkdir -p $working_directory/build/nyancat
-        cd $working_directory/build/nyancat
-        cp $working_directory/sources/nyancat-1.5.2.tar.gz .
-        tar xvzf nyancat-1.5.2.tar.gz
-        $(which cp) -af $root_directory/packages/nyancat-1.5.2/* nyancat-1.5.2/
-        tar cvzf nyancat.tar.gz nyancat-1.5.2
-        rpmbuild -ta nyancat.tar.gz
-        set +x
+        source $root_directory/packages/nyancat/build.sh
     ;;
 
     2) ######################################################################################
@@ -675,6 +662,14 @@ case $value in
         tar cvzf mll-$kernelversion.tar.gz mll-$kernelversion
         rpmbuild -ta mll-$kernelversion.tar.gz --define "_software_version $kernelversion" --define "_architecture $(uname -m)"
 	set +x
+    ;;
+
+    15) #####################################################################################
+        source $root_directory/packages/ssh-wait/build.sh
+    ;;
+
+    16) #####################################################################################
+        source $root_directory/packages/colour_text/build.sh
     ;;
 
 esac

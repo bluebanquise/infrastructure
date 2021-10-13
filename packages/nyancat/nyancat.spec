@@ -20,7 +20,7 @@
 
 Name:          nyancat
 Summary:       nyancat
-Version:       1.5.2
+Version:       %{_software_version}
 Release:       1%{dist}
 License:       GPL
 Group:         System Environment/Libraries
