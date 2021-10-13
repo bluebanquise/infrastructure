@@ -1,7 +1,7 @@
 set -x
 
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-source $CURRENT_DIR/version.sh
+#source $CURRENT_DIR/version.sh
         
 rm -Rf $working_directory/build/bluebanquise
 mkdir -p $working_directory/build/bluebanquise
