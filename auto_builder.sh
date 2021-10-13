@@ -29,7 +29,18 @@ echo " Detecting distribution..."
 distribution=$(grep ^NAME /etc/os-release | awk -F '"' '{print $2}')
 distribution_version=$(grep ^VERSION_ID /etc/os-release | awk -F '"' '{print $2}')
 distribution_architecture=$(uname --m)
-echo " Found $distribution $distribution_version $distribution_architecture"
+if [ -z $2 ]
+then
+   distribution=$2
+fi
+if [ -z $3 ]
+then
+   distribution_version=$3
+fi
+
+echo " Settings set to $distribution $distribution_version $distribution_architecture"
+
+
 
 echo " Creating working directory..."
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
@@ -85,13 +96,15 @@ case $value in
 	elif [ "$distribution" == 'Ubuntu' ]; then
 	    apt-get install -y liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev  libssl-dev python3-setuptools
 	    # Possibly missing python3-mysqldb libmysqld-dev
-        else
+        elif [ "$distribution" == 'RedHat' ]; then
           if [ $distribution_version -eq 8 ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
               dnf install 'dnf-command(config-manager)'
-              dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel -y
+	      dnf install dnf-plugins-core -y
+              dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget -y
               dnf config-manager --set-enabled PowerTools
               dnf install freeipmi-devel -y
+	      dnf groupinstall 'Development Tools' -y
 #              alternatives --set python /usr/bin/python3
             fi
             if [ $distribution_architecture == 'aarch64' ]; then
