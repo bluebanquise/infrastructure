@@ -8,8 +8,6 @@ Source:   https://github.com/prometheus/prometheus/releases/download/v%{_softwar
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
-Requires(pre): /usr/sbin/useradd, /usr/bin/getent
-Requires(postun): /usr/sbin/userdel
 
 %define debug_package %{nil}
 
@@ -34,26 +32,15 @@ mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
 cp -a prometheus-%{_software_version}.linux-amd64/prometheus $RPM_BUILD_ROOT/usr/local/bin/
 cp -a prometheus-%{_software_version}.linux-amd64/promtool $RPM_BUILD_ROOT/usr/local/bin/
 
-# Add services
-mkdir -p $RPM_BUILD_ROOT/etc/systemd/system/
-cp -a services/prometheus.service $RPM_BUILD_ROOT/etc/systemd/system/
-
 %pre
-/usr/bin/getent group prometheus || /usr/sbin/groupadd -r prometheus
-/usr/bin/getent passwd prometheus || /usr/sbin/useradd -r --no-create-home --shell /bin/false prometheus -g prometheus
 
 %preun
 
 %post
-systemctl daemon-reload
-mkdir -p $RPM_BUILD_ROOT/etc/prometheus
 
 %postun
-systemctl daemon-reload
-/usr/sbin/userdel prometheus
 
 %files
 %defattr(-,root,root,-)
 /usr/local/bin/prometheus
 /usr/local/bin/promtool
-/etc/systemd/system/prometheus.service

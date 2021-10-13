@@ -8,9 +8,6 @@ Source:   https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_soft
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
-Requires(pre): /usr/sbin/useradd, /usr/bin/getent
-Requires(postun): /usr/sbin/userdel
-
 %define debug_package %{nil}
 
 %description
@@ -33,25 +30,14 @@ tar xvzf ipmi_exporter-v%{_software_version}.linux-amd64.tar.gz
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
 cp -a ipmi_exporter-v%{_software_version}.linux-amd64/ipmi_exporter $RPM_BUILD_ROOT/usr/local/bin/
 
-# Add services
-mkdir -p $RPM_BUILD_ROOT/etc/systemd/system/
-cp -a services/ipmi_exporter.service $RPM_BUILD_ROOT/etc/systemd/system/
-
 %pre
-/usr/bin/getent group ipmi_exporter || /usr/sbin/groupadd -r ipmi_exporter
-/usr/bin/getent passwd ipmi_exporter || /usr/sbin/useradd -r --no-create-home --shell /bin/false ipmi_exporter -g ipmi_exporter
 
 %preun
 
 %post
-systemctl daemon-reload
-mkdir -p $RPM_BUILD_ROOT/etc/ipmi_exporter
 
 %postun
-systemctl daemon-reload
-/usr/sbin/userdel ipmi_exporter
 
 %files
 %defattr(-,root,root,-)
 /usr/local/bin/ipmi_exporter
-/etc/systemd/system/ipmi_exporter.service
