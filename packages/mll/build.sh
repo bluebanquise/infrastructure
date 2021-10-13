@@ -1,4 +1,8 @@
 set -x
+
+CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source $CURRENT_DIR/version.sh
+
 rm -Rf $working_directory/build/MLL
 mkdir -p $working_directory/build/MLL
 cd $working_directory/build/MLL
@@ -17,5 +21,5 @@ cp /mnt/boot/*.xz mll-$kernelversion/
 cp -a $root_directory/packages/mll mll-$kernelversion/
 tar cvzf mll-$kernelversion.tar.gz mll-$kernelversion
 rpmbuild -ta mll-$kernelversion.tar.gz --define "_software_version $kernelversion" --define "_architecture $(uname -m)"
-set +x
 
+set +x
