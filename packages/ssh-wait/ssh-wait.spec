@@ -10,7 +10,7 @@ Packager: Benoit Leveugle <benoit.leveugle@gmail.com>
 
 %define debug_package %{nil}
 
-Requires: colour_text
+Requires: python3-colour_text
 
 %description
 ssh-wait python module for BlueBanquise
