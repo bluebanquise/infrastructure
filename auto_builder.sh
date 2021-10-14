@@ -103,11 +103,11 @@ case $value in
           if [ $distribution_version -eq 8 ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
               dnf install 'dnf-command(config-manager)' -y
-	      dnf install dnf-plugins-core -y
-              dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget -y
+	            dnf install dnf-plugins-core -y
+              dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget bc -y
               dnf config-manager --set-enabled powertools
               dnf install freeipmi-devel -y
-	      dnf groupinstall 'Development Tools' -y
+	            dnf groupinstall 'Development Tools' -y
 #              alternatives --set python /usr/bin/python3
             fi
             if [ $distribution_architecture == 'aarch64' ]; then
