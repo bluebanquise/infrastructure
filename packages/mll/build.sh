@@ -14,10 +14,10 @@ sed -i 's/^cd\ \$DEST_DIR\/usr\/lib/cd\ \$DEST_DIR\/usr\/lib64/' minimal_overlay
 export FORCE_UNSAFE_CONFIGURE=1
 ./build_minimal_linux_live.sh
 kernelversion=$(ls -l source/ | grep -i '\ linux-' | awk -F 'linux-' '{print $2}' | awk -F '.tar.xz' '{print $1}')
-mount $working_directory/build/MLL/src/minimal_linux_live.iso /mnt
 cd $working_directory/build/MLL/
 mkdir mll-$kernelversion
-cp /mnt/boot/*.xz mll-$kernelversion/
+isoinfo -i $working_directory/build/MLL/src/minimal_linux_live.iso -x '/boot/rootfs.xz;1' > mll-$kernelversion/rootfs.xz
+isoinfo -i $working_directory/build/MLL/src/minimal_linux_live.iso -x '/boot/kernel.xz;1' > mll-$kernelversion/kernel.xz
 cp -a $root_directory/packages/mll mll-$kernelversion/
 tar cvzf mll-$kernelversion.tar.gz mll-$kernelversion
 rpmbuild -ta mll-$kernelversion.tar.gz --define "_software_version $kernelversion" --define "_architecture $(uname -m)"
