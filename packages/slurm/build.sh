@@ -55,7 +55,7 @@ fi
 rpmbuild -ta slurm-$slurm_version.tar.bz2
 
 if [ $distribution == "Ubuntu" ]; then
-    cd /dev/shm
+    cd /root
     alien --to-deb /root/rpmbuild/RPMS/x86_64/slurm*
     mkdir -p /root/debbuild/DEBS/x86_64/
     mv *.deb /root/debbuild/DEBS/x86_64/
