@@ -13,6 +13,7 @@ cd $working_directory/build/grubby
 cp $working_directory/sources/grubby-$grubby_version.tar.gz .
 tar xvzf grubby-$grubby_version.tar.gz
 cd grubby-$grubby_version
+sed -i 's|-Werror||' Makefile
 make	
 $(which cp) -af $root_directory/packages/grubby/* .
 cd ../
