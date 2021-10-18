@@ -3,7 +3,6 @@ set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
 
-
 if [ ! -f $working_directory/sources/slurm-$slurm_version.tar.bz2 ]; then
     wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-$slurm_version.tar.bz2
 fi
@@ -49,6 +48,7 @@ if [ $distribution == "Ubuntu" ]; then
     sed -i 's|BuildRequires:\ readline-devel|#BuildRequires:\ readline-devel|' slurm-$slurm_version/slurm.spec
     sed -i 's|BuildRequires:\ perl(ExtUtils::MakeMaker)|#BuildRequires:\ perl(ExtUtils::MakeMaker)|' slurm-$slurm_version/slurm.spec
     sed -i 's|BuildRequires:\ pam-devel|#BuildRequires:\ pam-devel|' slurm-$slurm_version/slurm.spec
+    sed -i 's|%{_perlman3dir}/Slurm*|#%{_perlman3dir}/Slurm*|' slurm-$slurm_version/slurm.spec
 tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
 fi
 
