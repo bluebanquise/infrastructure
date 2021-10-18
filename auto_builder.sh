@@ -94,7 +94,7 @@ case $value in
         echo " Installing needed packages... may take some time."
         if [ "$distribution" == 'opensuse_leap' ]; then
           if [ "$distribution_version" == "15.3" ]; then
-            zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
+            zypper -n install wget flex bison gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
 	      elif [ "$distribution" == 'Ubuntu' ]; then
            apt-get update
