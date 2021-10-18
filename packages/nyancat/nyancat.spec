@@ -1,27 +1,24 @@
-# Leap 15.0:
-%if 0%{?is_opensuse} && 0%{?sle_version} == 150000
-%define dist .osl15.0
+%define is_ubuntu %(grep -i ubuntu /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
+%define is_opensuse_leap %(grep -i opensuse-leap /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
+
+# OpenSuse Leap 15.3:
+%if %is_opensuse_leap
+  %if %(grep '15.3' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
+     %define dist .osl15.3
+  %endif
 %endif
 
-# Leap 15.1:
-%if 0%{?is_opensuse} && 0%{?sle_version} == 150100
-%define dist .osl15.1
-%endif
-
-# Leap 15.2:
-%if 0%{?is_opensuse} && 0%{?sle_version} == 150200
-%define dist .osl15.2
-%endif
-
-# Leap 15.3:
-%if 0%{?is_opensuse} && 0%{?sle_version} == 150300
-%define dist .osl15.3
+# Ubuntu 20.04
+%if %is_ubuntu
+  %if %(grep '20.04' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
+    %define dist ubuntu.20.04
+  %endif
 %endif
 
 Name:          nyancat
 Summary:       nyancat
 Version:       %{_software_version}
-Release:       1%{dist}
+Release:       1%{?dist}
 License:       GPL
 Group:         System Environment/Libraries
 Source:        https://github.com/klange/nyancat.tar.gz
