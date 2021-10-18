@@ -4,7 +4,7 @@ source $CURRENT_DIR/version.sh
 
 set -x
 
-if [ $distribution_version -ne 7 ]; then
+if [ "$distribution_version" != "7" ]; then
   if [ ! -f $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz ]; then
     wget -P $working_directory/sources/ https://github.com/prometheus/client_python/archive/v$prometheus_client_version.tar.gz
     mv $working_directory/sources/v$prometheus_client_version.tar.gz $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz
@@ -14,7 +14,7 @@ rm -Rf $working_directory/build/prometheus
 mkdir -p $working_directory/build/prometheus
 cd $working_directory/build/prometheus
 
-if [ $distribution_version -ne 7 ]; then
+if [ "$distribution_version" != "7" ]; then
   cp $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz .
   tar xvzf prometheus_client-$prometheus_client_version.tar.gz
   cd client_python-$prometheus_client_version
