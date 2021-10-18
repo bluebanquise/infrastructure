@@ -14,5 +14,13 @@ tar xvzf nyancat-$nyancat_version.tar.gz
 $(which cp) -af $root_directory/packages/nyancat/* nyancat-$nyancat_version/
 tar cvzf nyancat.tar.gz nyancat-$nyancat_version
 rpmbuild -ta nyancat.tar.gz --define "_software_version $nyancat_version"
+
+if [ $distribution == "Ubuntu" ]; then
+    cd /root
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/nyancat-*
+    mkdir -p /root/debbuild/DEBS/noarch/
+    mv *.deb /root/debbuild/DEBS/noarch/
+fi
+
 set +x
 

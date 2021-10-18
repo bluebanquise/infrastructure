@@ -22,4 +22,11 @@ cp -a $root_directory/packages/mll mll-$kernelversion/
 tar cvzf mll-$kernelversion.tar.gz mll-$kernelversion
 rpmbuild -ta mll-$kernelversion.tar.gz --define "_software_version $kernelversion" --define "_architecture $(uname -m)"
 
+if [ $distribution == "Ubuntu" ]; then
+    cd /root
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/mll-*
+    mkdir -p /root/debbuild/DEBS/noarch/
+    mv *.deb /root/debbuild/DEBS/noarch/
+fi
+
 set +x

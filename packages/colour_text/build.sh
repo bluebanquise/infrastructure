@@ -14,4 +14,13 @@ cp $working_directory/sources/colour_text-$colour_text_version-py2.py3-none-any.
 $(which cp) -af $root_directory/packages/colour_text/colour_text.spec python3-colour_text-$colour_text_version/
 tar cvzf python3-colour_text-$colour_text_version.tar.gz python3-colour_text-$colour_text_version
 rpmbuild -ta python3-colour_text-$colour_text_version.tar.gz --define "_software_version $colour_text_version"
+
+if [ $distribution == "Ubuntu" ]; then
+    cd /root
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/python3-colour_text-*
+    mkdir -p /root/debbuild/DEBS/noarch/
+    mv *.deb /root/debbuild/DEBS/noarch/
+fi
+
+
 set +x

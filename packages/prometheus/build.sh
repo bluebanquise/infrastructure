@@ -58,5 +58,19 @@ if [ $distribution_architecture == 'x86_64' ]; then
     rpmbuild -ta karma-linux-amd64.tar.gz --define "_software_version $karma_version"
 
 fi
+
+if [ $distribution == "Ubuntu" ]; then
+    cd /root
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/prometheus_client-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/prometheus-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/alertmanager-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/node_exporter-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/ipmi_exporter-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/snmp_exporter-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/karma-*
+    mkdir -p /root/debbuild/DEBS/noarch/
+    mv *.deb /root/debbuild/DEBS/noarch/
+fi
+
 set +x
 
