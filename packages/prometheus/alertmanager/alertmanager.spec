@@ -38,7 +38,7 @@ Alertmanager and related tools for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget https://github.com/prometheus/alertmanager/releases/download/v%{_software_version}/alertmanager-%{_software_version}.linux-amd64.tar.gz
+wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prometheus/alertmanager/releases/download/v%{_software_version}/alertmanager-%{_software_version}.linux-amd64.tar.gz
 
 # Extract
 tar xvzf alertmanager-%{_software_version}.linux-amd64.tar.gz

@@ -38,7 +38,7 @@ Node_exporter for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget https://github.com/prometheus/node_exporter/releases/download/v%{_software_version}/node_exporter-%{_software_version}.linux-amd64.tar.gz
+wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prometheus/node_exporter/releases/download/v%{_software_version}/node_exporter-%{_software_version}.linux-amd64.tar.gz
 
 # Extract
 tar xvzf node_exporter-%{_software_version}.linux-amd64.tar.gz

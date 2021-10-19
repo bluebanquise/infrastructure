@@ -94,12 +94,12 @@ case $value in
         echo " Installing needed packages... may take some time."
         if [ "$distribution" == 'opensuse_leap' ]; then
           if [ "$distribution_version" == "15.3" ]; then
-            zypper -n install wget flex bison gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
+            zypper -n install python3-setuptools wget flex bison gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
 	      elif [ "$distribution" == 'Ubuntu' ]; then
            apt-get update
            export DEBIAN_FRONTEND=noninteractive
-	         apt-get install -y bison flex  liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget
+	         apt-get install -y python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget
 	         # Possibly missing python3-mysqldb libmysqld-dev
         elif [ "$distribution" == 'RedHat' ]; then
           if [ $distribution_version -eq 8 ]; then

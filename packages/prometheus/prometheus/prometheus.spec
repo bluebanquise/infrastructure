@@ -39,7 +39,7 @@ Prometheus and related tools for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget https://github.com/prometheus/prometheus/releases/download/v%{_software_version}/prometheus-%{_software_version}.linux-amd64.tar.gz
+wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prometheus/prometheus/releases/download/v%{_software_version}/prometheus-%{_software_version}.linux-amd64.tar.gz
 
 # Extract
 tar xvzf prometheus-%{_software_version}.linux-amd64.tar.gz
