@@ -23,7 +23,7 @@ cp $root_directory/packages/ipxe-bluebanquise/grub2-shell.cfg .
 
 # Customizing
 # Building embed ipxe files
-last_commit=$(cd wd/sources/ipxe; git log | grep commit | sed -n 1p | awk -F ' ' '{print $2}'; cd ../../../;)
+last_commit=$(cd $working_directory/sources/ipxe; git log | grep commit | sed -n 1p | awk -F ' ' '{print $2}'; cd ../../../;)
 if [ -z $ipxe_bluebanquise_release ]
 then
     ipxe_bluebanquise_release=$last_commit
