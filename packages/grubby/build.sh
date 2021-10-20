@@ -22,8 +22,8 @@ rpmbuild -ta grubby-$grubby_version.tar.gz --define "_software_version $grubby_v
 if [ $distribution == "Ubuntu" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/grubby-*
-    mkdir -p /root/debbuild/DEBS/noarch/
-    mv *.deb /root/debbuild/DEBS/noarch/
+    mkdir -p /root/debbuild/DEBS/x86_64/
+    mv *.deb /root/debbuild/DEBS/x86_64/
 fi
 
 set +x
