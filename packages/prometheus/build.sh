@@ -61,13 +61,13 @@ fi
 
 if [ $distribution == "Ubuntu" ]; then
     cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/prometheus_client-*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/prometheus-*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/alertmanager-*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/node_exporter-*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/ipmi_exporter-*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/snmp_exporter-*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/karma-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/prometheus_client_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/prometheus_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/alertmanager_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/node_exporter_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/ipmi_exporter_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/snmp_exporter_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/karma_*
     mkdir -p /root/debbuild/DEBS/noarch/
     mv prometheus_client-*.deb /root/debbuild/DEBS/noarch/
     mv *.deb /root/debbuild/DEBS/x86_64/
