@@ -17,9 +17,9 @@ rpmbuild -ta ansible-cmdb-$ansible_cmdb_version.tar.gz --define "_software_versi
 
 if [ $distribution == "Ubuntu" ]; then
     cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/ansible-cmdb-*
-    mkdir -p /root/debbuild/DEBS/x86_64/
-    mv *.deb /root/debbuild/DEBS/x86_64/
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/ansible-cmdb-*
+    mkdir -p /root/debbuild/DEBS/$distribution_architecture/
+    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
 fi
 
 set +x

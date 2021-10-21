@@ -17,9 +17,9 @@ rpmbuild -ta nyancat.tar.gz --define "_software_version $nyancat_version"
 
 if [ $distribution == "Ubuntu" ]; then
     cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/nyancat-*
-    mkdir -p /root/debbuild/DEBS/x86_64/
-    mv *.deb /root/debbuild/DEBS/x86_64/
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/nyancat-*
+    mkdir -p /root/debbuild/DEBS/$distribution_architecture/
+    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
 fi
 
 set +x

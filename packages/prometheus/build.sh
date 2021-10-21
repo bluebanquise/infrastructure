@@ -26,51 +26,55 @@ if [ "$distribution_version" != "7" ]; then
 fi
 
 if [ $distribution_architecture == 'x86_64' ]; then
-
-    cp -a $root_directory/packages/prometheus/prometheus $working_directory/build/prometheus/prometheus
-    mv prometheus prometheus-$prometheus_version
-    tar cvzf prometheus-$prometheus_version.linux-amd64.tar.gz prometheus-$prometheus_version
-    rpmbuild -ta prometheus-$prometheus_version.linux-amd64.tar.gz --define "_software_version $prometheus_version"
-    sleep 20
-    cp -a $root_directory/packages/prometheus/alertmanager $working_directory/build/prometheus/alertmanager
-    mv alertmanager alertmanager-$alertmanager_version
-    tar cvzf alertmanager-$alertmanager_version.linux-amd64.tar.gz alertmanager-$alertmanager_version
-    rpmbuild -ta alertmanager-$alertmanager_version.linux-amd64.tar.gz --define "_software_version $alertmanager_version"
-    sleep 20
-    cp -a $root_directory/packages/prometheus/node_exporter $working_directory/build/prometheus/node_exporter
-    mv node_exporter node_exporter-$node_exporter_version
-    tar cvzf node_exporter-$node_exporter_version.linux-amd64.tar.gz node_exporter-$node_exporter_version
-    rpmbuild -ta node_exporter-$node_exporter_version.linux-amd64.tar.gz --define "_software_version $node_exporter_version"
-    sleep 20
-    cp -a $root_directory/packages/prometheus/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
-    mv ipmi_exporter ipmi_exporter-$ipmi_exporter_version
-    tar cvzf ipmi_exporter-$ipmi_exporter_version.linux-amd64.tar.gz ipmi_exporter-$ipmi_exporter_version
-    rpmbuild -ta ipmi_exporter-$ipmi_exporter_version.linux-amd64.tar.gz --define "_software_version $ipmi_exporter_version"
-    sleep 20
-    cp -a $root_directory/packages/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
-    mv snmp_exporter snmp_exporter-$snmp_exporter_version
-    tar cvzf snmp_exporter-$snmp_exporter_version.linux-amd64.tar.gz snmp_exporter-$snmp_exporter_version
-    rpmbuild -ta snmp_exporter-$snmp_exporter_version.linux-amd64.tar.gz --define "_software_version $snmp_exporter_version"
-    sleep 20
-    cp -a $root_directory/packages/prometheus/karma $working_directory/build/prometheus/karma
-    mv karma karma-$karma_version
-    tar cvzf karma-linux-amd64.tar.gz karma-$karma_version
-    rpmbuild -ta karma-linux-amd64.tar.gz --define "_software_version $karma_version"
-
+  prometheus_arch=amd64
+elif [ $distribution_architecture == 'aarch64' ]; then
+  prometheus_arch=arm64
 fi
+
+
+cp -a $root_directory/packages/prometheus/prometheus $working_directory/build/prometheus/prometheus
+mv prometheus prometheus-$prometheus_version
+tar cvzf prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz prometheus-$prometheus_version
+rpmbuild -ta prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz --define "_software_version $prometheus_version"
+sleep 20
+cp -a $root_directory/packages/prometheus/alertmanager $working_directory/build/prometheus/alertmanager
+mv alertmanager alertmanager-$alertmanager_version
+tar cvzf alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz alertmanager-$alertmanager_version
+rpmbuild -ta alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz --define "_software_version $alertmanager_version"
+sleep 20
+cp -a $root_directory/packages/prometheus/node_exporter $working_directory/build/prometheus/node_exporter
+mv node_exporter node_exporter-$node_exporter_version
+tar cvzf node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz node_exporter-$node_exporter_version
+rpmbuild -ta node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz --define "_software_version $node_exporter_version"
+sleep 20
+cp -a $root_directory/packages/prometheus/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
+mv ipmi_exporter ipmi_exporter-$ipmi_exporter_version
+tar cvzf ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz ipmi_exporter-$ipmi_exporter_version
+rpmbuild -ta ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz --define "_software_version $ipmi_exporter_version"
+sleep 20
+cp -a $root_directory/packages/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
+mv snmp_exporter snmp_exporter-$snmp_exporter_version
+tar cvzf snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz snmp_exporter-$snmp_exporter_version
+rpmbuild -ta snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz --define "_software_version $snmp_exporter_version"
+sleep 20
+cp -a $root_directory/packages/prometheus/karma $working_directory/build/prometheus/karma
+mv karma karma-$karma_version
+tar cvzf karma-linux-$prometheus_arch.tar.gz karma-$karma_version
+rpmbuild -ta karma-linux-$prometheus_arch.tar.gz --define "_software_version $karma_version"
+
 
 if [ $distribution == "Ubuntu" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/prometheus_client_*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/prometheus_*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/alertmanager_*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/node_exporter_*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/ipmi_exporter_*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/snmp_exporter_*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/karma_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/alertmanager_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/node_exporter_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/ipmi_exporter_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/snmp_exporter_*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/karma_*
     mkdir -p /root/debbuild/DEBS/noarch/
     mv prometheus_client-*.deb /root/debbuild/DEBS/noarch/
-    mv *.deb /root/debbuild/DEBS/x86_64/
+    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
 fi
 
 set +x
