@@ -21,7 +21,7 @@ Release:  1%{?dist}
 Version:  %{_software_version}
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-%{_software_version}.linux-amd64.tar.gz
+Source:   https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
@@ -38,7 +38,7 @@ ipmi_exporter for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-%{_software_version}.linux-amd64.tar.gz
+wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Extract
 tar xvzf ipmi_exporter-%{_software_version}.linux-amd64.tar.gz
