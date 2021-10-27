@@ -41,11 +41,11 @@ snmp_exporter for the BlueBanquise stack
 wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prometheus/snmp_exporter/releases/download/v%{_software_version}/snmp_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Extract
-tar xvzf snmp_exporter-%{_software_version}.linux-amd64.tar.gz
+tar xvzf snmp_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a snmp_exporter-%{_software_version}.linux-amd64/snmp_exporter $RPM_BUILD_ROOT/usr/local/bin/
+cp -a snmp_exporter-%{_software_version}.linux-%{_software_architecture}/snmp_exporter $RPM_BUILD_ROOT/usr/local/bin/
 
 %pre
 

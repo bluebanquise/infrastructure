@@ -41,11 +41,11 @@ Node_exporter for the BlueBanquise stack
 wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prometheus/node_exporter/releases/download/v%{_software_version}/node_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Extract
-tar xvzf node_exporter-%{_software_version}.linux-amd64.tar.gz
+tar xvzf node_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a node_exporter-%{_software_version}.linux-amd64/node_exporter $RPM_BUILD_ROOT/usr/local/bin/
+cp -a node_exporter-%{_software_version}.linux-%{_software_architecture}/node_exporter $RPM_BUILD_ROOT/usr/local/bin/
 
 %pre
 

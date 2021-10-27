@@ -41,12 +41,12 @@ Alertmanager and related tools for the BlueBanquise stack
 wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prometheus/alertmanager/releases/download/v%{_software_version}/alertmanager-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Extract
-tar xvzf alertmanager-%{_software_version}.linux-amd64.tar.gz
+tar xvzf alertmanager-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a alertmanager-%{_software_version}.linux-amd64/alertmanager $RPM_BUILD_ROOT/usr/local/bin/
-cp -a alertmanager-%{_software_version}.linux-amd64/amtool $RPM_BUILD_ROOT/usr/local/bin/
+cp -a alertmanager-%{_software_version}.linux-%{_software_architecture}/alertmanager $RPM_BUILD_ROOT/usr/local/bin/
+cp -a alertmanager-%{_software_version}.linux-%{_software_architecture}/amtool $RPM_BUILD_ROOT/usr/local/bin/
 
 %preun
 

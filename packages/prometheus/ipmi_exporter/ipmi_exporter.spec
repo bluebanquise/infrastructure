@@ -41,11 +41,11 @@ ipmi_exporter for the BlueBanquise stack
 wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Extract
-tar xvzf ipmi_exporter-%{_software_version}.linux-amd64.tar.gz
+tar xvzf ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a ipmi_exporter-%{_software_version}.linux-amd64/ipmi_exporter $RPM_BUILD_ROOT/usr/local/bin/
+cp -a ipmi_exporter-%{_software_version}.linux-%{_software_architecture}/ipmi_exporter $RPM_BUILD_ROOT/usr/local/bin/
 
 %pre
 

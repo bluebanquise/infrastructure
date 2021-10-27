@@ -41,11 +41,11 @@ karma for the BlueBanquise stack
 wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma-linux-%{_software_architecture}.tar.gz
 
 # Extract
-tar xvzf karma-linux-amd64.tar.gz
+tar xvzf karma-linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a karma-linux-amd64 $RPM_BUILD_ROOT/usr/local/bin/karma
+cp -a karma-linux-%{_software_architecture} $RPM_BUILD_ROOT/usr/local/bin/karma
 
 %pre
 
