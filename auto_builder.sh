@@ -79,7 +79,7 @@ case $value in
     0) ######################################################################################
         echo " Installing needed packages... may take some time."
         if [ "$distribution" == 'openSUSE Leap' ]; then
-          if [ "$distribution_version" == "15.1" ]; then
+          if [[ "$distribution_version" =~ ^15\. ]]; then
             zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
 	elif [ "$distribution" == 'Ubuntu' ]; then
@@ -217,7 +217,7 @@ case $value in
           wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
         fi
 
-	if [ $distribution != "Ubuntu" ]; then
+	if [ "$distribution" != "Ubuntu" ]; then
           rm -Rf $working_directory/build/munge
           mkdir -p $working_directory/build/munge
           cd $working_directory/build/munge
@@ -245,7 +245,7 @@ case $value in
 #        sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-$slurm_version/slurm.spec
 #        sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-$slurm_version/slurm.spec
 #        tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
-        if [ $distribution == "Ubuntu" ]; then
+        if [ "$distribution" == "Ubuntu" ]; then
           tar xjvf slurm-$slurm_version.tar.bz2
           sed -i 's|%{!?_unitdir|#%{!?_unitdir|' slurm-$slurm_version/slurm.spec
           sed -i 's|BuildRequires:\ systemd|#BuildRequires:\ systemd|' slurm-$slurm_version/slurm.spec
@@ -259,7 +259,7 @@ case $value in
 
         rpmbuild -ta slurm-$slurm_version.tar.bz2
 
-        if [ $distribution == "Ubuntu" ]; then
+        if [ "$distribution" == "Ubuntu" ]; then
            cd /dev/shm
            alien --to-deb /root/rpmbuild/RPMS/x86_64/slurm*
            mkdir -p /root/debbuild/DEBS/x86_64/
@@ -390,7 +390,7 @@ case $value in
 
         mkdir $working_directory/build/ipxe/bin/$ipxe_arch/ -p
 
-        if [ $distribution == "Ubuntu" ]; then
+        if [ "$distribution" == "Ubuntu" ]; then
             grub-mkstandalone -O $ipxe_arch-efi -o grub2_efi_autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
             grub-mkstandalone -O $ipxe_arch-efi -o grub2_shell.img "boot/grub/grub.cfg=grub2-shell.cfg"
         else
@@ -504,7 +504,7 @@ case $value in
         #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
         sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
         tar cvzf ipxe-$ipxe_arch-bluebanquise.tar.gz ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
-	if [ $distribution == "Ubuntu" ]; then
+	if [ "$distribution" == "Ubuntu" ]; then
           if [ $distribution_version == "18.04" ]; then
             rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release" --define "dist .ubuntu18"
 	  elif [ $distribution_version == "20.04" ]; then
@@ -513,7 +513,7 @@ case $value in
 	else
           rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release"
 	fi
-        if [ $distribution == "Ubuntu" ]; then
+        if [ "$distribution" == "Ubuntu" ]; then
            cd /dev/shm
            alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/ipxe*
            mkdir -p /root/debbuild/DEBS/noarch/
@@ -549,7 +549,7 @@ case $value in
        tar cvzf fbtftp-server-$fbtftp_server_version.tar.gz fbtftp-server-$fbtftp_server_version
        rpmbuild -ta fbtftp-server-$fbtftp_server_version.tar.gz --define "_software_version $fbtftp_server_version" --target=noarch
       
-       if [ $distribution == "Ubuntu" ]; then
+       if [ "$distribution" == "Ubuntu" ]; then
 	   cd /dev/shm
            alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/fbtftp-*
 	   mkdir -p /root/debbuild/DEBS/noarch/
@@ -620,7 +620,7 @@ case $value in
 	cd ../
         tar cvzf grubby-$grubby_version.tar.gz grubby-$grubby_version
         rpmbuild -ta grubby-$grubby_version.tar.gz --define "_software_version $grubby_version"
-        if [ $distribution == "Ubuntu" ]; then
+        if [ "$distribution" == "Ubuntu" ]; then
            cd /dev/shm
            alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/grubby-*
            mkdir -p /root/debbuild/DEBS/noarch/
@@ -645,7 +645,7 @@ case $value in
 	cd ../
         tar cvzf ara-$ara_version.tar.gz ara-$ara_version
         rpmbuild -ta ara-$ara_version.tar.gz
-        if [ $distribution == "Ubuntu" ]; then
+        if [ "$distribution" == "Ubuntu" ]; then
            cd /dev/shm
            alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/ara-*
            mkdir -p /root/debbuild/DEBS/noarch/
