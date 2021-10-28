@@ -52,7 +52,7 @@ echo "cpair 0" >> src/bluebanquise_noshell.ipxe
 if [ $distribution_architecture == 'x86_64' ]; then
     ipxe_arch=x86_64
     debug_flags=intel,dhcp,vesafb
-elif [ $distribution_architecture == 'aarch64' ]; then
+elif [ $distribution_architecture == 'aarch64' ] || [ $distribution_architecture == 'arm64' ]; then
     ipxe_arch=arm64
     debug_flags=intel,dhcp
 fi
