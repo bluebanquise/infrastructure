@@ -13,7 +13,7 @@ cp $working_directory/sources/nyancat-$nyancat_version.tar.gz .
 tar xvzf nyancat-$nyancat_version.tar.gz
 $(which cp) -af $root_directory/packages/nyancat/* nyancat-$nyancat_version/
 tar cvzf nyancat.tar.gz nyancat-$nyancat_version
-rpmbuild -ta nyancat.tar.gz --define "_software_version $nyancat_version"
+rpmbuild -ta nyancat.tar.gz --target=$distribution_architecture --define "_software_version $nyancat_version"
 
 if [ $distribution == "Ubuntu" ]; then
     cd /root

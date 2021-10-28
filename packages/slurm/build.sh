@@ -53,7 +53,7 @@ if [ $distribution == "Ubuntu" ]; then
 tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
 fi
 
-rpmbuild -ta slurm-$slurm_version.tar.bz2
+rpmbuild -ta --target=$distribution_architecture slurm-$slurm_version.tar.bz2
 
 if [ $distribution == "Ubuntu" ]; then
     cd /root

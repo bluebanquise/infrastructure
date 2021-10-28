@@ -13,7 +13,7 @@ cp $working_directory/sources/ansible-cmdb-$ansible_cmdb_version.tar.gz $working
 tar xvzf ansible-cmdb-$ansible_cmdb_version.tar.gz
 $(which cp) -af $root_directory/packages/ansible-cmdb/* ansible-cmdb-$ansible_cmdb_version/
 tar cvzf ansible-cmdb-$ansible_cmdb_version.tar.gz ansible-cmdb-$ansible_cmdb_version
-rpmbuild -ta ansible-cmdb-$ansible_cmdb_version.tar.gz --define "_software_version $ansible_cmdb_version"
+rpmbuild -ta ansible-cmdb-$ansible_cmdb_version.tar.gz --target=$distribution_architecture --define "_software_version $ansible_cmdb_version"
 
 if [ $distribution == "Ubuntu" ]; then
     cd /root
