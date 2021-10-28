@@ -72,6 +72,7 @@ if [ $distribution == "Ubuntu" ]; then
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/snmp_exporter-*
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/karma-*
     mkdir -p /root/debbuild/DEBS/noarch/
+    mkdir -p /root/debbuild/DEBS/$distribution_architecture/
     mv prometheus-client_*.deb /root/debbuild/DEBS/noarch/
     mv *.deb /root/debbuild/DEBS/$distribution_architecture/
 fi
