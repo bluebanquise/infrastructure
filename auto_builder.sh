@@ -97,10 +97,17 @@ case $value in
             zypper -n install python3-setuptools wget flex bison gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
 	      elif [ "$distribution" == 'Ubuntu' ]; then
+          if [ $distribution_architecture == 'x86_64' ]; then
            apt-get update
            export DEBIAN_FRONTEND=noninteractive
 	         apt-get install -y python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget
 	         # Possibly missing python3-mysqldb libmysqld-dev
+          fi
+          if [ $distribution_architecture == 'aarch64' ]; then
+           apt-get update
+           export DEBIAN_FRONTEND=noninteractive
+	         apt-get install -y python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-arm64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget
+          fi
         elif [ "$distribution" == 'RedHat' ]; then
           if [ $distribution_version -eq 8 ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
@@ -127,7 +134,7 @@ case $value in
               yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel wget git gcc-c++ python-setuptools python3-setuptools net-snmp-devel curl-devel freeipmi-devel bc rsync xorriso flex bison -y
             fi
             if [ $distribution_architecture == 'aarch64' ]; then
-              yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel -y
+              yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel wget git gcc-c++ python-setuptools python3-setuptools net-snmp-devel curl-devel freeipmi-devel bc rsync xorriso flex bison -y
             fi
           fi
         fi
