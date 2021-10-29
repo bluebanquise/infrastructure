@@ -1,3 +1,12 @@
+        if [ -z $4 ]
+        then
+          echo "Error, please add a tag"
+        else
+          bb_tag=$4
+        fi
+        source $root_directory/packages/bluebanquise/build.sh
+
+
 set -x
 
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
