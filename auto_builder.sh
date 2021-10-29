@@ -126,5 +126,5 @@ if [ "$1" == "documentation" ]; then
   exit 0
 fi
 
-source $root_directory/packages/$0/build.sh
+source $root_directory/packages/$1/build.sh
 exit 0

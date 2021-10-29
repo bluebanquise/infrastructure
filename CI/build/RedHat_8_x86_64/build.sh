@@ -2,8 +2,12 @@ set -e
 set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-podman pull docker.io/rockylinux/rockylinux:8
-podman build --no-cache --tag rockylinux_8_build -f $CURRENT_DIR/Dockerfile
+podman images | grep rockylinux_8_build
+if [ $? -ne 0 ]; then
+  podman pull docker.io/rockylinux/rockylinux:8
+  podman build --no-cache --tag rockylinux_8_build -f $CURRENT_DIR/Dockerfile
+fi
+
 podman run -it --rm -v /nfs/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build nyancat RedHat 8
 podman run -it --rm -v /nfs/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build prometheus RedHat 8
 podman run -it --rm -v /nfs/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build ansible-cmdb RedHat 8
