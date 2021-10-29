@@ -107,7 +107,7 @@ if [ "$1" == "dependencies" ]; then
   exit 0
 fi
 
-if [ "$1" == "documentation" ]
+if [ "$1" == "documentation" ]; then
 
   set -x
 
