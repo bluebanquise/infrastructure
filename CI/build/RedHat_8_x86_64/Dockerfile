@@ -3,5 +3,5 @@ RUN dnf install git -y
 RUN mkdir /infra
 RUN git clone https://github.com/oxedions/infrastructure.git /infra
 RUN chmod +x /infra/auto_builder.sh
-RUN /infra/auto_builder.sh 0 RedHat 8
+RUN /infra/auto_builder.sh packages RedHat 8
 ENTRYPOINT ["/infra/auto_builder.sh"]

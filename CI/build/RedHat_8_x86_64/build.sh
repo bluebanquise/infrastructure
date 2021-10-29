@@ -1,3 +1,5 @@
+set -e
+set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 podman pull docker.io/rockylinux/rockylinux:8

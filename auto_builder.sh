@@ -44,7 +44,7 @@ mkdir -p $working_directory/sources/
 echo " Sourcing parameters."
 source $root_directory/parameters.conf
 
-if [ "$1" == "dependencies" ]
+if [ "$1" == "dependencies" ]; then
   set -x
   echo " Installing needed packages... may take some time."
 
