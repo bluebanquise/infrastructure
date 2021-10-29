@@ -141,6 +141,8 @@ case $value in
             fi
             if [ $distribution_architecture == 'aarch64' ]; then
               yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel wget git gcc-c++ python-setuptools python3-setuptools net-snmp-devel curl-devel freeipmi-devel bc rsync xorriso flex bison -y
+              yum install centos-release-scl -y
+              yum install devtoolset-7 -y
             fi
           fi
         fi

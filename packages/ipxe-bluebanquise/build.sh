@@ -3,6 +3,14 @@ set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
 
+if [ "$distribution" == 'RedHat' ]; then
+    if [ $distribution_version -eq 7 ]; then
+        if [ $distribution_architecture == 'aarch64' ]; then
+            scl enable devtoolset-7 bash
+        fi
+    fi
+fi
+
 # iPXE
 if [ ! -f $working_directory/sources/ipxe/README ]; then
     mkdir -p $working_directory/sources/ipxe/
