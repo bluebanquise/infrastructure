@@ -11,3 +11,4 @@ mkdir -p ~/CI/{build,repositories}/ubuntu2004/{x86_64,arm64}/
 
 rsync -av $CURRENT_DIR/build/RedHat_8_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/RedHat_8_x86_64/
 ssh bluebanquise@x86_64_worker /home/bluebanquise/RedHat_8_x86_64/build.sh
+rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/rpmbuild/RPMS/* ~/CI/build/el8/x86_64/
