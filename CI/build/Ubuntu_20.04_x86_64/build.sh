@@ -3,20 +3,20 @@ set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 set +e
-podman images | grep rockylinux_8_build
+podman images | grep ubuntu_20.04_build
 if [ $? -ne 0 ]; then
   set -e
-  podman pull docker.io/rockylinux/rockylinux:8
-  podman build --no-cache --tag rockylinux_8_build -f $CURRENT_DIR/Dockerfile
+  podman pull docker.io/ubuntu:20.04
+  podman build --no-cache --tag ubuntu_20.04_build -f $CURRENT_DIR/Dockerfile
 fi
 set -e
 
-if [[ -d "~/build/el8/x86_64/" ]]; then
-rm -Rf ~/build/el8/x86_64/
+if [[ -d "~/build/ubuntu2004/x86_64/" ]]; then
+rm -Rf ~/build/ubuntu2004/x86_64/
 fi
-mkdir -p ~/build/el8/x86_64/
+mkdir -p ~/build/ubuntu2004/x86_64/
 
-podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS rockylinux_8_build nyancat RedHat 8
+podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/rpmbuild/RPMS ubuntu_20.04_build nyancat Ubuntu 20.04
 #podman run -it --rm -v /nfs/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build prometheus RedHat 8
 #podman run -it --rm -v /nfs/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build ansible-cmdb RedHat 8
 #podman run -it --rm -v /nfs/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build slurm RedHat 8
