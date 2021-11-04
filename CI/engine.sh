@@ -16,6 +16,8 @@ mkdir -p ~/CI/{build,repositories}/ubuntu2004/{x86_64,arm64}/
 ## Different archs == different hosts -> parallel
 
 #(
+a=1
+if [ $a -eq 2 ]; then
     ## RedHat_8_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_8_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/RedHat_8_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/RedHat_8_x86_64/build.sh
@@ -35,7 +37,7 @@ mkdir -p ~/CI/{build,repositories}/ubuntu2004/{x86_64,arm64}/
     rsync -av $CURRENT_DIR/build/RedHat_8_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/RedHat_8_aarch64/
     ssh bluebanquise@aarch64_worker /home/bluebanquise/RedHat_8_aarch64/build.sh
     rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/el8/aarch64/* ~/CI/build/el8/aarch64/
-
+fi
     ## RedHat_7_aarch64
     rsync -av $CURRENT_DIR/build/RedHat_7_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/RedHat_7_aarch64/
     ssh bluebanquise@aarch64_worker /home/bluebanquise/RedHat_7_aarch64/build.sh
