@@ -6,7 +6,8 @@ source $CURRENT_DIR/version.sh
 if [ "$distribution" == 'RedHat' ]; then
     if [ $distribution_version -eq 7 ]; then
         if [ $distribution_architecture == 'aarch64' ]; then
-            scl enable devtoolset-7 bash
+            # scl enable devtoolset-7 bash
+            source scl_source enable devtoolset-7
         fi
     fi
 fi
