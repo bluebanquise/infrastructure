@@ -9,7 +9,9 @@ if [ "$distribution" == 'RedHat' ]; then
             # scl enable devtoolset-7 bash
 	    yum install centos-release-scl -y
 	    yum install devtoolset-7 -y
+	    set +e
 	    source scl_source enable devtoolset-7
+	    set -e
         fi
     fi
 fi
