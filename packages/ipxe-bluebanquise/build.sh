@@ -7,7 +7,9 @@ if [ "$distribution" == 'RedHat' ]; then
     if [ $distribution_version -eq 7 ]; then
         if [ $distribution_architecture == 'aarch64' ]; then
             # scl enable devtoolset-7 bash
-            source scl_source enable devtoolset-7
+	    yum install centos-release-scl -y
+	    yum install devtoolset-7 -y
+	    source scl_source enable devtoolset-7
         fi
     fi
 fi
