@@ -17,8 +17,8 @@ fi
 mkdir -p ~/build/el7/aarch64/
 
 podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build nyancat RedHat 7
-#podman run -it --rm -v ~/build/el8/aarch64:/root/rpmbuild/RPMS centos_7_build prometheus RedHat 7
-#podman run -it --rm -v ~/build/el8/aarch64:/root/rpmbuild/RPMS centos_7_build ansible-cmdb RedHat 7
-#podman run -it --rm -v ~/build/el8/aarch64:/root/rpmbuild/RPMS centos_7_build slurm RedHat 7
-#podman run -it --rm -v ~/build/el8/aarch64:/root/rpmbuild/RPMS centos_7_build atftp RedHat 7
-podman run -it --rm -v ~/build/el8/aarch64:/root/rpmbuild/RPMS centos_7_build ipxe-bluebanquise RedHat 7
+#podman run -it --rm -v ~/build/el7/aarch64:/root/rpmbuild/RPMS centos_7_build prometheus RedHat 7
+#podman run -it --rm -v ~/build/el7/aarch64:/root/rpmbuild/RPMS centos_7_build ansible-cmdb RedHat 7
+#podman run -it --rm -v ~/build/el7/aarch64:/root/rpmbuild/RPMS centos_7_build slurm RedHat 7
+#podman run -it --rm -v ~/build/el7/aarch64:/root/rpmbuild/RPMS centos_7_build atftp RedHat 7
+podman run -it --rm -v ~/build/el7/aarch64:/root/rpmbuild/RPMS centos_7_build ipxe-bluebanquise RedHat 7

@@ -1,4 +1,4 @@
-prometheus_version=2.30.3
+prometheus_version=2.31.1
 prometheus_client_version=0.11.0
 alertmanager_version=0.23.0
 ipmi_exporter_version=1.4.0

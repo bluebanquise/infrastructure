@@ -16,16 +16,16 @@ rm -Rf ~/build/ubuntu2004/x86_64/
 fi
 mkdir -p ~/build/ubuntu2004/x86_64/
 
-podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/rpmbuild/RPMS ubuntu_20.04_build nyancat Ubuntu 20.04
-#podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build prometheus RedHat 8
-#podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build ansible-cmdb RedHat 8
-#podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build slurm RedHat 8
-#podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build atftp RedHat 8
-podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build ipxe-bluebanquise RedHat 8
-##podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build 10 RedHat 8 1.4
-## Delayed to 1.6 podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build 14 RedHat 8
-#podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build ssh-wait RedHat 8
-#podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux_8_build colour_text RedHat 8
+podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build nyancat Ubuntu 20.04
+#podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build prometheus Ubuntu 20.04
+#podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build ansible-cmdb Ubuntu 20.04
+#podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build slurm Ubuntu 20.04
+#podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build atftp Ubuntu 20.04
+podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build ipxe-bluebanquise Ubuntu 20.04
+##podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build 10 Ubuntu 20.04 1.4
+## Delayed to 1.6 podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build 14 Ubuntu 20.04
+#podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build ssh-wait Ubuntu 20.04
+#podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS ubuntu_20.04_build colour_text Ubuntu 20.04
 ## Check packages can be installed
-##podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux/rockylinux:8 /bin/bash -c 'dnf install epel-release -y; dnf install dnf-plugins-core -y; dnf config-manager --set-enabled powertools; dnf install -y /root/rpmbuild/RPMS/noarch/*.rpm /root/rpmbuild/RPMS/x86_64/*.rpm'
-##podman run -it --rm -v ~/build/el8/x86_64:/root/rpmbuild/RPMS rockylinux/rockylinux:8 /bin/bash -c 'dnf install -y git ; mkdir /infra; git clone https://github.com/oxedions/infrastructure.git /infra ; chmod +x /infra/auto_builder.sh ; auto_builder.sh 0 RedHat 8 ; dnf install -y /root/rpmbuild/RPMS/noarch/*.rpm /root/rpmbuild/RPMS/x86_64/*.rpm'
+##podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS rockylinux/rockylinux:8 /bin/bash -c 'dnf install epel-release -y; dnf install dnf-plugins-core -y; dnf config-manager --set-enabled powertools; dnf install -y /root/debbuild/DEBS/noarch/*.rpm /root/debbuild/DEBS/x86_64/*.rpm'
+##podman run -it --rm -v ~/build/ubuntu2004/x86_64:/root/debbuild/DEBS rockylinux/rockylinux:8 /bin/bash -c 'dnf install -y git ; mkdir /infra; git clone https://github.com/oxedions/infrastructure.git /infra ; chmod +x /infra/auto_builder.sh ; auto_builder.sh 0 Ubuntu 20.04 ; dnf install -y /root/debbuild/DEBS/noarch/*.rpm /root/debbuild/DEBS/x86_64/*.rpm'
