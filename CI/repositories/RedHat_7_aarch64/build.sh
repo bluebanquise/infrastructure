@@ -1,5 +1,5 @@
 set -x
-podman run -it --rm -v /home/bluebanquise/repositories/el7/aarch64/:/repo/ centos:7 /bin/bash -c ' \
+podman run -it --rm -v /home/bluebanquise/repositories/el7/aarch64/bluebanquise/:/repo/ centos:7 /bin/bash -c ' \
     set -x ; \
     yum install -y wget yum-utils createrepo rsync ; \
     wget http://bluebanquise.com/repository/releases/1.5-dev/el7/aarch64/bluebanquise/bluebanquise.repo -P /etc/yum.repos.d/ ; \

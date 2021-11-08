@@ -1,5 +1,5 @@
 set -x
-podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/:/repo/ ubuntu:20.04 /bin/bash -c ' \
+podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/:/repo/ ubuntu:20.04 /bin/bash -c ' \
     set -x ; \
     apt-get update ; \
     apt-get install -y wget dpkg-dev apt-mirror rsync ; \
