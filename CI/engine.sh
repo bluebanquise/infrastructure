@@ -88,16 +88,16 @@ rsync -av ~/CI/build/el7/aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise
 rsync -av $CURRENT_DIR/repositories/RedHat_7_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_RedHat_7_aarch64/
 ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_RedHat_7_aarch64/build.sh
 rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/el7/aarch64/* ~/CI/repositories/el7/aarch64/
-fi
+
 
 ssh bluebanquise@x86_64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2004/x86_64/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2004/x86_64/packages/*"
 rsync -av ~/CI/build/ubuntu2004/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2004/x86_64/packages/
 rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_x86_64/
 ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_x86_64/build.sh
 rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2004/x86_64/* ~/CI/repositories/ubuntu2004/x86_64/
-
-ssh bluebanquise@arm64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2004/arm64/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2004/arm64/packages/*"
-rsync -av ~/CI/build/ubuntu2004/arm64/ bluebanquise@arm64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/packages/
-rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_arm64/ bluebanquise@arm64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_arm64/
-ssh bluebanquise@arm64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_arm64/build.sh
-rsync -av bluebanquise@arm64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/* ~/CI/repositories/ubuntu2004/arm64/
+fi
+ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2004/arm64/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2004/arm64/packages/*"
+rsync -av ~/CI/build/ubuntu2004/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/packages/
+rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_arm64/
+ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_arm64/build.sh
+rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/* ~/CI/repositories/ubuntu2004/arm64/
