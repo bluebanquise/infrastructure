@@ -11,7 +11,7 @@ mkdir -p $working_directory/build/colour_text
 cd $working_directory/build/colour_text
 mkdir python3-colour_text-$colour_text_version
 cp $working_directory/sources/colour_text-$colour_text_version-py2.py3-none-any.whl python3-colour_text-$colour_text_version/
-$(which cp) -af $root_directory/packages/colour_text/colour_text.spec python3-colour_text-$colour_text_version/
+$(which cp) -af $root_directory/colour_text/colour_text.spec python3-colour_text-$colour_text_version/
 tar cvzf python3-colour_text-$colour_text_version.tar.gz python3-colour_text-$colour_text_version
 rpmbuild -ta python3-colour_text-$colour_text_version.tar.gz --define "_software_version $colour_text_version"
 

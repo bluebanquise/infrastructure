@@ -15,7 +15,7 @@ tar xvzf grubby-$grubby_version.tar.gz
 cd grubby-$grubby_version
 sed -i 's|-Werror||' Makefile
 make	
-$(which cp) -af $root_directory/packages/grubby/* .
+$(which cp) -af $root_directory/grubby/* .
 cd ../
 tar cvzf grubby-$grubby_version.tar.gz grubby-$grubby_version
 rpmbuild -ta grubby-$grubby_version.tar.gz --target=$distribution_architecture --define "_software_version $grubby_version"

@@ -31,8 +31,8 @@ mkdir -p $working_directory/build/ipxe/
 cd $working_directory/build/ipxe/
 cp -a $working_directory/sources/ipxe/* $working_directory/build/ipxe/
 
-cp $root_directory/packages/ipxe-bluebanquise/grub2-efi-autofind.cfg .
-cp $root_directory/packages/ipxe-bluebanquise/grub2-shell.cfg .
+cp $root_directory/ipxe-bluebanquise/grub2-efi-autofind.cfg .
+cp $root_directory/ipxe-bluebanquise/grub2-shell.cfg .
 
 # Customizing
 # Building embed ipxe files
@@ -43,22 +43,22 @@ then
 fi
 echo "#!ipxe" > src/bluebanquise_standard.ipxe
 echo "cpair --foreground 6 0" >> src/bluebanquise_standard.ipxe
-cat $root_directory/packages/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_standard.ipxe
-cat $root_directory/packages/ipxe-bluebanquise/bluebanquise_standard.ipxe >> src/bluebanquise_standard.ipxe
+cat $root_directory/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_standard.ipxe
+cat $root_directory/ipxe-bluebanquise/bluebanquise_standard.ipxe >> src/bluebanquise_standard.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_standard.ipxe
 echo "cpair 0" >> src/bluebanquise_standard.ipxe
 
 echo "#!ipxe" > src/bluebanquise_dhcpretry.ipxe
 echo "cpair --foreground 6 0" >> src/bluebanquise_dhcpretry.ipxe
-cat $root_directory/packages/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_dhcpretry.ipxe
-cat $root_directory/packages/ipxe-bluebanquise/bluebanquise_dhcpretry.ipxe >> src/bluebanquise_dhcpretry.ipxe
+cat $root_directory/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_dhcpretry.ipxe
+cat $root_directory/ipxe-bluebanquise/bluebanquise_dhcpretry.ipxe >> src/bluebanquise_dhcpretry.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_dhcpretry.ipxe
 echo "cpair 0" >> src/bluebanquise_dhcpretry.ipxe
 
 echo "#!ipxe" > src/bluebanquise_noshell.ipxe
 echo "cpair --foreground 6 0" >> src/bluebanquise_noshell.ipxe
-cat $root_directory/packages/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_noshell.ipxe
-cat $root_directory/packages/ipxe-bluebanquise/bluebanquise_noshell.ipxe >> src/bluebanquise_noshell.ipxe
+cat $root_directory/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_noshell.ipxe
+cat $root_directory/ipxe-bluebanquise/bluebanquise_noshell.ipxe >> src/bluebanquise_noshell.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_noshell.ipxe
 echo "cpair 0" >> src/bluebanquise_noshell.ipxe
 

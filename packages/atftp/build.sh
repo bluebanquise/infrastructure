@@ -22,7 +22,7 @@ fi
 cd $working_directory/build/atftp/
 cp $working_directory/sources/atftp-0.7.2.tar.gz $working_directory/build/atftp/
 tar xvzf atftp-0.7.2.tar.gz
-/usr/bin/cp -f $root_directory/packages/atftp/* atftp-0.7.2/
+/usr/bin/cp -f $root_directory/atftp/* atftp-0.7.2/
 rm -f atftp-0.7.2/redhat/atftp.spec
 tar cvzf atftp.tar.gz atftp-0.7.2
 rpmbuild -ta atftp.tar.gz

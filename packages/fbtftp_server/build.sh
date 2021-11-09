@@ -19,7 +19,7 @@
        tar cvzf fbtftp-$fbtftp_version.tar.gz fbtftp-$fbtftp_version
        rpmbuild -ta fbtftp-$fbtftp_version.tar.gz
 
-       cp -a $root_directory/packages/fbtftp_server fbtftp-server-$fbtftp_server_version
+       cp -a $root_directory/fbtftp_server fbtftp-server-$fbtftp_server_version
        tar cvzf fbtftp-server-$fbtftp_server_version.tar.gz fbtftp-server-$fbtftp_server_version
        rpmbuild -ta fbtftp-server-$fbtftp_server_version.tar.gz --define "_software_version $fbtftp_server_version" --target=noarch
       

@@ -4,7 +4,7 @@
         else
           bb_tag=$4
         fi
-        source $root_directory/packages/bluebanquise/build.sh
+        source $root_directory/bluebanquise/build.sh
 
 
 set -x
