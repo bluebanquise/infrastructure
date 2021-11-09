@@ -19,7 +19,7 @@ mkdir -p ~/CI/repositories/ubuntu2004/{x86_64,arm64}/bluebanquise/
 
 #(
 a=1
-if [ $a -eq 2 ]; then
+#if [ $a -eq 2 ]; then
     ## RedHat_8_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_8_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_8_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_8_x86_64/build.sh
@@ -62,7 +62,7 @@ cp ~/CI/build/el8/x86_64/noarch/ipxe-x86_64-bluebanquise*.rpm ~/CI/build/el8/aar
 cp ~/CI/build/el8/aarch64/noarch/ipxe-arm64-bluebanquise*.rpm ~/CI/build/el8/x86_64/noarch/ ; \
 cp ~/CI/build/ubuntu2004/x86_64/noarch/ipxe-x86-64-bluebanquise*.deb ~/CI/build/ubuntu2004/arm64/noarch/ ; \
 cp ~/CI/build/ubuntu2004/arm64/noarch/ipxe-arm64-bluebanquise*.deb ~/CI/build/ubuntu2004/x86_64/noarch/ ; \
-fi
+
 # REPOSITORIES
 
 ## RedHat_8_x86_64
