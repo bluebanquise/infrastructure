@@ -280,16 +280,16 @@ case $value in
         rm -Rf $working_directory/build/atftp
         mkdir -p $working_directory/build/atftp/
 
-        if [ ! -f $working_directory/sources/atftp-0.7.2.tar.gz ]; then
-            wget -P $working_directory/sources/ https://freefr.dl.sourceforge.net/project/atftp/atftp-0.7.2.tar.gz
+        if [ ! -f $working_directory/sources/atftp-0.7.5.tar.gz ]; then
+            wget -P $working_directory/sources/ https://freefr.dl.sourceforge.net/project/atftp/atftp-0.7.5.tar.gz
         fi
 
         cd $working_directory/build/atftp/
-        cp $working_directory/sources/atftp-0.7.2.tar.gz $working_directory/build/atftp/
-        tar xvzf atftp-0.7.2.tar.gz
-        /usr/bin/cp -f $root_directory/packages/atftp/* atftp-0.7.2/
-        rm -f atftp-0.7.2/redhat/atftp.spec
-        tar cvzf atftp.tar.gz atftp-0.7.2
+        cp $working_directory/sources/atftp-0.7.5.tar.gz $working_directory/build/atftp/
+        tar xvzf atftp-0.7.5.tar.gz
+        /usr/bin/cp -f $root_directory/packages/atftp/* atftp-0.7.5/
+        rm -f atftp-0.7.5/redhat/atftp.spec
+        tar cvzf atftp.tar.gz atftp-0.7.5
         rpmbuild -ta atftp.tar.gz
 
         set +x
