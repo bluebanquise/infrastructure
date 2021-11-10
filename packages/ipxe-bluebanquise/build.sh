@@ -182,7 +182,7 @@ fi
 
 cd $working_directory/build/ipxe/
 mkdir ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
-cp $root_directory//packages/ipxe-bluebanquise/ipxe-$ipxe_arch-bluebanquise.spec ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
+cp $root_directory/ipxe-bluebanquise/ipxe-$ipxe_arch-bluebanquise.spec ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
 #sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
 sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
 tar cvzf ipxe-$ipxe_arch-bluebanquise.tar.gz ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
