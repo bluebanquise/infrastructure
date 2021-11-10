@@ -11,7 +11,7 @@ mkdir -p $working_directory/build/ssh-wait
 cd $working_directory/build/ssh-wait
 mkdir python3-ssh-wait-$ssh_wait_version
 cp $working_directory/sources/ssh_wait-$ssh_wait_version-py2.py3-none-any.whl python3-ssh-wait-$ssh_wait_version/
-$(which cp) -af $root_directory/packages/ssh-wait/ssh-wait.spec python3-ssh-wait-$ssh_wait_version/
+$(which cp) -af $root_directory/ssh-wait/ssh-wait.spec python3-ssh-wait-$ssh_wait_version/
 tar cvzf python3-ssh-wait-$ssh_wait_version.tar.gz python3-ssh-wait-$ssh_wait_version
 rpmbuild -ta python3-ssh-wait-$ssh_wait_version.tar.gz --define "_software_version $ssh_wait_version"
 
