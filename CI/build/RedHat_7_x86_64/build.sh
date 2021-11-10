@@ -16,9 +16,13 @@ rm -Rf ~/build/el7/x86_64/
 fi
 mkdir -p ~/build/el7/x86_64/
 
+if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS centos_7_build nyancat RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS centos_7_build prometheus RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS centos_7_build ansible-cmdb RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS centos_7_build slurm RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS centos_7_build atftp RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS centos_7_build ipxe-bluebanquise RedHat 7
+else
+podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS centos_7_build $1 RedHat 7
+fi

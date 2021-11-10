@@ -16,9 +16,13 @@ rm -Rf ~/build/ubuntu2004/x86_64/
 fi
 mkdir -p ~/build/ubuntu2004/x86_64/
 
+if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build nyancat Ubuntu 20.04
 podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build prometheus Ubuntu 20.04
 podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build ansible-cmdb Ubuntu 20.04
 podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build slurm Ubuntu 20.04
 podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build ipxe-bluebanquise Ubuntu 20.04
 podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build grubby Ubuntu 20.04
+else
+podman run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build $1 Ubuntu 20.04
+fi
