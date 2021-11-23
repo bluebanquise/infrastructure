@@ -78,23 +78,23 @@ case $value in
 
     0) ######################################################################################
         echo " Installing needed packages... may take some time."
-        if [ "$distribution" == 'openSUSE Leap' ]; then
-          if [ "$distribution_version" == "15.1" ]; then
+        if [ "$distribution" = "openSUSE Leap" ]; then
+          if [ "$distribution_version" = "15.1" ]; then
             zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
           fi
 	elif [ "$distribution" = "Ubuntu" ]; then
 	    apt-get install -y liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev  libssl-dev python3-setuptools
 	    # Possibly missing python3-mysqldb libmysqld-dev
         else
-          if [ $distribution_version -eq 8 ]; then
-            if [ $distribution_architecture == 'x86_64' ]; then
+          if [ "$distribution_version" = "8" ]; then
+            if [ "$distribution_architecture" = "x86_64" ]; then
               dnf install 'dnf-command(config-manager)'
               dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel libblkid-devel -y
               #dnf config-manager --set-enabled PowerTools
               dnf install freeipmi-devel -y
 #              alternatives --set python /usr/bin/python3
             fi
-            if [ $distribution_architecture == 'aarch64' ]; then
+            if [ "$distribution_architecture" = "aarch64" ]; then
               dnf install 'dnf-command(config-manager)'
               dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel curl-devel net-snmp-devel dnf-plugins-core -y
               dnf config-manager --set-enabled powertools
@@ -102,11 +102,11 @@ case $value in
 #              alternatives --set python /usr/bin/python3
             fi
           fi
-          if [ $distribution_version -eq 7 ]; then
-            if [ $distribution_architecture == 'x86_64' ]; then
+          if [ "$distribution_version" = "7" ]; then
+            if [ "$distribution_architecture" = "x86_64" ]; then
               yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel wget git gcc-c++ python-setuptools python3-setuptools net-snmp-devel curl-devel freeipmi-devel -y
             fi
-            if [ $distribution_architecture == 'aarch64' ]; then
+            if [ "$distribution_architecture" = "aarch64" ]; then
               yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel -y
             fi
           fi
@@ -227,10 +227,10 @@ case $value in
           rpmbuild -ta munge-$munge_version.tar.xz
 
           # We need to install munge to build slurm
-          if [ $distribution_version -eq 8 ]; then
+          if [ "$distribution_version" = "8" ]; then
             dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
           fi
-          if [ $distribution_version -eq 7 ]; then
+          if [ "$distribution_version" = "7" ]; then
             yum install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
           fi
 	fi
@@ -381,10 +381,10 @@ case $value in
         sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_noshell.ipxe
         echo "cpair 0" >> src/bluebanquise_noshell.ipxe
 
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
            ipxe_arch=x86_64
            debug_flags=intel,dhcp,vesafb
-        elif [ $distribution_architecture == 'aarch64' ]; then
+        elif [ "$distribution_architecture" = "aarch64" ]; then
            ipxe_arch=arm64
            debug_flags=intel,dhcp
         fi
@@ -415,7 +415,7 @@ case $value in
        #sed -i 's/.*IMAGE_EFI.*/#define IMAGE_EFI/' config/general.h
 
        ############################################################################################### STANDARD
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
         fi
         make -j $nb_cores bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
@@ -424,7 +424,7 @@ case $value in
 #        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
 #        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
 
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           rm -Rf /dev/shm/efiiso/efi/boot
           mkdir -p /dev/shm/efiiso/efi/boot
           cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
@@ -435,14 +435,14 @@ case $value in
         mv bin-$ipxe_arch-efi/ipxe.efi $working_directory/build/ipxe/bin/$ipxe_arch/standard_ipxe.efi
         mv bin-$ipxe_arch-efi/snponly.efi $working_directory/build/ipxe/bin/$ipxe_arch/standard_snponly_ipxe.efi
         mv bin-$ipxe_arch-efi/snp.efi $working_directory/build/ipxe/bin/$ipxe_arch/standard_snp_ipxe.efi
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/standard_undionly.kpxe
         fi
 #        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/standard_pcbios.iso
 #        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/standard_pcbios.usb
 
         ############################################################################################### DHCPRETRY
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
         fi
         make -j $nb_cores bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
@@ -451,7 +451,7 @@ case $value in
 #        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
 #        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
 
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           rm -Rf /dev/shm/efiiso/efi/boot
           mkdir -p /dev/shm/efiiso/efi/boot
           cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
@@ -462,7 +462,7 @@ case $value in
         mv bin-$ipxe_arch-efi/ipxe.efi $working_directory/build/ipxe/bin/$ipxe_arch/dhcpretry_ipxe.efi
         mv bin-$ipxe_arch-efi/snponly.efi $working_directory/build/ipxe/bin/$ipxe_arch/dhcpretry_snponly_ipxe.efi
         mv bin-$ipxe_arch-efi/snp.efi $working_directory/build/ipxe/bin/$ipxe_arch/dhcpretry_snp_ipxe.efi
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/dhcpretry_undionly.kpxe
         fi
 #        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
@@ -471,7 +471,7 @@ case $value in
 
 
         ############################################################################################### NOSHELL
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
         fi
         make -j $nb_cores bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
@@ -480,7 +480,7 @@ case $value in
 #        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
 #        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
 
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           rm -Rf /dev/shm/efiiso/efi/boot
           mkdir -p /dev/shm/efiiso/efi/boot
           cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
@@ -491,7 +491,7 @@ case $value in
         mv bin-$ipxe_arch-efi/ipxe.efi $working_directory/build/ipxe/bin/$ipxe_arch/noshell_ipxe.efi
         mv bin-$ipxe_arch-efi/snponly.efi $working_directory/build/ipxe/bin/$ipxe_arch/noshell_snponly_ipxe.efi
         mv bin-$ipxe_arch-efi/snp.efi $working_directory/build/ipxe/bin/$ipxe_arch/noshell_snp_ipxe.efi
-        if [ $distribution_architecture == 'x86_64' ]; then
+        if [ "$distribution_architecture" = "x86_64" ]; then
           mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/noshell_undionly.kpxe
         fi
 #        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
