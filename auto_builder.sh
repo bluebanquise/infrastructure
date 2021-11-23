@@ -115,17 +115,17 @@ case $value in
 
     1) ######################################################################################
         set -x
-        if [ ! -f $working_directory/sources/nyancat-1.5.2.tar.gz ]; then
-            wget -P $working_directory/sources/ https://github.com/klange/nyancat/archive/1.5.2.tar.gz
-            mv $working_directory/sources/1.5.2.tar.gz $working_directory/sources/nyancat-1.5.2.tar.gz
+        if [ ! -f $working_directory/sources/nyancat-$nyancat_version.tar.gz ]; then
+            wget -P $working_directory/sources/ https://github.com/klange/nyancat/archive/$nyancat_version.tar.gz
+            mv $working_directory/sources/$nyancat_version.tar.gz $working_directory/sources/nyancat-$nyancat_version.tar.gz
         fi
         rm -Rf $working_directory/build/nyancat
         mkdir -p $working_directory/build/nyancat
         cd $working_directory/build/nyancat
-        cp $working_directory/sources/nyancat-1.5.2.tar.gz .
-        tar xvzf nyancat-1.5.2.tar.gz
-        $(which cp) -af $root_directory/packages/nyancat-1.5.2/* nyancat-1.5.2/
-        tar cvzf nyancat.tar.gz nyancat-1.5.2
+        cp $working_directory/sources/nyancat-$nyancat_version.tar.gz .
+        tar xvzf nyancat-$nyancat_version.tar.gz
+        $(which cp) -af $root_directory/packages/nyancat-$nyancat_version/* nyancat-$nyancat_version/
+        tar cvzf nyancat.tar.gz nyancat-$nyancat_version
         rpmbuild -ta nyancat.tar.gz
         set +x
     ;;
@@ -173,8 +173,8 @@ case $value in
 
             cp -a $root_directory/packages/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
             mv ipmi_exporter ipmi_exporter-$ipmi_exporter_version
-            tar cvzf ipmi_exporter-v$ipmi_exporter_version.linux-amd64.tar.gz ipmi_exporter-$ipmi_exporter_version
-            rpmbuild -ta ipmi_exporter-v$ipmi_exporter_version.linux-amd64.tar.gz --define "_software_version $ipmi_exporter_version"
+            tar cvzf ipmi_exporter-$ipmi_exporter_version.linux-amd64.tar.gz ipmi_exporter-$ipmi_exporter_version
+            rpmbuild -ta ipmi_exporter-$ipmi_exporter_version.linux-amd64.tar.gz --define "_software_version $ipmi_exporter_version"
 
             cp -a $root_directory/packages/snmp_exporter $working_directory/build/prometheus/snmp_exporter
             mv snmp_exporter snmp_exporter-$snmp_exporter_version
@@ -280,16 +280,17 @@ case $value in
         rm -Rf $working_directory/build/atftp
         mkdir -p $working_directory/build/atftp/
 
-        if [ ! -f $working_directory/sources/atftp-0.7.5.tar.gz ]; then
-            wget -P $working_directory/sources/ https://freefr.dl.sourceforge.net/project/atftp/atftp-0.7.5.tar.gz
+        if [ ! -f $working_directory/sources/atftp-$atftp_version.tar.gz ]; then
+            wget -P $working_directory/sources/ https://freefr.dl.sourceforge.net/project/atftp/atftp-$atftp_version.tar.gz
+            wget -P $working_directory/sources/ https://sourceforge.net/projects/atftp/files/atftp-$atftp_version.tar.gz/download
         fi
 
         cd $working_directory/build/atftp/
-        cp $working_directory/sources/atftp-0.7.5.tar.gz $working_directory/build/atftp/
-        tar xvzf atftp-0.7.5.tar.gz
-        /usr/bin/cp -f $root_directory/packages/atftp/* atftp-0.7.5/
-        rm -f atftp-0.7.5/redhat/atftp.spec
-        tar cvzf atftp.tar.gz atftp-0.7.5
+        cp $working_directory/sources/atftp-$atftp_version.tar.gz $working_directory/build/atftp/
+        tar xvzf atftp-$atftp_version.tar.gz
+        /usr/bin/cp -f $root_directory/packages/atftp/* atftp-$atftp_version/
+        rm -f atftp-$atftp_version/redhat/atftp.spec
+        tar cvzf atftp.tar.gz atftp-$atftp_version
         rpmbuild -ta atftp.tar.gz
 
         set +x
@@ -299,18 +300,18 @@ case $value in
 
         set -x
         
-        if [ ! -f $working_directory/sources/powerman-2.3.26.tar.gz ]; then
-          wget -P $working_directory/sources/ https://github.com/chaos/powerman/releases/download/2.3.26/powerman-2.3.26.tar.gz
+        if [ ! -f $working_directory/sources/powerman-$powerman_version.tar.gz ]; then
+          wget -P $working_directory/sources/ https://github.com/chaos/powerman/releases/download/$powerman_version/powerman-$powerman_version.tar.gz
         fi
         rm -Rf $working_directory/build/powerman
         mkdir -p $working_directory/build/powerman
         cd $working_directory/build/powerman
-        cp $working_directory/sources/powerman-2.3.26.tar.gz $working_directory/build/powerman
-        tar xvzf powerman-2.3.26.tar.gz
-        /usr/bin/cp -f $root_directory/packages/powerman/* powerman-2.3.26/
-        rm -f powerman-2.3.26/examples/powerman_el72.spec
-        tar cvzf powerman-2.3.26.tar.gz powerman-2.3.26
-        rpmbuild -ta powerman-2.3.26.tar.gz
+        cp $working_directory/sources/powerman-$powerman_version.tar.gz $working_directory/build/powerman
+        tar xvzf powerman-$powerman_version.tar.gz
+        /usr/bin/cp -f $root_directory/packages/powerman/* powerman-$powerman_version/
+        rm -f powerman-$powerman_version/examples/powerman_el72.spec
+        tar cvzf powerman-$powerman_version.tar.gz powerman-$powerman_version
+        rpmbuild -ta powerman-$powerman_version.tar.gz
 
         set +x
     ;;
@@ -319,17 +320,17 @@ case $value in
 
        set -x
 
-        if [ ! -f $working_directory/sources/conman-0.3.0.tar.xz ]; then
-          wget -P $working_directory/sources/ https://github.com/dun/conman/releases/download/conman-0.3.0/conman-0.3.0.tar.xz
+        if [ ! -f $working_directory/sources/conman-$conman_version.tar.xz ]; then
+          wget -P $working_directory/sources/ https://github.com/dun/conman/releases/download/conman-$conman_version/conman-$conman_version.tar.xz
         fi
         rm -Rf $working_directory/build/conman
         mkdir -p $working_directory/build/conman
         cd $working_directory/build/conman
-        cp $working_directory/sources/conman-0.3.0.tar.xz $working_directory/build/conman
-        tar xJvf conman-0.3.0.tar.xz
-        /usr/bin/cp -f $root_directory/packages/conman/* conman-0.3.0/
-        tar cvJf conman-0.3.0.tar.xz conman-0.3.0
-        rpmbuild -ta conman-0.3.0.tar.xz
+        cp $working_directory/sources/conman-$conman_version.tar.xz $working_directory/build/conman
+        tar xJvf conman-$conman_version.tar.xz
+        /usr/bin/cp -f $root_directory/packages/conman/* conman-$conman_version/
+        tar cvJf conman-$conman_version.tar.xz conman-$conman_version
+        rpmbuild -ta conman-$conman_version.tar.xz
 
         set +x
     ;;
