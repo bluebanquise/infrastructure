@@ -27,7 +27,7 @@ echo
 
 echo " Detecting distribution..."
 distribution=$(grep ^NAME /etc/os-release | awk -F '"' '{print $2}')
-distribution_version=$(grep ^VERSION_ID /etc/os-release | awk -F '"' '{print $2}')
+distribution_version=$(grep ^VERSION_ID /etc/os-release | awk -F '"' '{print substr($2,1,1)}')
 distribution_architecture=$(uname --m)
 echo " Found $distribution $distribution_version $distribution_architecture"
 
@@ -291,7 +291,7 @@ case $value in
         /usr/bin/cp -f $root_directory/packages/atftp/* atftp-$atftp_version/
         rm -f atftp-$atftp_version/redhat/atftp.spec
         tar cvzf atftp.tar.gz atftp-$atftp_version
-        rpmbuild -ta atftp.tar.gz
+        rpmbuild -ta atftp.tar.gz  --define "_software_version $atftp_version"
 
         set +x
     ;;
@@ -514,7 +514,7 @@ case $value in
 	else
           rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release 1$ipxe_bluebanquise_release"
 	fi
-        if [ $distribution == "Ubuntu" ]; then
+        if [ "$distribution" = "Ubuntu" ]; then
            cd /dev/shm
            alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/ipxe*
            mkdir -p /root/debbuild/DEBS/noarch/
