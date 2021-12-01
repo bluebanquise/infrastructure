@@ -62,6 +62,12 @@ cat $root_directory/ipxe-bluebanquise/bluebanquise_noshell.ipxe >> src/bluebanqu
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_noshell.ipxe
 echo "cpair 0" >> src/bluebanquise_noshell.ipxe
 
+cat src/bluebanquise_standard.ipxe
+cat src/bluebanquise_dhcpretry.ipxe
+cat src/bluebanquise_noshell.ipxe
+echo sleep 20s to check if code is conform
+sleep 20
+
 if [ $distribution_architecture == 'x86_64' ]; then
     ipxe_arch=x86_64
     debug_flags=intel,dhcp,vesafb

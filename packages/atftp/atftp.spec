@@ -1,7 +1,7 @@
 Name: atftp
 Summary: Advanced Trivial File Transfer Protocol (ATFTP) - TFTP server
 Group: System Environment/Daemons
-Version: 0.7.2
+Version: %{_software_version}
 Release: 1
 License: GPL
 Vendor: Linux Networx Inc.
@@ -70,6 +70,7 @@ usermod -a -G tftp apache || true
 
 
 %changelog
-
+* Wed Dec 01 2021 Benoit Leveugle <benoit.leveugle@gmail.com>
+- Adapt to bluebanquise
 * Tue Jan 07 2003 Thayne Harbaugh <thayne@plug.org>
 - put client in sub-rpm
