@@ -1,10 +1,10 @@
-# BlueBanquise Infrastructure
+# Infrastructure
 
 <p align="center">
   <img src="https://i.pinimg.com/originals/aa/8e/8c/aa8e8c57325952dcd28cd654bd4539e7.gif" alt="Factorio"/>
 </p>
 
-This repository host the BlueBanquise factory, to build packages and other stack needed elements.
+This repository hosts the BlueBanquise factory, to build packages and other stack needed elements.
 
 To generate all latest repositories, you need a cluster composed of 2 servers:
 
