@@ -11,7 +11,7 @@
 %define dist .lp153
 %endif
 
-%if 0%{?sle_version} 
+%if 0%{?is_opensuse} 
 %define tftp_path /srv/tftpboot/
 %define http_path /srv/www/htdocs/
 %else
