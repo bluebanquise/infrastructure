@@ -30,7 +30,6 @@ Source0: https://github.com/grafana/loki/releases/download/v%{version}/%{name}-l
 Source1: %{name}.service
 
 %{?systemd_requires}
-Requires(pre): shadow-utils
 BuildRequires: lsb-release
 
 %description
