@@ -1,11 +1,11 @@
-Name: atftp
+Name: atftp-bluebanquise
 Summary: Advanced Trivial File Transfer Protocol (ATFTP) - TFTP server
 Group: System Environment/Daemons
 Version: 0.7.2
 Release: 1
 License: GPL
 Vendor: Linux Networx Inc.
-Source: /usr/src/redhat/SOURCES/atftp.tar.gz
+Source: /usr/src/redhat/SOURCES/atftp-bluebanquise.tar.gz
 Buildroot: /var/tmp/atftp-buildroot
 Packager: Benoit Leveugle <benoit.leveugle@gmail.com>
 

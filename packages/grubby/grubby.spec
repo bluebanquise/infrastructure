@@ -1,12 +1,3 @@
-%define is_ubuntu %(grep -i ubuntu /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-
-# Ubuntu 20.04
-%if %is_ubuntu
-  %if %(grep '20.04' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-    %define dist ubuntu.20.04
-  %endif
-%endif
-
 Name:     grubby
 Summary:  grubby
 Release:  1%{?dist}

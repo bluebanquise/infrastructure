@@ -1,0 +1,14 @@
+[Unit]
+Description=snmp_exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=snmp_exporter
+Group=snmp_exporter
+Type=simple
+WorkingDirectory=/etc/snmp_exporter/
+ExecStart=/usr/local/bin/snmp_exporter --config.file=/etc/snmp_exporter/snmp.yml
+
+[Install]
+WantedBy=multi-user.target

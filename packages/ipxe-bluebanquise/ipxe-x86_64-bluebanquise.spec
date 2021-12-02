@@ -1,18 +1,14 @@
-%define is_ubuntu %(grep -i ubuntu /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-%define is_opensuse_leap %(grep -i opensuse-leap /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-
-# OpenSuse Leap 15.3:
-%if %is_opensuse_leap
-  %if %(grep '15.3' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-     %define dist .osl15.3
-  %endif
+# Leap 15.1:
+%if 0%{?sle_version} == 150100
+%define dist .lp151
 %endif
-
-# Ubuntu 20.04
-%if %is_ubuntu
-  %if %(grep '20.04' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-    %define dist ubuntu.20.04
-  %endif
+# Leap 15.2:
+%if 0%{?sle_version} == 150200
+%define dist .lp152
+%endif
+# Leap 15.3:
+%if 0%{?sle_version} == 150300
+%define dist .lp153
 %endif
 
 %if 0%{?sle_version} 
@@ -25,7 +21,7 @@
 
 Name:     ipxe-x86_64-bluebanquise
 Summary:  ipxe-x86_64-bluebanquise
-Release:  %{_software_release}%{?dist}
+Release:  %{_software_release}%{dist}
 Version:  %{_software_version}
 License:  MIT and GPL
 Group:    System Environment/Base
