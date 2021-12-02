@@ -15,40 +15,46 @@
   %endif
 %endif
 
-Name:     mll
-Summary:  mll
+Name:     karma
+Summary:  karma
 Release:  1%{?dist}
 Version:  %{_software_version}
-License:  MIT
+License:  apache-2.0
 Group:    System Environment/Base
-URL:      https://github.com/ivandavidov/minimal
-Source:   https://bluebanquise.com/sources/mll-%{_software_version}.tar.gz
-Packager: Benoit Leveugle <benoit.leveugle@gmail.com>
+Source:   https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma-linux-%{_software_architecture}.tar.gz
+URL:      https://github.com/prymitive
+Packager: Oxedions <oxedions@gmail.com>
 
 %define debug_package %{nil}
 
 %description
-MLL build for BlueBanquise PXE
-
+karma for the BlueBanquise stack
 %prep
 
 %setup -q
 
-%post
-restorecon -Rv /var/www/html/preboot_execution_environment/MLL
-
 %build
 
 %install
+
+# Download files (binaries)
+wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma-linux-%{_software_architecture}.tar.gz
+
+# Extract
+tar xvzf karma-linux-%{_software_architecture}.tar.gz
+
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/MLL/%{_architecture}/
-cp kernel.xz rootfs.xz $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/MLL/%{_architecture}/
+mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
+cp -a karma-linux-%{_software_architecture} $RPM_BUILD_ROOT/usr/local/bin/karma
+
+%pre
+
+%preun
+
+%post
+
+%postun
 
 %files
 %defattr(-,root,root,-)
-/var/www/html/preboot_execution_environment/MLL/%{_architecture}/*
-
-%changelog
-
-* Wed Aug 11 2021 Benoit Leveugle <benoit.leveugle@gmail.com>
-- Create
+/usr/local/bin/karma
