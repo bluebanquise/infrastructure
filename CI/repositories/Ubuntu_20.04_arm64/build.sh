@@ -7,5 +7,7 @@ podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanq
     #echo "deb [trusted=yes] http://bluebanquise.com/repository/releases/1.5-dev/ubuntu2004/arm64/bluebanquise/ ./" > bluebanquise.list ; \
     #apt-mirror bluebanquise.list ; \
     #rsync -a -v --ignore-times /var/spool/apt-mirror/mirror/bluebanquise.com/repository/releases/1.5-dev/ubuntu2004/arm64/bluebanquise/packages/* /repo/packages/ ; \
+    wget -np -nH --cut-dirs 5 -r --reject "index.html*" http://bluebanquise.com/repository/releases/1.5-dev/ubuntu2004/arm64/bluebanquise/ ; \
+    rsync -a -v --ignore-times bluebanquise/packages/* /repo/packages/ ; \
     dpkg-scanpackages /repo/ /dev/null | gzip -9c > /repo/Packages.gz ; \
     '

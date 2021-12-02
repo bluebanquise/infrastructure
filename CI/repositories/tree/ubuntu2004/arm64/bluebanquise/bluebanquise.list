@@ -1,1 +1,1 @@
-deb [trusted=yes] http://bluebanquise.com/repository/releases/1.5-dev/ubuntu_2004/arm64/bluebanquise/ ./
+deb [trusted=yes] http://bluebanquise.com/repository/releases/1.5-dev/ubuntu2004/arm64/bluebanquise/ ./
