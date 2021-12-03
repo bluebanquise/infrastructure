@@ -14,9 +14,9 @@ fi
 
 mkdir -p ~/CI/
 mkdir -p ~/CI/logs/
-mkdir -p ~/CI/build/{el7,el8}/{x86_64,aarch64}/
+mkdir -p ~/CI/build/{el7,el8}/{x86_64,aarch64,sources}/
 mkdir -p ~/CI/build/ubuntu2004/{x86_64,arm64}/
-mkdir -p ~/CI/repositories/{el7,el8}/{x86_64,aarch64}/bluebanquise/
+mkdir -p ~/CI/repositories/{el7,el8}/{x86_64,aarch64,sources}/bluebanquise/
 mkdir -p ~/CI/repositories/ubuntu2004/{x86_64,arm64}/bluebanquise/
 
 # BUILDS
@@ -25,22 +25,23 @@ mkdir -p ~/CI/repositories/ubuntu2004/{x86_64,arm64}/bluebanquise/
 
 #(
 a=1
-if [ $a -eq 2 ]; then
+#if [ $a -eq 2 ]; then
     ## RedHat_8_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_8_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_8_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_8_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el8/x86_64/* ~/CI/build/el8/x86_64/
-
+    rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el8/sources/* ~/CI/build/el8/sources/
     ## RedHat_7_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_7_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_7_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_7_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el7/x86_64/* ~/CI/build/el7/x86_64/
-fi
+    rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el7/sources/* ~/CI/build/el7/sources/
+#fi
     ## Ubuntu_20.04_x86_64
     rsync -av $CURRENT_DIR/build/Ubuntu_20.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_Ubuntu_20.04_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_Ubuntu_20.04_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/ubuntu2004/x86_64/* ~/CI/build/ubuntu2004/x86_64/
-if [ $a -eq 2 ]; then
+#if [ $a -eq 2 ]; then
 #exit
     ## RedHat_8_aarch64
     rsync -av $CURRENT_DIR/build/RedHat_8_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_RedHat_8_aarch64/
@@ -62,7 +63,7 @@ if [ $a -eq 2 ]; then
 #wait $!
 
 # CROSS packages between archs for iPXE toms
-fi
+#fi
 cp ~/CI/build/el7/x86_64/noarch/ipxe-x86_64-bluebanquise*.rpm ~/CI/build/el7/aarch64/noarch/ ; \
 cp ~/CI/build/el7/aarch64/noarch/ipxe-arm64-bluebanquise*.rpm ~/CI/build/el7/x86_64/noarch/ ; \
 cp ~/CI/build/el8/x86_64/noarch/ipxe-x86_64-bluebanquise*.rpm ~/CI/build/el8/aarch64/noarch/ ; \
@@ -76,7 +77,20 @@ cp ~/CI/build/ubuntu2004/arm64/noarch/ipxe-arm64-bluebanquise*.deb ~/CI/build/ub
 
 ## RedHat_8_x86_64
 #fi
-if [ $a -eq 2 ]; then
+#if [ $a -eq 2 ]; then
+#fi
+
+ssh bluebanquise@x86_64_worker "mkdir -p /home/bluebanquise/repositories/el8/sources/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/el8/sources/bluebanquise/packages/*"
+rsync -av ~/CI/build/el8/sources/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/el8/sources/bluebanquise/packages/
+rsync -av $CURRENT_DIR/repositories/RedHat_8_sources/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_RedHat_8_sources/
+ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_RedHat_8_sources/build.sh
+rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/el8/sources/bluebanquise/* ~/CI/repositories/el8/sources/bluebanquise/
+
+ssh bluebanquise@x86_64_worker "mkdir -p /home/bluebanquise/repositories/el7/sources/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/el7/sources/bluebanquise/packages/*"
+rsync -av ~/CI/build/el7/sources/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/el7/sources/bluebanquise/packages/
+rsync -av $CURRENT_DIR/repositories/RedHat_7_sources/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_RedHat_7_sources/
+ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_RedHat_7_sources/build.sh
+rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/el7/sources/bluebanquise/* ~/CI/repositories/el7/sources/bluebanquise/
 
 ssh bluebanquise@x86_64_worker "mkdir -p /home/bluebanquise/repositories/el8/x86_64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/el8/x86_64/bluebanquise/packages/*"
 rsync -av ~/CI/build/el8/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/el8/x86_64/bluebanquise/packages/
@@ -101,13 +115,13 @@ rsync -av ~/CI/build/el7/aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise
 rsync -av $CURRENT_DIR/repositories/RedHat_7_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_RedHat_7_aarch64/
 ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_RedHat_7_aarch64/build.sh
 rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/el7/aarch64/bluebanquise/* ~/CI/repositories/el7/aarch64/bluebanquise/
-fi
+
 ssh bluebanquise@x86_64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2004/x86_64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2004/x86_64/bluebanquise/packages/*"
 rsync -av ~/CI/build/ubuntu2004/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2004/x86_64/bluebanquise/packages/
 rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_x86_64/
 ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_x86_64/build.sh
 rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2004/x86_64/bluebanquise/* ~/CI/repositories/ubuntu2004/x86_64/bluebanquise/
-exit
+
 ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/packages/*"
 rsync -av ~/CI/build/ubuntu2004/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/packages/
 rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_arm64/
