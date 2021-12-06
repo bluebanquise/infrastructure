@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 User=loki
-ExecStart=/usr/bin/loki
+ExecStart=/usr/bin/loki -config.file /etc/loki.yml
 Restart=on-failure
 
 [Install]
