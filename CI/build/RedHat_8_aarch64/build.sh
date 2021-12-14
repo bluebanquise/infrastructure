@@ -22,7 +22,8 @@ podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_bui
 podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build ansible-cmdb RedHat 8
 podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build slurm RedHat 8
 podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build atftp RedHat 8
-podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build ipxe-bluebanquise RedHat 8
+podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build bluebanquise-ipxe RedHat 8
+podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build bluebanquise-tools RedHat 8
 podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build ssh-wait RedHat 8
 podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build colour_text RedHat 8
 else

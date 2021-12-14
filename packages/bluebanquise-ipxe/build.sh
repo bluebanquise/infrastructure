@@ -37,27 +37,27 @@ cp $root_directory/ipxe-bluebanquise/grub2-shell.cfg .
 # Customizing
 # Building embed ipxe files
 last_commit=$(cd $working_directory/sources/ipxe; git log | grep commit | sed -n 1p | awk -F ' ' '{print $2}'; cd ../../../;)
-if [ -z $ipxe_bluebanquise_release ]
+if [ -z $bluebanquise_ipxe_release ]
 then
     ipxe_bluebanquise_release=$last_commit
 fi
 echo "#!ipxe" > src/bluebanquise_standard.ipxe
 echo "cpair --foreground 6 0" >> src/bluebanquise_standard.ipxe
-cat $root_directory/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_standard.ipxe
+cat $root_directory/ipxe-bluebanquise/$bluebanquise_ipxe_logo.ipxe >> src/bluebanquise_standard.ipxe
 cat $root_directory/ipxe-bluebanquise/bluebanquise_standard.ipxe >> src/bluebanquise_standard.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_standard.ipxe
 echo "cpair 0" >> src/bluebanquise_standard.ipxe
 
 echo "#!ipxe" > src/bluebanquise_dhcpretry.ipxe
 echo "cpair --foreground 6 0" >> src/bluebanquise_dhcpretry.ipxe
-cat $root_directory/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_dhcpretry.ipxe
+cat $root_directory/ipxe-bluebanquise/$bluebanquise_ipxe_logo.ipxe >> src/bluebanquise_dhcpretry.ipxe
 cat $root_directory/ipxe-bluebanquise/bluebanquise_dhcpretry.ipxe >> src/bluebanquise_dhcpretry.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_dhcpretry.ipxe
 echo "cpair 0" >> src/bluebanquise_dhcpretry.ipxe
 
 echo "#!ipxe" > src/bluebanquise_noshell.ipxe
 echo "cpair --foreground 6 0" >> src/bluebanquise_noshell.ipxe
-cat $root_directory/ipxe-bluebanquise/$ipxe_bluebanquise_logo.ipxe >> src/bluebanquise_noshell.ipxe
+cat $root_directory/ipxe-bluebanquise/$bluebanquise_ipxe_logo.ipxe >> src/bluebanquise_noshell.ipxe
 cat $root_directory/ipxe-bluebanquise/bluebanquise_noshell.ipxe >> src/bluebanquise_noshell.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_noshell.ipxe
 echo "cpair 0" >> src/bluebanquise_noshell.ipxe
@@ -187,19 +187,19 @@ fi
 ###############################################################################################
 
 cd $working_directory/build/ipxe/
-mkdir ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
-cp $root_directory/ipxe-bluebanquise/ipxe-$ipxe_arch-bluebanquise.spec ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
-#sed -i "s|Version:\ \ XXX|Version:\ \ $ipxe_bluebanquise_version|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
-sed -i "s|working_directory=XXX|working_directory=$working_directory|g" ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version/ipxe-$ipxe_arch-bluebanquise.spec
-tar cvzf ipxe-$ipxe_arch-bluebanquise.tar.gz ipxe-$ipxe_arch-bluebanquise-$ipxe_bluebanquise_version
+mkdir bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version
+cp $root_directory/ipxe-bluebanquise/bluebanquise-ipxe-$ipxe_arc.spec bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version
+#sed -i "s|Version:\ \ XXX|Version:\ \ $bluebanquise_ipxe_version|g" bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version/bluebanquise-ipxe-$ipxe_arc.spec
+sed -i "s|working_directory=XXX|working_directory=$working_directory|g" bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version/bluebanquise-ipxe-$ipxe_arc.spec
+tar cvzf bluebanquise-ipxe-$ipxe_arc.tar.gz bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version
 if [ "$distribution" == "Ubuntu" ]; then
     if [ "$distribution_version" == "18.04" ]; then
-    rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release $ipxe_bluebanquise_release" --define "dist .ubuntu1804"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arc.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu1804"
 elif [ "$distribution_version" == "20.04" ]; then
-rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release $ipxe_bluebanquise_release" --define "dist .ubuntu2004"
+rpmbuild -ta bluebanquise-ipxe-$ipxe_arc.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu2004"
 fi
 else
-    rpmbuild -ta ipxe-$ipxe_arch-bluebanquise.tar.gz --target=noarch --define "_software_version $ipxe_bluebanquise_version" --define "_software_release $ipxe_bluebanquise_release"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arc.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release"
 fi
 if [ "$distribution" == "Ubuntu" ]; then
     cd /dev/shm

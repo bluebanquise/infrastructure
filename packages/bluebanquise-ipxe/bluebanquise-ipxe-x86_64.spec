@@ -23,13 +23,13 @@
 %define http_path /var/www/html/
 %endif
 
-Name:     ipxe-x86_64-bluebanquise
-Summary:  ipxe-x86_64-bluebanquise
+Name:     bluebanquise-ipxe-x86_64
+Summary:  bluebanquise-ipxe-x86_64
 Release:  %{_software_release}%{?dist}
 Version:  %{_software_version}
 License:  MIT and GPL
 Group:    System Environment/Base
-Source:   https://github.com/oxedions/bluebanquise/ipxe-x86_64-bluebanquise.tar.gz
+Source:   https://github.com/oxedions/bluebanquise/bluebanquise-ipxe-x86_64.tar.gz
 URL:      https://github.com/oxedions/
 Packager: Benoit Leveugle <benoit.leveugle@gmail.com>
 
