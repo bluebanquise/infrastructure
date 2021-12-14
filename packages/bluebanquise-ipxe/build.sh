@@ -187,19 +187,19 @@ fi
 ###############################################################################################
 
 cd $working_directory/build/ipxe/
-mkdir bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version
-cp $root_directory/bluebanquise-ipxe/bluebanquise-ipxe-$ipxe_arc.spec bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version
-#sed -i "s|Version:\ \ XXX|Version:\ \ $bluebanquise_ipxe_version|g" bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version/bluebanquise-ipxe-$ipxe_arc.spec
-sed -i "s|working_directory=XXX|working_directory=$working_directory|g" bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version/bluebanquise-ipxe-$ipxe_arc.spec
-tar cvzf bluebanquise-ipxe-$ipxe_arc.tar.gz bluebanquise-ipxe-$ipxe_arc-$bluebanquise_ipxe_version
+mkdir bluebanquise-ipxe-$ipxe_arch-$bluebanquise_ipxe_version
+cp $root_directory/bluebanquise-ipxe/bluebanquise-ipxe-$ipxe_arch.spec bluebanquise-ipxe-$ipxe_arch-$bluebanquise_ipxe_version
+#sed -i "s|Version:\ \ XXX|Version:\ \ $bluebanquise_ipxe_version|g" bluebanquise-ipxe-$ipxe_arch-$bluebanquise_ipxe_version/bluebanquise-ipxe-$ipxe_arch.spec
+sed -i "s|working_directory=XXX|working_directory=$working_directory|g" bluebanquise-ipxe-$ipxe_arch-$bluebanquise_ipxe_version/bluebanquise-ipxe-$ipxe_arch.spec
+tar cvzf bluebanquise-ipxe-$ipxe_arch.tar.gz bluebanquise-ipxe-$ipxe_arch-$bluebanquise_ipxe_version
 if [ "$distribution" == "Ubuntu" ]; then
     if [ "$distribution_version" == "18.04" ]; then
-    rpmbuild -ta bluebanquise-ipxe-$ipxe_arc.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu1804"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu1804"
 elif [ "$distribution_version" == "20.04" ]; then
-rpmbuild -ta bluebanquise-ipxe-$ipxe_arc.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu2004"
+rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu2004"
 fi
 else
-    rpmbuild -ta bluebanquise-ipxe-$ipxe_arc.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release"
 fi
 if [ "$distribution" == "Ubuntu" ]; then
     cd /dev/shm
