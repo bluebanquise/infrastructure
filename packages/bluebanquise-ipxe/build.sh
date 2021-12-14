@@ -39,7 +39,7 @@ cp $root_directory/bluebanquise-ipxe/grub2-shell.cfg .
 last_commit=$(cd $working_directory/sources/ipxe; git log | grep commit | sed -n 1p | awk -F ' ' '{print $2}'; cd ../../../;)
 if [ -z $bluebanquise_ipxe_release ]
 then
-    ipxe_bluebanquise_release=$last_commit
+    bluebanquise_ipxe_release=$last_commit
 fi
 echo "#!ipxe" > src/bluebanquise_standard.ipxe
 echo "cpair --foreground 6 0" >> src/bluebanquise_standard.ipxe
