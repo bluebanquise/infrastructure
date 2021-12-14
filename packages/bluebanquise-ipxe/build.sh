@@ -203,7 +203,7 @@ else
 fi
 if [ "$distribution" == "Ubuntu" ]; then
     cd /dev/shm
-    alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/ipxe*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/bluebanquise-ipxe*
     mkdir -p /root/debbuild/DEBS/noarch/
     mv *.deb /root/debbuild/DEBS/noarch/
 fi
