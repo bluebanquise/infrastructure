@@ -11,9 +11,9 @@ git clone https://github.com/bluebanquise/tools.git .
 
 if [ $distribution == "Ubuntu" ]; then
     cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/bluebanquise-*
-    mkdir -p /root/debbuild/DEBS/$distribution_architecture/
-    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
+    alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/bluebanquise-*
+    mkdir -p /root/debbuild/DEBS/noarch/
+    mv *.deb /root/debbuild/DEBS/noarch/
 fi
 
 set +x
