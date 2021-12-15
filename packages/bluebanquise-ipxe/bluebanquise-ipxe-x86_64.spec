@@ -33,6 +33,7 @@ Source:   https://github.com/oxedions/bluebanquise/bluebanquise-ipxe-x86_64.tar.
 URL:      https://github.com/oxedions/
 Packager: Benoit Leveugle <benoit.leveugle@gmail.com>
 
+Obsoletes: ipxe-x86_64-bluebanquise
 
 %define debug_package %{nil}
 

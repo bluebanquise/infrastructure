@@ -33,6 +33,7 @@ Source:   https://github.com/oxedions/bluebanquise/bluebanquise-ipxe-arm64.tar.g
 URL:      https://github.com/oxedions/
 Packager: Benoit Leveugle <benoit.leveugle@gmail.com>
 
+Obsoletes: ipxe-arm64-bluebanquise
 
 %define debug_package %{nil}
 
