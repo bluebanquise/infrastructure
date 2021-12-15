@@ -1,5 +1,5 @@
 [bluebanquise]
 name = bluebanquise
-baseurl = https://bluebanquise.com/repository/releases/1.5-dev/el8/x86_64/bluebanquise/
+baseurl = https://bluebanquise.com/repository/releases/1.5/el8/x86_64/bluebanquise/
 gpgcheck = 0
 enabled = 1

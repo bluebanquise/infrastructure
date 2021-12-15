@@ -25,7 +25,7 @@ mkdir -p ~/CI/repositories/ubuntu2004/{x86_64,arm64}/bluebanquise/
 
 #(
 a=1
-#if [ $a -eq 2 ]; then
+if [ $a -eq 2 ]; then
     ## RedHat_8_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_8_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_8_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_8_x86_64/build.sh $packages_list
@@ -41,6 +41,7 @@ a=1
     rsync -av $CURRENT_DIR/build/Ubuntu_20.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_Ubuntu_20.04_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_Ubuntu_20.04_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/ubuntu2004/x86_64/* ~/CI/build/ubuntu2004/x86_64/
+
 #if [ $a -eq 2 ]; then
 #exit
     ## RedHat_8_aarch64
@@ -63,17 +64,17 @@ a=1
 #wait $!
 
 # CROSS packages between archs for iPXE toms
-#fi
-cp ~/CI/build/el7/x86_64/noarch/ipxe-x86_64-bluebanquise*.rpm ~/CI/build/el7/aarch64/noarch/ ; \
-cp ~/CI/build/el7/aarch64/noarch/ipxe-arm64-bluebanquise*.rpm ~/CI/build/el7/x86_64/noarch/ ; \
-cp ~/CI/build/el8/x86_64/noarch/ipxe-x86_64-bluebanquise*.rpm ~/CI/build/el8/aarch64/noarch/ ; \
-cp ~/CI/build/el8/aarch64/noarch/ipxe-arm64-bluebanquise*.rpm ~/CI/build/el8/x86_64/noarch/ ; \
-cp ~/CI/build/ubuntu2004/x86_64/noarch/ipxe-x86-64-bluebanquise*.deb ~/CI/build/ubuntu2004/arm64/noarch/ ; \
-cp ~/CI/build/ubuntu2004/arm64/noarch/ipxe-arm64-bluebanquise*.deb ~/CI/build/ubuntu2004/x86_64/noarch/ ; \
+
+cp ~/CI/build/el7/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el7/aarch64/noarch/ ; \
+cp ~/CI/build/el7/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el7/x86_64/noarch/ ; \
+cp ~/CI/build/el8/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el8/aarch64/noarch/ ; \
+cp ~/CI/build/el8/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el8/x86_64/noarch/ ; \
+cp ~/CI/build/ubuntu2004/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2004/arm64/noarch/ ; \
+cp ~/CI/build/ubuntu2004/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2004/x86_64/noarch/ ; \
 
 # REPOSITORIES
 
-#fi
+fi
 
 ## RedHat_8_x86_64
 #fi
