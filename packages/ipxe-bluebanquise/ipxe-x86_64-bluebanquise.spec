@@ -1,14 +1,18 @@
-# Leap 15.1:
+# SUSE 12.5
+%if 0%{?sle_version} == 120500
+%define dist .sl125
+%endif
+# SUSE 15.1:
 %if 0%{?sle_version} == 150100
-%define dist .lp151
+%define dist .sl151
 %endif
-# Leap 15.2:
+# SUSE 15.2:
 %if 0%{?sle_version} == 150200
-%define dist .lp152
+%define dist .sl152
 %endif
-# Leap 15.3:
+# SUSE 15.3:
 %if 0%{?sle_version} == 150300
-%define dist .lp153
+%define dist .sl153
 %endif
 
 %if 0%{?sle_version} 
