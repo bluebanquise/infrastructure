@@ -25,17 +25,19 @@ mkdir -p ~/CI/repositories/ubuntu2004/{x86_64,arm64}/bluebanquise/
 
 #(
 a=1
-if [ $a -eq 2 ]; then
+#if [ $a -eq 2 ]; then
     ## RedHat_8_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_8_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_8_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_8_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el8/x86_64/* ~/CI/build/el8/x86_64/
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el8/sources/* ~/CI/build/el8/sources/
+#fi
     ## RedHat_7_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_7_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_7_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_7_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el7/x86_64/* ~/CI/build/el7/x86_64/
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el7/sources/* ~/CI/build/el7/sources/
+#exit
 #fi
     ## Ubuntu_20.04_x86_64
     rsync -av $CURRENT_DIR/build/Ubuntu_20.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_Ubuntu_20.04_x86_64/
@@ -74,7 +76,7 @@ cp ~/CI/build/ubuntu2004/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ub
 
 # REPOSITORIES
 
-fi
+
 
 ## RedHat_8_x86_64
 #fi
@@ -130,3 +132,5 @@ ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_arm
 rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/* ~/CI/repositories/ubuntu2004/arm64/bluebanquise/
 
 rsync -av -av $CURRENT_DIR/repositories/tree/* ~/CI/repositories/
+
+echo "All done :-)"
