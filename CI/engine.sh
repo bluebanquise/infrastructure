@@ -1,5 +1,5 @@
 set -e
-set -x
+#set -x
 
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
@@ -60,7 +60,7 @@ if echo $os_list | grep -q "lp15"; then
     if echo $arch_list | grep -q "x86_64"; then
         ## RedHat_8_x86_64
         rsync -av $CURRENT_DIR/build/OpenSUSELeap_15_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_OpenSUSELeap_15_x86_64/
-        ssh bluebanquise@x86_64_worker /home/bluebanquise/OpenSUSELeap_15_x86_64/build.sh $packages_list
+        ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_OpenSUSELeap_15_x86_64/build.sh $packages_list
         rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/lp15/x86_64/* ~/CI/build/lp15/x86_64/
         rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/lp15/sources/* ~/CI/build/lp15/sources/
     fi
