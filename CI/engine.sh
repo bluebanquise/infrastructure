@@ -17,80 +17,90 @@ do
 done
 
 if [ -z ${packages_list+x} ]; then
-    echo "Packages list to be generated: $packages_list"
-else
     packages_list="all"
-    echo "No packages list passed as argumentd, will generate all."
+    echo "No packages list passed as argument, will generate all."
+else
+    echo "Packages list to be generated: $packages_list"
 fi
 
 if [ -z ${arch_list+x} ]; then
-    echo "Arch list to be generated: $arch_list"
+    arch_list="x86_64 aarch64 arm64"
+    echo "No arch list passed as argument, will generate all."
 else
-    arch_list="all"
-    echo "No arch list passed as argumentd, will generate all."
+    echo "Arch list to be generated: $arch_list"
 fi
 
 if [ -z ${os_list+x} ]; then
-    echo "OS list to be generated: $os_list"
+    os_list="el7 el8 lp15 ubuntu2004"
+    echo "No os list passed as argument, will generate all."
 else
-    os_list="all"
-    echo "No os list passed as argumentd, will generate all."
+    echo "OS list to be generated: $os_list"
 fi
-
-exit
 
 mkdir -p ~/CI/
 mkdir -p ~/CI/logs/
-mkdir -p ~/CI/build/{el7,el8}/{x86_64,aarch64,sources}/
+mkdir -p ~/CI/build/{el7,el8,lp15}/{x86_64,aarch64,sources}/
 mkdir -p ~/CI/build/ubuntu2004/{x86_64,arm64}/
-mkdir -p ~/CI/repositories/{el7,el8}/{x86_64,aarch64,sources}/bluebanquise/
+mkdir -p ~/CI/repositories/{el7,el8,lp15}/{x86_64,aarch64,sources}/bluebanquise/
 mkdir -p ~/CI/repositories/ubuntu2004/{x86_64,arm64}/bluebanquise/
 
 # BUILDS
 
-## Different archs == different hosts -> parallel
-
-#(
-a=1
-#if [ $a -eq 2 ]; then
+if echo $os_list | grep -q "el8"; then
+    if echo $arch_list | grep -q "x86_64"; then
     ## RedHat_8_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_8_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_8_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_8_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el8/x86_64/* ~/CI/build/el8/x86_64/
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el8/sources/* ~/CI/build/el8/sources/
-#fi
+    fi
+fi
+
+if echo $os_list | grep -q "el7"; then
+    if echo $arch_list | grep -q "x86_64"; then
     ## RedHat_7_x86_64
     rsync -av $CURRENT_DIR/build/RedHat_7_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_7_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_7_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el7/x86_64/* ~/CI/build/el7/x86_64/
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el7/sources/* ~/CI/build/el7/sources/
-#exit
-#fi
+    fi
+fi
+
+if echo $os_list | grep -q "ubuntu2004"; then
+    if echo $arch_list | grep -q "x86_64"; then
     ## Ubuntu_20.04_x86_64
     rsync -av $CURRENT_DIR/build/Ubuntu_20.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_Ubuntu_20.04_x86_64/
     ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_Ubuntu_20.04_x86_64/build.sh $packages_list
     rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/ubuntu2004/x86_64/* ~/CI/build/ubuntu2004/x86_64/
+    fi
+fi
 
-#if [ $a -eq 2 ]; then
-#exit
+if echo $os_list | grep -q "el8"; then
+    if echo $arch_list | grep -q -E "aarch64|arm64"; then
     ## RedHat_8_aarch64
     rsync -av $CURRENT_DIR/build/RedHat_8_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_RedHat_8_aarch64/
     ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_RedHat_8_aarch64/build.sh $packages_list
     rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/el8/aarch64/* ~/CI/build/el8/aarch64/
-#fi
+    fi
+fi
+
+if echo $os_list | grep -q "el7"; then
+    if echo $arch_list | grep -q -E "aarch64|arm64"; then
     ## RedHat_7_aarch64
     rsync -av $CURRENT_DIR/build/RedHat_7_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_RedHat_7_aarch64/
     ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_RedHat_7_aarch64/build.sh $packages_list
     rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/el7/aarch64/* ~/CI/build/el7/aarch64/
+    fi
+fi
 
+if echo $os_list | grep -q "ubuntu2004"; then
+    if echo $arch_list | grep -q -E "aarch64|arm64"; then
     ## Ubuntu_20.04_arm64
     rsync -av $CURRENT_DIR/build/Ubuntu_20.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_Ubuntu_20.04_arm64/
     ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_Ubuntu_20.04_arm64/build.sh $packages_list
     rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/ubuntu2004/arm64/* ~/CI/build/ubuntu2004/arm64/
-
-#) >  ~/CI/logs/x86_64.log 2>&1 &
-
-#wait $!
+    fi
+fi
 
 # CROSS packages between archs for iPXE toms
 
@@ -98,6 +108,8 @@ cp ~/CI/build/el7/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el7/aar
 cp ~/CI/build/el7/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el7/x86_64/noarch/ ; \
 cp ~/CI/build/el8/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el8/aarch64/noarch/ ; \
 cp ~/CI/build/el8/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el8/x86_64/noarch/ ; \
+cp ~/CI/build/lp15/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/lp15/aarch64/noarch/ ; \
+cp ~/CI/build/lp15/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/lp15/x86_64/noarch/ ; \
 cp ~/CI/build/ubuntu2004/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2004/arm64/noarch/ ; \
 cp ~/CI/build/ubuntu2004/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2004/x86_64/noarch/ ; \
 
