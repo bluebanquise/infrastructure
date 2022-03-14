@@ -6,11 +6,38 @@ CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 # Assume aarch64_worker and x86_64_worker both resolve
 # Assume remote user is bluebanquise user and remote home is /home/bluebanquise
 
-if [ -z $1 ]; then
-    packages_list="all"
+for ARGUMENT in "$@"
+do
+   KEY=$(echo $ARGUMENT | cut -f1 -d=)
+
+   KEY_LENGTH=${#KEY}
+   VALUE="${ARGUMENT:$KEY_LENGTH+1}"
+
+   export "$KEY"="$VALUE"
+done
+
+if [ -z ${packages_list+x} ]; then
+    echo "Packages list to be generated: $packages_list"
 else
-    packages_list=$1
+    packages_list="all"
+    echo "No packages list passed as argumentd, will generate all."
 fi
+
+if [ -z ${arch_list+x} ]; then
+    echo "Arch list to be generated: $arch_list"
+else
+    arch_list="all"
+    echo "No arch list passed as argumentd, will generate all."
+fi
+
+if [ -z ${os_list+x} ]; then
+    echo "OS list to be generated: $os_list"
+else
+    os_list="all"
+    echo "No os list passed as argumentd, will generate all."
+fi
+
+exit
 
 mkdir -p ~/CI/
 mkdir -p ~/CI/logs/
