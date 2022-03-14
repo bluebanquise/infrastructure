@@ -3,15 +3,19 @@ set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
 
-if [ $distribution_version -eq 7 ]; then
-    if [ -f /usr/bin/aclocal-1.16 ]; then
-       echo link exist, skipping
-    else
-        ln -s /usr/bin/aclocal /usr/bin/aclocal-1.16
-        ln -s /usr/bin/autoconf /usr/bin/autoconf-1.16
-        ln -s /usr/bin/automake /usr/bin/automake-1.16
-    fi
-fi
+#if [ $distribution_version -eq 7 ]; then
+#    if [ -f /usr/bin/aclocal-1.16 ]; then
+#       echo link exist, skipping
+#    else
+if [[ ! -f /usr/bin/aclocal-1.16 ]]; then ln -s /usr/bin/aclocal /usr/bin/aclocal-1.16; fi
+if [[ ! -f /usr/bin/autoconf-1.16 ]]; then ln -s /usr/bin/autoconf /usr/bin/autoconf-1.16; fi
+if [[ ! -f /usr/bin/automake-1.16 ]]; then ln -s /usr/bin/automake /usr/bin/automake-1.16; fi
+
+        #ln -s /usr/bin/autoconf /usr/bin/autoconf-1.16
+        #ln -s /usr/bin/automake /usr/bin/automake-1.16
+#    fi
+#fi
+
 rm -Rf $working_directory/build/atftp
 mkdir -p $working_directory/build/atftp/
 

@@ -1,11 +1,21 @@
 %define is_ubuntu %(grep -i ubuntu /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
 %define is_opensuse_leap %(grep -i opensuse-leap /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
 
-# OpenSuse Leap 15.3:
-%if %is_opensuse_leap
-  %if %(grep '15.3' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-     %define dist .osl15.3
-  %endif
+# SUSE 12.5
+%if 0%{?sle_version} == 120500
+  %define dist .sl125
+%endif
+# SUSE 15.1:
+%if 0%{?sle_version} == 150100
+  %define dist .sl151
+%endif
+# SUSE 15.2:
+%if 0%{?sle_version} == 150200
+  %define dist .sl152
+%endif
+# SUSE 15.3:
+%if 0%{?sle_version} == 150300
+  %define dist .sl153
 %endif
 
 # Ubuntu 20.04
@@ -15,12 +25,12 @@
   %endif
 %endif
 
-%if 0%{?is_opensuse} 
-%define tftp_path /srv/tftpboot/
-%define http_path /srv/www/htdocs/
+%if 0%{?sle_version} 
+  %define tftp_path /srv/tftpboot/
+  %define http_path /srv/www/htdocs/
 %else
-%define tftp_path /var/lib/tftpboot/
-%define http_path /var/www/html/
+  %define tftp_path /var/lib/tftpboot/
+  %define http_path /var/www/html/
 %endif
 
 Name:     bluebanquise-ipxe-arm64

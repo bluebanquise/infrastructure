@@ -50,8 +50,15 @@ if [ "$1" == "dependencies" ]; then
   echo " Installing needed packages... may take some time."
 
   if [ "$distribution" == 'opensuse_leap' ]; then
-    if [ "$distribution_version" == "15.3" ]; then
-      zypper -n install python3-setuptools wget flex bison gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi mariadb munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3
+    if [[ "$distribution_version" =~ ^15\. ]]; then
+      zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build tar
+    fi
+  elif [ "$distribution" == 'SLES' ]; then
+    if [[ "$distribution_version" =~ ^12\. ]]; then
+        # no munge RPMs!!
+        zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi freeipmi freeipmi-devel libmysqlclient-devel mariadb mariadb-client rpm-build
+    elif [[ "$distribution_version" =~ ^15\. ]]; then
+        zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build
     fi
 
   elif [ "$distribution" == 'Ubuntu' ]; then
