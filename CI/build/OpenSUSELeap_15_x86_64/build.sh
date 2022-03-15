@@ -27,8 +27,6 @@ podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15
 podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build atftp opensuse_leap 15
 podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build bluebanquise-ipxe opensuse_leap 15
 podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build bluebanquise-tools opensuse_leap 15
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build ssh-wait opensuse_leap 15
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build colour_text opensuse_leap 15
 podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build slurm opensuse_leap 15
 podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build prometheus opensuse_leap 15
 else
