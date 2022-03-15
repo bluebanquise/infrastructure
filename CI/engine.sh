@@ -114,6 +114,8 @@ fi
 
 # CROSS packages between archs for iPXE toms
 
+if echo $packages_list | grep -q "ipxe"; then
+
 cp ~/CI/build/el7/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el7/aarch64/noarch/ ; \
 cp ~/CI/build/el7/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el7/x86_64/noarch/ ; \
 cp ~/CI/build/el8/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el8/aarch64/noarch/ ; \
@@ -122,6 +124,8 @@ cp ~/CI/build/lp15/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/lp15/a
 cp ~/CI/build/lp15/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/lp15/x86_64/noarch/ ; \
 cp ~/CI/build/ubuntu2004/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2004/arm64/noarch/ ; \
 cp ~/CI/build/ubuntu2004/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2004/x86_64/noarch/ ; \
+
+fi
 
 # REPOSITORIES
 
@@ -148,6 +152,16 @@ if echo $os_list | grep -q "el8"; then
         rsync -av $CURRENT_DIR/repositories/RedHat_8_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_RedHat_8_x86_64/
         ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_RedHat_8_x86_64/build.sh
         rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/el8/x86_64/bluebanquise/* ~/CI/repositories/el8/x86_64/bluebanquise/
+    fi
+fi
+
+if echo $os_list | grep -q "lp15"; then
+    if echo $arch_list | grep -q "x86_64"; then
+        ssh bluebanquise@x86_64_worker "mkdir -p /home/bluebanquise/repositories/lp15/x86_64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/lp15/x86_64/bluebanquise/packages/*"
+        rsync -av ~/CI/build/lp15/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/lp15/x86_64/bluebanquise/packages/
+        rsync -av $CURRENT_DIR/repositories/OpenSUSELeap_15_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_OpenSUSELeap_15_x86_64/
+        ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_OpenSUSELeap_15_x86_64/build.sh
+        rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/lp15/x86_64/bluebanquise/* ~/CI/repositories/lp15/x86_64/bluebanquise/
     fi
 fi
 

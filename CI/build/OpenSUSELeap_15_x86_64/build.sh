@@ -22,13 +22,13 @@ fi
 mkdir -p ~/build/lp15/sources/
 
 if [ "$1" == "all" ]; then
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build nyancat opensuse_leap 15
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build ansible-cmdb opensuse_leap 15
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build atftp opensuse_leap 15
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build bluebanquise-ipxe opensuse_leap 15
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build bluebanquise-tools opensuse_leap 15
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build slurm opensuse_leap 15
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build prometheus opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build nyancat opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build ansible-cmdb opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build atftp opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build bluebanquise-ipxe opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build bluebanquise-tools opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build slurm opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build prometheus opensuse_leap 15
 else
-podman run -it --rm -v ~/build/lp15/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/lp15/sources/:/root/rpmbuild/SRPMS/ opensuse_leap_15_build $1 opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build $1 opensuse_leap 15
 fi
