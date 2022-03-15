@@ -37,6 +37,13 @@ else
     echo "OS list to be generated: $os_list"
 fi
 
+if [ -z ${reset_repos+x} ]; then
+    reset_repos="false"
+    echo "No repo reset required."
+else
+    echo "Reset repo: $reset_repos"
+fi
+
 mkdir -p ~/CI/
 mkdir -p ~/CI/logs/
 mkdir -p ~/CI/build/{el7,el8,lp15}/{x86_64,aarch64,sources}/
