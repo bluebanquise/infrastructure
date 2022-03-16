@@ -51,7 +51,7 @@ if [ "$1" == "dependencies" ]; then
 
   if [ "$distribution" == 'opensuse_leap' ]; then
     if [[ "$distribution_version" =~ ^15\. ]]; then
-      zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build tar wget python3
+      zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build tar wget python3 python3-setuptools
       if [ $distribution_architecture == 'x86_64' ]; then
          zypper -n install grub2-x86_64-efi
       fi
