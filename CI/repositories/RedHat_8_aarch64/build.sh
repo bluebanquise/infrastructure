@@ -1,4 +1,11 @@
 set -x
+if [ "$1" == 'yes' ]; then
+podman run -it --rm -v /home/bluebanquise/repositories/el8/aarch64/bluebanquise/:/repo/ rockylinux/rockylinux:8 /bin/bash -c ' \
+    set -x ; \
+    dnf install -y createrepo ; \
+    createrepo /repo/ ; \
+    '
+else
 podman run -it --rm -v /home/bluebanquise/repositories/el8/aarch64/bluebanquise/:/repo/ rockylinux/rockylinux:8 /bin/bash -c ' \
     set -x ; \
     dnf install -y wget yum-utils createrepo rsync ; \
@@ -7,3 +14,4 @@ podman run -it --rm -v /home/bluebanquise/repositories/el8/aarch64/bluebanquise/
     rsync -a -v --ignore-times /root/bluebanquise/packages/* /repo/packages/ ; \
     createrepo /repo/ ; \
     '
+fi

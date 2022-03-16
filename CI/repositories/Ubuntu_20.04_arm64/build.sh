@@ -1,4 +1,13 @@
 set -x
+if [ "$1" == 'yes' ]; then
+podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/:/repo/ ubuntu:20.04 /bin/bash -c ' \
+    set -x ; \
+    apt-get update ; \
+    apt-get install -y dpkg-dev ; \
+    cd /repo/ ; \
+    dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz ; \
+    '
+else
 podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/:/repo/ ubuntu:20.04 /bin/bash -c ' \
     set -x ; \
     apt-get update ; \
@@ -12,3 +21,4 @@ podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanq
     cd /repo/ ; \
     dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz ; \
     '
+fi
