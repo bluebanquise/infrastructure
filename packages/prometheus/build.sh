@@ -19,7 +19,7 @@ if [ "$distribution_version" != "7" ]; then
   tar xvzf prometheus_client-$prometheus_client_version.tar.gz
   cd client_python-$prometheus_client_version
   python3 setup.py bdist_rpm --spec-only
-  sed -i 's/setup.py/setup.py --no-target-compile --no-compile/' dist/prometheus_client.spec
+  sed -i 's/setup.py/setup.py --no-compile/' dist/prometheus_client.spec
   sed -i '1s/^/%undefine __brp_python_bytecompile\n/' dist/prometheus_client.spec 
   cd ..
   mv client_python-$prometheus_client_version prometheus_client-$prometheus_client_version
