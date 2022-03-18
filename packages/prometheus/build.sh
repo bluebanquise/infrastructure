@@ -14,13 +14,14 @@ rm -Rf $working_directory/build/prometheus
 mkdir -p $working_directory/build/prometheus
 cd $working_directory/build/prometheus
 
-if [ "$distribution_version" != "7" ]; then
+if [ "$distribution_version" != "7" ] && [ "$distribution_version" != "11" ]; then
   cp $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz .
   tar xvzf prometheus_client-$prometheus_client_version.tar.gz
   cd client_python-$prometheus_client_version
   python3 setup.py bdist_rpm --spec-only
-  sed -i 's/setup.py/setup.py --no-compile/' dist/prometheus_client.spec
-  sed -i '1s/^/%undefine __brp_python_bytecompile\n/' dist/prometheus_client.spec 
+#  sed -i 's/\/bin\/bash/\/bin\/bash\nexit 0\n/' /usr/lib/rpm/brp-python-bytecompile
+#  sed -i 's/setup.py/setup.py --no-compile/' dist/prometheus_client.spec
+#  sed -i '1s/^/%undefine __brp_python_bytecompile\n/' dist/prometheus_client.spec 
   cd ..
   mv client_python-$prometheus_client_version prometheus_client-$prometheus_client_version
   tar cvzf prometheus_client-$prometheus_client_version.tar.gz prometheus_client-$prometheus_client_version
