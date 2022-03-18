@@ -39,7 +39,7 @@ cp  $working_directory/sources/slurm-$slurm_version.tar.bz2 $working_directory/b
 #        sed -i '1s/^/%undefine\ _hardened_build\n/' slurm-$slurm_version/slurm.spec
 #        sed -i 's/BuildRequires:\ python/#BuildRequires:\ python/g' slurm-$slurm_version/slurm.spec
 #        tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     tar xjvf slurm-$slurm_version.tar.bz2
     sed -i 's|%{!?_unitdir|#%{!?_unitdir|' slurm-$slurm_version/slurm.spec
     sed -i '1s|^|%define\ _unitdir\ /etc/systemd/system\n|' slurm-$slurm_version/slurm.spec
