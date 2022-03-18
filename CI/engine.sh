@@ -181,17 +181,26 @@ fi
 
 if echo $packages_list | grep -q "ipxe" || echo $packages_list | grep -q "all" ; then
 
-cp ~/CI/build/el7/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el7/aarch64/noarch/ ; \
-cp ~/CI/build/el7/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el7/x86_64/noarch/ ; \
-cp ~/CI/build/el8/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el8/aarch64/noarch/ ; \
-cp ~/CI/build/el8/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el8/x86_64/noarch/ ; \
-cp ~/CI/build/lp15/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/lp15/aarch64/noarch/ ; \
-cp ~/CI/build/lp15/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/lp15/x86_64/noarch/ ; \
-cp ~/CI/build/ubuntu2004/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2004/arm64/noarch/ ; \
-cp ~/CI/build/ubuntu2004/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2004/x86_64/noarch/ ; \
-cp ~/CI/build/debian11/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/debian11/arm64/noarch/ ; \
-cp ~/CI/build/debian11/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/debian11/x86_64/noarch/ ; \
-
+    if echo $os_list | grep -q "el7"; then
+        cp ~/CI/build/el7/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el7/aarch64/noarch/ ; \
+        cp ~/CI/build/el7/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el7/x86_64/noarch/ ; \
+    fi
+    if echo $os_list | grep -q "el8"; then
+        cp ~/CI/build/el8/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/el8/aarch64/noarch/ ; \
+        cp ~/CI/build/el8/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/el8/x86_64/noarch/ ; \
+    fi
+    if echo $os_list | grep -q "lp15"; then
+        cp ~/CI/build/lp15/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/lp15/aarch64/noarch/ ; \
+        cp ~/CI/build/lp15/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/lp15/x86_64/noarch/ ; \
+    fi
+    if echo $os_list | grep -q "ubuntu2004"; then
+        cp ~/CI/build/ubuntu2004/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2004/arm64/noarch/ ; \
+        cp ~/CI/build/ubuntu2004/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2004/x86_64/noarch/ ; \
+    fi
+    if echo $os_list | grep -q "debian11"; then
+        cp ~/CI/build/debian11/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/debian11/arm64/noarch/ ; \
+        cp ~/CI/build/debian11/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/debian11/x86_64/noarch/ ; \
+    fi
 fi
 
 if echo $steps | grep -q "repos"; then
