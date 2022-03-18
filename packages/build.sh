@@ -67,6 +67,23 @@ if [ "$1" == "dependencies" ]; then
         zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build
     fi
 
+  elif [ "$distribution" == 'Debian' ]; then
+    if [ "$distribution_version" == "11" ]; then
+      if [ $distribution_architecture == 'x86_64' ]; then
+        echo "%_arch x86_64" > ~/.rpmmacros
+        apt-get update
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get install -y python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget
+        # Possibly missing python3-mysqldb libmysqld-dev
+      fi
+      if [ $distribution_architecture == 'arm64' ]; then
+        echo "%_arch arm64" > ~/.rpmmacros
+        apt-get update
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get install -y python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-arm64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget
+      fi
+    fi
+
   elif [ "$distribution" == 'Ubuntu' ]; then
     if [ "$distribution_version" == "20.04" ]; then
       if [ $distribution_architecture == 'x86_64' ]; then

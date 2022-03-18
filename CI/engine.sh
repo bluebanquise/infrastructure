@@ -120,6 +120,15 @@ if echo $os_list | grep -q "ubuntu2004"; then
     fi
 fi
 
+if echo $os_list | grep -q "debian11"; then
+    if echo $arch_list | grep -q "x86_64"; then
+        ## Debian_11_x86_64
+        rsync -av $CURRENT_DIR/build/Debian_11_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_Debian_11_x86_64/
+        ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_Debian_11_x86_64/build.sh $packages_list
+        rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/debian11/x86_64/* ~/CI/build/debian11/x86_64/
+    fi
+fi
+
 if echo $os_list | grep -q "el8"; then
     if echo $arch_list | grep -q -E "aarch64|arm64"; then
         ## RedHat_8_aarch64
@@ -157,6 +166,15 @@ if echo $os_list | grep -q "ubuntu2004"; then
     fi
 fi
 
+if echo $os_list | grep -q "debian11"; then
+    if echo $arch_list | grep -q -E "aarch64|arm64"; then
+        ## Debian_11_arm64
+        rsync -av $CURRENT_DIR/build/Debian_11_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_Debian_11_arm64/
+        ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_Debian_11_arm64/build.sh $packages_list
+        rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/debian11/arm64/* ~/CI/build/debian11/arm64/
+    fi
+fi
+
 fi
 
 # CROSS packages between archs for iPXE toms
@@ -171,6 +189,8 @@ cp ~/CI/build/lp15/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm ~/CI/build/lp15/a
 cp ~/CI/build/lp15/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm ~/CI/build/lp15/x86_64/noarch/ ; \
 cp ~/CI/build/ubuntu2004/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2004/arm64/noarch/ ; \
 cp ~/CI/build/ubuntu2004/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2004/x86_64/noarch/ ; \
+cp ~/CI/build/debian11/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/debian11/arm64/noarch/ ; \
+cp ~/CI/build/debian11/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/debian11/x86_64/noarch/ ; \
 
 fi
 
@@ -234,6 +254,16 @@ if echo $os_list | grep -q "ubuntu2004"; then
     fi
 fi
 
+if echo $os_list | grep -q "debian11"; then
+    if echo $arch_list | grep -q "x86_64"; then
+        ssh bluebanquise@x86_64_worker "mkdir -p /home/bluebanquise/repositories/debian11/x86_64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/debian11/x86_64/bluebanquise/packages/*"
+        rsync -av ~/CI/build/debian11/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/debian11/x86_64/bluebanquise/packages/
+        rsync -av $CURRENT_DIR/repositories/Debian_11_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Debian_11_x86_64/
+        ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Debian_11_x86_64/build.sh $reset_repos
+        rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/debian11/x86_64/bluebanquise/* ~/CI/repositories/debian11/x86_64/bluebanquise/
+    fi
+fi
+
 if echo $os_list | grep -q "el8"; then
     if echo $arch_list | grep -q -E "aarch64|arm64"; then
         ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/el8/aarch64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/el8/aarch64/bluebanquise/packages/*"
@@ -241,6 +271,16 @@ if echo $os_list | grep -q "el8"; then
         rsync -av $CURRENT_DIR/repositories/RedHat_8_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_RedHat_8_aarch64/
         ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_RedHat_8_aarch64/build.sh $reset_repos
         rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/el8/aarch64/bluebanquise/* ~/CI/repositories/el8/aarch64/bluebanquise/
+    fi
+fi
+
+if echo $os_list | grep -q "lp15"; then
+    if echo $arch_list | grep -q -E "aarch64|arm64"; then
+        ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/lp15/aarch64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/lp15/aarch64/bluebanquise/packages/*"
+        rsync -av ~/CI/build/lp15/aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/lp15/aarch64/bluebanquise/packages/
+        rsync -av $CURRENT_DIR/repositories/OpenSUSELeap_15_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_OpenSUSELeap_15_aarch64/
+        ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_OpenSUSELeap_15_aarch64/build.sh $reset_repos
+        rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/lp15/aarch64/bluebanquise/* ~/CI/repositories/lp15/aarch64/bluebanquise/
     fi
 fi
 
@@ -261,6 +301,16 @@ if echo $os_list | grep -q "ubuntu2004"; then
         rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_arm64/
         ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_arm64/build.sh $reset_repos
         rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/* ~/CI/repositories/ubuntu2004/arm64/bluebanquise/
+    fi
+fi
+
+if echo $os_list | grep -q "debian11"; then
+    if echo $arch_list | grep -q -E "aarch64|arm64"; then
+        ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/*"
+        rsync -av ~/CI/build/debian11/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/
+        rsync -av $CURRENT_DIR/repositories/Debian_11_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Debian_11_arm64/
+        ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Debian_11_arm64/build.sh $reset_repos
+        rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/arm64/bluebanquise/* ~/CI/repositories/debian11/arm64/bluebanquise/
     fi
 fi
 
