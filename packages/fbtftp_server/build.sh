@@ -23,7 +23,7 @@
        tar cvzf fbtftp-server-$fbtftp_server_version.tar.gz fbtftp-server-$fbtftp_server_version
        rpmbuild -ta fbtftp-server-$fbtftp_server_version.tar.gz --define "_software_version $fbtftp_server_version" --target=noarch
       
-       if [ $distribution == "Ubuntu" ]; then
+       if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
 	   cd /dev/shm
            alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/fbtftp-*
 	   mkdir -p /root/debbuild/DEBS/noarch/

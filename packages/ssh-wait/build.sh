@@ -15,7 +15,7 @@ $(which cp) -af $root_directory/ssh-wait/ssh-wait.spec python3-ssh-wait-$ssh_wai
 tar cvzf python3-ssh-wait-$ssh_wait_version.tar.gz python3-ssh-wait-$ssh_wait_version
 rpmbuild -ta python3-ssh-wait-$ssh_wait_version.tar.gz --define "_software_version $ssh_wait_version"
 
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/x86_64/python3-ssh-wait-*
     mkdir -p /root/debbuild/DEBS/noarch/

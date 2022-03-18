@@ -9,7 +9,7 @@ cd $working_directory/build/bluebanquise-tools
 git clone https://github.com/bluebanquise/tools.git .
 ./packages.sh
 
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/bluebanquise-*
     mkdir -p /root/debbuild/DEBS/noarch/

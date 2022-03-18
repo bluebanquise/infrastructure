@@ -15,7 +15,7 @@ $(which cp) -af $root_directory/nyancat/* nyancat-$nyancat_version/
 tar cvzf nyancat.tar.gz nyancat-$nyancat_version
 rpmbuild -ta nyancat.tar.gz --target=$distribution_architecture --define "_software_version $nyancat_version"
 
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/nyancat-*
     mkdir -p /root/debbuild/DEBS/$distribution_architecture/

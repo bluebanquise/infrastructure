@@ -62,7 +62,7 @@ tar cvzf karma-linux-$prometheus_arch.tar.gz karma-$karma_version
 rpmbuild -ta karma-linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $karma_version" --define "_software_architecture $prometheus_arch"
 
 
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/prometheus_client-*
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-*

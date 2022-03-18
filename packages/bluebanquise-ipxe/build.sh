@@ -78,7 +78,7 @@ fi
 
 mkdir $working_directory/build/ipxe/bin/$ipxe_arch/ -p
 
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     grub-mkstandalone -O $ipxe_arch-efi -o grub2_efi_autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
     grub-mkstandalone -O $ipxe_arch-efi -o grub2_shell.img "boot/grub/grub.cfg=grub2-shell.cfg"
 else
@@ -195,13 +195,17 @@ tar cvzf bluebanquise-ipxe-$ipxe_arch.tar.gz bluebanquise-ipxe-$ipxe_arch-$blueb
 if [ "$distribution" == "Ubuntu" ]; then
     if [ "$distribution_version" == "18.04" ]; then
     rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu1804"
-elif [ "$distribution_version" == "20.04" ]; then
-rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu2004"
-fi
+    elif [ "$distribution_version" == "20.04" ]; then
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu2004"
+    fi
+elif [ "$distribution" == "Debian" ]; then
+    if [ "$distribution_version" == "11" ]; then
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .debian11"
+    fi
 else
     rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release"
 fi
-if [ "$distribution" == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /dev/shm
     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/bluebanquise-ipxe*
     mkdir -p /root/debbuild/DEBS/noarch/

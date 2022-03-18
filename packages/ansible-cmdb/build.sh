@@ -15,7 +15,7 @@ $(which cp) -af $root_directory/ansible-cmdb/* ansible-cmdb-$ansible_cmdb_versio
 tar cvzf ansible-cmdb-$ansible_cmdb_version.tar.gz ansible-cmdb-$ansible_cmdb_version
 rpmbuild -ta ansible-cmdb-$ansible_cmdb_version.tar.gz --target=$distribution_architecture --define "_software_version $ansible_cmdb_version"
 
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/ansible-cmdb-*
     mkdir -p /root/debbuild/DEBS/$distribution_architecture/

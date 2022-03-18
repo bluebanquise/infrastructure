@@ -55,7 +55,7 @@ fi
 
 rpmbuild -ta --target=$distribution_architecture slurm-$slurm_version.tar.bz2
 
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
     alien --to-deb /root/rpmbuild/RPMS/$distribution_architecture/slurm*
     mkdir -p /root/debbuild/DEBS/$distribution_architecture/

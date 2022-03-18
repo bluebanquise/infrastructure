@@ -19,7 +19,7 @@ $(which cp) -af $root_directory/grubby/* .
 cd ../
 tar cvzf grubby-$grubby_version.tar.gz grubby-$grubby_version
 rpmbuild -ta grubby-$grubby_version.tar.gz --target=$distribution_architecture --define "_software_version $grubby_version"
-if [ $distribution == "Ubuntu" ]; then
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/grubby-*
     mkdir -p /root/debbuild/DEBS/$distribution_architecture/
