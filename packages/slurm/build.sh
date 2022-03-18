@@ -11,7 +11,7 @@ if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz ]; then
     wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
 fi
 
-if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ]; then
+if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $distribution != "Debian" ]; then
     rm -Rf $working_directory/build/munge
     mkdir -p $working_directory/build/munge
     cd $working_directory/build/munge
