@@ -31,7 +31,7 @@ else
 fi
 
 if [ -z ${os_list+x} ]; then
-    os_list="el7 el8 lp15 ubuntu2004"
+    os_list="el7 el8 lp15 ubuntu2004 debian11"
     echo "No os list passed as argument, will generate all."
 else
     echo "OS list to be generated: $os_list"
@@ -202,7 +202,7 @@ if echo $packages_list | grep -q "ipxe" || echo $packages_list | grep -q "all" ;
     fi
     if echo $os_list | grep -q "debian11"; then
         cp ~/CI/build/debian11/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/debian11/aarch64/noarch/ ; \
-        cp ~/CI/build/debian11/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/debian11/x86_64/noarch/ ; \
+        cp ~/CI/build/debian11/aarch64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/debian11/x86_64/noarch/ ; \
     fi
 fi
 
@@ -317,7 +317,7 @@ fi
 if echo $os_list | grep -q "debian11"; then
     if echo $arch_list | grep -q -E "aarch64|arm64"; then
         ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/debian11/aarch64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/debian11/aarch64/bluebanquise/packages/*"
-        rsync -av ~/CI/build/debian11/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/aarch64/bluebanquise/packages/
+        rsync -av ~/CI/build/debian11/aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/aarch64/bluebanquise/packages/
         rsync -av $CURRENT_DIR/repositories/Debian_11_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Debian_11_aarch64/
         ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Debian_11_aarch64/build.sh $reset_repos
         rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/aarch64/bluebanquise/* ~/CI/repositories/debian11/aarch64/bluebanquise/
