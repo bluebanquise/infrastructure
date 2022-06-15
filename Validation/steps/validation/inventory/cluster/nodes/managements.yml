@@ -11,5 +11,7 @@ mg_managements:
           network_interfaces:
             - interface: ens3
               ip4: 10.10.0.1
-              mac: 52:54:00:fa:1f:02
+              mac: 52:54:00:fa:12:02
               network: ice1-1
+            - interface: ens2
+              dhcp: true

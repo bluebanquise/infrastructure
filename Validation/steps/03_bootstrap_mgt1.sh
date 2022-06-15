@@ -27,19 +27,23 @@ if (( $STEP < 4 )); then
     set -e
     echo "  - Estabilishing link with mgt1."
 
-    sshpass -e ssh-copy-id -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip
+   # sshpass -e ssh-copy-id -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip sudo apt-get update
 
     echo "  - Configuring mgt1 as gateway."
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip bash <<EOF
-    sudo bash -c 'echo 1 > /proc/sys/net/ipv4/ip_forward'
-    sudo iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ens2 -j MASQUERADE
-    EOF
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip << EOF
+sudo bash -c 'echo 1 > /proc/sys/net/ipv4/ip_forward'
+sudo iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ens2 -j MASQUERADE
+EOF
 
     echo "  - Expand default FS."
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip bash <<EOF
-    sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
-    sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
-    EOF
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip << EOF
+sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
+EOF
 
 fi
+
+echo "  - Getting mgt1 ip."
+export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | awk -F ' ' '{print $5}' | sed 's/\/24//')
+echo "  $mgt1_ip"
