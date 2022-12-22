@@ -1,0 +1,13 @@
+[all]
+c001 network_interfaces=[{'ip4':"10.10.0.1", 'mac':"1a:2b:3c:4d:5e:8f", 'network':"net-admin", 'interface':"eno1"}]
+mg1 network_interfaces=[{'ip4':"10.10.0.1", 'mac':"1a:2b:3c:4d:5e:9f", 'network':"net-admin", 'interface':"eno1"}]
+
+[mg_managements]
+mg1
+
+[all:vars]
+# Define unique network settings
+networks={'net-admin':{'subnet':"10.10.0.1", 'prefix':"16", 'services_ip':"10.10.0.1" }}
+# Define all eq settings
+pxe_stack_ep_equipment_type=server
+pxe_stack_ep_operating_system={'distribution':"redhat", 'distribution_version':"8", 'distribution_major_version':"8" }
