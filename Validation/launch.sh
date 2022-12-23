@@ -11,6 +11,7 @@ LAUNCH_CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null 
 echo "Starting test."
 set -e
 source values.sh
+wget -nc https://repo.almalinux.org/almalinux/8/isos/x86_64/AlmaLinux-8-latest-x86_64-dvd.iso
 source steps/01_setup_networks.sh
 cd $LAUNCH_CURRENT_DIR
 source steps/02_start_http_server.sh
