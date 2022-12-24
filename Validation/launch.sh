@@ -11,7 +11,9 @@ LAUNCH_CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null 
 echo "Starting test."
 set -e
 source values.sh
+cd http
 wget -nc https://repo.almalinux.org/almalinux/8/isos/x86_64/AlmaLinux-8-latest-x86_64-dvd.iso
+cd ../
 source steps/01_setup_networks.sh
 cd $LAUNCH_CURRENT_DIR
 source steps/02_start_http_server.sh
@@ -19,3 +21,5 @@ cd $LAUNCH_CURRENT_DIR
 source steps/03_bootstrap_mgt1.sh
 cd $LAUNCH_CURRENT_DIR
 source steps/04_deploy_bluebanquise_on_mgt1.sh
+cd $LAUNCH_CURRENT_DIR
+source steps/05_deploy_compute.sh

@@ -6,16 +6,6 @@ autoinstall:
     preserve_sources_list: true
   keyboard: {layout: us, toggle: null, variant: ''}
   locale: en_US.UTF-8
-  user-data:
-    disable_root: true
-    users:
-      - name: bluebanquise
-        sudo: ['ALL=(ALL:ALL) NOPASSWD:ALL']
-        groups: sudo
-        shell: /bin/bash
-        ssh-authorized-keys:
-          - SSHKEY
-        passwd: $6$M3crarMVoUV3rALd$ZTre2CIyss7zOb4lkLoG23As9OAkYPw2BM88Y1F43n8CCyV5XWwAYEwBOrS8bcCBIMjIPdJG.ndOfzWyAVR4j0
   ssh:
     allow-pw: true
     install-server: true
@@ -23,3 +13,12 @@ autoinstall:
     mode: poweroff
     delay: 5
     message: Bye Bye
+  user-data:
+    disable_root: true
+    users:
+      - name: generic
+        sudo: ['ALL=(ALL:ALL) NOPASSWD:ALL']
+        groups: sudo
+        shell: /bin/bash
+        passwd: $6$M3crarMVoUV3rALd$ZTre2CIyss7zOb4lkLoG23As9OAkYPw2BM88Y1F43n8CCyV5XWwAYEwBOrS8bcCBIMjIPdJG.ndOfzWyAVR4j0
+        ssh-authorized-keys:

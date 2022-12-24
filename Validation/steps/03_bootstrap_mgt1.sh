@@ -26,22 +26,22 @@ if (( $STEP < 4 )); then
 
     echo "Waiting for VM to be ready at $mgt1_ip"
     set +e
-    $CURRENT_DIR/functions/waitforssh.sh bluebanquise@$mgt1_ip
+    $CURRENT_DIR/functions/waitforssh.sh generic@$mgt1_ip
     set -e
     echo "  - Estabilishing link with mgt1."
 
-   # sshpass -e ssh-copy-id -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip sudo apt-get update
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip DEBIAN_FRONTEND=noninteractive sudo apt-get upgrade -y
+   # sshpass -e ssh-copy-id -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip sudo apt-get update
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip DEBIAN_FRONTEND=noninteractive sudo apt-get upgrade -y
 
     echo "  - Configuring mgt1 as gateway."
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip << EOF
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip << EOF
 sudo bash -c 'echo 1 > /proc/sys/net/ipv4/ip_forward'
 sudo iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ens2 -j MASQUERADE
 EOF
 
     echo "  - Expand default FS."
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip << EOF
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip << EOF
 sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 EOF

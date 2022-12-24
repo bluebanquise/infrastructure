@@ -7,8 +7,9 @@ if (( $STEP < 5 )); then
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip chmod +x online_bootstrap.sh
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip ./online_bootstrap.sh silent
 
-    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip 'sudo cat .ssh/authorized_keys >> /var/lib/bluebanquise/.ssh/authorized_keys'
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip 'cat .ssh/authorized_keys | sudo tee -a /var/lib/bluebanquise/.ssh/authorized_keys'
 
+    ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip hostname
     scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r $CURRENT_DIR/validation bluebanquise@$mgt1_ip:/var/lib/bluebanquise/
 
 
@@ -17,14 +18,18 @@ if (( $STEP < 6 )); then
 
     remote_pubkey=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip /bin/echo \$\(cat /var/lib/bluebanquise/.ssh/id_ed25519.pub\))
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-
+set -x
 cd validation/inventories/
 mkdir -p minimal/group_vars/all/
 cp bb_core.yml minimal/group_vars/all/
 echo ep_admin_ssh_keys=[\"$remote_pubkey\"] >> minimal/hosts
 echo 127.0.0.1 mgt1 | sudo tee -a /etc/hosts
 ssh -o StrictHostKeyChecking=no mgt1 hostname
+EOF
 
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+echo 'deb [trusted=yes] http://bluebanquise.com/repository/releases/latest/ubuntu2004/x86_64/bluebanquise/ ./' | sudo tee /etc/apt/sources.list.d/bluebanquise.list
+sudo apt update
 EOF
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -35,16 +40,23 @@ EOF
 fi
 
 if (( $STEP < 7 )); then
-scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r $CURRENT_DIR/../http/AlmaLinux-8-latest-x86_64-dvd.iso bluebanquise@$mgt1_ip:/var/lib/bluebanquise/AlmaLinux-8-latest-x86_64-dvd.iso
+ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/AlmaLinux-8-latest-x86_64-dvd.iso
+#rsync -av --partial $CURRENT_DIR/../AlmaLinux-8-latest-x86_64-dvd.iso bluebanquise@$mgt1_ip:/var/lib/bluebanquise/AlmaLinux-8-latest-x86_64-dvd.iso
+
+mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip pip3 show ClusterShell | grep Location | awk -F ' ' '{print $2}')
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo mkdir -p /var/www/html/pxe/netboots/redhat/8/x86_64/iso
 sudo mount /var/lib/bluebanquise/AlmaLinux-8-latest-x86_64-dvd.iso /var/www/html/pxe/netboots/redhat/8/x86_64/iso
-/bin/bash -c 'sudo bluebanquise-bootset -n c001 -b osdeploy'
+export PYTHONPATH=$mgt1_PYTHONPATH
+sudo bluebanquise-bootset -n c001 -b osdeploy
 # temporary fix
 sudo mkdir -p /var/www/html/preboot_execution_environment/
 cd /var/www/html/preboot_execution_environment/
+sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
+
+
 
 fi

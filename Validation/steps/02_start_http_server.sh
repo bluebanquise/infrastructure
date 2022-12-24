@@ -14,12 +14,16 @@ if (( $STEP < 2 )); then
     cp -a /bbmnt/casper/initrd . && chmod 666 initrd
     cp -a /bbmnt/casper/vmlinuz . && chmod 666 vmlinuz
     (
+    set -x
     cd $CURRENT_DIR/../http
-    ps -ax | grep 'python3 -m http.server 8000' | grep -v color > /dev/null 2>&1
-    if [ $? -eq 1 ]; then
+    ps -ax | grep 'python3 -m http.server 8000'
+#    if [ $? -eq 1 ]; then
        python3 -m http.server 8000 > http_server.log 2>&1
-    fi
+#    fi
     ) &
     export http_server_pid=$!
     echo "  - http server pid: $http_server_pid"
+    rm -f $CURRENT_DIR/../http/user-data
+    cp $CURRENT_DIR/../http/user-data.template $CURRENT_DIR/../http/user-data
+    echo "          - $(cat $HOME/.ssh/id_ed25519.pub)" >> $CURRENT_DIR/../http/user-data
 fi
