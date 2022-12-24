@@ -32,31 +32,17 @@ echo 'deb [trusted=yes] http://bluebanquise.com/repository/releases/latest/ubunt
 sudo apt update
 EOF
 
+# Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/ 
 ansible-playbook ../playbooks/managements.yml -i minimal --limit mgt1 -b
 EOF
+if [ $RESULT -eq 0 ]; then
+  echo SUCCESS deploying mgt1
+else
+  echo FAILED deploying mgt1
+  exit 1
+fi
 
 fi
 
-if (( $STEP < 7 )); then
-ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/AlmaLinux-8-latest-x86_64-dvd.iso
-#rsync -av --partial $CURRENT_DIR/../AlmaLinux-8-latest-x86_64-dvd.iso bluebanquise@$mgt1_ip:/var/lib/bluebanquise/AlmaLinux-8-latest-x86_64-dvd.iso
-
-mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip pip3 show ClusterShell | grep Location | awk -F ' ' '{print $2}')
-
-ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sudo mkdir -p /var/www/html/pxe/netboots/redhat/8/x86_64/iso
-sudo mount /var/lib/bluebanquise/AlmaLinux-8-latest-x86_64-dvd.iso /var/www/html/pxe/netboots/redhat/8/x86_64/iso
-export PYTHONPATH=$mgt1_PYTHONPATH
-sudo bluebanquise-bootset -n c001 -b osdeploy
-# temporary fix
-sudo mkdir -p /var/www/html/preboot_execution_environment/
-cd /var/www/html/preboot_execution_environment/
-sudo rm -f convergence.ipxe
-sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
-EOF
-
-
-
-fi
