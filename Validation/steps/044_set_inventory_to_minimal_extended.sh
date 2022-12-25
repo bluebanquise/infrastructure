@@ -15,9 +15,9 @@ EOF
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/ 
-ansible-playbook ../playbooks/managements.yml -i minimal --limit mgt1 -b
+ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt1 -b
 EOF
-if [ $RESULT -eq 0 ]; then
+if [ $? -eq 0 ]; then
   echo SUCCESS deploying minimal extended on mgt1
 else
   echo FAILED deploying minimal extended on mgt1
