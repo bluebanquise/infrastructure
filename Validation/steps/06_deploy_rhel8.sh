@@ -9,12 +9,6 @@ cd $CURRENT_DIR
 if (( $STEP < 7 )); then
 ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/AlmaLinux-8-latest-x86_64-dvd.iso
 
-# Update configuration
-ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-cd validation/inventories/ 
-ansible-playbook ../playbooks/managements.yml -i minimal --limit mgt1 -b
-EOF
-
 # Prepare target deployment
 mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip pip3 show ClusterShell | grep Location | awk -F ' ' '{print $2}')
 
@@ -22,7 +16,7 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 sudo mkdir -p /var/www/html/pxe/netboots/redhat/8/x86_64/iso
 sudo mount /var/lib/bluebanquise/AlmaLinux-8-latest-x86_64-dvd.iso /var/www/html/pxe/netboots/redhat/8/x86_64/iso
 export PYTHONPATH=$mgt1_PYTHONPATH
-sudo bluebanquise-bootset -n c001 -b osdeploy
+sudo bluebanquise-bootset -n mgt2 -b osdeploy
 # temporary fix
 sudo mkdir -p /var/www/html/preboot_execution_environment/
 cd /var/www/html/preboot_execution_environment/
@@ -33,21 +27,21 @@ EOF
 fi
 
 if (( $STEP < 8 )); then
-    virsh destroy c001
-    virsh undefine c001
-    virt-install --name=c001 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/c001.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:5e:8f --pxe
+    virsh destroy mgt2
+    virsh undefine mgt2
+    virt-install --name=mgt2 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt2.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:2e:8f --pxe
 fi
 
 # Validation step
 if (( $STEP < 9 )); then
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/ 
-ansible-playbook ../playbooks/computes.yml -i minimal --limit c001 -b
+ansible-playbook ../playbooks/managements.yml -i minimal --limit mgt2 -b
 EOF
 if [ $RESULT -eq 0 ]; then
-  echo SUCCESS deploying RHEL 8 c001
+  echo SUCCESS deploying RHEL 8 on mgt2
 else
-  echo FAILED deploying RHEL 8 c001
+  echo FAILED deploying RHEL 8 on mgt2
   exit 1
 fi
 

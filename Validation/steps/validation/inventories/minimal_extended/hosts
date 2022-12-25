@@ -1,0 +1,49 @@
+[all]
+mgt1 network_interfaces="[{'ip4':'10.10.0.1', 'mac':'1a:2b:3c:4d:1e:9f', 'network':'net-admin', 'interface':'enp2s0'}]"
+c001 network_interfaces="[{'ip4':'10.10.3.1', 'mac':'1a:2b:3c:4d:5e:9f', 'network':'net-admin', 'interface':'enp1s0'}]"
+
+[mg_managements]
+mgt[1-7]
+
+[mg_computes]
+c001
+
+[equipment_rhel8]
+mgt2 network_interfaces="[{'ip4':'10.10.0.2', 'mac':'1a:2b:3c:4d:2e:8f', 'network':'net-admin', 'interface':'enp1s0'}]"
+[equipment_rhel8:vars]
+pxe_stack_ep_operating_system={'distribution':"redhat", 'distribution_version':"8", 'distribution_major_version':"8" }
+
+[equipment_rhel9]
+mgt3 network_interfaces="[{'ip4':'10.10.0.3', 'mac':'1a:2b:3c:4d:3e:8f', 'network':'net-admin', 'interface':'enp1s0'}]"
+[equipment_rhel9:vars]
+pxe_stack_ep_operating_system={'distribution':"redhat", 'distribution_version':"9", 'distribution_major_version':"9" }
+
+[equipment_rhel7]
+mgt4 network_interfaces="[{'ip4':'10.10.0.4', 'mac':'1a:2b:3c:4d:4e:8f', 'network':'net-admin', 'interface':'enp1s0'}]"
+[equipment_rhel7:vars]
+pxe_stack_ep_operating_system={'distribution':"redhat", 'distribution_version':"7", 'distribution_major_version':"7" }
+
+[equipment_ubuntu20]
+mgt5 network_interfaces="[{'ip4':'10.10.0.5', 'mac':'1a:2b:3c:4d:5e:8f', 'network':'net-admin', 'interface':'enp1s0'}]"
+[equipment_ubuntu20:vars]
+pxe_stack_ep_operating_system={'distribution':"ubuntu", 'distribution_version':"20.04", 'distribution_major_version':"20" }
+
+[equipment_ubuntu22]
+mgt6 network_interfaces="[{'ip4':'10.10.0.6', 'mac':'1a:2b:3c:4d:6e:8f', 'network':'net-admin', 'interface':'enp1s0'}]"
+[equipment_ubuntu22:vars]
+pxe_stack_ep_operating_system={'distribution':"ubuntu", 'distribution_version':"22.04", 'distribution_major_version':"22" }
+
+[equipment_opensuseleap15]
+mgt7 network_interfaces="[{'ip4':'10.10.0.7', 'mac':'1a:2b:3c:4d:7e:8f', 'network':'net-admin', 'interface':'enp1s0'}]"
+[equipment_opensuseleap15:vars]
+pxe_stack_ep_operating_system={'distribution':"opensuse", 'distribution_version':"15", 'distribution_major_version':"15" }
+
+[equipment_debian11]
+mgt8 network_interfaces="[{'ip4':'10.10.0.8', 'mac':'1a:2b:3c:4d:8e:8f', 'network':'net-admin', 'interface':'enp1s0'}]"
+[equipment_debian11:vars]
+pxe_stack_ep_operating_system={'distribution':"debian", 'distribution_version':"11", 'distribution_major_version':"11" }
+
+[all:vars]
+# Define unique network settings
+networks={'net-admin':{'subnet':"10.10.0.0", 'prefix':"16", 'services_ip':"10.10.0.1" }}
+pxe_stack_ep_equipment_type=server
