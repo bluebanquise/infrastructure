@@ -1,7 +1,7 @@
 #!/bin/bash
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-cd ../http
+cd $CURRENT_DIR/../http
 wget -nc https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9-latest-x86_64-dvd.iso
 cd $CURRENT_DIR
 
