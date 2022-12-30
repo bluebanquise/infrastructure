@@ -29,12 +29,14 @@ if (( $STEP < 8 )); then
     virsh destroy mgt3
     virsh undefine mgt3
     virt-install --name=mgt3 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt3.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:3e:8f --pxe
+    virsh start mgt3
 fi
 
 # Validation step
 if (( $STEP < 9 )); then
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/ 
+sleep 60
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt3 -b
 EOF
 if [ $? -eq 0 ]; then
