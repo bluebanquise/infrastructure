@@ -37,6 +37,7 @@ if (( $STEP < 9 )); then
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/ 
 sleep 60
+ssh -o StrictHostKeyChecking=no mgt4 hostname
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt4 -b
 EOF
 if [ $? -eq 0 ]; then
