@@ -11,3 +11,4 @@ networks={'net-admin':{'subnet':"10.10.0.0", 'prefix':"16", 'services_ip':"10.10
 # Define all eq settings
 pxe_stack_ep_equipment_type=server
 pxe_stack_ep_operating_system={'distribution':"redhat", 'distribution_version':"8", 'distribution_major_version':"8" }
+

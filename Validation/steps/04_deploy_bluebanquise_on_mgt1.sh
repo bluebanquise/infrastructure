@@ -37,7 +37,7 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 cd validation/inventories/ 
 ansible-playbook ../playbooks/managements.yml -i minimal --limit mgt1 -b
 EOF
-if [ $RESULT -eq 0 ]; then
+if [ $? -eq 0 ]; then
   echo SUCCESS deploying mgt1
 else
   echo FAILED deploying mgt1
