@@ -32,6 +32,7 @@ sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt5
 ssh -o StrictHostKeyChecking=no mgt5 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF

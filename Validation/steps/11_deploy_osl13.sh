@@ -5,16 +5,16 @@ export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail
 mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip pip3 show ClusterShell | grep Location | awk -F ' ' '{print $2}')
 
 cd $CURRENT_DIR/../http
-wget -nc https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9-latest-x86_64-dvd.iso
+wget -nc https://mirror.its.dal.ca/opensuse/distribution/leap/15.4/iso/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso
 cd $CURRENT_DIR
 
-ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/AlmaLinux-9-latest-x86_64-dvd.iso
+ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sudo mkdir -p /var/www/html/pxe/netboots/redhat/9/x86_64/iso
-sudo mount /var/lib/bluebanquise/AlmaLinux-9-latest-x86_64-dvd.iso /var/www/html/pxe/netboots/redhat/9/x86_64/iso
+sudo mkdir -p /var/www/html/pxe/netboots/sles/15/x86_64/iso
+sudo mount /var/lib/bluebanquise/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso /var/www/html/pxe/netboots/sles/15/x86_64/iso
 export PYTHONPATH=$mgt1_PYTHONPATH
-sudo bluebanquise-bootset -n mgt3 -b osdeploy
+sudo bluebanquise-bootset -n mgt7 -b osdeploy
 # temporary fix
 sudo mkdir -p /var/www/html/preboot_execution_environment/
 cd /var/www/html/preboot_execution_environment/
@@ -22,31 +22,31 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-virsh destroy mgt3
-virsh undefine mgt3
-virt-install --name=mgt3 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt3.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:3e:8f --pxe
-virsh start mgt3
+virsh destroy mgt7
+virsh undefine mgt7
+virt-install --name=mgt7 --os-variant sle15 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt7.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:7e:8f --pxe
+virsh start mgt7
 sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt3
-ssh -o StrictHostKeyChecking=no mgt3 hostname
+ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt7
+ssh -o StrictHostKeyChecking=no mgt7 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/
-ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt3 -b
+ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt7 -b
 EOF
 if [ $? -eq 0 ]; then
-  echo SUCCESS deploying RHEL 9 mgt3
+  echo SUCCESS deploying Ubuntu 22.04 mgt7
 else
-  echo FAILED deploying RHEL 9 mgt3
+  echo FAILED deploying Ubuntu 22.04 mgt7
   exit 1
 fi
 
 # Cleaning
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sudo umount /var/www/html/pxe/netboots/redhat/9/x86_64/iso
-rm AlmaLinux-9-latest-x86_64-dvd.iso
+sudo umount /var/www/html/pxe/netboots/sles/15/x86_64/iso
+sudo rm /var/lib/bluebanquise/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso
 sudo shutdown -h now
 EOF
