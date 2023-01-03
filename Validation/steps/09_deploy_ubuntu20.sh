@@ -13,8 +13,10 @@ ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo mkdir -p /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/iso
 sudo mv /var/lib/bluebanquise/ubuntu-20.04.5-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/
+sudo mount /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/ubuntu-20.04.5-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/iso
+sudo ln -s ./ubuntu-20.04.5-live-server-amd64.iso /var/lib/bluebanquise/ubuntu-20.04-live-server-amd64.iso
 export PYTHONPATH=$mgt1_PYTHONPATH
-sudo bluebanquise-bootset -n mgt4 -b osdeploy
+sudo bluebanquise-bootset -n mgt5 -b osdeploy
 # temporary fix
 sudo mkdir -p /var/www/html/preboot_execution_environment/
 cd /var/www/html/preboot_execution_environment/
@@ -22,30 +24,30 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-virsh destroy mgt4
-virsh undefine mgt4
-virt-install --name=mgt4 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt4.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:4e:8f --pxe
-virsh start mgt4
+virsh destroy mgt5
+virsh undefine mgt5
+virt-install --name=mgt5 --os-variant ubuntu20.04 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt5.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:5e:8f --pxe
+virsh start mgt5
+sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-cd validation/inventories/ 
-sleep 60
-ssh -o StrictHostKeyChecking=no mgt4 hostname
+ssh -o StrictHostKeyChecking=no mgt5 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt4 -b
+cd validation/inventories/
+ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt5 -b
 EOF
 if [ $? -eq 0 ]; then
-  echo SUCCESS deploying RHEL 7 mgt4
+  echo SUCCESS deploying Ubuntu 20.04 mgt5
 else
-  echo FAILED deploying RHEL 7 mgt4
+  echo FAILED deploying Ubuntu 20.04 mgt5
   exit 1
 fi
 
 # Cleaning
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sudo umount /var/www/html/pxe/netboots/redhat/7/x86_64/iso
-rm CentOS-7-x86_64-Everything-2207-02.iso
+sudo umount /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/iso
+sudo rm /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/ubuntu-20.04.5-live-server-amd64.iso
 sudo shutdown -h now
 EOF

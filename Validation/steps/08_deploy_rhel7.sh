@@ -26,14 +26,14 @@ virsh destroy mgt4
 virsh undefine mgt4
 virt-install --name=mgt4 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt4.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:4e:8f --pxe
 virsh start mgt4
+sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-cd validation/inventories/ 
-sleep 60
 ssh -o StrictHostKeyChecking=no mgt4 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt4 -b
 EOF
 if [ $? -eq 0 ]; then
