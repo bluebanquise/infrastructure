@@ -34,6 +34,8 @@ ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt3
 ssh -o StrictHostKeyChecking=no mgt3 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sudo curl http://bluebanquise.com/repository/releases/latest/el9/x86_64/bluebanquise/bluebanquise.repo --outpu
+t /etc/yum.repos.d/bluebanquise.repo
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt3 -b
 EOF
