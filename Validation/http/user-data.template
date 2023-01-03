@@ -20,5 +20,5 @@ autoinstall:
         sudo: ['ALL=(ALL:ALL) NOPASSWD:ALL']
         groups: sudo
         shell: /bin/bash
-        passwd: $6$M3crarMVoUV3rALd$ZTre2CIyss7zOb4lkLoG23As9OAkYPw2BM88Y1F43n8CCyV5XWwAYEwBOrS8bcCBIMjIPdJG.ndOfzWyAVR4j0
+        passwd: $6$bug788A2SwaTAxEV$UzdEwTABKp/FGpLmjOaSwC.tAw7Pb.rk3peJ0hox.vUzuIRbZ2AqMjhVisbCuqusGOynXwdnJkrwbSI/NVQwz/
         ssh-authorized-keys:

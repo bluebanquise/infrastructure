@@ -20,9 +20,9 @@ if (( $STEP < 6 )); then
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 set -x
 cd validation/inventories/
-mkdir -p minimal/group_vars/all/
-cp bb_core.yml minimal/group_vars/all/
-echo ep_admin_ssh_keys=[\"$remote_pubkey\"] >> minimal/hosts
+mkdir -p minimal_extended/group_vars/all/
+cp bb_core.yml minimal_extended/group_vars/all/
+echo ep_admin_ssh_keys=[\"$remote_pubkey\"] >> minimal_extended/hosts
 echo 127.0.0.1 mgt1 | sudo tee -a /etc/hosts
 ssh -o StrictHostKeyChecking=no mgt1 hostname
 EOF
@@ -35,7 +35,7 @@ EOF
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/ 
-ansible-playbook ../playbooks/managements.yml -i minimal --limit mgt1 -b
+ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt1 -b
 EOF
 if [ $? -eq 0 ]; then
   echo SUCCESS deploying mgt1

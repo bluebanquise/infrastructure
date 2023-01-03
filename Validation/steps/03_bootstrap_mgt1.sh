@@ -20,7 +20,7 @@ if (( $STEP < 4 )); then
     virsh start vmgt1
 
     echo "  - Getting mgt1 ip."
-    sleep 10
+    sleep 30
     export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | awk -F ' ' '{print $5}' | sed 's/\/24//')
     echo "  $mgt1_ip"
 
@@ -37,7 +37,7 @@ if (( $STEP < 4 )); then
     echo "  - Configuring mgt1 as gateway."
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip << EOF
 sudo bash -c 'echo 1 > /proc/sys/net/ipv4/ip_forward'
-sudo iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ens2 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o enp1s0 -j MASQUERADE
 EOF
 
     echo "  - Expand default FS."
