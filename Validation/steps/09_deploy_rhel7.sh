@@ -1,5 +1,6 @@
 #!/bin/bash
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail -1 | awk -F ' ' '{print $5}' | sed 's/\/24//')
 
 cd $CURRENT_DIR/../http
 wget -nc http://centos.mirror.vexxhost.com/7.9.2009/isos/x86_64/CentOS-7-x86_64-Everything-2207-02.iso

@@ -21,7 +21,7 @@ if (( $STEP < 4 )); then
 
     echo "  - Getting mgt1 ip."
     sleep 30
-    export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | awk -F ' ' '{print $5}' | sed 's/\/24//')
+    export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail -1 | awk -F ' ' '{print $5}' | sed 's/\/24//')
     echo "  $mgt1_ip"
 
     echo "Waiting for VM to be ready at $mgt1_ip"
@@ -47,7 +47,3 @@ sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 EOF
 
 fi
-
-echo "  - Getting mgt1 ip if was skipped before."
-export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | awk -F ' ' '{print $5}' | sed 's/\/24//')
-echo "  $mgt1_ip"

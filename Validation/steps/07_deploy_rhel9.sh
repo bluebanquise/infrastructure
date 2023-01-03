@@ -1,5 +1,6 @@
 #!/bin/bash
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail -1 | awk -F ' ' '{print $5}' | sed 's/\/24//')
 
 cd $CURRENT_DIR/../http
 wget -nc https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9-latest-x86_64-dvd.iso
@@ -38,6 +39,8 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 cd validation/inventories/ 
 sleep 60
 ssh -o StrictHostKeyChecking=no mgt3 hostname
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt3 -b
 EOF
 if [ $? -eq 0 ]; then
