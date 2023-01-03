@@ -14,7 +14,7 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 sudo mkdir -p /var/www/html/pxe/netboots/debian/11/x86_64/iso
 sudo mount /var/lib/bluebanquise/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso /var/www/html/pxe/netboots/sles/15/x86_64/iso
 export PYTHONPATH=$mgt1_PYTHONPATH
-sudo bluebanquise-bootset -n mgt7 -b osdeploy
+sudo bluebanquise-bootset -n mgt8 -b osdeploy
 # temporary fix
 sudo mkdir -p /var/www/html/preboot_execution_environment/
 cd /var/www/html/preboot_execution_environment/
@@ -22,25 +22,25 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-virsh destroy mgt7
-virsh undefine mgt7
-virt-install --name=mgt7 --os-variant sle15 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt7.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:7e:8f --pxe
-virsh start mgt7
+virsh destroy mgt8
+virsh undefine mgt8
+virt-install --name=mgt8 --os-variant debian11 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt8.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:7e:8f --pxe
+virsh start mgt8
 sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt7
-ssh -o StrictHostKeyChecking=no mgt7 hostname
+ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt8
+ssh -o StrictHostKeyChecking=no mgt8 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/
-ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt7 -b
+ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt8 -b
 EOF
 if [ $? -eq 0 ]; then
-  echo SUCCESS deploying Ubuntu 22.04 mgt7
+  echo SUCCESS deploying Ubuntu 22.04 mgt8
 else
-  echo FAILED deploying Ubuntu 22.04 mgt7
+  echo FAILED deploying Ubuntu 22.04 mgt8
   exit 1
 fi
 

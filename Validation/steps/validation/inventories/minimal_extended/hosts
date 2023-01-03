@@ -48,3 +48,7 @@ ep_operating_system={'distribution':"debian", 'distribution_version':"11", 'dist
 networks={'net-admin':{'subnet':"10.10.0.0", 'prefix':"16", 'gateway4':"10.10.0.1", 'services_ip':"10.10.0.1" }}
 pxe_stack_ep_equipment_type=server
 ep_operating_system={'distribution':"ubuntu", 'distribution_version':"22.04", 'distribution_major_version':"22" }
+dns_server_dnssec_enable=False
+dns_server_dnssec_validation=False
+dns_server_recursion=True
+dns_server_forwarders=['8.8.8.8', '8.8.4.4']
