@@ -1,16 +1,14 @@
 #!/bin/bash
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail -1 | awk -F ' ' '{print $5}' | sed 's/\/24//')
+# Prepare target deployment
+mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip pip3 show ClusterShell | grep Location | awk -F ' ' '{print $2}')
 
 cd $CURRENT_DIR/../http
 wget -nc https://repo.almalinux.org/almalinux/8/isos/x86_64/AlmaLinux-8-latest-x86_64-dvd.iso
 cd $CURRENT_DIR
 
-if (( $STEP < 7 )); then
 ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/AlmaLinux-8-latest-x86_64-dvd.iso
-
-# Prepare target deployment
-mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip pip3 show ClusterShell | grep Location | awk -F ' ' '{print $2}')
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo mkdir -p /var/www/html/pxe/netboots/redhat/8/x86_64/iso
@@ -24,17 +22,12 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-fi
-
-if (( $STEP < 8 )); then
-    virsh destroy mgt2
-    virsh undefine mgt2
-    virt-install --name=mgt2 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt2.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:2e:8f --pxe
-    virsh start mgt2
-fi
+virsh destroy mgt2
+virsh undefine mgt2
+virt-install --name=mgt2 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt2.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:2e:8f --pxe
+virsh start mgt2
 
 # Validation step
-if (( $STEP < 9 )); then
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/ 
 sleep 60
@@ -50,9 +43,9 @@ else
   exit 1
 fi
 
+# Cleaning
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo umount /var/www/html/pxe/netboots/redhat/8/x86_64/iso
 rm AlmaLinux-8-latest-x86_64-dvd.iso
+sudo shutdown -h now
 EOF
-
-fi

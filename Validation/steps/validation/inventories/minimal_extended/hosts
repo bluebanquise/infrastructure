@@ -1,5 +1,5 @@
 [all]
-mgt1 network_interfaces="[{'ip4':'10.10.0.1', 'mac':'1a:2b:3c:4d:1e:9f', 'network':'net-admin', 'interface':'enp2s0'}]"
+mgt1 network_interfaces="[{'ip4':'10.10.0.1', 'mac':'1a:2b:3c:4d:1e:9f', 'network':'net-admin', 'interface':'enp2s0', 'never_default4':'true'}]"
 c001 network_interfaces="[{'ip4':'10.10.3.1', 'mac':'1a:2b:3c:4d:5e:9f', 'network':'net-admin', 'interface':'enp1s0'}]"
 
 [mg_managements]
