@@ -50,5 +50,5 @@ fi
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo umount /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/iso
 sudo rm /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/ubuntu-20.04.5-live-server-amd64.iso
-sudo shutdown -h now
+ssh -o StrictHostKeyChecking=no mgt5 sudo shutdown -h now
 EOF

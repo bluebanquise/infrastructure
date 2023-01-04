@@ -49,5 +49,5 @@ fi
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo umount /var/www/html/pxe/netboots/redhat/8/x86_64/iso
 rm AlmaLinux-8-latest-x86_64-dvd.iso
-sudo shutdown -h now
+ssh -o StrictHostKeyChecking=no mgt2 sudo shutdown -h now
 EOF
