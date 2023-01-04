@@ -12,9 +12,8 @@ ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo mkdir -p /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/iso
-sudo mv /var/lib/bluebanquise/ubuntu-20.04.5-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/
-sudo mount /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/ubuntu-20.04.5-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/iso
-sudo ln -s ./ubuntu-20.04.5-live-server-amd64.iso /var/lib/bluebanquise/ubuntu-20.04-live-server-amd64.iso
+sudo mv /var/lib/bluebanquise/ubuntu-20.04.5-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/ubuntu-20.04-live-server-amd64.iso
+sudo mount /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/ubuntu-20.04-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/iso
 export PYTHONPATH=$mgt1_PYTHONPATH
 sudo bluebanquise-bootset -n mgt5 -b osdeploy
 # temporary fix

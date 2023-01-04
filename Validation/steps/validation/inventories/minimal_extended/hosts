@@ -42,6 +42,7 @@ ep_operating_system={'distribution':"opensuse", 'distribution_version':"15", 'di
 mgt8 network_interfaces="[{'ip4':'10.10.0.8', 'mac':'1a:2b:3c:4d:8e:8f', 'network':'net-admin', 'interface':'enp1s0'}]"
 [equipment_debian11:vars]
 ep_operating_system={'distribution':"debian", 'distribution_version':"11", 'distribution_major_version':"11" }
+ep_partitioning="d-i partman-auto/disk string /dev/vda\nd-i partman-auto/method string regular\nd-i partman-auto/choose_recipe select atomic\nd-i partman-auto/init_automatically_partition select Guided - use entire disk\n"
 
 [all:vars]
 # Define unique network settings
