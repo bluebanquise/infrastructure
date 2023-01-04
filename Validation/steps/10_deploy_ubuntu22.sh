@@ -50,5 +50,5 @@ fi
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo umount /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/iso
 sudo rm /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/ubuntu-22.04.1-live-server-amd64.iso
-ssh -o StrictHostKeyChecking=no mgt6 sudo shutdown -h now
 EOF
+virsh shutdown mgt6

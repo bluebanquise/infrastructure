@@ -37,6 +37,11 @@ EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 cd validation/inventories/ 
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt1 -b
+# temporary fix
+sudo mkdir -p /var/www/html/preboot_execution_environment/
+cd /var/www/html/preboot_execution_environment/
+sudo rm -f convergence.ipxe
+sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 if [ $? -eq 0 ]; then
   echo SUCCESS deploying mgt1

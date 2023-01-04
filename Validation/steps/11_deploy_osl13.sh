@@ -48,5 +48,5 @@ fi
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo umount /var/www/html/pxe/netboots/sles/15/x86_64/iso
 sudo rm /var/lib/bluebanquise/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso
-ssh -o StrictHostKeyChecking=no mgt7 sudo shutdown -h now
 EOF
+virsh shutdown mgt7

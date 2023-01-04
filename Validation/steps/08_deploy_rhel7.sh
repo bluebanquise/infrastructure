@@ -49,5 +49,5 @@ fi
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo umount /var/www/html/pxe/netboots/redhat/7/x86_64/iso
 rm CentOS-7-x86_64-Everything-2207-02.iso
-ssh -o StrictHostKeyChecking=no mgt4 sudo shutdown -h now
 EOF
+virsh shutdown mgt4
