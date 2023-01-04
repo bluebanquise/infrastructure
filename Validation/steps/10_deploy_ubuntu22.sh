@@ -12,9 +12,8 @@ ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo mkdir -p /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/iso
-sudo mv /var/lib/bluebanquise/ubuntu-22.04.1-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/
-sudo mount /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/ubuntu-22.04.1-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/iso
-sudo ln -s ./ubuntu-22.04.1-live-server-amd64.iso /var/lib/bluebanquise/ubuntu-22.04-live-server-amd64.iso
+sudo mv /var/lib/bluebanquise/ubuntu-22.04.1-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/ubuntu-22.04-live-server-amd64.iso
+sudo mount /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/ubuntu-22.04-live-server-amd64.iso /var/www/html/pxe/netboots/ubuntu/22.04/x86_64/iso
 export PYTHONPATH=$mgt1_PYTHONPATH
 sudo bluebanquise-bootset -n mgt6 -b osdeploy
 # temporary fix
@@ -34,6 +33,9 @@ sleep 60
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt6
 ssh -o StrictHostKeyChecking=no mgt6 hostname
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+ssh -o StrictHostKeyChecking=no mgt4 sudo curl http://bluebanquise.com/repository/releases/latest/ubuntu2004/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
