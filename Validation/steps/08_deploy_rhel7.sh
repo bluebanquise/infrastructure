@@ -37,6 +37,11 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 ssh -o StrictHostKeyChecking=no mgt4 sudo curl http://bluebanquise.com/repository/releases/latest/el7/x86_64/bluebanquise/bluebanquise.repo --output /etc/yum.repos.d/bluebanquise.repo
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sleep 120
+ssh -o StrictHostKeyChecking=no mgt4 'sudo yum update -y && sudo reboot -h now'
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sleep 120
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt4 -b
 EOF

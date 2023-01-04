@@ -36,6 +36,11 @@ ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt6
 ssh -o StrictHostKeyChecking=no mgt6 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sleep 120
+ssh -o StrictHostKeyChecking=no mgt6 'sudo apt-get update && sudo apt-get upgrade -y && sudo reboot -h now'
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sleep 120
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt6 -b
 EOF
