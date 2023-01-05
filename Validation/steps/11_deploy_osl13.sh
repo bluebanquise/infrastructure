@@ -11,8 +11,8 @@ cd $CURRENT_DIR
 ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sudo mkdir -p /var/www/html/pxe/netboots/sles/15/x86_64/iso
-sudo mount /var/lib/bluebanquise/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso /var/www/html/pxe/netboots/sles/15/x86_64/iso
+sudo mkdir -p /var/www/html/pxe/netboots/opensuse/15/x86_64/iso
+sudo mount /var/lib/bluebanquise/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso /var/www/html/pxe/netboots/opensuse/15/x86_64/iso
 export PYTHONPATH=$mgt1_PYTHONPATH
 sudo bluebanquise-bootset -n mgt7 -b osdeploy
 # temporary fix
@@ -46,7 +46,7 @@ fi
 
 # Cleaning
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sudo umount /var/www/html/pxe/netboots/sles/15/x86_64/iso
+sudo umount /var/www/html/pxe/netboots/opensuse/15/x86_64/iso
 sudo rm /var/lib/bluebanquise/openSUSE-Leap-15.4-DVD-x86_64-Build243.2-Media.iso
 EOF
 virsh shutdown mgt7
