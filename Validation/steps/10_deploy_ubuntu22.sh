@@ -35,7 +35,7 @@ ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt6
 ssh -o StrictHostKeyChecking=no mgt6 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh -o StrictHostKeyChecking=no mgt4 sudo curl http://bluebanquise.com/repository/releases/latest/ubuntu2004/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
+ssh -o StrictHostKeyChecking=no mgt6 sudo curl http://bluebanquise.com/repository/releases/latest/ubuntu2004/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120

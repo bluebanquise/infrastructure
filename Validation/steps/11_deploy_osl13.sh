@@ -34,6 +34,14 @@ ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt7
 ssh -o StrictHostKeyChecking=no mgt7 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+ssh -o StrictHostKeyChecking=no mgt7 sudo curl http://bluebanquise.com/repository/releases/latest/lp15/x86_64/bluebanquise/bluebanquise.repo --output /etc/zypp/repos.d/bluebanquise.list
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sleep 120
+ssh -o StrictHostKeyChecking=no mgt7 'sudo zypper refresh && sudo zypper update -y && sudo reboot -h now'
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sleep 120
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt7 -b
 EOF
