@@ -24,6 +24,9 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $d
     if [ $distribution_version -eq 8 ]; then
     dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
     fi
+    if [ $distribution_version -eq 8 ]; then
+    dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
+    fi
     if [ $distribution_version -eq 7 ]; then
     yum install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
     fi
