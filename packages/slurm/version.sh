@@ -1,2 +1,2 @@
-slurm_version=21.08.6
-munge_version=0.5.14
+slurm_version=22.05.7
+munge_version=0.5.15
