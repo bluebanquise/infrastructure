@@ -23,12 +23,8 @@ mkdir -p ~/build/el8/sources/
 
 if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build nyancat RedHat 8
-podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build ansible-cmdb RedHat 8
 podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build atftp RedHat 8
 podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build bluebanquise-ipxe RedHat 8
-podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build bluebanquise-tools RedHat 8
-podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build ssh-wait RedHat 8
-podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build colour_text RedHat 8
 podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build slurm RedHat 8
 podman run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ rockylinux_8_build prometheus RedHat 8
 else

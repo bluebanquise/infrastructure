@@ -1,0 +1,24 @@
+#cloud-config
+autoinstall:
+  version: 1
+  apt:
+    geoip: true
+    preserve_sources_list: true
+  keyboard: {layout: us, toggle: null, variant: ''}
+  locale: en_US.UTF-8
+  ssh:
+    allow-pw: true
+    install-server: true
+  power_state:
+    mode: poweroff
+    delay: 5
+    message: Bye Bye
+  user-data:
+    disable_root: true
+    users:
+      - name: generic
+        sudo: ['ALL=(ALL:ALL) NOPASSWD:ALL']
+        groups: sudo
+        shell: /bin/bash
+        passwd: $6$bug788A2SwaTAxEV$UzdEwTABKp/FGpLmjOaSwC.tAw7Pb.rk3peJ0hox.vUzuIRbZ2AqMjhVisbCuqusGOynXwdnJkrwbSI/NVQwz/
+        ssh-authorized-keys:
