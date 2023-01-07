@@ -22,7 +22,7 @@ podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_bu
 #podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_build ansible-cmdb Debian 11
 podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_build slurm Debian 11
 podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_build bluebanquise-ipxe Debian 11
-podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_build bluebanquise-tools Debian 11
+#podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_build bluebanquise-tools Debian 11
 podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_build grubby Debian 11
 else
 podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_build $1 Debian 11
