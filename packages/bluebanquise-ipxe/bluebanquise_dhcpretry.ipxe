@@ -6,6 +6,8 @@ echo . . . | . . . . . BlueBanquise - Benoit Leveugle . . . . . | . . .
 echo . . . | . . IPXECOMMIT . . . | . . .
 echo . . . +----------------------------------------------------+ . . .
 
+cpair 0
+
 set user-class BlueBanquise
 
 sleep 2
@@ -34,16 +36,5 @@ echo
 echo (waiting 5s and chain...)
 sleep 5
 
-echo Trying to chain... 1/3
-chain http://${next-server}/preboot_execution_environment/convergence.ipxe || goto retry1
-
-:retry1
-sleep 2
-echo Trying to chain... 2/3
-chain http://${next-server}/preboot_execution_environment/convergence.ipxe || goto retry2
-
-:retry2
-sleep 2
-echo Trying to chain... 3/3
-chain http://${next-server}/preboot_execution_environment/convergence.ipxe || shell
-
+echo Now chain to http...
+chain http://${next-server}/pxe/convergence.ipxe || shell

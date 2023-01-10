@@ -5,6 +5,8 @@ echo . . . | . . . . . BlueBanquise - Benoit Leveugle . . . . . | . . .
 echo . . . | . . IPXECOMMIT . . . | . . .
 echo . . . +----------------------------------------------------+ . . .
 
+cpair 0
+
 set user-class BlueBanquise
 
 sleep 4
@@ -32,5 +34,5 @@ echo
 echo (waiting 5s and chain...)
 sleep 5
 
-echo Chaining without shell...
-chain http://${next-server}/preboot_execution_environment/convergence.ipxe
+echo Now chain to http without shell...
+chain http://${next-server}/pxe/convergence.ipxe

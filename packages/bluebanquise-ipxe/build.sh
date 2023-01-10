@@ -21,10 +21,15 @@ if [ ! -f $working_directory/sources/ipxe/README ]; then
     mkdir -p $working_directory/sources/ipxe/
     cd $working_directory/sources/ipxe/
     git clone https://github.com/ipxe/ipxe.git .
+else
+    cd $working_directory/sources/ipxe/
+    git pull
 fi
 
-# No git pull by default, could not be what is expected
-# git pull
+if [ -z $bluebanquise_ipxe_release ]
+then
+    bluebanquise_ipxe_release=$(git rev-list HEAD --count)
+fi
 
 rm -Rf $working_directory/build/ipxe/
 mkdir -p $working_directory/build/ipxe/
@@ -37,26 +42,20 @@ cp $root_directory/bluebanquise-ipxe/grub2-shell.cfg .
 # Customizing
 # Building embed ipxe files
 last_commit=$(cd $working_directory/sources/ipxe; git log | grep commit | sed -n 1p | awk -F ' ' '{print $2}'; cd ../../../;)
-if [ -z $bluebanquise_ipxe_release ]
-then
-    bluebanquise_ipxe_release=$last_commit
-fi
+
 echo "#!ipxe" > src/bluebanquise_standard.ipxe
-echo "cpair --foreground 6 0" >> src/bluebanquise_standard.ipxe
 cat $root_directory/bluebanquise-ipxe/$bluebanquise_ipxe_logo.ipxe >> src/bluebanquise_standard.ipxe
 cat $root_directory/bluebanquise-ipxe/bluebanquise_standard.ipxe >> src/bluebanquise_standard.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_standard.ipxe
 echo "cpair 0" >> src/bluebanquise_standard.ipxe
 
 echo "#!ipxe" > src/bluebanquise_dhcpretry.ipxe
-echo "cpair --foreground 6 0" >> src/bluebanquise_dhcpretry.ipxe
 cat $root_directory/bluebanquise-ipxe/$bluebanquise_ipxe_logo.ipxe >> src/bluebanquise_dhcpretry.ipxe
 cat $root_directory/bluebanquise-ipxe/bluebanquise_dhcpretry.ipxe >> src/bluebanquise_dhcpretry.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_dhcpretry.ipxe
 echo "cpair 0" >> src/bluebanquise_dhcpretry.ipxe
 
 echo "#!ipxe" > src/bluebanquise_noshell.ipxe
-echo "cpair --foreground 6 0" >> src/bluebanquise_noshell.ipxe
 cat $root_directory/bluebanquise-ipxe/$bluebanquise_ipxe_logo.ipxe >> src/bluebanquise_noshell.ipxe
 cat $root_directory/bluebanquise-ipxe/bluebanquise_noshell.ipxe >> src/bluebanquise_noshell.ipxe
 sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_noshell.ipxe
@@ -208,7 +207,7 @@ else
     rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release"
 fi
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
-    cd /tmp
+    cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/bluebanquise-ipxe*
     mkdir -p /root/debbuild/DEBS/noarch/
     mv *.deb /root/debbuild/DEBS/noarch/
