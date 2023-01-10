@@ -208,7 +208,7 @@ else
     rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release"
 fi
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
-    cd /dev/shm
+    cd /tmp
     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/bluebanquise-ipxe*
     mkdir -p /root/debbuild/DEBS/noarch/
     mv *.deb /root/debbuild/DEBS/noarch/

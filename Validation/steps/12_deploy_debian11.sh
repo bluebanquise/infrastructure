@@ -70,9 +70,9 @@ cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt8 -b
 EOF
 if [ $? -eq 0 ]; then
-  echo SUCCESS deploying Ubuntu 22.04 mgt8
+  echo SUCCESS deploying Debian 11 mgt8
 else
-  echo FAILED deploying Ubuntu 22.04 mgt8
+  echo FAILED deploying Debian 11 mgt8
   exit 1
 fi
 

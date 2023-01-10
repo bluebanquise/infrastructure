@@ -46,9 +46,9 @@ cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt7 -b
 EOF
 if [ $? -eq 0 ]; then
-  echo SUCCESS deploying Ubuntu 22.04 mgt7
+  echo SUCCESS deploying OpenSuseLeap 15 mgt7
 else
-  echo FAILED deploying Ubuntu 22.04 mgt7
+  echo FAILED deploying OpenSuseLeap15 mgt7
   exit 1
 fi
 
