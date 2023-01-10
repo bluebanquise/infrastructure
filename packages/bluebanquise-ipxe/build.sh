@@ -193,18 +193,18 @@ sed -i "s|working_directory=XXX|working_directory=$working_directory|g" bluebanq
 tar cvzf bluebanquise-ipxe-$ipxe_arch.tar.gz bluebanquise-ipxe-$ipxe_arch-$bluebanquise_ipxe_version
 if [ "$distribution" == "Ubuntu" ]; then
     if [ "$distribution_version" == "18.04" ]; then
-    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu1804"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version.$bluebanquise_ipxe_release" --define "_software_release 1" --define "dist .ubuntu1804"
     elif [ "$distribution_version" == "20.04" ]; then
-    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu2004"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version.$bluebanquise_ipxe_release" --define "_software_release 1" --define "dist .ubuntu2004"
     elif [ "$distribution_version" == "22.04" ]; then
-    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .ubuntu2204"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version.$bluebanquise_ipxe_release" --define "_software_release 1" --define "dist .ubuntu2204"
     fi
 elif [ "$distribution" == "Debian" ]; then
     if [ "$distribution_version" == "11" ]; then
-    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release" --define "dist .debian11"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version.$bluebanquise_ipxe_release" --define "_software_release 1" --define "dist .debian11"
     fi
 else
-    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release $bluebanquise_ipxe_release"
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version.$bluebanquise_ipxe_release" --define "_software_release 1"
 fi
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root

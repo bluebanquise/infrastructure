@@ -7,21 +7,27 @@
 %endif
 # SUSE 15.1:
 %if 0%{?sle_version} == 150100
-  %define dist .sl151
+  %define dist .sl15
 %endif
 # SUSE 15.2:
 %if 0%{?sle_version} == 150200
-  %define dist .sl152
+  %define dist .sl15
 %endif
 # SUSE 15.3:
 %if 0%{?sle_version} == 150300
-  %define dist .sl153
+  %define dist .sl15
+%endif
+%if 0%{?sle_version} == 150400
+  %define dist .sl15
 %endif
 
 # Ubuntu 20.04
 %if %is_ubuntu
   %if %(grep '20.04' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-    %define dist ubuntu.20.04
+    %define dist u20
+  %endif
+  %if %(grep '20.04' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
+    %define dist u22
   %endif
 %endif
 
