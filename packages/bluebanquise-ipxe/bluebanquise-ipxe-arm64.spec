@@ -41,7 +41,7 @@
 
 Name:     bluebanquise-ipxe-arm64
 Summary:  bluebanquise-ipxe-arm64
-Release:  %{_software_release}-%{?dist}
+Release:  %{_software_release}.%{?dist}
 Version:  %{_software_version}
 License:  MIT and GPL
 Group:    System Environment/Base
