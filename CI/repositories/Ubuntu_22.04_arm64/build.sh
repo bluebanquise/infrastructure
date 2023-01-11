@@ -1,6 +1,6 @@
 set -x
-#if [ "$1" == 'yes' ]; then
-podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/:/repo/ ubuntu:20.04 /bin/bash -c ' \
+# if [ "$1" == 'yes' ]; then
+podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/:/repo/ ubuntu:22.04 /bin/bash -c ' \
     set -x ; \
     apt-get update ; \
     export DEBIAN_FRONTEND=noninteractive; \
@@ -10,15 +10,15 @@ podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanq
     mkdir repo && cd repo && mkdir conf -p; \
     echo "Origin: BlueBanquise" > conf/distributions; \
     echo "Label: bluebanquise" >> conf/distributions; \
-    echo "Codename: focal" >> conf/distributions; \
+    echo "Codename: jammy" >> conf/distributions; \
     echo "Suite: stable" >> conf/distributions; \
     echo "Architectures: arm64" >> conf/distributions; \
     echo "Components: main" >> conf/distributions; \
     cd /repo/packages/arm64/; \
-    reprepro -b /repo/repo/ includedeb focal *.deb; \
+    reprepro -b /repo/repo/ includedeb jammy *.deb; \
     cd ../noarch/; \
-    reprepro -b /repo/repo/ includedeb focal *.deb; \
-    reprepro -b /repo/repo/ list focal; \
+    reprepro -b /repo/repo/ includedeb jammy *.deb; \
+    reprepro -b /repo/repo/ list jammy; \
     '
 # else
 # podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/:/repo/ ubuntu:20.04 /bin/bash -c ' \
