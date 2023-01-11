@@ -192,8 +192,8 @@ if echo $steps | grep -q "build"; then
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## Debian_11_arm64
-            rsync -av $CURRENT_DIR/build/debian_11_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_debian_11_arm64/
-            ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_debian_11_arm64/build.sh $packages_list
+            rsync -av $CURRENT_DIR/build/Debian_11_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_Debian_11_arm64/
+            ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_Debian_11_arm64/build.sh $packages_list
             rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/debian11/arm64/* ~/CI/build/debian11/arm64/
         fi
     fi
