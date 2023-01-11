@@ -79,8 +79,8 @@ mkdir -p ~/CI/build/{el7,el8,el9,lp15}/{x86_64,aarch64,sources}/
 mkdir -p ~/CI/build/debian11/{x86_64,arm64}/
 mkdir -p ~/CI/build/{ubuntu2004,ubuntu2204}/{x86_64,arm64}/
 mkdir -p ~/CI/repositories/{el7,el8,el9,lp15}/{x86_64,aarch64,sources}/bluebanquise/
-mkdir -p ~/CI/repositories/debian11/{x86_64,arm64}/bluebanquise/
-mkdir -p ~/CI/repositories/{ubuntu2004,ubuntu2204}/{x86_64,arm64}/bluebanquise/
+mkdir -p ~/CI/repositories/deb11/{x86_64,arm64}/bluebanquise/
+mkdir -p ~/CI/repositories/{u20,u22}/{x86_64,arm64}/bluebanquise/
 
 
 ################################################################################
@@ -346,14 +346,14 @@ if echo $steps | grep -q "repos"; then
             rsync -av ~/CI/build/ubuntu2004/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2004/x86_64/bluebanquise/packages/
             rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_x86_64/
             ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_x86_64/build.sh $reset_repos
-            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2004/x86_64/bluebanquise/* ~/CI/repositories/ubuntu2004/x86_64/bluebanquise/
+            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2004/x86_64/bluebanquise/* ~/CI/repositories/u20/x86_64/bluebanquise/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/packages/*"
             rsync -av ~/CI/build/ubuntu2004/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/packages/
             rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_arm64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_arm64/build.sh $reset_repos
-            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/* ~/CI/repositories/ubuntu2004/arm64/bluebanquise/
+            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/* ~/CI/repositories/u20/arm64/bluebanquise/
         fi
     fi
 
@@ -363,14 +363,14 @@ if echo $steps | grep -q "repos"; then
             rsync -av ~/CI/build/ubuntu2204/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2204/x86_64/bluebanquise/packages/
             rsync -av $CURRENT_DIR/repositories/Ubuntu_22.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Ubuntu_22.04_x86_64/
             ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Ubuntu_22.04_x86_64/build.sh $reset_repos
-            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2204/x86_64/bluebanquise/* ~/CI/repositories/ubuntu2204/x86_64/bluebanquise/
+            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2204/x86_64/bluebanquise/* ~/CI/repositories/u22/x86_64/bluebanquise/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/packages/*"
             rsync -av ~/CI/build/ubuntu2204/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/packages/
             rsync -av $CURRENT_DIR/repositories/Ubuntu_22.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Ubuntu_22.04_arm64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Ubuntu_22.04_arm64/build.sh $reset_repos
-            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/* ~/CI/repositories/ubuntu2204/arm64/bluebanquise/
+            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/* ~/CI/repositories/u22/arm64/bluebanquise/
         fi
     fi
 
@@ -380,14 +380,14 @@ if echo $steps | grep -q "repos"; then
             rsync -av ~/CI/build/debian11/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/debian11/x86_64/bluebanquise/packages/
             rsync -av $CURRENT_DIR/repositories/Debian_11_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Debian_11_x86_64/
             ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Debian_11_x86_64/build.sh $reset_repos
-            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/debian11/x86_64/bluebanquise/* ~/CI/repositories/debian11/x86_64/bluebanquise/
+            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/debian11/x86_64/bluebanquise/* ~/CI/repositories/deb11/x86_64/bluebanquise/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/*"
             rsync -av ~/CI/build/debian11/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/
             rsync -av $CURRENT_DIR/repositories/debian_11_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_debian_11_arm64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_debian_11_arm64/build.sh $reset_repos
-            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/arm64/bluebanquise/* ~/CI/repositories/debian11/arm64/bluebanquise/
+            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/arm64/bluebanquise/* ~/CI/repositories/deb11/arm64/bluebanquise/
         fi
     fi
 
