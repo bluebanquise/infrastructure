@@ -385,8 +385,8 @@ if echo $steps | grep -q "repos"; then
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/*"
             rsync -av ~/CI/build/debian11/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/
-            rsync -av $CURRENT_DIR/repositories/debian_11_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_debian_11_arm64/
-            ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_debian_11_arm64/build.sh $reset_repos
+            rsync -av $CURRENT_DIR/repositories/Debian_11_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Debian_11_arm64/
+            ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Debian_11_arm64/build.sh $reset_repos
             rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/arm64/bluebanquise/* ~/CI/repositories/deb11/arm64/bluebanquise/
         fi
     fi
