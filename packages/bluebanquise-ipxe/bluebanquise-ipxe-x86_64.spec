@@ -41,7 +41,7 @@
 
 Name:     bluebanquise-ipxe-x86_64
 Summary:  bluebanquise-ipxe-x86_64
-Release:  %{_software_release}.%{?dist}
+Release:  %{_software_release}
 Version:  %{_software_version}
 License:  MIT and GPL
 Group:    System Environment/Base
