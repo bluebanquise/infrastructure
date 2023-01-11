@@ -28,6 +28,9 @@ distribution_architecture=$(uname --m)
 if [ "$distribution" == 'Ubuntu' ] && [ $distribution_architecture == 'aarch64' ]; then
 distribution_architecture=arm64
 fi
+if [ "$distribution" == 'Debian' ] && [ $distribution_architecture == 'aarch64' ]; then
+distribution_architecture=arm64
+fi
 
 echo " Settings set to $distribution $distribution_version $distribution_architecture"
 
