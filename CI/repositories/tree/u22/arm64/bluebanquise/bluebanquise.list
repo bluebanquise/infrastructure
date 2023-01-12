@@ -1,1 +1,1 @@
-deb [trusted=yes] http://bluebanquise.com/repository/releases/latest/u22/arm64/bluebanquise/ ./
+deb [trusted=yes] http://bluebanquise.com/repository/releases/latest/u22/arm64/bluebanquise/ jammy main
