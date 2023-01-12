@@ -1,1 +1,1 @@
-deb [trusted=yes] http://bluebanquise.com/repository/releases/latest/ubuntu2004/arm64/bluebanquise/ ./
+deb [trusted=yes] http://bluebanquise.com/repository/releases/latest/u20/arm64/bluebanquise/ ./

@@ -347,6 +347,9 @@ if echo $steps | grep -q "repos"; then
             rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_x86_64/
             ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_x86_64/build.sh $reset_repos
             rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2004/x86_64/bluebanquise/* ~/CI/repositories/u20/x86_64/bluebanquise/
+            rm -Rf ~/CI/repositories/u20/x86_64/bluebanquise/packages
+            mv ~/CI/repositories/u20/x86_64/bluebanquise/repo/* ~/CI/repositories/u20/x86_64/bluebanquise/
+            rm -Rf ~/CI/repositories/u20/x86_64/bluebanquise/repo
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/packages/*"
@@ -354,6 +357,9 @@ if echo $steps | grep -q "repos"; then
             rsync -av $CURRENT_DIR/repositories/Ubuntu_20.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Ubuntu_20.04_arm64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Ubuntu_20.04_arm64/build.sh $reset_repos
             rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/* ~/CI/repositories/u20/arm64/bluebanquise/
+            rm -Rf ~/CI/repositories/u20/arm64/bluebanquise/packages
+            mv ~/CI/repositories/u20/arm64/bluebanquise/repo/* ~/CI/repositories/u20/arm64/bluebanquise/
+            rm -Rf ~/CI/repositories/u20/arm64/bluebanquise/repo
         fi
     fi
 
@@ -364,6 +370,9 @@ if echo $steps | grep -q "repos"; then
             rsync -av $CURRENT_DIR/repositories/Ubuntu_22.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Ubuntu_22.04_x86_64/
             ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Ubuntu_22.04_x86_64/build.sh $reset_repos
             rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2204/x86_64/bluebanquise/* ~/CI/repositories/u22/x86_64/bluebanquise/
+            rm -Rf ~/CI/repositories/u22/x86_64/bluebanquise/packages
+            mv ~/CI/repositories/u22/x86_64/bluebanquise/repo/* ~/CI/repositories/u22/x86_64/bluebanquise/
+            rm -Rf ~/CI/repositories/u22/x86_64/bluebanquise/repo
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/packages/*"
@@ -371,6 +380,9 @@ if echo $steps | grep -q "repos"; then
             rsync -av $CURRENT_DIR/repositories/Ubuntu_22.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Ubuntu_22.04_arm64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Ubuntu_22.04_arm64/build.sh $reset_repos
             rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2204/arm64/bluebanquise/* ~/CI/repositories/u22/arm64/bluebanquise/
+            rm -Rf ~/CI/repositories/u22/arm64/bluebanquise/packages
+            mv ~/CI/repositories/u22/arm64/bluebanquise/repo/* ~/CI/repositories/u22/arm64/bluebanquise/
+            rm -Rf ~/CI/repositories/u22/arm64/bluebanquise/repo
         fi
     fi
 
@@ -381,6 +393,9 @@ if echo $steps | grep -q "repos"; then
             rsync -av $CURRENT_DIR/repositories/Debian_11_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Debian_11_x86_64/
             ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Debian_11_x86_64/build.sh $reset_repos
             rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/debian11/x86_64/bluebanquise/* ~/CI/repositories/deb11/x86_64/bluebanquise/
+            rm -Rf ~/CI/repositories/deb11/x86_64/bluebanquise/packages
+            mv ~/CI/repositories/deb11/x86_64/bluebanquise/repo/* ~/CI/repositories/deb11/x86_64/bluebanquise/
+            rm -Rf ~/CI/repositories/deb11/x86_64/bluebanquise/repo
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/debian11/arm64/bluebanquise/packages/*"
@@ -388,6 +403,9 @@ if echo $steps | grep -q "repos"; then
             rsync -av $CURRENT_DIR/repositories/Debian_11_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Debian_11_arm64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Debian_11_arm64/build.sh $reset_repos
             rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/debian11/arm64/bluebanquise/* ~/CI/repositories/deb11/arm64/bluebanquise/
+            rm -Rf ~/CI/repositories/deb11/arm64/bluebanquise/packages
+            mv ~/CI/repositories/deb11/arm64/bluebanquise/repo/* ~/CI/repositories/deb11/arm64/bluebanquise/
+            rm -Rf ~/CI/repositories/deb11/arm64/bluebanquise/repo
         fi
     fi
 
