@@ -20,7 +20,7 @@ echo "    .   'C/ |    |    |   |    |mrf  ,"
 echo "    \), .. .'OOO-'. ..'OOO'OOO-'. ..\(,"
 echo
 echo "  BlueBanquise packages builder"
-echo "    (c) 2019-2021 Benoit Leveugle"
+echo "    (c) 2019-2023 Benoit Leveugle"
 echo
 distribution=$2
 distribution_version=$3
