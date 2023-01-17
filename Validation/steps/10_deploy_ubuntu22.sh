@@ -26,6 +26,7 @@ EOF
 virsh destroy mgt6
 virsh undefine mgt6
 virt-install --name=mgt6 --os-variant ubuntu22.04 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt6.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:6e:8f --pxe
+virsh setmem mgt6 2G --config
 virsh start mgt6
 sleep 60
 
@@ -35,11 +36,11 @@ ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt6
 ssh -o StrictHostKeyChecking=no mgt6 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh -o StrictHostKeyChecking=no mgt6 sudo curl http://bluebanquise.com/repository/releases/latest/ubuntu2004/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
+ssh -o StrictHostKeyChecking=no mgt6 sudo curl http://bluebanquise.com/repository/releases/latest/u22/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
-ssh -o StrictHostKeyChecking=no mgt6 'sudo apt-get update && sudo apt-get upgrade -y && sudo reboot -h now'
+ssh -o StrictHostKeyChecking=no mgt6 'DEBIAN_FRONTEND=noninteractive sudo apt-get update && sudo apt-get upgrade -y && sudo reboot -h now'
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120

@@ -25,6 +25,7 @@ EOF
 virsh destroy mgt3
 virsh undefine mgt3
 virt-install --name=mgt3 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt3.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:3e:8f --pxe
+virsh setmem mgt3 2G --config
 virsh start mgt3
 sleep 60
 

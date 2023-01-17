@@ -29,7 +29,7 @@ ssh -o StrictHostKeyChecking=no mgt1 hostname
 EOF
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-echo 'deb [trusted=yes] http://bluebanquise.com/repository/releases/latest/ubuntu2004/x86_64/bluebanquise/ ./' | sudo tee /etc/apt/sources.list.d/bluebanquise.list
+echo 'deb [trusted=yes] http://bluebanquise.com/repository/releases/latest/u20/x86_64/bluebanquise/ ./' | sudo tee /etc/apt/sources.list.d/bluebanquise.list
 sudo apt update
 EOF
 

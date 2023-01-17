@@ -26,6 +26,7 @@ EOF
 virsh destroy mgt5
 virsh undefine mgt5
 virt-install --name=mgt5 --os-variant ubuntu20.04 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt5.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:5e:8f --pxe
+virsh setmem mgt5 2G --config
 virsh start mgt5
 sleep 60
 
@@ -35,11 +36,11 @@ ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt5
 ssh -o StrictHostKeyChecking=no mgt5 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh -o StrictHostKeyChecking=no mgt5 sudo curl http://bluebanquise.com/repository/releases/latest/ubuntu2004/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
+ssh -o StrictHostKeyChecking=no mgt5 sudo curl http://bluebanquise.com/repository/releases/latest/u20/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
-ssh -o StrictHostKeyChecking=no mgt5 'sudo apt-get update && sudo apt-get upgrade -y && sudo reboot -h now'
+ssh -o StrictHostKeyChecking=no mgt5 'DEBIAN_FRONTEND=noninteractive sudo apt-get update && sudo apt-get upgrade -y && sudo reboot -h now'
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120

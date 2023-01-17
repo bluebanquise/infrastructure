@@ -25,6 +25,7 @@ EOF
 virsh destroy mgt2
 virsh undefine mgt2
 virt-install --name=mgt2 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt2.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:2e:8f --pxe
+virsh setmem mgt2 2G --config
 virsh start mgt2
 sleep 60
 

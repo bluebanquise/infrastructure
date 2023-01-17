@@ -7,7 +7,10 @@ if (( $STEP < 3 )); then
     sudo chown -R $CUSER:$CUSER /data/images 
     echo "  - Deploying base OS..."
 
+    virsh destroy vmgt1
+    virsh undefine vmgt1
     virt-install --os-variant ubuntu22.04 --name=vmgt1 --ram=8192 --vcpus=4 --noreboot --disk path=/data/images/mgt1.qcow2,bus=virtio,size=24 --network bridge=virbr0,mac=52:54:00:fa:12:01 --network bridge=virbr1,mac=52:54:00:fa:12:02 --install kernel=http://$host_ip:8000/vmlinuz,initrd=http://$host_ip:8000/initrd,kernel_args_overwrite=yes,kernel_args="root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://$host_ip:8000/ubuntu-22.04.1-live-server-amd64.iso autoinstall ds=nocloud-net;s=http://$host_ip:8000/"
+    virsh setmem vmgt1 2G --config
 #virt-install --os-variant ubuntu20.04 --name=vmgt1 --ram=8192 --vcpus=4 --noreboot --disk path=/data/images/mgt1.qcow2,bus=virtio,size=24 --network bridge=virbr0,mac=52:54:00:fa:12:01 --install kernel=http://$host_ip:8000/vmlinuz,initrd=http://$host_ip:8000/initrd,kernel_args_overwrite=yes,kernel_args="root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://$host_ip:8000/ubuntu-20.04.5-live-server-amd64.iso autoinstall ds=nocloud-net;s=http://$host_ip:8000/"
 
 #    echo "  - Stopping host http server."
@@ -23,6 +26,8 @@ if (( $STEP < 4 )); then
     sleep 30
     export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail -1 | awk -F ' ' '{print $5}' | sed 's/\/24//')
     echo "  $mgt1_ip"
+
+    ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R $mgt1_ip
 
     echo "Waiting for VM to be ready at $mgt1_ip"
     set +e

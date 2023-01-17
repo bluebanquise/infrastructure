@@ -19,4 +19,16 @@ source steps/03_bootstrap_mgt1.sh
 cd $LAUNCH_CURRENT_DIR
 source steps/04_deploy_bluebanquise_on_mgt1.sh
 cd $LAUNCH_CURRENT_DIR
-source steps/05_deploy_rhel8.sh
+source steps/06_deploy_rhel8.sh
+cd $LAUNCH_CURRENT_DIR
+source steps/07_deploy_rhel9.sh
+cd $LAUNCH_CURRENT_DIR
+source steps/08_deploy_rhel7.sh
+cd $LAUNCH_CURRENT_DIR
+source steps/09_deploy_ubuntu20.sh
+cd $LAUNCH_CURRENT_DIR
+source steps/10_deploy_ubuntu22.sh
+cd $LAUNCH_CURRENT_DIR
+source steps/11_deploy_osl13.sh
+cd $LAUNCH_CURRENT_DIR
+source steps/12_deploy_debian11.sh

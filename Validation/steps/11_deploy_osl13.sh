@@ -25,6 +25,7 @@ EOF
 virsh destroy mgt7
 virsh undefine mgt7
 virt-install --name=mgt7 --os-variant sle15 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt7.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:7e:8f --pxe
+virsh setmem mgt7 2G --config
 virsh start mgt7
 sleep 60
 
