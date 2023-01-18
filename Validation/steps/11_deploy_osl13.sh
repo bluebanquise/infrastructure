@@ -22,8 +22,9 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-virsh destroy mgt7
-virsh undefine mgt7
+virsh destroy mgt7 && echo "mgt7 destroyed" || echo "mgt7 not found, skipping"
+virsh undefine mgt7 && echo "mgt7 undefined" || echo "mgt7 not found, skipping"
+
 virt-install --name=mgt7 --os-variant sle15 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt7.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:7e:8f --pxe
 virsh setmem mgt7 2G --config
 virsh start mgt7
@@ -37,10 +38,12 @@ EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh -o StrictHostKeyChecking=no mgt7 sudo curl http://bluebanquise.com/repository/releases/latest/lp15/x86_64/bluebanquise/bluebanquise.repo --output /etc/zypp/repos.d/bluebanquise.list
 EOF
+set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
 ssh -o StrictHostKeyChecking=no mgt7 'sudo zypper refresh && sudo zypper update -y && sudo reboot -h now'
 EOF
+set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
 cd validation/inventories/

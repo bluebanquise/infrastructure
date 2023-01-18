@@ -70,8 +70,9 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-virsh destroy mgt8
-virsh undefine mgt8
+virsh destroy mgt8 && echo "mgt8 destroyed" || echo "mgt8 not found, skipping"
+virsh undefine mgt8 && echo "mgt8 undefined" || echo "mgt8 not found, skipping"
+
 virt-install --name=mgt8 --os-variant debian11 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt8.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:8e:8f --pxe
 virsh setmem mgt8 2G --config
 virsh start mgt8
@@ -85,10 +86,12 @@ EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh -o StrictHostKeyChecking=no mgt8 sudo curl http://bluebanquise.com/repository/releases/latest/deb11/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
 EOF
+set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
 ssh -o StrictHostKeyChecking=no mgt8 'DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt upgrade -y && sudo reboot -h now'
 EOF
+set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
 cd validation/inventories/

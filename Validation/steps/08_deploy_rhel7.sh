@@ -22,12 +22,13 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-virsh destroy mgt4
-virsh undefine mgt4
+virsh destroy mgt4 && echo "mgt4 destroyed" || echo "mgt4 not found, skipping"
+virsh undefine mgt4 && echo "mgt4 undefined" || echo "mgt4 not found, skipping"
+
 virt-install --name=mgt4 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt4.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:4e:8f --pxe
 virsh setmem mgt4 2G --config
 virsh start mgt4
-sleep 60
+sleep 120
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -37,10 +38,12 @@ EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh -o StrictHostKeyChecking=no mgt4 sudo curl http://bluebanquise.com/repository/releases/latest/el7/x86_64/bluebanquise/bluebanquise.repo --output /etc/yum.repos.d/bluebanquise.repo
 EOF
+set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
-ssh -o StrictHostKeyChecking=no mgt4 'sudo yum update -y && sudo reboot -h now'
+ssh -o StrictHostKeyChecking=no mgt4 'sudo yum install wget -y && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && sudo yum install epel-release-latest-7.noarch.rpm -y && sudo yum update -y && sudo reboot -h now'
 EOF
+set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
 cd validation/inventories/

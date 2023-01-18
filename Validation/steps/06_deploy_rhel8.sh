@@ -1,5 +1,6 @@
 #!/bin/bash
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+set -x
 export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail -1 | awk -F ' ' '{print $5}' | sed 's/\/24//')
 # Prepare target deployment
 mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip pip3 show ClusterShell | grep Location | awk -F ' ' '{print $2}')
@@ -11,6 +12,7 @@ cd $CURRENT_DIR
 ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/AlmaLinux-8-latest-x86_64-dvd.iso
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+set -x
 sudo mkdir -p /var/www/html/pxe/netboots/redhat/8/x86_64/iso
 sudo mount /var/lib/bluebanquise/AlmaLinux-8-latest-x86_64-dvd.iso /var/www/html/pxe/netboots/redhat/8/x86_64/iso
 export PYTHONPATH=$mgt1_PYTHONPATH
@@ -22,27 +24,29 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-virsh destroy mgt2
-virsh undefine mgt2
+virsh destroy mgt2 && echo "mgt2 destroyed" || echo "mgt2 not found, skipping"
+virsh undefine mgt2 && echo "mgt2 undefined" || echo "mgt2 not found, skipping"
 virt-install --name=mgt2 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt2.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:2e:8f --pxe
 virsh setmem mgt2 2G --config
 virsh start mgt2
-sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+/tmp/waitforssh.sh bluebanquise@mgt2
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt2
 ssh -o StrictHostKeyChecking=no mgt2 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh -o StrictHostKeyChecking=no mgt2 sudo curl http://bluebanquise.com/repository/releases/latest/el8/x86_64/bluebanquise/bluebanquise.repo --output /etc/yum.repos.d/bluebanquise.repo
 EOF
+set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
-ssh -o StrictHostKeyChecking=no mgt2 'sudo dnf update -y && sudo reboot -h now'
+ssh -o StrictHostKeyChecking=no mgt2 'sudo dnf install wget -y && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && sudo dnf install epel-release-latest-8.noarch.rpm -y && sudo dnf update -y && sudo reboot -h now'
 EOF
+set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+/tmp/waitforssh.sh bluebanquise@mgt2
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt2 -b
 EOF

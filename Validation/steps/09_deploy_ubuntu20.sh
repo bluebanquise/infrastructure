@@ -23,8 +23,9 @@ sudo rm -f convergence.ipxe
 sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
-virsh destroy mgt5
-virsh undefine mgt5
+virsh destroy mgt5 && echo "mgt5 destroyed" || echo "mgt5 not found, skipping"
+virsh undefine mgt5 && echo "mgt5 undefined" || echo "mgt5 not found, skipping"
+
 virt-install --name=mgt5 --os-variant ubuntu20.04 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt5.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:5e:8f --pxe
 virsh setmem mgt5 2G --config
 virsh start mgt5
@@ -38,10 +39,12 @@ EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh -o StrictHostKeyChecking=no mgt5 sudo curl http://bluebanquise.com/repository/releases/latest/u20/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
 EOF
+set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
 ssh -o StrictHostKeyChecking=no mgt5 'DEBIAN_FRONTEND=noninteractive sudo apt-get update && sudo apt-get upgrade -y && sudo reboot -h now'
 EOF
+set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
 cd validation/inventories/
@@ -57,6 +60,6 @@ fi
 # Cleaning
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo umount /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/iso
-sudo rm /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/ubuntu-20.04.5-live-server-amd64.iso
+sudo rm /var/www/html/pxe/netboots/ubuntu/20.04/x86_64/ubuntu-20.04-live-server-amd64.iso
 EOF
 virsh shutdown mgt5
