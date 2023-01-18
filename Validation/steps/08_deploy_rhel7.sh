@@ -32,7 +32,7 @@ virsh start mgt4
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt4
-/tmp/waitforssh.sh bluebanquise@mgt2
+/tmp/waitforssh.sh bluebanquise@mgt4
 ssh -o StrictHostKeyChecking=no mgt4 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -45,7 +45,7 @@ ssh -o StrictHostKeyChecking=no mgt4 'sudo yum install wget -y && wget https://d
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-/tmp/waitforssh.sh bluebanquise@mgt2
+/tmp/waitforssh.sh bluebanquise@mgt4
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt4 -b
 EOF

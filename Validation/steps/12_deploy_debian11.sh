@@ -80,7 +80,7 @@ virsh start mgt8
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt8
-/tmp/waitforssh.sh bluebanquise@mgt2
+/tmp/waitforssh.sh bluebanquise@mgt8
 ssh -o StrictHostKeyChecking=no mgt8 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -93,7 +93,7 @@ ssh -o StrictHostKeyChecking=no mgt8 'DEBIAN_FRONTEND=noninteractive sudo apt up
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-/tmp/waitforssh.sh bluebanquise@mgt2
+/tmp/waitforssh.sh bluebanquise@mgt8
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt8 -b
 EOF
