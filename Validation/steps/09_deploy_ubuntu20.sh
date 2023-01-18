@@ -29,11 +29,11 @@ virsh undefine mgt5 && echo "mgt5 undefined" || echo "mgt5 not found, skipping"
 virt-install --name=mgt5 --os-variant ubuntu20.04 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt5.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:5e:8f --pxe
 virsh setmem mgt5 2G --config
 virsh start mgt5
-sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt5
+/tmp/waitforssh.sh bluebanquise@mgt2
 ssh -o StrictHostKeyChecking=no mgt5 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -46,7 +46,7 @@ ssh -o StrictHostKeyChecking=no mgt5 'DEBIAN_FRONTEND=noninteractive sudo apt-ge
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+/tmp/waitforssh.sh bluebanquise@mgt2
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt5 -b
 EOF

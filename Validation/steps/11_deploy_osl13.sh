@@ -28,11 +28,11 @@ virsh undefine mgt7 && echo "mgt7 undefined" || echo "mgt7 not found, skipping"
 virt-install --name=mgt7 --os-variant sle15 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt7.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:7e:8f --pxe
 virsh setmem mgt7 2G --config
 virsh start mgt7
-sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt7
+/tmp/waitforssh.sh bluebanquise@mgt2
 ssh -o StrictHostKeyChecking=no mgt7 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -45,7 +45,7 @@ ssh -o StrictHostKeyChecking=no mgt7 'sudo zypper refresh && sudo zypper update 
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+/tmp/waitforssh.sh bluebanquise@mgt2
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt7 -b
 EOF

@@ -32,8 +32,8 @@ virsh start mgt2
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-/tmp/waitforssh.sh bluebanquise@mgt2
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt2
+/tmp/waitforssh.sh bluebanquise@mgt2
 ssh -o StrictHostKeyChecking=no mgt2 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF

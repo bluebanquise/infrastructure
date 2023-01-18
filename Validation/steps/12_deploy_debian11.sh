@@ -76,11 +76,11 @@ virsh undefine mgt8 && echo "mgt8 undefined" || echo "mgt8 not found, skipping"
 virt-install --name=mgt8 --os-variant debian11 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt8.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:8e:8f --pxe
 virsh setmem mgt8 2G --config
 virsh start mgt8
-sleep 60
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt8
+/tmp/waitforssh.sh bluebanquise@mgt2
 ssh -o StrictHostKeyChecking=no mgt8 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -93,7 +93,7 @@ ssh -o StrictHostKeyChecking=no mgt8 'DEBIAN_FRONTEND=noninteractive sudo apt up
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+/tmp/waitforssh.sh bluebanquise@mgt2
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt8 -b
 EOF

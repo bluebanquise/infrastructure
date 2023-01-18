@@ -29,11 +29,11 @@ virsh undefine mgt6 && echo "mgt6 undefined" || echo "mgt6 not found, skipping"
 virt-install --name=mgt6 --os-variant ubuntu22.04 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt6.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:6e:8f --pxe
 virsh setmem mgt6 2G --config
 virsh start mgt6
-sleep 120
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt6
+/tmp/waitforssh.sh bluebanquise@mgt2
 ssh -o StrictHostKeyChecking=no mgt6 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -46,7 +46,7 @@ ssh -o StrictHostKeyChecking=no mgt6 'DEBIAN_FRONTEND=noninteractive sudo apt-ge
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+/tmp/waitforssh.sh bluebanquise@mgt2
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt6 -b
 EOF

@@ -28,11 +28,11 @@ virsh undefine mgt3 && echo "mgt3 undefined" || echo "mgt3 not found, skipping"
 virt-install --name=mgt3 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt3.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:3e:8f --pxe
 virsh setmem mgt3 2G --config
 virsh start mgt3
-sleep 120
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt3
+/tmp/waitforssh.sh bluebanquise@mgt2
 ssh -o StrictHostKeyChecking=no mgt3 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -45,7 +45,7 @@ ssh -o StrictHostKeyChecking=no mgt3 'sudo dnf install wget -y && wget https://d
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+/tmp/waitforssh.sh bluebanquise@mgt2
 cd validation/inventories/
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt3 -b
 EOF
