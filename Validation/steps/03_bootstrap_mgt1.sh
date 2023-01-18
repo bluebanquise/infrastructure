@@ -53,6 +53,6 @@ sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 EOF
 
     echo "  - Send waitssh."
-    scp -o StrictHostKeyChecking=no $CURRENT_DIR/functions/waitforssh.sh bluebanquise@$mgt1_ip:/tmp/waitforssh.sh
+    scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $CURRENT_DIR/functions/waitforssh.sh generic@$mgt1_ip:/tmp/waitforssh.sh
 
 fi
