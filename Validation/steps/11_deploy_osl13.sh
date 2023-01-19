@@ -38,7 +38,7 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 ssh -o StrictHostKeyChecking=no mgt7 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh -o StrictHostKeyChecking=no mgt7 sudo curl http://bluebanquise.com/repository/releases/latest/lp15/x86_64/bluebanquise/bluebanquise.repo --output /etc/zypp/repos.d/bluebanquise.list
+ssh -o StrictHostKeyChecking=no mgt7 sudo curl http://bluebanquise.com/repository/releases/latest/lp15/x86_64/bluebanquise/bluebanquise.repo --output /etc/zypp/repos.d/bluebanquise.repo
 EOF
 set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
