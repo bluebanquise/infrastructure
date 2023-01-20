@@ -18,7 +18,7 @@ mkdir -p ~/build/el9/aarch64/
 
 if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build nyancat RedHat 9
-# podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build prometheus RedHat 9
+podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build prometheus RedHat 9
 # podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build ansible-cmdb RedHat 9
 podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build slurm RedHat 9
 podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build atftp RedHat 9
