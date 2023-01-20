@@ -14,7 +14,7 @@ rm -Rf $working_directory/build/prometheus
 mkdir -p $working_directory/build/prometheus
 cd $working_directory/build/prometheus
 
-if [ "$distribution_version" != "7" ] && [ "$distribution_version" != "11" ]; then
+if [ "$distribution_version" != "7" ]; then
   cp $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz .
   tar xvzf prometheus_client-$prometheus_client_version.tar.gz
   cd client_python-$prometheus_client_version
@@ -54,11 +54,11 @@ mv ipmi_exporter ipmi_exporter-$ipmi_exporter_version
 tar cvzf ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz ipmi_exporter-$ipmi_exporter_version
 rpmbuild -ta ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $ipmi_exporter_version" --define "_software_architecture $prometheus_arch"
 sleep 20
-cp -a $root_directory/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
-mv snmp_exporter snmp_exporter-$snmp_exporter_version
-tar cvzf snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz snmp_exporter-$snmp_exporter_version
-rpmbuild -ta snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $snmp_exporter_version" --define "_software_architecture $prometheus_arch"
-sleep 20
+# cp -a $root_directory/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
+# mv snmp_exporter snmp_exporter-$snmp_exporter_version
+# tar cvzf snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz snmp_exporter-$snmp_exporter_version
+# rpmbuild -ta snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $snmp_exporter_version" --define "_software_architecture $prometheus_arch"
+# sleep 20
 cp -a $root_directory/prometheus/karma $working_directory/build/prometheus/karma
 mv karma karma-$karma_version
 tar cvzf karma-linux-$prometheus_arch.tar.gz karma-$karma_version
@@ -74,7 +74,7 @@ if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/alertmanager-*
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/node_exporter-*
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/ipmi_exporter-*
-    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/snmp_exporter-*
+    # alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/snmp_exporter-*
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/karma-*
     mkdir -p /root/debbuild/DEBS/noarch/
     mkdir -p /root/debbuild/DEBS/$distribution_architecture/
