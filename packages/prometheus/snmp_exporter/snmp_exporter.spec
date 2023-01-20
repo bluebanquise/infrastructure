@@ -44,8 +44,8 @@ wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.co
 tar xvzf snmp_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a snmp_exporter-%{_software_version}.linux-%{_software_architecture}/snmp_exporter $RPM_BUILD_ROOT/usr/local/bin/
+mkdir -p $RPM_BUILD_ROOT/bin/
+cp -a snmp_exporter-%{_software_version}.linux-%{_software_architecture}/snmp_exporter $RPM_BUILD_ROOT/bin/
 
 %pre
 
@@ -57,4 +57,4 @@ cp -a snmp_exporter-%{_software_version}.linux-%{_software_architecture}/snmp_ex
 
 %files
 %defattr(-,root,root,-)
-/usr/local/bin/snmp_exporter
+/bin/snmp_exporter

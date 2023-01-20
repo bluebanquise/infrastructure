@@ -44,13 +44,13 @@ wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.co
 tar xvzf alertmanager-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a alertmanager-%{_software_version}.linux-%{_software_architecture}/alertmanager $RPM_BUILD_ROOT/usr/local/bin/
-cp -a alertmanager-%{_software_version}.linux-%{_software_architecture}/amtool $RPM_BUILD_ROOT/usr/local/bin/
+mkdir -p $RPM_BUILD_ROOT/bin/
+cp -a alertmanager-%{_software_version}.linux-%{_software_architecture}/alertmanager $RPM_BUILD_ROOT/bin/
+cp -a alertmanager-%{_software_version}.linux-%{_software_architecture}/amtool $RPM_BUILD_ROOT/bin/
 
 %preun
 
 %files
 %defattr(-,root,root,-)
-/usr/local/bin/alertmanager
-/usr/local/bin/amtool
+/bin/alertmanager
+/bin/amtool
