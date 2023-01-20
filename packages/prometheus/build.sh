@@ -40,27 +40,27 @@ cp -a $root_directory/prometheus/prometheus $working_directory/build/prometheus/
 mv prometheus prometheus-$prometheus_version
 tar cvzf prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz prometheus-$prometheus_version
 rpmbuild -ta prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $prometheus_version" --define "_software_architecture $prometheus_arch"
-sleep 20
+#sleep 20
 cp -a $root_directory/prometheus/alertmanager $working_directory/build/prometheus/alertmanager
 mv alertmanager alertmanager-$alertmanager_version
 tar cvzf alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz alertmanager-$alertmanager_version
 rpmbuild -ta alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $alertmanager_version" --define "_software_architecture $prometheus_arch"
-sleep 20
+#sleep 20
 cp -a $root_directory/prometheus/node_exporter $working_directory/build/prometheus/node_exporter
 mv node_exporter node_exporter-$node_exporter_version
 tar cvzf node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz node_exporter-$node_exporter_version
 rpmbuild -ta node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $node_exporter_version" --define "_software_architecture $prometheus_arch"
-sleep 20
+#sleep 20
 cp -a $root_directory/prometheus/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
 mv ipmi_exporter ipmi_exporter-$ipmi_exporter_version
 tar cvzf ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz ipmi_exporter-$ipmi_exporter_version
 rpmbuild -ta ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $ipmi_exporter_version" --define "_software_architecture $prometheus_arch"
-sleep 20
+#sleep 20
 # cp -a $root_directory/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
 # mv snmp_exporter snmp_exporter-$snmp_exporter_version
 # tar cvzf snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz snmp_exporter-$snmp_exporter_version
 # rpmbuild -ta snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $snmp_exporter_version" --define "_software_architecture $prometheus_arch"
-# sleep 20
+# #sleep 20
 cp -a $root_directory/prometheus/karma $working_directory/build/prometheus/karma
 mv karma karma-$karma_version
 tar cvzf karma-linux-$prometheus_arch.tar.gz karma-$karma_version
