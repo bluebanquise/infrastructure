@@ -45,9 +45,9 @@ wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.co
 tar xvzf prometheus-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/usr/local/bin/
-cp -a prometheus-%{_software_version}.linux-%{_software_architecture}/prometheus $RPM_BUILD_ROOT/usr/local/bin/
-cp -a prometheus-%{_software_version}.linux-%{_software_architecture}/promtool $RPM_BUILD_ROOT/usr/local/bin/
+mkdir -p $RPM_BUILD_ROOT/bin/
+cp -a prometheus-%{_software_version}.linux-%{_software_architecture}/prometheus $RPM_BUILD_ROOT/bin/
+cp -a prometheus-%{_software_version}.linux-%{_software_architecture}/promtool $RPM_BUILD_ROOT/bin/
 
 %pre
 
@@ -59,5 +59,5 @@ cp -a prometheus-%{_software_version}.linux-%{_software_architecture}/promtool $
 
 %files
 %defattr(-,root,root,-)
-/usr/local/bin/prometheus
-/usr/local/bin/promtool
+/bin/prometheus
+/bin/promtool
