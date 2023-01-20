@@ -6,10 +6,12 @@ set -x
 
 if [ "$distribution_version" != "7" ]; then
   if [ ! -f $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz ]; then
-    wget -P $working_directory/sources/ https://github.com/prometheus/client_python/archive/v$prometheus_client_version.tar.gz
+    cd /tmp
+    wget -nc -P $working_directory/sources/ https://github.com/prometheus/client_python/archive/v$prometheus_client_version.tar.gz
     mv $working_directory/sources/v$prometheus_client_version.tar.gz $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz
   fi
 fi
+cd $CURRENT_DIR
 rm -Rf $working_directory/build/prometheus
 mkdir -p $working_directory/build/prometheus
 cd $working_directory/build/prometheus

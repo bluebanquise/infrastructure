@@ -38,7 +38,8 @@ karma for the BlueBanquise stack
 %install
 
 # Download files (binaries)
-wget --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma-linux-%{_software_architecture}.tar.gz
+cd /tmp
+wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/prymitive/karma/releases/download/v%{_software_version}/karma-linux-%{_software_architecture}.tar.gz
 
 # Extract
 tar xvzf karma-linux-%{_software_architecture}.tar.gz
