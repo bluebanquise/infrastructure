@@ -25,5 +25,5 @@ podman run -it --rm -v ~/build/ubuntu2004/arm64/:/root/debbuild/DEBS ubuntu_20.0
 # podman run -it --rm -v ~/build/ubuntu2004/arm64/:/root/debbuild/DEBS ubuntu_20.04_build bluebanquise-tools Ubuntu 20.04
 podman run -it --rm -v ~/build/ubuntu2004/arm64/:/root/debbuild/DEBS ubuntu_20.04_build grubby Ubuntu 20.04
 else
-podman run -it --rm -v ~/build/ubuntu2004/arm64/:/root/debbuild/DEBS ubuntu_20.04_build $1 Ubuntu 20.04
+podman run -it --rm -v ~/build/ubuntu2004/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build $1 Ubuntu 20.04
 fi

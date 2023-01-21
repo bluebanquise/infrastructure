@@ -27,5 +27,5 @@ podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_bui
 # podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build ssh-wait RedHat 9
 # podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build colour_text RedHat 9
 else
-podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS rockylinux_9_build $1 RedHat 9
+podman run -it --rm -v ~/build/el9/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_9_build $1 RedHat 9
 fi

@@ -30,5 +30,5 @@ podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/l
 podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build slurm opensuse_leap 15
 podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build prometheus opensuse_leap 15
 else
-podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build $1 opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/x86_64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build $1 opensuse_leap 15
 fi

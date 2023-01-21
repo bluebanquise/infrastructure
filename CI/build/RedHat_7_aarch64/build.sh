@@ -25,5 +25,5 @@ podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build a
 podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build bluebanquise-ipxe RedHat 7
 # podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build bluebanquise-tools RedHat 7
 else
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build $1 RedHat 7
+podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build $1 RedHat 7
 fi

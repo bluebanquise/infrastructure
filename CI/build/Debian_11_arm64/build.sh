@@ -25,5 +25,5 @@ podman run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS debian_11_bui
 # podman run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS debian_11_build bluebanquise-tools Debian 11
 podman run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS debian_11_build grubby Debian 11
 else
-podman run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS debian_11_build $1 Debian 11
+podman run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build $1 Debian 11
 fi

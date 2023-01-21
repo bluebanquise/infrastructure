@@ -28,5 +28,5 @@ podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/s
 podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ rockylinux_9_build slurm RedHat 9
 podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build prometheus RedHat 9
 else
-podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ rockylinux_9_build $1 RedHat 9
+podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build $1 RedHat 9
 fi
