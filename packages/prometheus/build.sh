@@ -69,9 +69,9 @@ rpmbuild -ta karma-linux-$prometheus_arch.tar.gz --target=$distribution_architec
 
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
-    if [ $distribution == "Ubuntu" ]; then
+    #if [ $distribution == "Ubuntu" ]; then
     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/prometheus_client-*
-    fi
+    #fi
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-*
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/alertmanager-*
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/node_exporter-*
@@ -80,7 +80,9 @@ if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/karma-*
     mkdir -p /root/debbuild/DEBS/noarch/
     mkdir -p /root/debbuild/DEBS/$distribution_architecture/
+    #if [ $distribution == "Ubuntu" ]; then
     mv prometheus-client_*.deb /root/debbuild/DEBS/noarch/
+    #fi
     mv *.deb /root/debbuild/DEBS/$distribution_architecture/
 fi
 
