@@ -11,13 +11,21 @@ if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz ]; then
     wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
 fi
 
+if [ ! -f $working_directory/sources/dun.gpg ]; then
+    wget -P $working_directory/sources/ https://github.com/dun.gpg
+fi
+
+if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz.asc ]; then
+    wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc
+fi
+
 if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $distribution != "Debian" ]; then
     rm -Rf $working_directory/build/munge
     mkdir -p $working_directory/build/munge
     cd $working_directory/build/munge
     cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
-    wget https://github.com/dun.gpg -O $working_directory/build/munge/dun.gpg
-    wget https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc -O $working_directory/build/munge/munge-$munge_version.tar.xz.asc
+    cp $working_directory/sources/dun.gpg $working_directory/build/munge/dun.gpg
+    cp $working_directory/sources/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
     rpmbuild -ta munge-$munge_version.tar.xz
 
     # We need to install munge to build slurm
