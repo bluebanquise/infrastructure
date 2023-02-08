@@ -73,16 +73,16 @@ Description:
 working_directory=XXX
 
 # x86_64
-mkdir -p $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64
-cp $working_directory/build/ipxe/bin/x86_64/grub2_efi_autofind.img $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/grub2_efi_autofind.img
-cp $working_directory/build/ipxe/bin/x86_64/grub2_shell.img $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/grub2_shell.img
-cp $working_directory/build/ipxe/bin/x86_64/standard_efi.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/standard_efi.iso
-#cp $working_directory/build/ipxe/bin/x86_64/standard_pcbios.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/standard_pcbios.iso
-#cp $working_directory/build/ipxe/bin/x86_64/standard_pcbios.usb $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/standard_pcbios.usb
-cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_efi.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_efi.iso
-cp $working_directory/build/ipxe/bin/x86_64/noshell_efi.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/noshell_efi.iso
-#cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_pcbios.iso
-#cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_pcbios.usb
+mkdir -p $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64
+cp $working_directory/build/ipxe/bin/x86_64/grub2_efi_autofind.img $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/grub2_efi_autofind.img
+cp $working_directory/build/ipxe/bin/x86_64/grub2_shell.img $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/grub2_shell.img
+cp $working_directory/build/ipxe/bin/x86_64/standard_efi.iso $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/standard_efi.iso
+#cp $working_directory/build/ipxe/bin/x86_64/standard_pcbios.iso $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/standard_pcbios.iso
+#cp $working_directory/build/ipxe/bin/x86_64/standard_pcbios.usb $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/standard_pcbios.usb
+cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_efi.iso $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_efi.iso
+cp $working_directory/build/ipxe/bin/x86_64/noshell_efi.iso $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/noshell_efi.iso
+#cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_pcbios.iso
+#cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_pcbios.usb
 
 
 mkdir -p $RPM_BUILD_ROOT/%{tftp_path}/x86_64
@@ -101,15 +101,15 @@ cp $working_directory/build/ipxe/bin/x86_64/noshell_snp_ipxe.efi $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%{http_path}/preboot_execution_environment/bin/x86_64/grub2_efi_autofind.img
-%{http_path}/preboot_execution_environment/bin/x86_64/grub2_shell.img
-%{http_path}/preboot_execution_environment/bin/x86_64/standard_efi.iso
-#%{http_path}/preboot_execution_environment/bin/x86_64/standard_pcbios.iso
-#%{http_path}/preboot_execution_environment/bin/x86_64/standard_pcbios.usb
-%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_efi.iso
-%{http_path}/preboot_execution_environment/bin/x86_64/noshell_efi.iso
-#%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_pcbios.iso
-#%{http_path}/preboot_execution_environment/bin/x86_64/dhcpretry_pcbios.usb
+%{http_path}/pxe/bin/x86_64/grub2_efi_autofind.img
+%{http_path}/pxe/bin/x86_64/grub2_shell.img
+%{http_path}/pxe/bin/x86_64/standard_efi.iso
+#%{http_path}/pxe/bin/x86_64/standard_pcbios.iso
+#%{http_path}/pxe/bin/x86_64/standard_pcbios.usb
+%{http_path}/pxe/bin/x86_64/dhcpretry_efi.iso
+%{http_path}/pxe/bin/x86_64/noshell_efi.iso
+#%{http_path}/pxe/bin/x86_64/dhcpretry_pcbios.iso
+#%{http_path}/pxe/bin/x86_64/dhcpretry_pcbios.usb
 %{tftp_path}/x86_64/standard_ipxe.efi
 %{tftp_path}/x86_64/standard_undionly.kpxe
 %{tftp_path}/x86_64/standard_snponly_ipxe.efi
