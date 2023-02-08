@@ -73,9 +73,9 @@ Description:
 working_directory=XXX
 
 # arm64
-mkdir -p $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/arm64
-cp $working_directory/build/ipxe/bin/arm64/grub2_efi_autofind.img $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/arm64/grub2_efi_autofind.img
-cp $working_directory/build/ipxe/bin/arm64/grub2_shell.img $RPM_BUILD_ROOT/%{http_path}/preboot_execution_environment/bin/arm64/grub2_shell.img
+mkdir -p $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64
+cp $working_directory/build/ipxe/bin/arm64/grub2_efi_autofind.img $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64/grub2_efi_autofind.img
+cp $working_directory/build/ipxe/bin/arm64/grub2_shell.img $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64/grub2_shell.img
 
 mkdir -p $RPM_BUILD_ROOT/%{tftp_path}/arm64
 cp $working_directory/build/ipxe/bin/arm64/standard_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/standard_ipxe.efi
@@ -87,8 +87,8 @@ cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snp_ipxe.efi $RPM_BUILD_ROO
 
 %files
 %defattr(-,root,root,-)
-%{http_path}/preboot_execution_environment/bin/arm64/grub2_efi_autofind.img
-%{http_path}/preboot_execution_environment/bin/arm64/grub2_shell.img
+%{http_path}/pxe/bin/arm64/grub2_efi_autofind.img
+%{http_path}/pxe/bin/arm64/grub2_shell.img
 %{tftp_path}/arm64/standard_ipxe.efi
 %{tftp_path}/arm64/standard_snponly_ipxe.efi
 %{tftp_path}/arm64/standard_snp_ipxe.efi

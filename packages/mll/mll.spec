@@ -35,18 +35,18 @@ MLL build for BlueBanquise PXE
 %setup -q
 
 %post
-restorecon -Rv /var/www/html/preboot_execution_environment/MLL
+restorecon -Rv /var/www/html/pxe/MLL
 
 %build
 
 %install
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/MLL/%{_architecture}/
-cp kernel.xz rootfs.xz $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/MLL/%{_architecture}/
+mkdir -p $RPM_BUILD_ROOT/var/www/html/pxe/MLL/%{_architecture}/
+cp kernel.xz rootfs.xz $RPM_BUILD_ROOT/var/www/html/pxe/MLL/%{_architecture}/
 
 %files
 %defattr(-,root,root,-)
-/var/www/html/preboot_execution_environment/MLL/%{_architecture}/*
+/var/www/html/pxe/MLL/%{_architecture}/*
 
 %changelog
 
