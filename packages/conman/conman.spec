@@ -64,20 +64,21 @@ rm -rf "%{buildroot}"
 %systemd_postun_with_restart conman.service
 
 %files
-%{!?_licensedir:%global license %doc}
 %license COPYING
 %doc AUTHORS
-%doc DISCLAIMER*
+%doc DISCLAIMER.LLNS
+%doc DISCLAIMER.UC
 %doc FAQ
-%doc KEYS
 %doc NEWS
-%doc PLATFORMS
 %doc README
 %doc THANKS
 %config(noreplace) %{_sysconfdir}/conman.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/conman
-%{_bindir}/*
-%{_sbindir}/*
-%{_prefix}/lib/*
-%{_mandir}/*/*
+%{_bindir}/conman
+%{_bindir}/conmen
+%{_sbindir}/conmand
+%{_datadir}/conman
+%{_mandir}/man1/conman.1*
+%{_mandir}/man5/conman.conf.5*
+%{_mandir}/man8/conmand.8*
 %{_unitdir}/conman.service
