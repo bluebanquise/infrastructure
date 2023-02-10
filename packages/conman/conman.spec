@@ -2,10 +2,10 @@
 %define is_debian %(grep -i debian /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
 
 %if %is_ubuntu
-  %define _unitdir /lib/systemd/system
+  %define _unitdir /usr/lib/systemd/system
 %endif
 %if %is_debian
-  %define _unitdir /lib/systemd/system
+  %define _unitdir /usr/lib/systemd/system
 %endif
 
 Name:		conman
