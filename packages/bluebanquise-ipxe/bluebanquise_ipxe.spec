@@ -26,8 +26,8 @@ mkdir ipxe
 git clone https://github.com/ipxe/ipxe.git ipxe/.
 
 grub2-mkstandalone -O x86_64-efi -o grub2-efi-autofind.img "boot/grub/grub.cfg=grub2-efi-autofind.cfg"
-mkdir -p $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/
-cp grub2-efi-autofind.img $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/
+mkdir -p $RPM_BUILD_ROOT/var/www/html/pxe/bin/
+cp grub2-efi-autofind.img $RPM_BUILD_ROOT/var/www/html/pxe/bin/
 
 cp bluebanquise_standard.ipxe ipxe/src/bluebanquise_standard.ipxe
 
@@ -64,7 +64,7 @@ cp ipxe-efi.iso $RPM_BUILD_ROOT/var/lib/tftpboot/ipxe-efi.iso
 
 %files
 %defattr(-,root,root,-)
-/var/www/html/preboot_execution_environment/bin/grub2-efi-autofind.img
+/var/www/html/pxe/bin/grub2-efi-autofind.img
 /var/lib/tftpboot/bluebanquise_standard_ipxe.efi
 /var/lib/tftpboot/bluebanquise_standard_undionly.kpxe
 /var/lib/tftpboot/ipxe.iso

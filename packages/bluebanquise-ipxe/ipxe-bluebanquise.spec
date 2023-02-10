@@ -29,12 +29,12 @@ Description:
 %install
 
 # x86_64
-mkdir -p $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/x86_64
-cp /root/build/bin/http/x86_64/grub2_efi_autofind.img $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/x86_64/grub2_efi_autofind.img
-cp /root/build/bin/http/x86_64/grub2_shell.img $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/x86_64/grub2_shell.img
-cp /root/build/bin/http/x86_64/ipxe_efi.iso $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/x86_64/ipxe_efi.iso
-cp /root/build/bin/http/x86_64/ipxe_legacy.iso $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/x86_64/ipxe_legacy.iso
-cp /root/build/bin/http/x86_64/ipxe.usb $RPM_BUILD_ROOT/var/www/html/preboot_execution_environment/bin/x86_64/ipxe.usb
+mkdir -p $RPM_BUILD_ROOT/var/www/html/pxe/bin/x86_64
+cp /root/build/bin/http/x86_64/grub2_efi_autofind.img $RPM_BUILD_ROOT/var/www/html/pxe/bin/x86_64/grub2_efi_autofind.img
+cp /root/build/bin/http/x86_64/grub2_shell.img $RPM_BUILD_ROOT/var/www/html/pxe/bin/x86_64/grub2_shell.img
+cp /root/build/bin/http/x86_64/ipxe_efi.iso $RPM_BUILD_ROOT/var/www/html/pxe/bin/x86_64/ipxe_efi.iso
+cp /root/build/bin/http/x86_64/ipxe_legacy.iso $RPM_BUILD_ROOT/var/www/html/pxe/bin/x86_64/ipxe_legacy.iso
+cp /root/build/bin/http/x86_64/ipxe.usb $RPM_BUILD_ROOT/var/www/html/pxe/bin/x86_64/ipxe.usb
 
 mkdir -p $RPM_BUILD_ROOT/var/lib/tftpboot/x86_64
 cp /root/build/bin/tftp/x86_64/standard_ipxe.efi $RPM_BUILD_ROOT/var/lib/tftpboot/x86_64/standard_ipxe.efi
@@ -51,11 +51,11 @@ cp /root/build/bin/tftp/arm64/standard_snp_ipxe.efi $RPM_BUILD_ROOT/var/lib/tftp
 
 %files
 %defattr(-,root,root,-)
-/var/www/html/preboot_execution_environment/bin/x86_64/grub2_efi_autofind.img
-/var/www/html/preboot_execution_environment/bin/x86_64/grub2_shell.img
-/var/www/html/preboot_execution_environment/bin/x86_64/ipxe_efi.iso
-/var/www/html/preboot_execution_environment/bin/x86_64/ipxe_legacy.iso
-/var/www/html/preboot_execution_environment/bin/x86_64/ipxe.usb
+/var/www/html/pxe/bin/x86_64/grub2_efi_autofind.img
+/var/www/html/pxe/bin/x86_64/grub2_shell.img
+/var/www/html/pxe/bin/x86_64/ipxe_efi.iso
+/var/www/html/pxe/bin/x86_64/ipxe_legacy.iso
+/var/www/html/pxe/bin/x86_64/ipxe.usb
 /var/lib/tftpboot/x86_64/standard_ipxe.efi
 /var/lib/tftpboot/x86_64/standard_undionly.kpxe
 /var/lib/tftpboot/x86_64/standard_snponly_ipxe.efi
