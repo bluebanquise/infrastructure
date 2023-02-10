@@ -23,6 +23,7 @@ mkdir -p ~/build/el9/sources/
 
 if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build nyancat RedHat 9
+podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build conman RedHat 9
 podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build atftp RedHat 9
 podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build bluebanquise-ipxe RedHat 9
 podman run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build slurm RedHat 9

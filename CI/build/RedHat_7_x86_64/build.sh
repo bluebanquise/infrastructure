@@ -23,6 +23,7 @@ mkdir -p ~/build/el7/sources/
 
 if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build nyancat RedHat 7
+podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build conman RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build prometheus RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build slurm RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build atftp RedHat 7

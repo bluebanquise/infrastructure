@@ -23,6 +23,7 @@ mkdir -p ~/build/lp15/sources/
 
 if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build nyancat opensuse_leap 15
+podman run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build conman opensuse_leap 15
 # podman run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build ansible-cmdb opensuse_leap 15
 # podman run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build atftp opensuse_leap 15
 podman run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build bluebanquise-ipxe opensuse_leap 15

@@ -18,6 +18,7 @@ mkdir -p ~/build/ubuntu2204/x86_64/
 
 if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build nyancat Ubuntu 22.04
+podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build conman Ubuntu 22.04
 podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build prometheus Ubuntu 22.04
 #podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS ubuntu_22.04_build ansible-cmdb Ubuntu 22.04
 podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build slurm Ubuntu 22.04
