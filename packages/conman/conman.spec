@@ -8,9 +8,9 @@ License:	GPLv3+
 URL:		https://dun.github.io/conman/
 Source0:	https://github.com/dun/conman/releases/download/%{name}-%{version}/%{name}-%{version}.tar.xz
 
-BuildRequires:	freeipmi-devel >= 1.0.4
+#BuildRequires:	freeipmi-devel >= 1.0.4
 #BuildRequires:	tcp_wrappers-devel
-BuildRequires:	systemd
+#BuildRequires:	systemd
 Requires:	expect, freeipmi
 Requires(post): systemd
 Requires(preun): systemd
