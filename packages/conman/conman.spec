@@ -1,5 +1,5 @@
 %define is_ubuntu %(grep -i ubuntu /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-%define is_debian %(grep -qi Debian /etc/lsb-release && echo 1 || echo 0)
+%define is_debian %(grep -i debian /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
 
 %if %is_ubuntu
   %define _unitdir /lib/systemd/system
