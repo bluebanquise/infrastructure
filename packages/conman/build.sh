@@ -15,7 +15,7 @@ cp $working_directory/sources/conman-$conman_version.tar.xz $working_directory/b
 tar xJvf conman-$conman_version.tar.xz
 $(which cp) -af $root_directory/conman/* conman-$conman_version/
 tar cvJf conman-$conman_version.tar.xz conman-$conman_version
-rpmbuild -ta conman-$conman_version.tar.xz --define "_software_version $conman_version"
+rpmbuild -ta --target=$distribution_architecture conman-$conman_version.tar.xz --define "_software_version $conman_version"
 
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
