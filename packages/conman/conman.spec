@@ -1,6 +1,6 @@
 Name:		conman
-Version:	0.3.0
-Release:	1%{?dist}
+Version:	%{_software_version}
+Release:	7
 
 Summary:	ConMan: The Console Manager
 Group:		Applications/System
