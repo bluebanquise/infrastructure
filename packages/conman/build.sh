@@ -13,7 +13,7 @@ fi
 cd $working_directory/build/conman
 cp $working_directory/sources/conman-$conman_version.tar.xz $working_directory/build/conman
 tar xJvf conman-$conman_version.tar.xz
-/usr/bin/cp -f $root_directory/packages/conman/* conman-$conman_version/
+$(which cp) -af $root_directory/conman/* conman-$conman_version/
 tar cvJf conman-$conman_version.tar.xz conman-$conman_version
 rpmbuild -ta conman-$conman_version.tar.xz --define "_software_version $conman_version"
 
