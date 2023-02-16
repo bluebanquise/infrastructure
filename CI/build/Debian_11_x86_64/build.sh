@@ -18,7 +18,7 @@ mkdir -p ~/build/debian11/x86_64/
 
 if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build nyancat Debian 11
-podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build conman Debian 11
+#podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build conman Debian 11
 podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build prometheus Debian 11
 # podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS debian_11_build ansible-cmdb Debian 11
 podman run -it --rm -v ~/build/debian11/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build slurm Debian 11
