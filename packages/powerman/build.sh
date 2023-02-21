@@ -4,7 +4,7 @@ source $CURRENT_DIR/version.sh
 set -x
 if [ ! -f $working_directory/sources/powerman-$powerman_version.tar.gz ]; then
     wget -P $working_directory/sources/ https://github.com/chaos/powerman/releases/download/v$powerman_version/powerman-$powerman_version.tar.gz
-    mv $working_directory/sources/$powerman_version.tar.gz $working_directory/sources/powerman-$powerman_version.tar.gz
+    mv $working_directory/sources/powerman-$powerman_version.tar.gz $working_directory/sources/powerman-$powerman_version.tar.gz
 fi
 rm -Rf $working_directory/build/powerman
 mkdir -p $working_directory/build/powerman
