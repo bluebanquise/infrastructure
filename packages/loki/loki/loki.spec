@@ -18,15 +18,17 @@
 %endif
 
 Name:       loki
-Version:    2.4.1
-Release:    1%{?dist}
-Distribution: %(lsb_release -d -s | sed 's/"//g')
+Release:  1%{?dist}
+Version:  %{_software_version}
 Summary:    Loki
 URL:        https://github.com/grafana/loki
 Group:      Grafana
 License:    Apache License 2.0
+URL:      https://github.com/grafana/loki
+Packager: Oxedions <oxedions@gmail.com>
 
-Source0: https://github.com/grafana/loki/releases/download/v%{version}/%{name}-linux-amd64.zip
+
+Source0: https://github.com/grafana/loki/releases/download/v%{_software_version}/%{name}-linux-amd64.zip
 Source1: %{name}.service
 
 %{?systemd_requires}
