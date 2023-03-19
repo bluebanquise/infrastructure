@@ -29,6 +29,6 @@ tar xvzf atftp-$atftp_version.tar.gz
 /usr/bin/cp -f $root_directory/atftp/* atftp-$atftp_version/
 rm -f atftp-$atftp_version/redhat/atftp.spec
 tar cvzf atftp.tar.gz atftp-$atftp_version
-rpmbuild -ta atftp.tar.gz --define "_software_version $atftp_version"
+rpmbuild -ta atftp.tar.gz --define "_software_version $atftp_version" --define "_lto_cflags %{nil}"
 
 set +x
