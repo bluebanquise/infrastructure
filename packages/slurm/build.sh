@@ -61,6 +61,7 @@ if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     sed -i 's|BuildRequires:\ perl(ExtUtils::MakeMaker)|#BuildRequires:\ perl(ExtUtils::MakeMaker)|' slurm-$slurm_version/slurm.spec
     sed -i 's|BuildRequires:\ pam-devel|#BuildRequires:\ pam-devel|' slurm-$slurm_version/slurm.spec
     sed -i 's|%{_perlman3dir}/Slurm*|#%{_perlman3dir}/Slurm*|' slurm-$slurm_version/slurm.spec
+    sed -i '1s/^/%define _build_id_links none\n/' slurm-$slurm_version/slurm.spec
 tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
 fi
 
