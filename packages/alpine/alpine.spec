@@ -81,11 +81,11 @@ rm -Rf boot
 
 %files
 %defattr(-,root,root,-)
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/aarch64/initramfs-lts
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/aarch64/modloop-lts
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/aarch64/vmlinuz-lts
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/x86_64/initramfs-lts
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/x86_64/modloop-lts
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/x86_64/vmlinuz-lts
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/boot.ipxe
+%{http_path}/pxe/tools/alpine/aarch64/initramfs-lts
+%{http_path}/pxe/tools/alpine/aarch64/modloop-lts
+%{http_path}/pxe/tools/alpine/aarch64/vmlinuz-lts
+%{http_path}/pxe/tools/alpine/x86_64/initramfs-lts
+%{http_path}/pxe/tools/alpine/x86_64/modloop-lts
+%{http_path}/pxe/tools/alpine/x86_64/vmlinuz-lts
+%{http_path}/pxe/tools/alpine/boot.ipxe
 

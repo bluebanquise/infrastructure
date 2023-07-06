@@ -72,5 +72,5 @@ cp memtest.efi $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.efi
 
 %files
 %defattr(-,root,root,-)
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.bin
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.efi
+%{http_path}/pxe/tools/memtest86plus/memtest.bin
+%{http_path}/pxe/tools/memtest86plus/memtest.efi

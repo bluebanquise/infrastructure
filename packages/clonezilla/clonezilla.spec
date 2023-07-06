@@ -71,5 +71,5 @@ cp clonezilla-live-%{_software_version}-amd64.iso $RPM_BUILD_ROOT/%{http_path}/p
 
 %files
 %defattr(-,root,root,-)
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/boot.ipxe
-$RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/clonezilla-live-%{_software_version}-amd64.iso
+%{http_path}/pxe/tools/clonezilla/boot.ipxe
+%{http_path}/pxe/tools/clonezilla/clonezilla-live-%{_software_version}-amd64.iso
