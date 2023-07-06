@@ -48,7 +48,7 @@ Version:       %{_software_version}
 Release:       1%{?dist}
 License:       GPL
 Group:         System Environment/Libraries
-Source:        https://clonezilla.org/alpine.tar.gz
+Source:        https://clonezilla.org/clonezilla.tar.gz
 URL:           https://clonezilla.org
 Packager:      oxedions <oxedions@gmail.com>
 %define debug_package %{nil}
