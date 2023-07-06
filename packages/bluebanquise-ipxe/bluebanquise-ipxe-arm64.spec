@@ -20,13 +20,16 @@
 %if 0%{?sle_version} == 150400
   %define dist .sl15
 %endif
+%if 0%{?sle_version} == 150500
+  %define dist .sl15
+%endif
 
 # Ubuntu 20.04
 %if %is_ubuntu
   %if %(grep '20.04' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
     %define dist u20
   %endif
-  %if %(grep '20.04' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
+  %if %(grep '22.04' /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
     %define dist u22
   %endif
 %endif
