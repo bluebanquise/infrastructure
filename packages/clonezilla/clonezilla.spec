@@ -66,10 +66,10 @@ Clonezilla Live
 %install
 mkdir -p $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
 cp boot.ipxe $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
-cp clonezilla-live-%{_software_version}-amd64.iso $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
+cp clonezilla-live-amd64.iso $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
 
 
 %files
 %defattr(-,root,root,-)
 %{http_path}/pxe/tools/clonezilla/boot.ipxe
-%{http_path}/pxe/tools/clonezilla/clonezilla-live-%{_software_version}-amd64.iso
+%{http_path}/pxe/tools/clonezilla/clonezilla-live-amd64.iso
