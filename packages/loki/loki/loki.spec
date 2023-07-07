@@ -21,7 +21,6 @@ Name:     loki
 Release:  1%{?dist}
 Version:  %{_software_version}
 Summary:  Loki
-URL:      https://github.com/grafana/loki
 Group:    Grafana
 License:  Apache License 2.0
 URL:      https://github.com/grafana/loki
