@@ -27,6 +27,10 @@ podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp roc
 # podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build bluebanquise-tools RedHat 8
 # podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build ssh-wait RedHat 8
 # podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build colour_text RedHat 8
+podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build alpine RedHat 8
+podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build loki RedHat 8
+podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build clonezilla RedHat 8
+
 else
 podman run -it --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build $1 RedHat 8
 fi

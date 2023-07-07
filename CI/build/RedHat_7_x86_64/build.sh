@@ -28,6 +28,11 @@ podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/so
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build slurm RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build atftp RedHat 7
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build bluebanquise-ipxe RedHat 7
+podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build loki RedHat 7
+podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build alpine RedHat 7
+podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build clonezilla RedHat 7
+podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build memtest86plus RedHat 7
+
 else
 podman run -it --rm -v ~/build/el7/x86_64/:/root/rpmbuild/RPMS -v ~/build/el7/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp centos_7_build $1 RedHat 7
 fi

@@ -86,6 +86,21 @@ if [ "$1" == "dependencies" ]; then
         apt-get install -y python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-arm64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi xz-utils
       fi
     fi
+    if [ "$distribution_version" == "12" ]; then
+      if [ $distribution_architecture == 'x86_64' ]; then
+        echo "%_arch x86_64" > ~/.rpmmacros
+        apt-get update
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get install -y python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi xz-utils
+        # Possibly missing python3-mysqldb libmysqld-dev
+      fi
+      if [ $distribution_architecture == 'arm64' ]; then
+        echo "%_arch arm64" > ~/.rpmmacros
+        apt-get update
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get install -y python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-arm64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi xz-utils
+      fi
+    fi
 
   elif [ "$distribution" == 'Ubuntu' ]; then
     if [ "$distribution_version" == "20.04" ]; then

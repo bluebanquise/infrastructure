@@ -25,6 +25,11 @@ podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/t
 podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build bluebanquise-ipxe Ubuntu 22.04
 #podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS ubuntu_22.04_build bluebanquise-tools Ubuntu 22.04
 podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build grubby Ubuntu 22.04
+podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build loki Ubuntu 22.04
+podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build alpine Ubuntu 22.04
+podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build clonezilla Ubuntu 22.04
+podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build memtest86plus Ubuntu 22.04
+
 else
 podman run -it --rm -v ~/build/ubuntu2204/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build $1 Ubuntu 22.04
 fi
