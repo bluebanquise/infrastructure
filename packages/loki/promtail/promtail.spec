@@ -56,7 +56,7 @@ unzip promtail-linux-%{_software_architecture}.zip
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/bin/
-cp -a promtail-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/
+cp -a promtail-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/promtail
 
 %pre
 
