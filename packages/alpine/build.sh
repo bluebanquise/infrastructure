@@ -22,9 +22,9 @@ rpmbuild -ta alpine.tar.gz --target=noarch --define "_software_version $alpine_v
 
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/alpine-*
-    mkdir -p /root/debbuild/DEBS/$distribution_architecture/
-    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
+    alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/alpine-*
+    mkdir -p /root/debbuild/DEBS/noarch/
+    mv *.deb /root/debbuild/DEBS/noarch/
 fi
 
 set +x

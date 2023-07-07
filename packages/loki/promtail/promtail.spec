@@ -17,20 +17,16 @@
   %endif
 %endif
 
-Name:       promtail
-Version:    2.4.1
-Release:    1%{?dist}
-Distribution: %(lsb_release -d -s | sed 's/"//g')
-Summary:    Promtail agent
-URL:        https://github.com/grafana/loki
-Group:      Grafana
-License:    Apache License 2.0
-
-Source0: https://github.com/grafana/loki/releases/download/v%{version}/%{name}-linux-amd64.zip
-Source1: %{name}.service
-
-%{?systemd_requires}
-BuildRequires: lsb-release
+Name:     promtail
+Release:  1%{?dist}
+Version:  %{_software_version}
+Summary:  Promtail agent
+URL:      https://github.com/grafana/loki
+Group:    Grafana
+License:  Apache License 2.0
+URL:      https://github.com/grafana/loki
+Packager: Oxedions <oxedions@gmail.com>
+Source: https://github.com/grafana/loki/releases/download/promtail.tar.gz
 
 %description
 Promtail is an agent which ships the contents of local logs to a private Loki
@@ -44,36 +40,33 @@ It primarily:
 3. Pushes them to the Loki instance.
 
 Currently, Promtail can tail logs from two sources: local log files and the
-systemd journal (on AMD64 machines only).
+systemd journal.
 
 %prep
-unzip -o %{SOURCE0}
 
 %build
-# nothing to do here
 
-# %install
-install -D -m 755 %{name}-linux-amd64 %{buildroot}%{_bindir}/%{name}
-install -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
+%install
+
+# Download files (binaries)
+cd /tmp
+wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/grafana/loki/releases/download/v%{_software_version}/promtail-linux-%{_software_architecture}.zip
+
+# Extract
+unzip promtail-linux-%{_software_architecture}.zip
+
+# Populate binaries
+mkdir -p $RPM_BUILD_ROOT/bin/
+cp -a promtail-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/
 
 %pre
-getent group %{name} >/dev/null || groupadd -r %{name}
-getent passwd %{name} >/dev/null || \
-  useradd -r -g %{name} -d %{_sysconfdir}/%{name} -s /sbin/nologin \
-          -c "Promtail data collection agent" %{name}
-exit 0
 
 %post
-%systemd_post %{name}.service
 
 %preun
-%systemd_preun %{name}.service
 
 %postun
-%systemd_postun %{name}.service
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}/%{name}
-%{_unitdir}/%{name}.service
-
+/bin/promtail

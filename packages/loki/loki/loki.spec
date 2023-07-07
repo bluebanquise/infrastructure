@@ -17,54 +17,46 @@
   %endif
 %endif
 
-Name:       loki
+Name:     loki
 Release:  1%{?dist}
 Version:  %{_software_version}
-Summary:    Loki
-URL:        https://github.com/grafana/loki
-Group:      Grafana
-License:    Apache License 2.0
+Summary:  Loki
+URL:      https://github.com/grafana/loki
+Group:    Grafana
+License:  Apache License 2.0
 URL:      https://github.com/grafana/loki
 Packager: Oxedions <oxedions@gmail.com>
-
-
-Source0: https://github.com/grafana/loki/releases/download/v%{_software_version}/%{name}-linux-amd64.zip
-Source1: %{name}.service
-
-%{?systemd_requires}
-BuildRequires: lsb-release
+Source: https://github.com/grafana/loki/releases/download/loki.tar.gz
 
 %description
 Loki is a horizontally-scalable, highly-available, multi-tenant log aggregation system inspired by Prometheus. It is designed to be very cost effective and easy to operate. It does not index the contents of the logs, but rather a set of labels for each log stream.
 
 %prep
-unzip -o %{SOURCE0}
 
 %build
-# nothing to do here
 
-# %install
-install -D -m 755 %{name}-linux-amd64 %{buildroot}%{_bindir}/%{name}
-install -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
+%install
+
+# Download files (binaries)
+cd /tmp
+wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/grafana/loki/releases/download/v%{_software_version}/loki-linux-%{_software_architecture}.zip
+
+# Extract
+unzip loki-linux-%{_software_architecture}.zip
+
+# Populate binaries
+mkdir -p $RPM_BUILD_ROOT/bin/
+cp -a loki-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/
 
 %pre
-getent group %{name} >/dev/null || groupadd -r %{name}
-getent passwd %{name} >/dev/null || \
-  useradd -r -g %{name} -d %{_sysconfdir}/%{name} -s /sbin/nologin \
-          -c "Loki" %{name}
-exit 0
 
 %post
-%systemd_post %{name}.service
 
 %preun
-%systemd_preun %{name}.service
 
 %postun
-%systemd_postun %{name}.service
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}/%{name}
-%{_unitdir}/%{name}.service
+/bin/loki
 

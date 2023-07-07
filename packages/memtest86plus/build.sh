@@ -13,18 +13,13 @@ cp $working_directory/sources/memtest86plus-$memtest86plus_version.tar.gz .
 tar xvzf memtest86plus-$memtest86plus_version.tar.gz
 $(which cp) -af $root_directory/memtest86plus/* memtest86plus-$memtest86plus_version/
 tar cvzf memtest86plus.tar.gz memtest86plus-$memtest86plus_version
-rpmbuild -ta memtest86plus.tar.gz --target=$distribution_architecture --define "_software_version $memtest86plus_version"
+rpmbuild -ta memtest86plus.tar.gz --target=noarch --define "_software_version $memtest86plus_version"
 
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/memtest86plus-*
-    mkdir -p /root/debbuild/DEBS/$distribution_architecture/
-    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
+    alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/memtest86plus-*
+    mkdir -p /root/debbuild/DEBS/noarch/
+    mv *.deb /root/debbuild/DEBS/noarch/
 fi
 
 set +x
-
-
-
-
-git clone https://github.com/memtest86plus/memtest86plus
