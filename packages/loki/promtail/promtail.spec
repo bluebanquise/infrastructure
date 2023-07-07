@@ -52,7 +52,7 @@ cd /tmp
 wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/grafana/loki/releases/download/v%{_software_version}/promtail-linux-%{_software_architecture}.zip
 
 # Extract
-unzip promtail-linux-%{_software_architecture}.zip
+unzip -o promtail-linux-%{_software_architecture}.zip
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/bin/
