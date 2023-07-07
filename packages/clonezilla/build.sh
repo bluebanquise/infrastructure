@@ -10,9 +10,9 @@ rm -Rf $working_directory/build/clonezilla
 mkdir -p $working_directory/build/clonezilla
 cd $working_directory/build/clonezilla
 mkdir clonezilla-$clonezilla_version
-cp $working_directory/sources/$clonezilla_iso clonezilla-$clonezilla_version/clonezilla-live-amd64.iso 
+
+osirrox -indev $working_directory/sources/$clonezilla_iso -extract /live clonezilla-$clonezilla_version/live/
 $(which cp) -af $root_directory/clonezilla/* clonezilla-$clonezilla_version/
-sed -i "s/CLONEZILLA_VERSION/$clonezilla_version/" clonezilla-$clonezilla_version/boot.ipxe
 tar cvzf clonezilla.tar.gz clonezilla-$clonezilla_version
 rpmbuild -ta clonezilla.tar.gz --target=noarch --define "_software_version $clonezilla_version"
 

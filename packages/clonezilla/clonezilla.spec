@@ -65,9 +65,12 @@ Clonezilla Live
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
-cp clonezilla-live-amd64.iso $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
-
+cp live/initrd.img $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
+cp live/vmlinuz $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
+cp live/filesystem.squashfs $RPM_BUILD_ROOT/%{http_path}/pxe/tools/clonezilla/
 
 %files
 %defattr(-,root,root,-)
-%{http_path}/pxe/tools/clonezilla/clonezilla-live-amd64.iso
+%{http_path}/pxe/tools/clonezilla/initrd.img
+%{http_path}/pxe/tools/clonezilla/vmlinuz
+%{http_path}/pxe/tools/clonezilla/filesystem.squashfs
