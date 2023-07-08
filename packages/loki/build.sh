@@ -29,7 +29,8 @@ rpmbuild -ta promtail.tar.gz --target=$distribution_architecture --define "_soft
 
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/nyancat-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/loki-*
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/promtail-*
     mkdir -p /root/debbuild/DEBS/$distribution_architecture/
     mv *.deb /root/debbuild/DEBS/$distribution_architecture/
 fi
