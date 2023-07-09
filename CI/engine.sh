@@ -80,6 +80,7 @@ mkdir -p ~/CI/build/{debian11,debian12}/{x86_64,arm64}/
 mkdir -p ~/CI/build/{ubuntu2004,ubuntu2204}/{x86_64,arm64}/
 mkdir -p ~/CI/repositories/{el7,el8,el9,lp15}/{x86_64,aarch64,sources}/bluebanquise/
 mkdir -p ~/CI/repositories/{debian11,debian12}/{x86_64,arm64}/bluebanquise/
+mkdir -p ~/CI/repositories/{deb11,deb12}/{x86_64,arm64}/bluebanquise/
 mkdir -p ~/CI/repositories/{u20,u22}/{x86_64,arm64}/bluebanquise/
 
 
