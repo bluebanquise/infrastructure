@@ -99,6 +99,7 @@ sed -i 's/.*CONSOLE_FRAMEBUFFER.*/#define CONSOLE_FRAMEBUFFER/' config/console.h
 sed -i 's/.*IMAGE_ZLIB.*/#define IMAGE_ZLIB/' config/general.h
 sed -i 's/.*IMAGE_GZIP.*/#define IMAGE_GZIP/' config/general.h
 #sed -i 's/.*IMAGE_EFI.*/#define IMAGE_EFI/' config/general.h
+sed -i 's/.*DIGEST_CMD.*/#define DIGEST_CMD/' config/general.h
 
 ############################################################################################### STANDARD
 if [ $distribution_architecture == 'x86_64' ]; then
