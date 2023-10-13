@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 rm -f /tmp/RHEL_in.sh
 cp -a RHEL_in.sh /tmp
-#for distrib in "almalinux:8" "rockylinux:8"
+#for distrib in "almalinux:9"
 for distrib in "almalinux:8" "rockylinux:8" "almalinux:9" "rockylinux:9"
 do
+#    sudo rm -Rf /tmp/image
     echo $distrib
     # Priviledged is mandatory for EL9 builds
     docker run --rm --privileged -v /tmp:/tmp $distrib /tmp/RHEL_in.sh $distrib
