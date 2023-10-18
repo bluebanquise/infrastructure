@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export PATH=$HOME/.local/bin:$PATH
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 set -x
 pip3 install --upgrade sphinx sphinx-book-theme==0.4.0rc1 mkdocs mkdocs-material
