@@ -44,8 +44,8 @@ wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://githu
 unzip -o loki-linux-%{_software_architecture}.zip
 
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/bin/
-cp -a loki-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/loki
+mkdir -p $RPM_BUILD_ROOT/usr/bin/
+cp -a loki-linux-%{_software_architecture} $RPM_BUILD_ROOT/usr/bin/loki
 
 %pre
 
@@ -57,5 +57,5 @@ cp -a loki-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/loki
 
 %files
 %defattr(-,root,root,-)
-/bin/loki
+/usr/bin/loki
 
