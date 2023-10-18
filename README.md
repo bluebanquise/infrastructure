@@ -1,8 +1,6 @@
 # Infrastructure
 
-<p align="center">
-  <img src="https://i.pinimg.com/originals/aa/8e/8c/aa8e8c57325952dcd28cd654bd4539e7.gif" alt="Factorio"/>
-</p>
+![Factorio](factorio.gif)
 
 This repository hosts the BlueBanquise factory, to build packages and other stack needed elements.
 
