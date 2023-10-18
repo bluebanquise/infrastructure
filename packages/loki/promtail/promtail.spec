@@ -55,8 +55,8 @@ wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://githu
 unzip -o promtail-linux-%{_software_architecture}.zip
 
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/bin/
-cp -a promtail-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/promtail
+mkdir -p $RPM_BUILD_ROOT/usr/bin/
+cp -a promtail-linux-%{_software_architecture} $RPM_BUILD_ROOT/usr/bin/promtail
 
 %pre
 
@@ -68,4 +68,4 @@ cp -a promtail-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/promtail
 
 %files
 %defattr(-,root,root,-)
-/bin/promtail
+/usr/bin/promtail
