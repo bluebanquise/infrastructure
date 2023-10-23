@@ -7,11 +7,11 @@ if (( $STEP < 3 )); then
     sudo chown -R $CUSER:$CUSER /data/images 
     echo "  - Deploying base OS..."
 
-    virsh destroy vmgt1 && echo "vmgt1 destroyed" || echo "vmgt1 not found, skipping"
-    virsh undefine vmgt1 && echo "vmgt1 undefined" || echo "vmgt1 not found, skipping"
+    virsh destroy mgt1 && echo "mgt1 destroyed" || echo "mgt1 not found, skipping"
+    virsh undefine mgt1 && echo "mgt1 undefined" || echo "mgt1 not found, skipping"
 
-    virt-install --os-variant ubuntu22.04 --name=vmgt1 --ram=8192 --vcpus=4 --noreboot --disk path=/data/images/mgt1.qcow2,bus=virtio,size=24 --network bridge=virbr0,mac=52:54:00:fa:12:01 --network bridge=virbr1,mac=52:54:00:fa:12:02 --install kernel=http://$host_ip:8000/vmlinuz,initrd=http://$host_ip:8000/initrd,kernel_args_overwrite=yes,kernel_args="root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://$host_ip:8000/ubuntu-22.04.1-live-server-amd64.iso autoinstall ds=nocloud-net;s=http://$host_ip:8000/"
-    virsh setmem vmgt1 2G --config
+    virt-install --os-variant ubuntu22.04 --name=mgt1 --ram=8192 --vcpus=4 --check mac_in_use=off --noreboot --disk path=/data/images/mgt1_2.qcow2,bus=virtio,size=24 --network bridge=virbr0,mac=52:54:00:fa:12:01 --network bridge=virbr1,mac=52:54:00:fa:12:02 --install kernel=http://$host_ip:8000/vmlinuz,initrd=http://$host_ip:8000/initrd,kernel_args_overwrite=yes,kernel_args="root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://$host_ip:8000/ubuntu-22.04.1-live-server-amd64.iso autoinstall ds=nocloud-net;s=http://$host_ip:8000/"
+    virsh setmem mgt1 2G --config
 #virt-install --os-variant ubuntu20.04 --name=vmgt1 --ram=8192 --vcpus=4 --noreboot --disk path=/data/images/mgt1.qcow2,bus=virtio,size=24 --network bridge=virbr0,mac=52:54:00:fa:12:01 --install kernel=http://$host_ip:8000/vmlinuz,initrd=http://$host_ip:8000/initrd,kernel_args_overwrite=yes,kernel_args="root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://$host_ip:8000/ubuntu-20.04.5-live-server-amd64.iso autoinstall ds=nocloud-net;s=http://$host_ip:8000/"
 
 #    echo "  - Stopping host http server."
@@ -21,7 +21,7 @@ fi
 if (( $STEP < 4 )); then
 
     echo "  - Starting VM and wait 5s."
-    virsh start vmgt1
+    virsh start mgt1
 
     echo "  - Getting mgt1 ip."
     sleep 30

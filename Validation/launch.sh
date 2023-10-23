@@ -18,6 +18,7 @@ cd $LAUNCH_CURRENT_DIR
 source steps/03_bootstrap_mgt1.sh
 cd $LAUNCH_CURRENT_DIR
 source steps/04_deploy_bluebanquise_on_mgt1.sh
+exit
 cd $LAUNCH_CURRENT_DIR
 source steps/06_deploy_rhel8.sh
 cd $LAUNCH_CURRENT_DIR
