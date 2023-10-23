@@ -11,25 +11,50 @@ LAUNCH_CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null 
 echo "Starting test."
 set -e
 source values.sh
-source steps/01_setup_networks.sh
+if (( $STEP < 1 )); then
+    source steps/01_setup_networks.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/02_start_http_server.sh
+if (( $STEP < 2 )); then
+    source steps/02_start_http_server.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/03_bootstrap_mgt1.sh
+if (( $STEP < 3 )); then
+    source steps/03_bootstrap_mgt1.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/04_deploy_bluebanquise_on_mgt1.sh
-exit
+if (( $STEP < 6 )); then
+    source steps/04_deploy_bluebanquise_on_mgt1.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/06_deploy_rhel8.sh
+if (( $STEP < 10 )); then
+    source steps/06_deploy_rhel8.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/07_deploy_rhel9.sh
+if (( $STEP < 11 )); then
+    source steps/07_deploy_rhel9.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/08_deploy_rhel7.sh
+if (( $STEP < 12 )); then
+    source steps/08_deploy_rhel7.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/09_deploy_ubuntu20.sh
+if (( $STEP < 13 )); then
+    source steps/09_deploy_ubuntu20.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/10_deploy_ubuntu22.sh
+if (( $STEP < 14 )); then
+    source steps/10_deploy_ubuntu22.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/11_deploy_osl13.sh
+if (( $STEP < 15 )); then
+    source steps/11_deploy_osl13.sh
+fi
 cd $LAUNCH_CURRENT_DIR
-source steps/12_deploy_debian11.sh
+if (( $STEP < 16 )); then
+    source steps/12_deploy_debian11.sh
+fi
+cd $LAUNCH_CURRENT_DIR
+if (( $STEP < 17 )); then
+    source steps/13_deploy_debian12.sh
+fi
