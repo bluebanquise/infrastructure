@@ -43,7 +43,8 @@ ssh -o StrictHostKeyChecking=no mgt5 sudo curl http://bluebanquise.com/repositor
 EOF
 set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+set -x
+sleep 200 # wait for network to stabilize
 ssh -o StrictHostKeyChecking=no mgt5 'DEBIAN_FRONTEND=noninteractive sudo apt-get update && sudo apt-get upgrade -y && sudo reboot -h now'
 EOF
 set -e
