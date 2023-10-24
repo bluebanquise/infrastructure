@@ -51,7 +51,9 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 /tmp/waitforssh.sh bluebanquise@mgt5
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-cd validation/inventories/
+source /var/lib/bluebanquise/ansible_venv/bin/activate
+cd validation/inventories/ 
+export ANSIBLE_VARS_ENABLED=ansible.builtin.host_group_vars,bluebanquise.commons.core
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt5 -b
 EOF
 if [ $? -eq 0 ]; then

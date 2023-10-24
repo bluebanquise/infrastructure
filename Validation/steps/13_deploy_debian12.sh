@@ -7,7 +7,7 @@ mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/nul
 cd $CURRENT_DIR/../http
 # wget -nc --no-parent -r -l 0 --cut-dirs 5 -nH -A iso https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/
 # export DEBIAN_ISO=$(ls debian*.iso)
-wget -nc https://deb.debian.org/debian/dists/bullseye/main/installer-amd64/current/images/netboot/netboot.tar.gz
+wget -nc https://deb.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/netboot/netboot.tar.gz
 cd $CURRENT_DIR
 
 ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/netboot.tar.gz
@@ -46,7 +46,7 @@ ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8
 # sudo mv newinitrd.gz /var/www/html/pxe/netboots/debian/11/x86_64/initrd.gz
 
 # export PYTHONPATH=$mgt1_PYTHONPATH
-# sudo bluebanquise-bootset -n mgt8 -b osdeploy
+# sudo bluebanquise-bootset -n mgt9 -b osdeploy
 # # temporary fix
 # sudo mkdir -p /var/www/html/preboot_execution_environment/
 # cd /var/www/html/preboot_execution_environment/
@@ -56,52 +56,52 @@ ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 # Debian preparation is extensive, we need to inject ata/scsi modules into netboot initrd
-sudo mkdir -p /var/www/html/pxe/netboots/debian/11/x86_64/
+sudo mkdir -p /var/www/html/pxe/netboots/debian/12/x86_64/
 tar xvzf netboot.tar.gz
-sudo cp debian-installer/amd64/initrd.gz /var/www/html/pxe/netboots/debian/11/x86_64/
-sudo cp debian-installer/amd64/linux /var/www/html/pxe/netboots/debian/11/x86_64/
+sudo cp debian-installer/amd64/initrd.gz /var/www/html/pxe/netboots/debian/12/x86_64/
+sudo cp debian-installer/amd64/linux /var/www/html/pxe/netboots/debian/12/x86_64/
 
 export PYTHONPATH=$mgt1_PYTHONPATH
-sudo bluebanquise-bootset -n mgt8 -b osdeploy
+sudo bluebanquise-bootset -n mgt9 -b osdeploy
 EOF
 
-virsh destroy mgt8 && echo "mgt8 destroyed" || echo "mgt8 not found, skipping"
-virsh undefine mgt8 && echo "mgt8 undefined" || echo "mgt8 not found, skipping"
+virsh destroy mgt9 && echo "mgt9 destroyed" || echo "mgt9 not found, skipping"
+virsh undefine mgt9 && echo "mgt9 undefined" || echo "mgt9 not found, skipping"
 
-virt-install --name=mgt8 --os-variant debian11 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt8.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:8e:8f --pxe
-virsh setmem mgt8 2G --config
-virsh start mgt8
+virt-install --name=mgt9 --os-variant debian11 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt9.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:8e:8f --pxe
+virsh setmem mgt9 2G --config
+virsh start mgt9
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt8
-/tmp/waitforssh.sh bluebanquise@mgt8
+ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt9
+/tmp/waitforssh.sh bluebanquise@mgt9
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh -o StrictHostKeyChecking=no mgt8 hostname
+ssh -o StrictHostKeyChecking=no mgt9 hostname
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-ssh -o StrictHostKeyChecking=no mgt8 sudo curl http://bluebanquise.com/repository/releases/latest/deb11/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
+ssh -o StrictHostKeyChecking=no mgt9 sudo curl http://bluebanquise.com/repository/releases/latest/deb12/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
 EOF
 set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sleep 120
-ssh -o StrictHostKeyChecking=no mgt8 'DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt upgrade -y && sudo reboot -h now'
+ssh -o StrictHostKeyChecking=no mgt9 'DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt upgrade -y && sudo reboot -h now'
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-/tmp/waitforssh.sh bluebanquise@mgt8
+/tmp/waitforssh.sh bluebanquise@mgt9
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 source /var/lib/bluebanquise/ansible_venv/bin/activate
 cd validation/inventories/ 
 export ANSIBLE_VARS_ENABLED=ansible.builtin.host_group_vars,bluebanquise.commons.core
-ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt8 -b
+ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt9 -b
 EOF
 if [ $? -eq 0 ]; then
-  echo SUCCESS deploying Debian 11 mgt8
+  echo SUCCESS deploying Debian 12 mgt9
 else
-  echo FAILED deploying Debian 11 mgt8
+  echo FAILED deploying Debian 12 mgt9
   exit 1
 fi
 
@@ -109,4 +109,4 @@ fi
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 sudo rm /var/lib/bluebanquise/netboot.tar.gz
 EOF
-virsh shutdown mgt8
+virsh shutdown mgt9

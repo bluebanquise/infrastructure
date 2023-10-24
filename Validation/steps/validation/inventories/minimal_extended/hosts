@@ -53,7 +53,7 @@ ep_partitioning="d-i partman-auto/disk string /dev/vda\nd-i partman-auto/method 
 
 [all:vars]
 # Define unique network settings
-networks={'net-admin':{'subnet':"10.10.0.0", 'prefix':"16", 'gateway4':"10.10.0.1", 'services_ip':"10.10.0.1" }}
+networks={'net-admin':{'subnet':"10.10.0.0", 'prefix':"16", 'gateway':"10.10.0.1", 'services_ip':"10.10.0.1" }}
 pxe_stack_ep_equipment_type=server
 ep_operating_system={'distribution':"ubuntu", 'distribution_version':"22.04", 'distribution_major_version':"22" }
 dns_server_dnssec_enable=False
