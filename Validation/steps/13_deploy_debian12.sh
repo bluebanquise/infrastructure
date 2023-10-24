@@ -7,9 +7,11 @@ mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/nul
 cd $CURRENT_DIR/../http
 # wget -nc --no-parent -r -l 0 --cut-dirs 5 -nH -A iso https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/
 # export DEBIAN_ISO=$(ls debian*.iso)
+rm -f netboot.tar.gz
 wget -nc https://deb.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/netboot/netboot.tar.gz
 cd $CURRENT_DIR
 
+ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip rm -Rf netboot.tar.gz debian-installer
 ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/netboot.tar.gz
 # ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/$DEBIAN_ISO
 
@@ -68,7 +70,7 @@ EOF
 virsh destroy mgt9 && echo "mgt9 destroyed" || echo "mgt9 not found, skipping"
 virsh undefine mgt9 && echo "mgt9 undefined" || echo "mgt9 not found, skipping"
 
-virt-install --name=mgt9 --os-variant debian11 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt9.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:8e:8f --pxe
+virt-install --name=mgt9 --os-variant debian11 --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt9.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:9e:8f --pxe
 virsh setmem mgt9 2G --config
 virsh start mgt9
 

@@ -35,9 +35,9 @@ if (( $STEP < 30 )); then
     source steps/07_deploy_rhel9.sh
 fi
 cd $LAUNCH_CURRENT_DIR
-if (( $STEP < 40 )); then
-    source steps/08_deploy_rhel7.sh
-fi
+#if (( $STEP < 40 )); then
+#    source steps/08_deploy_rhel7.sh
+#fi
 cd $LAUNCH_CURRENT_DIR
 if (( $STEP < 50 )); then
     source steps/09_deploy_ubuntu20.sh
@@ -52,6 +52,7 @@ if (( $STEP < 70 )); then
 fi
 cd $LAUNCH_CURRENT_DIR
 if (( $STEP < 80 )); then
+    # Note: if this part fails when grabing repos, clean netboot and kernels everywhere, and relaunch
     source steps/12_deploy_debian11.sh
 fi
 cd $LAUNCH_CURRENT_DIR
