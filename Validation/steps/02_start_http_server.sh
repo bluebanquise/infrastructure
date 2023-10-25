@@ -23,7 +23,4 @@ if (( $STEP < 2 )); then
     ) &
     export http_server_pid=$!
     echo "  - http server pid: $http_server_pid"
-    rm -f $CURRENT_DIR/../http/user-data
-    cp $CURRENT_DIR/../http/user-data.template $CURRENT_DIR/../http/user-data
-    echo "          - $(cat $HOME/.ssh/id_ed25519.pub)" >> $CURRENT_DIR/../http/user-data
 fi

@@ -43,7 +43,8 @@ ssh -o StrictHostKeyChecking=no mgt6 sudo curl http://bluebanquise.com/repositor
 EOF
 set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+set -x
+sleep 200 # wait for network to stabilize
 ssh -o StrictHostKeyChecking=no mgt6 'DEBIAN_FRONTEND=noninteractive sudo apt-get update && sudo apt-get upgrade -y && sudo reboot -h now'
 EOF
 set -e
@@ -51,7 +52,9 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 /tmp/waitforssh.sh bluebanquise@mgt6
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-cd validation/inventories/
+source /var/lib/bluebanquise/ansible_venv/bin/activate
+cd validation/inventories/ 
+export ANSIBLE_VARS_ENABLED=ansible.builtin.host_group_vars,bluebanquise.commons.core
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt6 -b
 EOF
 if [ $? -eq 0 ]; then

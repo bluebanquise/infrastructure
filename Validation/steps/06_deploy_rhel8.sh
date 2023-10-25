@@ -5,6 +5,8 @@ export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail
 # Prepare target deployment
 mgt1_PYTHONPATH=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip pip3 show ClusterShell | grep Location | awk -F ' ' '{print $2}')
 
+if (( $STEP < 11 )); then
+
 cd $CURRENT_DIR/../http
 wget -nc https://repo.almalinux.org/almalinux/8/isos/x86_64/AlmaLinux-8-latest-x86_64-dvd.iso
 cd $CURRENT_DIR
@@ -29,6 +31,9 @@ virsh undefine mgt2 && echo "mgt2 undefined" || echo "mgt2 not found, skipping"
 virt-install --name=mgt2 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt2.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:2e:8f --pxe
 virsh setmem mgt2 2G --config
 virsh start mgt2
+fi
+
+if (( $STEP < 12 )); then
 
 # Validation step
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
@@ -43,7 +48,8 @@ ssh -o StrictHostKeyChecking=no mgt2 sudo curl http://bluebanquise.com/repositor
 EOF
 set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+set -x
+sleep 200 # wait for network to stabilize
 ssh -o StrictHostKeyChecking=no mgt2 'sudo dnf install wget -y && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && sudo dnf install epel-release-latest-8.noarch.rpm -y && sudo dnf update -y && sudo reboot -h now'
 EOF
 set -e
@@ -51,7 +57,9 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 /tmp/waitforssh.sh bluebanquise@mgt2
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+source /var/lib/bluebanquise/ansible_venv/bin/activate
 cd validation/inventories/
+export ANSIBLE_VARS_ENABLED=ansible.builtin.host_group_vars,bluebanquise.commons.core
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt2 -b
 EOF
 if [ $? -eq 0 ]; then
@@ -67,3 +75,5 @@ sudo umount /var/www/html/pxe/netboots/redhat/8/x86_64/iso
 rm AlmaLinux-8-latest-x86_64-dvd.iso
 EOF
 virsh shutdown mgt2
+
+fi

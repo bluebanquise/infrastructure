@@ -143,12 +143,12 @@ EOF
             echo "[Tuto] Build success !"
             echo "[Tuto] Uploading Tutorials"
             lftp -u $website_user,$website_pass sftp://ssh.$website_host <<EOF
-rm -r /home/$website_user/bluebanquise/tutorials
+rm -r /home/$website_user/bluebanquise/tutorials/site
 exit
 EOF
             sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-mkdir /home/$website_user/bluebanquise/tutorials
-put -r /dev/shm/tutorials/site/* /home/$website_user/bluebanquise/tutorials/
+mkdir /home/$website_user/bluebanquise/tutorials/site/
+put -r /dev/shm/tutorials/site/* /home/$website_user/bluebanquise/tutorials/site/
 exit
 EOF
             sudo sed -i 's|Tutorials\ build\ status:.*|Tutorials build status: <div class="green-square"></div><br>|' /var/www/html/index.html

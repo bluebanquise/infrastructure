@@ -12,7 +12,7 @@ iseq ${arch} arm64 && goto arm64 || goto x86_64
 :arm64
 set alpine_arch aarch64
 goto continue_boot
-: x86_64
+:x86_64
 set alpine_arch x86_64
 goto continue_boot
 :continue_boot

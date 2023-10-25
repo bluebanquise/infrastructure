@@ -42,7 +42,8 @@ ssh -o StrictHostKeyChecking=no mgt4 sudo curl http://bluebanquise.com/repositor
 EOF
 set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-sleep 120
+set -x
+sleep 200 # wait for network to stabilize
 ssh -o StrictHostKeyChecking=no mgt4 'sudo yum install wget -y && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && sudo yum install epel-release-latest-7.noarch.rpm -y && sudo yum update -y && sudo reboot -h now'
 EOF
 set -e
@@ -50,7 +51,9 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 /tmp/waitforssh.sh bluebanquise@mgt4
 EOF
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
-cd validation/inventories/
+source /var/lib/bluebanquise/ansible_venv/bin/activate
+cd validation/inventories/ 
+export ANSIBLE_VARS_ENABLED=ansible.builtin.host_group_vars,bluebanquise.commons.core
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt4 -b
 EOF
 if [ $? -eq 0 ]; then
