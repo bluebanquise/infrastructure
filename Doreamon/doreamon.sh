@@ -171,7 +171,7 @@ EOF
         rm -f /dev/shm/website/.gitignore
         rm -Rf /dev/shm/website/.git*
         sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-put -r /dev/shm/website/* /home/$website_user/bluebanquise/
+put -r /dev/shm/website/bluebanquise/* /home/$website_user/bluebanquise/
 exit
 EOF
         echo "[Website] Done."
