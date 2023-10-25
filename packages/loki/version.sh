@@ -1,1 +1,1 @@
-loki_version=2.8.6
+loki_version=2.9.2
