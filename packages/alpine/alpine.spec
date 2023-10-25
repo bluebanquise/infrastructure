@@ -71,11 +71,13 @@ rm -Rf boot
 tar xvzf alpine-netboot-aarch64.tar.gz
 cd boot/
 mv initramfs-lts modloop-lts vmlinuz-lts $RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/aarch64/
+chmod 644 $RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/aarch64/*
 cd ../
 rm -Rf boot
 tar xvzf alpine-netboot-x86_64.tar.gz
 cd boot/
 mv initramfs-lts modloop-lts vmlinuz-lts $RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/x86_64/
+chmod 644 $RPM_BUILD_ROOT/%{http_path}/pxe/tools/alpine/x86_64/*
 cd ../
 rm -Rf boot
 
