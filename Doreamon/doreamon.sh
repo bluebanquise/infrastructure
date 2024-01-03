@@ -114,12 +114,12 @@ do
             echo "[Doc] Build success !"
             echo "[Doc] Uploading documentation"
             lftp -u $website_user,$website_pass sftp://ssh.$website_host <<EOF
-rm -r /home/$website_user/bluebanquise/documentation/releases/latest
+rm -r /home/$website_user/bluebanquise/documentation
 exit
 EOF
             sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-mkdir /home/$website_user/bluebanquise/documentation/releases/latest
-put -r /dev/shm/documentation/_build/html/* /home/$website_user/bluebanquise/documentation/releases/latest/
+mkdir /home/$website_user/bluebanquise/documentation
+put -r /dev/shm/documentation/_build/html/* /home/$website_user/bluebanquise/documentation/
 exit
 EOF
             sudo sed -i 's|Documentation\ build\ status:.*|Documentation build status: <div class="green-square"></div><br>|' /var/www/html/index.html
