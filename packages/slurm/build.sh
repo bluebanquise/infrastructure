@@ -59,17 +59,18 @@ if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     sed -i 's|BuildRequires:\ python3|#BuildRequires:\ python3|' slurm-$slurm_version/slurm.spec
     sed -i 's|BuildRequires:\ readline-devel|#BuildRequires:\ readline-devel|' slurm-$slurm_version/slurm.spec
     sed -i 's|BuildRequires:\ perl(ExtUtils::MakeMaker)|#BuildRequires:\ perl(ExtUtils::MakeMaker)|' slurm-$slurm_version/slurm.spec
+    sed -i 's|BuildRequires:\ mariadb-devel|#BuildRequires:\ mariadb-devel|' slurm-$slurm_version/slurm.spec
     sed -i 's|BuildRequires:\ pam-devel|#BuildRequires:\ pam-devel|' slurm-$slurm_version/slurm.spec
     sed -i 's|%{_perlman3dir}/Slurm*|#%{_perlman3dir}/Slurm*|' slurm-$slurm_version/slurm.spec
     sed -i '1s/^/%define _build_id_links none\n/' slurm-$slurm_version/slurm.spec
-tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
+    tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
 fi
 
 if [ $distribution == "opensuse_leap" ]; then
     tar xjvf slurm-$slurm_version.tar.bz2
     # Package on sles is libmariadb-devel
     sed -i 's|BuildRequires:\ mariadb-devel|#BuildRequires:\ mariadb-devel|' slurm-$slurm_version/slurm.spec
-tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
+    tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
 fi
 
 rpmbuild -ta --target=$distribution_architecture slurm-$slurm_version.tar.bz2
