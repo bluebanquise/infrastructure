@@ -65,6 +65,13 @@ if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
 tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
 fi
 
+if [ $distribution == "opensuse_leap" ]; then
+    tar xjvf slurm-$slurm_version.tar.bz2
+    # Package on sles is libmariadb-devel
+    sed -i 's|BuildRequires:\ mariadb-devel|#BuildRequires:\ mariadb-devel|' slurm-$slurm_version/slurm.spec
+tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
+fi
+
 rpmbuild -ta --target=$distribution_architecture slurm-$slurm_version.tar.bz2
 
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
