@@ -1,1 +1,1 @@
-memtest86plus_version=6.20
+memtest86plus_version=7.00
