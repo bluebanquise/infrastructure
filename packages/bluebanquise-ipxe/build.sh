@@ -101,6 +101,9 @@ sed -i 's/.*IMAGE_GZIP.*/#define IMAGE_GZIP/' config/general.h
 #sed -i 's/.*IMAGE_EFI.*/#define IMAGE_EFI/' config/general.h
 sed -i 's/.*DIGEST_CMD.*/#define DIGEST_CMD/' config/general.h
 
+sed -i 's/.*REBOOT_CMD.*/#define REBOOT_CMD/' config/general.h
+sed -i 's/.*POWEROFF_CMD.*/#define POWEROFF_CMD/' config/general.h
+
 ############################################################################################### STANDARD
 if [ $distribution_architecture == 'x86_64' ]; then
     make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
