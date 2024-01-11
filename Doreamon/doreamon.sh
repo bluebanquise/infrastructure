@@ -100,6 +100,23 @@ do
     cd $CURRENT_DIR
     echo "[Gits] Done."
 
+    if [ "$gits_website_update" -eq 1 ]; then
+
+        echo "[Website] Starting website upload"
+        rm -Rf /dev/shm/website
+        cp -a gits/website /dev/shm
+        rm -Rf /dev/shm/website/.git
+        rm -f /dev/shm/website/.gitignore
+        rm -Rf /dev/shm/website/.git*
+        sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
+put -r /dev/shm/website/bluebanquise/* /home/$website_user/bluebanquise/
+exit
+EOF
+        echo "[Website] Done."
+        echo "[Website] Forcing main bluebanquise refresh now."
+        gits_bluebanquise_update=1
+    fi
+
     if [ "$gits_bluebanquise_update" -eq 1 ]; then
 
         ## MAIN DOC
@@ -162,20 +179,6 @@ EOF
 
     fi
 
-    if [ "$gits_website_update" -eq 1 ]; then
-
-        echo "[Website] Starting website upload"
-        rm -Rf /dev/shm/website
-        cp -a gits/website /dev/shm
-        rm -Rf /dev/shm/website/.git
-        rm -f /dev/shm/website/.gitignore
-        rm -Rf /dev/shm/website/.git*
-        sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-put -r /dev/shm/website/bluebanquise/* /home/$website_user/bluebanquise/
-exit
-EOF
-        echo "[Website] Done."
-    fi
 
 
     if [ "$gits_infrastructure_update" -eq 1 ]; then
