@@ -54,7 +54,7 @@ os_partitioning="d-i partman-auto/disk string /dev/vda\nd-i partman-auto/method 
 c001
 mgt[1:9]
 [hw_all:vars]
-hw_type="server"
+hw_equipment_type="server"
 
 [all:vars]
 # Define unique network settings
