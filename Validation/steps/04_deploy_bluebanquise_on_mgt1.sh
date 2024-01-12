@@ -22,7 +22,7 @@ if (( $STEP < 7 )); then
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 set -x
 cd validation/inventories/
-echo ep_admin_ssh_keys=[\"$remote_pubkey\"] >> minimal_extended/hosts
+echo os_admin_ssh_keys=[\"$remote_pubkey\"] >> minimal_extended/hosts
 echo 127.0.0.1 mgt1 | sudo tee -a /etc/hosts
 ssh -o StrictHostKeyChecking=no mgt1 hostname
 EOF
