@@ -54,6 +54,7 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mg
 source /var/lib/bluebanquise/ansible_venv/bin/activate
 cd validation/inventories/ 
 export ANSIBLE_VARS_ENABLED=ansible.builtin.host_group_vars,bluebanquise.commons.core
+export ANSIBLE_JINJA2_EXTENSIONS=jinja2.ext.loopcontrols,jinja2.ext.do
 ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt4 -b
 EOF
 if [ $? -eq 0 ]; then
