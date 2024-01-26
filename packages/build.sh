@@ -139,7 +139,7 @@ if [ "$1" == "dependencies" ]; then
       if [ $distribution_architecture == 'x86_64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core -y
-        dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso unzip -y
+        dnf install gcc-toolset-11-toolchain make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso unzip -y
         dnf config-manager --set-enabled powertools
         dnf install freeipmi-devel -y
         dnf groupinstall 'Development Tools' -y
@@ -147,7 +147,7 @@ if [ "$1" == "dependencies" ]; then
       if [ $distribution_architecture == 'aarch64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core -y
-        dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso unzip -y
+        dnf install gcc-toolset-11-toolchain make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso unzip -y
         dnf config-manager --set-enabled powertools
         dnf install freeipmi-devel -y
         dnf groupinstall 'Development Tools' -y
@@ -206,6 +206,13 @@ if [ "$1" == "documentation" ]; then
 
   set +x
   exit 0
+fi
+
+# Sepcial loads
+if [ "$distribution" == 'RedHat' ]; then
+  if [ $distribution_version -eq 8 ]; then
+scl enable gcc-toolset-11 bash
+  fi
 fi
 
 if [ -z ${1+x} ] || [ -z ${2+x} ] || [ -z ${3+x} ]; then
