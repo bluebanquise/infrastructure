@@ -215,6 +215,8 @@ source scl_source enable gcc-toolset-11 bash
   fi
 fi
 
+# Crash if anything wrong happens
+set -e
 if [ -z ${1+x} ] || [ -z ${2+x} ] || [ -z ${3+x} ]; then
   echo "Missing arguments, exiting"
 else
