@@ -211,7 +211,7 @@ fi
 # Sepcial loads
 if [ "$distribution" == 'RedHat' ]; then
   if [ $distribution_version -eq 8 ]; then
-scl enable gcc-toolset-11 bash
+source scl_source enable gcc-toolset-11 bash
   fi
 fi
 
