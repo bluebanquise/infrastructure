@@ -20,7 +20,7 @@ echo "    .   'C/ |    |    |   |    |mrf  ,"
 echo "    \), .. .'OOO-'. ..'OOO'OOO-'. ..\(,"
 echo
 echo "  BlueBanquise packages builder"
-echo "    (c) 2019-2023 Benoit Leveugle"
+echo "    2024 Benoit Leveugle"
 echo
 distribution=$2
 distribution_version=$3
@@ -38,6 +38,7 @@ echo " Creating working directory..."
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 root_directory=$SCRIPT_DIR
 working_directory=/tmp/wd/
+cache_directory=/tmp/cache/
 echo " Working directory: $working_directory"
 mkdir -p $working_directory
 echo " root directory: $root_directory"
@@ -139,7 +140,7 @@ if [ "$1" == "dependencies" ]; then
       if [ $distribution_architecture == 'x86_64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core -y
-        dnf install gcc-toolset-11* -y
+        # dnf install gcc-toolset-11* -y
         dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso unzip -y
         dnf config-manager --set-enabled powertools
         dnf install freeipmi-devel -y
@@ -148,7 +149,7 @@ if [ "$1" == "dependencies" ]; then
       if [ $distribution_architecture == 'aarch64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core -y
-        dnf install gcc-toolset-11* -y
+        # dnf install gcc-toolset-11* -y
         dnf install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso unzip -y
         dnf config-manager --set-enabled powertools
         dnf install freeipmi-devel -y
@@ -210,12 +211,12 @@ if [ "$1" == "documentation" ]; then
   exit 0
 fi
 
-# Sepcial loads
-if [ "$distribution" == 'RedHat' ]; then
-  if [ $distribution_version -eq 8 ]; then
-source /opt/rh/gcc-toolset-11/enable
-  fi
-fi
+# # Sepcial loads
+# if [ "$distribution" == 'RedHat' ]; then
+#   if [ $distribution_version -eq 8 ]; then
+# source /opt/rh/gcc-toolset-11/enable
+#   fi
+# fi
 
 # Crash if anything wrong happens
 set -e

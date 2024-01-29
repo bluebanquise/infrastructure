@@ -90,6 +90,21 @@ mkdir -p ~/CI/repositories/{u20,u22}/{x86_64,arm64}/bluebanquise/
 
 if echo $steps | grep -q "build"; then
 
+    if echo $os_list | grep -q "ubuntu2204"; then
+        if echo $arch_list | grep -q "x86_64"; then
+            ## Ubuntu_22.04_x86_64
+            rsync -av $CURRENT_DIR/build/Ubuntu_22.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_Ubuntu_22.04_x86_64/
+            ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_Ubuntu_22.04_x86_64/build.sh $packages_list
+            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/ubuntu2204/x86_64/* ~/CI/build/ubuntu2204/x86_64/
+        fi
+        if echo $arch_list | grep -q -E "aarch64|arm64"; then
+            ## Ubuntu_22.04_arm64
+            rsync -av $CURRENT_DIR/build/Ubuntu_22.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_Ubuntu_22.04_arm64/
+            ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_Ubuntu_22.04_arm64/build.sh $packages_list
+            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/ubuntu2204/arm64/* ~/CI/build/ubuntu2204/arm64/
+        fi
+    fi
+
     if echo $os_list | grep -q "el7"; then
         if echo $arch_list | grep -q "x86_64"; then
             ## RedHat_7_x86_64
@@ -166,21 +181,6 @@ if echo $steps | grep -q "build"; then
             rsync -av $CURRENT_DIR/build/Ubuntu_20.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_Ubuntu_20.04_arm64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_Ubuntu_20.04_arm64/build.sh $packages_list
             rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/ubuntu2004/arm64/* ~/CI/build/ubuntu2004/arm64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "ubuntu2204"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## Ubuntu_22.04_x86_64
-            rsync -av $CURRENT_DIR/build/Ubuntu_22.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_Ubuntu_22.04_x86_64/
-            ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_Ubuntu_22.04_x86_64/build.sh $packages_list
-            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/ubuntu2204/x86_64/* ~/CI/build/ubuntu2204/x86_64/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## Ubuntu_22.04_arm64
-            rsync -av $CURRENT_DIR/build/Ubuntu_22.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_Ubuntu_22.04_arm64/
-            ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_Ubuntu_22.04_arm64/build.sh $packages_list
-            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/ubuntu2204/arm64/* ~/CI/build/ubuntu2204/arm64/
         fi
     fi
 

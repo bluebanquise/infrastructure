@@ -87,6 +87,18 @@ cp $working_directory/build/ipxe/bin/x86_64/noshell_efi.iso $RPM_BUILD_ROOT/%{ht
 #cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_pcbios.iso
 #cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_pcbios.usb
 
+cp $working_directory/build/ipxe/bin/x86_64/standard_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/standard_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/standard_undionly.kpxe $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/standard_undionly.kpxe
+cp $working_directory/build/ipxe/bin/x86_64/standard_snponly_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/standard_snponly_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/standard_snp_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/standard_snp_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_undionly.kpxe $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_undionly.kpxe
+cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_snponly_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_snponly_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/dhcpretry_snp_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/dhcpretry_snp_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/noshell_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/noshell_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/noshell_undionly.kpxe $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/noshell_undionly.kpxe
+cp $working_directory/build/ipxe/bin/x86_64/noshell_snponly_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/noshell_snponly_ipxe.efi
+cp $working_directory/build/ipxe/bin/x86_64/noshell_snp_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/x86_64/noshell_snp_ipxe.efi
 
 mkdir -p $RPM_BUILD_ROOT/%{tftp_path}/x86_64
 cp $working_directory/build/ipxe/bin/x86_64/standard_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/x86_64/standard_ipxe.efi
@@ -113,6 +125,18 @@ cp $working_directory/build/ipxe/bin/x86_64/noshell_snp_ipxe.efi $RPM_BUILD_ROOT
 %{http_path}/pxe/bin/x86_64/noshell_efi.iso
 #%{http_path}/pxe/bin/x86_64/dhcpretry_pcbios.iso
 #%{http_path}/pxe/bin/x86_64/dhcpretry_pcbios.usb
+%{http_path}/pxe/bin/x86_64/standard_ipxe.efi
+%{http_path}/pxe/bin/x86_64/standard_undionly.kpxe
+%{http_path}/pxe/bin/x86_64/standard_snponly_ipxe.efi
+%{http_path}/pxe/bin/x86_64/standard_snp_ipxe.efi
+%{http_path}/pxe/bin/x86_64/dhcpretry_ipxe.efi
+%{http_path}/pxe/bin/x86_64/dhcpretry_undionly.kpxe
+%{http_path}/pxe/bin/x86_64/dhcpretry_snponly_ipxe.efi
+%{http_path}/pxe/bin/x86_64/dhcpretry_snp_ipxe.efi
+%{http_path}/pxe/bin/x86_64/noshell_ipxe.efi
+%{http_path}/pxe/bin/x86_64/noshell_undionly.kpxe
+%{http_path}/pxe/bin/x86_64/noshell_snponly_ipxe.efi
+%{http_path}/pxe/bin/x86_64/noshell_snp_ipxe.efi
 %{tftp_path}/x86_64/standard_ipxe.efi
 %{tftp_path}/x86_64/standard_undionly.kpxe
 %{tftp_path}/x86_64/standard_snponly_ipxe.efi
