@@ -1,3 +1,5 @@
+#!ipxe
+
 # https://forum.ipxe.org/showthread.php?tid=7960
 # https://www.eso.org/~ndelmott/ascii.html
 # https://www.asciiart.eu/animals/wolves
@@ -35,3 +37,8 @@ echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}
 echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp};`-
 echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}:${bs}
 echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp};${sp}${sp}bug
+
+cpair 0
+
+sleep 10
+chain http://${next-server}/pxe/menu.ipxe || shell
