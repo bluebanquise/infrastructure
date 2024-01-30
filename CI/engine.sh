@@ -7,10 +7,11 @@ CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 # Assume remote user is bluebanquise user and remote home is /home/bluebanquise
 
 # Introduce tags, that allows to prevent super long and stupid rebuilds
-mkdir -p /tmp/tags
-
+ssh bluebanquise@x86_64_worker mkdir -p /tmp/tags
+ssh bluebanquise@aarch64_worker mkdir -p /tmp/tags
 # Clean cache, it was meant to be redone at each build pass
-rm -Rf /tmp/cache/*
+ssh bluebanquise@x86_64_worker rm -Rf /tmp/cache/*
+ssh bluebanquise@aarch64_worker rm -Rf /tmp/cache/*
 
 ################################################################################
 #################### INIT STEP
