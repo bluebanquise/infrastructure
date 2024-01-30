@@ -32,6 +32,14 @@ then
     bluebanquise_ipxe_release=$(git rev-list HEAD --count)
 fi
 
+if [ $distribution_architecture == 'x86_64' ]; then
+    ipxe_arch=x86_64
+    debug_flags=intel,dhcp,vesafb
+elif [ $distribution_architecture == 'aarch64' ] || [ $distribution_architecture == 'arm64' ]; then
+    ipxe_arch=arm64
+    debug_flags=intel,dhcp
+fi
+
 # If cache folder does not exist, create it and build all files
 # If exists, then skip build and package bins directly
 if [ ! -d "$cache_directory/ipxe" ]; then
@@ -72,14 +80,6 @@ if [ ! -d "$cache_directory/ipxe" ]; then
     cat src/bluebanquise_noshell.ipxe
     echo sleep 20s to check if code is conform
     sleep 20
-
-    if [ $distribution_architecture == 'x86_64' ]; then
-        ipxe_arch=x86_64
-        debug_flags=intel,dhcp,vesafb
-    elif [ $distribution_architecture == 'aarch64' ] || [ $distribution_architecture == 'arm64' ]; then
-        ipxe_arch=arm64
-        debug_flags=intel,dhcp
-    fi
 
     mkdir $working_directory/build/ipxe/bin/$ipxe_arch/ -p
 
