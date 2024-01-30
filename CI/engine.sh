@@ -6,6 +6,12 @@ CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 # Assume aarch64_worker and x86_64_worker both resolve
 # Assume remote user is bluebanquise user and remote home is /home/bluebanquise
 
+# Introduce tags, that allows to prevent super long and stupid rebuilds
+mkdir -p /tmp/tags
+
+# Clean cache, it was meant to be redone at each build pass
+rm -Rf /tmp/cache/*
+
 ################################################################################
 #################### INIT STEP
 ####
@@ -62,7 +68,6 @@ else
     echo "Steos: $steps"
 fi
 
-
 if [ "$clean_all" == 'yes' ]; then
     rm -Rf ~/CI/
     if echo $arch_list | grep -q "x86_64"; then
@@ -90,6 +95,8 @@ mkdir -p ~/CI/repositories/{u20,u22}/{x86_64,arm64}/bluebanquise/
 
 if echo $steps | grep -q "build"; then
 
+
+    # We need Ubuntu 22 first, aka most recent GCC, to build cached files
     if echo $os_list | grep -q "ubuntu2204"; then
         if echo $arch_list | grep -q "x86_64"; then
             ## Ubuntu_22.04_x86_64
