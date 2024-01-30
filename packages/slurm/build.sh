@@ -97,7 +97,7 @@ if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_versi
     fi
 
     # Build success, tag it
-    touch $tags_directory/slurm-$distribution-$distribution_version-$munge_version
+    touch $tags_directory/slurm-$distribution-$distribution_version-$slurm_version
 
 fi
 
