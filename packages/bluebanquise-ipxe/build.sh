@@ -3,38 +3,39 @@ set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
 
+
+if [ "$distribution" == 'RedHat' ]; then
+    if [ $distribution_version -eq 7 ]; then
+        if [ $distribution_architecture == 'aarch64' ]; then
+            # scl enable devtoolset-7 bash
+        yum install centos-release-scl -y
+        yum install devtoolset-7 -y
+        set +e
+        source scl_source enable devtoolset-7
+        set -e
+        fi
+    fi
+fi
+
+# iPXE
+if [ ! -f $working_directory/sources/ipxe/README ]; then
+    mkdir -p $working_directory/sources/ipxe/
+    cd $working_directory/sources/ipxe/
+    git clone https://github.com/ipxe/ipxe.git .
+else
+    cd $working_directory/sources/ipxe/
+    git pull
+fi
+
+if [ -z $bluebanquise_ipxe_release ]
+then
+    bluebanquise_ipxe_release=$(git rev-list HEAD --count)
+fi
+
 # If cache folder does not exist, create it and build all files
 # If exists, then skip build and package bins directly
 if [ ! -d "$cache_directory/ipxe" ]; then
     mkdir -p $cache_directory/ipxe
-
-    if [ "$distribution" == 'RedHat' ]; then
-        if [ $distribution_version -eq 7 ]; then
-            if [ $distribution_architecture == 'aarch64' ]; then
-                # scl enable devtoolset-7 bash
-            yum install centos-release-scl -y
-            yum install devtoolset-7 -y
-            set +e
-            source scl_source enable devtoolset-7
-            set -e
-            fi
-        fi
-    fi
-
-    # iPXE
-    if [ ! -f $working_directory/sources/ipxe/README ]; then
-        mkdir -p $working_directory/sources/ipxe/
-        cd $working_directory/sources/ipxe/
-        git clone https://github.com/ipxe/ipxe.git .
-    else
-        cd $working_directory/sources/ipxe/
-        git pull
-    fi
-
-    if [ -z $bluebanquise_ipxe_release ]
-    then
-        bluebanquise_ipxe_release=$(git rev-list HEAD --count)
-    fi
 
     rm -Rf $working_directory/build/ipxe/
     mkdir -p $working_directory/build/ipxe/
