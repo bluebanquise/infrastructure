@@ -5,7 +5,7 @@ source $CURRENT_DIR/version.sh
 
 ###### MUNGE
 
-if [ ! -f $tags_directory/munge_$distribution_$distribution_version_$munge_version ]; then
+if [ ! -f $tags_directory/munge-$distribution-$distribution_version-$munge_version ]; then
 
     if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz ]; then
         wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
@@ -41,13 +41,13 @@ if [ ! -f $tags_directory/munge_$distribution_$distribution_version_$munge_versi
     fi
 
     # Build success, tag it
-    touch $tags_directory/munge_$distribution_$distribution_version_$munge_version
+    touch $tags_directory/munge-$distribution-$distribution_version-$munge_version
 
 fi
 
 ###### SLURM
 
-if [ ! -f $tags_directory/slurm_$distribution_$distribution_version_$slurm_version ]; then
+if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_version ]; then
 
     if [ ! -f $working_directory/sources/slurm-$slurm_version.tar.bz2 ]; then
         wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-$slurm_version.tar.bz2
@@ -97,7 +97,7 @@ if [ ! -f $tags_directory/slurm_$distribution_$distribution_version_$slurm_versi
     fi
 
     # Build success, tag it
-    touch $tags_directory/slurm_$distribution_$distribution_version_$munge_version
+    touch $tags_directory/slurm-$distribution-$distribution_version-$munge_version
 
 fi
 
