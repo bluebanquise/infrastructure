@@ -27,6 +27,7 @@ echo ${sp}${sp}${sp}B5${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${s
 echo ${sp}${sp}${sp}${sp}5G${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}/${sp}${bs}/${sp}${sp}${bs}${sp}|${sp}|_|${sp}|${sp}${sp}__/${sp}${bs}/${sp}${sp}${bs}${sp}(_|${sp}|${sp}|${sp}|${sp}|${sp}(_|${sp}|${sp}|_|${sp}|${sp}${bs}__${sp}${bs}${sp}${sp}__/
 echo ${sp}${sp}${sp}${sp}${sp}YB${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${bs}_____/_|${bs}__,_|${bs}___${bs}_____/${bs}__,_|_|${sp}|_|${bs}__,${sp}|${bs}__,_|_|___/${bs}___|
 echo ${sp}${sp}${sp}${sp}${sp}B5&${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}|_|
+sleep 2
 echo ${sp}${sp}${sp}${sp}${sp}${sp}PG${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}5G
 echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}YB${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}GP&
 echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}B5&${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}&5B
@@ -55,3 +56,4 @@ echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}
 echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}G?P
 echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}&YB
 echo ${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}${sp}B
+sleep 1
