@@ -96,8 +96,23 @@ mkdir -p ~/CI/repositories/{u20,u22}/{x86_64,arm64}/bluebanquise/
 
 if echo $steps | grep -q "build"; then
 
+    # We need EL9 first, aka recent GCC, to build cached files
+    if echo $os_list | grep -q "el9"; then
+        if echo $arch_list | grep -q "x86_64"; then
+            ## RedHat_9_x86_64
+            rsync -av $CURRENT_DIR/build/RedHat_9_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_9_x86_64/
+            ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_9_x86_64/build.sh $packages_list
+            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el9/x86_64/* ~/CI/build/el9/x86_64/
+            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el9/sources/* ~/CI/build/el9/sources/
+        fi
+        if echo $arch_list | grep -q -E "aarch64|arm64"; then
+            ## RedHat_9_aarch64
+            rsync -av $CURRENT_DIR/build/RedHat_9_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_RedHat_9_aarch64/
+            ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_RedHat_9_aarch64/build.sh $packages_list
+            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/el9/aarch64/* ~/CI/build/el9/aarch64/
+        fi
+    fi
 
-    # We need Ubuntu 22 first, aka most recent GCC, to build cached files
     if echo $os_list | grep -q "ubuntu2204"; then
         if echo $arch_list | grep -q "x86_64"; then
             ## Ubuntu_22.04_x86_64
@@ -142,22 +157,6 @@ if echo $steps | grep -q "build"; then
             rsync -av $CURRENT_DIR/build/RedHat_8_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_RedHat_8_aarch64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_RedHat_8_aarch64/build.sh $packages_list
             rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/el8/aarch64/* ~/CI/build/el8/aarch64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "el9"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## RedHat_9_x86_64
-            rsync -av $CURRENT_DIR/build/RedHat_9_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_RedHat_9_x86_64/
-            ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_RedHat_9_x86_64/build.sh $packages_list
-            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el9/x86_64/* ~/CI/build/el9/x86_64/
-            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/el9/sources/* ~/CI/build/el9/sources/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## RedHat_9_aarch64
-            rsync -av $CURRENT_DIR/build/RedHat_9_aarch64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_RedHat_9_aarch64/
-            ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_RedHat_9_aarch64/build.sh $packages_list
-            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/el9/aarch64/* ~/CI/build/el9/aarch64/
         fi
     fi
 
