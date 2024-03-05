@@ -14,10 +14,10 @@ mount --rbind /sys sys/
 mount --rbind /dev dev/
 
 if [[ $PLATFORM_ID == "platform:el8" ]]; then
-	dnf install -y --installroot=/image dnf vi yum iproute procps-ng openssh-server NetworkManager kernel-modules kernel dracut dracut-live nfs-utils --exclude glibc-all-langpacks --exclude grubby --exclude libxkbcommon --exclude pinentry --exclude python3-unbound --exclude unbound-libs --exclude xkeyboard-config --exclude trousers --exclude gnupg2-smime --exclude openssl-pkcs11 --exclude rpm-plugin-systemd-inhibit --exclude shared-mime-info --exclude glibc-langpack-* --setopt=module_platform_id=$PLATFORM_ID --nobest --releasever=$VERSION_ID
+	dnf install -y --installroot=/image dnf sudo vi yum iproute procps-ng openssh-server NetworkManager kernel-modules kernel dracut dracut-live nfs-utils --exclude glibc-all-langpacks --exclude grubby --exclude libxkbcommon --exclude pinentry --exclude python3-unbound --exclude unbound-libs --exclude xkeyboard-config --exclude trousers --exclude gnupg2-smime --exclude openssl-pkcs11 --exclude rpm-plugin-systemd-inhibit --exclude shared-mime-info --exclude glibc-langpack-* --setopt=module_platform_id=$PLATFORM_ID --nobest --releasever=$VERSION_ID
 fi
 if [[ $PLATFORM_ID == "platform:el9" ]]; then
-    dnf install -y --installroot=/image dnf vi yum iproute procps-ng openssh-server NetworkManager kernel-modules kernel dracut dracut-live nfs-utils --exclude glibc-all-langpacks --exclude grubby --exclude libxkbcommon --exclude pinentry --exclude python3-unbound --exclude unbound-libs --exclude xkeyboard-config --exclude trousers --exclude gnupg2-smime --exclude openssl-pkcs11 --exclude rpm-plugin-systemd-inhibit --exclude shared-mime-info --exclude glibc-langpack-* --setopt=module_platform_id=$PLATFORM_ID --nobest --releasever=$VERSION_ID
+    dnf install -y --installroot=/image dnf vi sudo yum iproute procps-ng openssh-server NetworkManager kernel-modules kernel dracut dracut-live nfs-utils --exclude glibc-all-langpacks --exclude grubby --exclude libxkbcommon --exclude pinentry --exclude python3-unbound --exclude unbound-libs --exclude xkeyboard-config --exclude trousers --exclude gnupg2-smime --exclude openssl-pkcs11 --exclude rpm-plugin-systemd-inhibit --exclude shared-mime-info --exclude glibc-langpack-* --setopt=module_platform_id=$PLATFORM_ID --nobest --releasever=$VERSION_ID
 fi
 
 cat << EOF > /image/etc/dracut.conf.d/bluebanquise.conf
