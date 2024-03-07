@@ -85,6 +85,9 @@ cp $working_directory/build/ipxe/bin/arm64/standard_snp_ipxe.efi $RPM_BUILD_ROOT
 cp $working_directory/build/ipxe/bin/arm64/dhcpretry_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64/dhcpretry_ipxe.efi
 cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snponly_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64/dhcpretry_snponly_ipxe.efi
 cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snp_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64/dhcpretry_snp_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/allretry_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64/allretry_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/allretry_snponly_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64/allretry_snponly_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/allretry_snp_ipxe.efi $RPM_BUILD_ROOT/%{http_path}/pxe/bin/arm64/allretry_snp_ipxe.efi
 
 mkdir -p $RPM_BUILD_ROOT/%{tftp_path}/arm64
 cp $working_directory/build/ipxe/bin/arm64/standard_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/standard_ipxe.efi
@@ -93,6 +96,9 @@ cp $working_directory/build/ipxe/bin/arm64/standard_snp_ipxe.efi $RPM_BUILD_ROOT
 cp $working_directory/build/ipxe/bin/arm64/dhcpretry_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/dhcpretry_ipxe.efi
 cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snponly_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/dhcpretry_snponly_ipxe.efi
 cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snp_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/dhcpretry_snp_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/allretry_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/allretry_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/allretry_snponly_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/allretry_snponly_ipxe.efi
+cp $working_directory/build/ipxe/bin/arm64/allretry_snp_ipxe.efi $RPM_BUILD_ROOT/%{tftp_path}/arm64/allretry_snp_ipxe.efi
 
 %files
 %defattr(-,root,root,-)
@@ -104,9 +110,15 @@ cp $working_directory/build/ipxe/bin/arm64/dhcpretry_snp_ipxe.efi $RPM_BUILD_ROO
 %{http_path}/pxe/bin/arm64/dhcpretry_ipxe.efi
 %{http_path}/pxe/bin/arm64/dhcpretry_snponly_ipxe.efi
 %{http_path}/pxe/bin/arm64/dhcpretry_snp_ipxe.efi
+%{http_path}/pxe/bin/arm64/allretry_ipxe.efi
+%{http_path}/pxe/bin/arm64/allretry_snponly_ipxe.efi
+%{http_path}/pxe/bin/arm64/allretry_snp_ipxe.efi
 %{tftp_path}/arm64/standard_ipxe.efi
 %{tftp_path}/arm64/standard_snponly_ipxe.efi
 %{tftp_path}/arm64/standard_snp_ipxe.efi
 %{tftp_path}/arm64/dhcpretry_ipxe.efi
 %{tftp_path}/arm64/dhcpretry_snponly_ipxe.efi
 %{tftp_path}/arm64/dhcpretry_snp_ipxe.efi
+%{tftp_path}/arm64/allretry_ipxe.efi
+%{tftp_path}/arm64/allretry_snponly_ipxe.efi
+%{tftp_path}/arm64/allretry_snp_ipxe.efi

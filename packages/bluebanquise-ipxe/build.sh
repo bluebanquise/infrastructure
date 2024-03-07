@@ -69,6 +69,12 @@ if [ ! -d "$cache_directory/ipxe" ]; then
     sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_dhcpretry.ipxe
     echo "cpair 0" >> src/bluebanquise_dhcpretry.ipxe
 
+    echo "#!ipxe" > src/bluebanquise_allretry.ipxe
+    cat $root_directory/bluebanquise-ipxe/$bluebanquise_ipxe_logo.ipxe >> src/bluebanquise_allretry.ipxe
+    cat $root_directory/bluebanquise-ipxe/bluebanquise_allretry.ipxe >> src/bluebanquise_allretry.ipxe
+    sed -i "s/IPXECOMMIT/$last_commit/" src/bluebanquise_allretry.ipxe
+    echo "cpair 0" >> src/bluebanquise_allretry.ipxe
+
     echo "#!ipxe" > src/bluebanquise_noshell.ipxe
     cat $root_directory/bluebanquise-ipxe/$bluebanquise_ipxe_logo.ipxe >> src/bluebanquise_noshell.ipxe
     cat $root_directory/bluebanquise-ipxe/bluebanquise_noshell.ipxe >> src/bluebanquise_noshell.ipxe
@@ -77,9 +83,8 @@ if [ ! -d "$cache_directory/ipxe" ]; then
 
     cat src/bluebanquise_standard.ipxe
     cat src/bluebanquise_dhcpretry.ipxe
+    cat src/bluebanquise_allretry.ipxe
     cat src/bluebanquise_noshell.ipxe
-    echo sleep 20s to check if code is conform
-    sleep 20
 
     mkdir $working_directory/build/ipxe/bin/$ipxe_arch/ -p
 
@@ -164,7 +169,32 @@ if [ ! -d "$cache_directory/ipxe" ]; then
     #        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.iso
     #        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/dhcpretry_pcbios.usb
 
+    ############################################################################################### allretry
+    if [ $distribution_architecture == 'x86_64' ]; then
+        make -j $nb_cores bin/undionly.kpxe EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+    fi
+    make -j $nb_cores bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+    make -j $nb_cores bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+    make -j $nb_cores bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+    #        make -j $nb_cores bin/ipxe.iso EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+    #        make -j $nb_cores bin/ipxe.usb EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
 
+    if [ $distribution_architecture == 'x86_64' ]; then
+        rm -Rf /dev/shm/efiiso/efi/boot
+        mkdir -p /dev/shm/efiiso/efi/boot
+        cp bin-x86_64-efi/ipxe.efi /dev/shm/efiiso/efi/boot/bootx64.efi
+        mkisofs -o allretry_efi.iso -J -r /dev/shm/efiiso
+        cp allretry_efi.iso $working_directory/build/ipxe/bin/x86_64/allretry_efi.iso
+    fi
+
+    mv bin-$ipxe_arch-efi/ipxe.efi $working_directory/build/ipxe/bin/$ipxe_arch/allretry_ipxe.efi
+    mv bin-$ipxe_arch-efi/snponly.efi $working_directory/build/ipxe/bin/$ipxe_arch/allretry_snponly_ipxe.efi
+    mv bin-$ipxe_arch-efi/snp.efi $working_directory/build/ipxe/bin/$ipxe_arch/allretry_snp_ipxe.efi
+    if [ $distribution_architecture == 'x86_64' ]; then
+        mv bin/undionly.kpxe $working_directory/build/ipxe/bin/x86_64/allretry_undionly.kpxe
+    fi
+    #        mv bin/ipxe.iso $working_directory/build/ipxe/bin/x86_64/allretry_pcbios.iso
+    #        mv bin/ipxe.usb $working_directory/build/ipxe/bin/x86_64/allretry_pcbios.usb
 
     ############################################################################################### NOSHELL
     if [ $distribution_architecture == 'x86_64' ]; then
