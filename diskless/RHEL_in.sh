@@ -3,15 +3,37 @@ set -x
 source /etc/os-release
 NAME=$(echo -n $NAME | sed 's/\ /_/g')
 
-rm -Rf /image
+mount_dirs() {
+    pushd /image
+    mkdir proc
+    mkdir -p sys/fs/selinux
+    mkdir -p sys/kernel/tracing
+    mkdir dev
+
+    mount -t proc /proc proc/
+    mount --rbind /sys sys/
+    mount --rbind /dev dev/
+
+    mount --make-rslave sys/
+    mount --make-rslave dev/
+    popd
+}
+
+umount_dirs() {
+    umount -f /image/proc
+    umount -R /image/sys
+    umount -R /image/dev
+}
+
+if [ -d /image ]; then
+    umount_dirs
+    rm -Rf -f /image
+fi
+
 mkdir /image
+mount_dirs
+
 cd /image
-mkdir proc
-mkdir sys
-mkdir dev
-mount -t proc /proc proc/
-mount --rbind /sys sys/
-mount --rbind /dev dev/
 
 if [[ $PLATFORM_ID == "platform:el8" ]]; then
 	dnf install -y --installroot=/image dnf sudo vi yum iproute procps-ng openssh-server NetworkManager kernel-modules kernel dracut dracut-live nfs-utils --exclude glibc-all-langpacks --exclude grubby --exclude libxkbcommon --exclude pinentry --exclude python3-unbound --exclude unbound-libs --exclude xkeyboard-config --exclude trousers --exclude gnupg2-smime --exclude openssl-pkcs11 --exclude rpm-plugin-systemd-inhibit --exclude shared-mime-info --exclude glibc-langpack-* --setopt=module_platform_id=$PLATFORM_ID --nobest --releasever=$VERSION_ID
@@ -28,6 +50,7 @@ show_modules=yes
 EOF
 
 chroot /image /bin/bash -c "dracut --regenerate-all --force"
+umount_dirs
 
 PLATFORM=$(echo ${PLATFORM_ID} | sed 's/platform://')
 KERNEL=$(ls /image/usr/lib/modules)
@@ -47,11 +70,8 @@ packaging_date: $(date)
 EOF
 
 cd /image
-umount proc/
-umount sys/
-umount dev/
 shopt -s dotglob
-tar --exclude="proc" --exclude="sys" --exclude="dev" -czf /tmp/${NAME}_${VERSION_ID}_minimal_$(uname -m).tar.gz *
+tar -czf /tmp/${NAME}_${VERSION_ID}_minimal_$(uname -m).tar.gz *
 chmod 777 /tmp/${NAME}_${VERSION_ID}_minimal_$(uname -m).tar.gz
 shopt -u dotglob
 
