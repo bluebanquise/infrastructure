@@ -1,7 +1,7 @@
 
 echo
 echo . . . +----------------------------------------------------+ . . .
-echo . . . | . . . . . . . iPXE embed - dhcpretry . . . . . . . | . . .
+echo . . . | . . . . . . . iPXE embed - allretry. . . . . . . . | . . .
 echo . . . | . . . . . BlueBanquise - Benoit Leveugle . . . . . | . . .
 echo . . . | . . IPXECOMMIT . . . | . . .
 echo . . . +----------------------------------------------------+ . . .
