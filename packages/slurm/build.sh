@@ -26,6 +26,7 @@ if [ ! -f $tags_directory/munge-$distribution-$distribution_version-$munge_versi
         cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
         cp $working_directory/sources/dun.gpg $working_directory/build/munge/dun.gpg
         cp $working_directory/sources/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
+        rm -f /root/rpmbuild/RPMS/$distribution_architecture/munge*
         rpmbuild -ta munge-$munge_version.tar.xz
 
         # We need to install munge to build slurm
