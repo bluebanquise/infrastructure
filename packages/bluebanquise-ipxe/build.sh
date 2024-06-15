@@ -34,10 +34,10 @@ fi
 
 if [ $distribution_architecture == 'x86_64' ]; then
     ipxe_arch=x86_64
-    debug_flags=intel,dhcp,vesafb,tcp
+    debug_flags=intel,dhcp,vesafb
 elif [ $distribution_architecture == 'aarch64' ] || [ $distribution_architecture == 'arm64' ]; then
     ipxe_arch=arm64
-    debug_flags=intel,dhcp,tcp
+    debug_flags=intel,dhcp
 fi
 
 # If cache folder does not exist, create it and build all files
