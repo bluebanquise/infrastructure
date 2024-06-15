@@ -42,7 +42,7 @@ else
 fi
 
 if [ -z ${os_list+x} ]; then
-    os_list="el7 el8 el9 lp15 ubuntu2004 ubuntu2204 debian11 debian12"
+    os_list="el7 el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12"
     echo "No os list passed as argument, will generate all."
 else
     echo "OS list to be generated: $os_list"
@@ -83,11 +83,11 @@ mkdir -p ~/CI/
 mkdir -p ~/CI/logs/
 mkdir -p ~/CI/build/{el7,el8,el9,lp15}/{x86_64,aarch64,sources}/
 mkdir -p ~/CI/build/{debian11,debian12}/{x86_64,arm64}/
-mkdir -p ~/CI/build/{ubuntu2004,ubuntu2204}/{x86_64,arm64}/
+mkdir -p ~/CI/build/{ubuntu2004,ubuntu2204,ubuntu2404}/{x86_64,arm64}/
 mkdir -p ~/CI/repositories/{el7,el8,el9,lp15}/{x86_64,aarch64,sources}/bluebanquise/
 mkdir -p ~/CI/repositories/{debian11,debian12}/{x86_64,arm64}/bluebanquise/
 mkdir -p ~/CI/repositories/{deb11,deb12}/{x86_64,arm64}/bluebanquise/
-mkdir -p ~/CI/repositories/{u20,u22}/{x86_64,arm64}/bluebanquise/
+mkdir -p ~/CI/repositories/{u20,u22,u24}/{x86_64,arm64}/bluebanquise/
 
 
 ################################################################################
@@ -125,6 +125,21 @@ if echo $steps | grep -q "build"; then
             rsync -av $CURRENT_DIR/build/Ubuntu_22.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_Ubuntu_22.04_arm64/
             ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_Ubuntu_22.04_arm64/build.sh $packages_list
             rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/ubuntu2204/arm64/* ~/CI/build/ubuntu2204/arm64/
+        fi
+    fi
+
+    if echo $os_list | grep -q "ubuntu2404"; then
+        if echo $arch_list | grep -q "x86_64"; then
+            ## Ubuntu_24.04_x86_64
+            rsync -av $CURRENT_DIR/build/Ubuntu_24.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Build_Ubuntu_24.04_x86_64/
+            ssh bluebanquise@x86_64_worker /home/bluebanquise/Build_Ubuntu_24.04_x86_64/build.sh $packages_list
+            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/build/ubuntu2404/x86_64/* ~/CI/build/ubuntu2404/x86_64/
+        fi
+        if echo $arch_list | grep -q -E "aarch64|arm64"; then
+            ## Ubuntu_24.04_arm64
+            rsync -av $CURRENT_DIR/build/Ubuntu_24.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Build_Ubuntu_24.04_arm64/
+            ssh bluebanquise@aarch64_worker /home/bluebanquise/Build_Ubuntu_24.04_arm64/build.sh $packages_list
+            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/build/ubuntu2404/arm64/* ~/CI/build/ubuntu2404/arm64/
         fi
     fi
 
@@ -261,9 +276,14 @@ if echo $steps | grep -q "repos"; then
             cp ~/CI/build/ubuntu2204/x86_64/noarch/memtest86plus*.deb ~/CI/build/ubuntu2204/arm64/noarch/ ; \
             cp ~/CI/build/ubuntu2204/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2204/x86_64/noarch/ ; \
         fi
+        if echo $os_list | grep -q "ubuntu2404"; then
+            cp ~/CI/build/ubuntu2404/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2404/arm64/noarch/ ; \
+            cp ~/CI/build/ubuntu2404/x86_64/noarch/memtest86plus*.deb ~/CI/build/ubuntu2404/arm64/noarch/ ; \
+            cp ~/CI/build/ubuntu2404/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2404/x86_64/noarch/ ; \
+        fi
         if echo $os_list | grep -q "debian11"; then
-            cp ~/CI/build/ubuntu2204/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2204/arm64/noarch/ ; \
-            cp ~/CI/build/ubuntu2204/x86_64/noarch/memtest86plus*.deb ~/CI/build/ubuntu2204/arm64/noarch/ ; \
+            cp ~/CI/build/debian11/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/debian11/arm64/noarch/ ; \
+            cp ~/CI/build/debian11/x86_64/noarch/memtest86plus*.deb ~/CI/build/debian11/arm64/noarch/ ; \
             cp ~/CI/build/debian11/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/debian11/x86_64/noarch/ ; \
         fi
         if echo $os_list | grep -q "debian12"; then
@@ -421,6 +441,31 @@ if echo $steps | grep -q "repos"; then
             rm -Rf ~/CI/repositories/u22/arm64/bluebanquise/packages
             mv ~/CI/repositories/u22/arm64/bluebanquise/repo/* ~/CI/repositories/u22/arm64/bluebanquise/
             rm -Rf ~/CI/repositories/u22/arm64/bluebanquise/repo
+        fi
+    fi
+
+    if echo $os_list | grep -q "ubuntu2404"; then
+        if echo $arch_list | grep -q "x86_64"; then
+	    rm -Rf ~/CI/repositories/u24/x86_64/bluebanquise/*
+            ssh bluebanquise@x86_64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2404/x86_64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2404/x86_64/bluebanquise/packages/*"
+            rsync -av ~/CI/build/ubuntu2404/x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2404/x86_64/bluebanquise/packages/
+            rsync -av $CURRENT_DIR/repositories/Ubuntu_24.04_x86_64/ bluebanquise@x86_64_worker:/home/bluebanquise/Repositories_Ubuntu_24.04_x86_64/
+            ssh bluebanquise@x86_64_worker /home/bluebanquise/Repositories_Ubuntu_24.04_x86_64/build.sh $reset_repos
+            rsync -av bluebanquise@x86_64_worker:/home/bluebanquise/repositories/ubuntu2404/x86_64/bluebanquise/* ~/CI/repositories/u24/x86_64/bluebanquise/
+            rm -Rf ~/CI/repositories/u24/x86_64/bluebanquise/packages
+            mv ~/CI/repositories/u24/x86_64/bluebanquise/repo/* ~/CI/repositories/u24/x86_64/bluebanquise/
+            rm -Rf ~/CI/repositories/u24/x86_64/bluebanquise/repo
+        fi
+        if echo $arch_list | grep -q -E "aarch64|arm64"; then
+	    rm -Rf ~/CI/repositories/u24/arm64/bluebanquise/*
+            ssh bluebanquise@aarch64_worker "mkdir -p /home/bluebanquise/repositories/ubuntu2404/arm64/bluebanquise/packages/; rm -Rf /home/bluebanquise/repositories/ubuntu2404/arm64/bluebanquise/packages/*"
+            rsync -av ~/CI/build/ubuntu2404/arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2404/arm64/bluebanquise/packages/
+            rsync -av $CURRENT_DIR/repositories/Ubuntu_24.04_arm64/ bluebanquise@aarch64_worker:/home/bluebanquise/Repositories_Ubuntu_24.04_arm64/
+            ssh bluebanquise@aarch64_worker /home/bluebanquise/Repositories_Ubuntu_24.04_arm64/build.sh $reset_repos
+            rsync -av bluebanquise@aarch64_worker:/home/bluebanquise/repositories/ubuntu2404/arm64/bluebanquise/* ~/CI/repositories/u24/arm64/bluebanquise/
+            rm -Rf ~/CI/repositories/u24/arm64/bluebanquise/packages
+            mv ~/CI/repositories/u24/arm64/bluebanquise/repo/* ~/CI/repositories/u24/arm64/bluebanquise/
+            rm -Rf ~/CI/repositories/u24/arm64/bluebanquise/repo
         fi
     fi
 
