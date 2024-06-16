@@ -77,7 +77,6 @@ if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_versi
         if [ $distribution_architecture == 'arm64' ]; then
             sed -i 's/--with-pmix/--with-pmix=\/usr\/lib\/aarch64-linux-gnu\/pmix\//' debian/rules
         fi
-        /usr/lib/aarch64-linux-gnu/pmix/
         debuild -b -uc -us
         cd ../
         mkdir -p /root/debbuild/DEBS/$distribution_architecture/
