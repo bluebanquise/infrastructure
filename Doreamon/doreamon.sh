@@ -186,7 +186,7 @@ EOF
         sudo sed -i "s|Repositories\ last\ build\ attempt:.*|Repositories last build attempt: $(date)<br>|" /var/www/html/index.html
         sudo sed -i 's|Repositories\ build\ status:.*|Repositories build status: <div class="blue-square"></div><br>|' /var/www/html/index.html
         cd $CURRENT_DIR/gits/infrastructure/CI/
-        ./engine.sh arch_list="x86_64 arm64 aarch64" os_list="el8 el9 lp15 ubuntu2004 ubuntu2204 debian11 debian12" steps="build repositories" > /tmp/doreamon_repositories_build_log 2>&1
+        ./engine.sh arch_list="x86_64 arm64 aarch64" os_list="el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12" steps="build repositories" > /tmp/doreamon_repositories_build_log 2>&1
         if [ $? -eq 0 ]; then
             echo "[Repo] Build success !"
 
