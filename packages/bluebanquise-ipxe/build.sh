@@ -248,6 +248,8 @@ if [ "$distribution" == "Ubuntu" ]; then
     rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release 1" --define "dist .ubuntu2004"
     elif [ "$distribution_version" == "22.04" ]; then
     rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release 1" --define "dist .ubuntu2204"
+    elif [ "$distribution_version" == "24.04" ]; then
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release 1" --define "dist .ubuntu2404"
     fi
 elif [ "$distribution" == "Debian" ]; then
     if [ "$distribution_version" == "11" ]; then
