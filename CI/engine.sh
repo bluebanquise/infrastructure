@@ -281,6 +281,11 @@ if echo $steps | grep -q "repos"; then
             cp ~/CI/build/ubuntu2404/x86_64/noarch/memtest86plus*.deb ~/CI/build/ubuntu2404/arm64/noarch/ ; \
             cp ~/CI/build/ubuntu2404/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2404/x86_64/noarch/ ; \
         fi
+        if echo $os_list | grep -q "ubuntu2404"; then
+            cp ~/CI/build/ubuntu2404/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/ubuntu2404/arm64/noarch/ ; \
+            cp ~/CI/build/ubuntu2404/x86_64/noarch/memtest86plus*.deb ~/CI/build/ubuntu2404/arm64/noarch/ ; \
+            cp ~/CI/build/ubuntu2404/arm64/noarch/bluebanquise-ipxe-arm64*.deb ~/CI/build/ubuntu2404/x86_64/noarch/ ; \
+        fi
         if echo $os_list | grep -q "debian11"; then
             cp ~/CI/build/debian11/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb ~/CI/build/debian11/arm64/noarch/ ; \
             cp ~/CI/build/debian11/x86_64/noarch/memtest86plus*.deb ~/CI/build/debian11/arm64/noarch/ ; \
