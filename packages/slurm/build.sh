@@ -79,7 +79,7 @@ if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_versi
                 sed -i 's/--with-pmix/--with-pmix=\/usr\/lib\/aarch64-linux-gnu\/pmix2\//' debian/rules
             fi
             if [ $distribution == "Ubuntu" ]; then
-                if [ "$distribution_version" == "24.04" ]; then
+                if [ "$distribution_version" == "24.04" ] || [ "$distribution_version" == "22.04" ]; then
                     sed -i 's/--with-pmix/--with-pmix=\/usr\/lib\/aarch64-linux-gnu\/pmix2\//' debian/rules
                 else
                     sed -i 's/--with-pmix/--with-pmix=\/usr\/lib\/aarch64-linux-gnu\/pmix\//' debian/rules
