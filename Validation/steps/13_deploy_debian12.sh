@@ -58,10 +58,10 @@ ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 # Debian preparation is extensive, we need to inject ata/scsi modules into netboot initrd
-sudo mkdir -p /var/www/html/pxe/netboots/debian/12/x86_64/
+sudo mkdir -p /var/www/html/pxe/netboots/debian/12/x86_64/iso/
 tar xvzf netboot.tar.gz
-sudo cp debian-installer/amd64/initrd.gz /var/www/html/pxe/netboots/debian/12/x86_64/
-sudo cp debian-installer/amd64/linux /var/www/html/pxe/netboots/debian/12/x86_64/
+sudo cp debian-installer/amd64/initrd.gz /var/www/html/pxe/netboots/debian/12/x86_64/iso/
+sudo cp debian-installer/amd64/linux /var/www/html/pxe/netboots/debian/12/x86_64/iso/
 
 export PYTHONPATH=$mgt1_PYTHONPATH
 sudo bluebanquise-bootset -n mgt9 -b osdeploy
