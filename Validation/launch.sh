@@ -59,3 +59,8 @@ cd $LAUNCH_CURRENT_DIR
 if (( $STEP < 90 )); then
     source steps/13_deploy_debian12.sh
 fi
+cd $LAUNCH_CURRENT_DIR
+if (( $STEP < 100 )); then
+    source steps/14_deploy_ubuntu24.sh
+fi
+

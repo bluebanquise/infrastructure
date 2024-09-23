@@ -50,9 +50,9 @@ set +e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
 set -x
 sleep 200 # wait for network to stabilize
-ssh -o StrictHostKeyChecking=no mgt2 'sudo dnf install wget -y && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && sudo dnf install epel-release-latest-8.noarch.rpm -y && sudo dnf update -y && sudo reboot -h now'
-ssh -o StrictHostKeyChecking=no mgt2 'sudo dnf install git python39 python39-pip python3-policycoreutils openssh-clients -y'
-ssh -o StrictHostKeyChecking=no mgt2 'sudo alternatives --set python3 /usr/bin/python3.9'
+#ssh -o StrictHostKeyChecking=no mgt2 'sudo dnf install wget -y && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && sudo dnf install epel-release-latest-8.noarch.rpm -y && sudo dnf update -y && sudo dnf install git python39 python39-pip python3-policycoreutils openssh-clients -y && sudo alternatives --set python3 /usr/bin/python3.9 && sudo reboot -h now
+ssh -o StrictHostKeyChecking=no mgt2 'sudo dnf install wget -y && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && sudo dnf install epel-release-latest-8.noarch.rpm -y && sudo dnf update -y && sudo dnf install git python3-policycoreutils openssh-clients -y && sudo reboot -h now
+'
 EOF
 set -e
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF

@@ -23,9 +23,9 @@ sudo ln -s ../pxe/convergence.ipxe convergence.ipxe
 EOF
 
 virsh destroy mgt3 && echo "mgt3 destroyed" || echo "mgt3 not found, skipping"
-virsh undefine mgt3 && echo "mgt3 undefined" || echo "mgt3 not found, skipping"
+virsh undefine mgt3 --nvram && echo "mgt3 undefined" || echo "mgt3 not found, skipping"
 
-virt-install --name=mgt3 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt3.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:3e:8f --pxe
+virt-install --name=mgt3 --os-variant rhel8-unknown --ram=6000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt3.qcow2,bus=virtio,size=10 --network bridge=virbr1,mac=1a:2b:3c:4d:3e:8f --pxe --boot firmware=efi,firmware.feature0.enabled=no,firmware.feature0.name=secure-boot
 virsh setmem mgt3 2G --config
 virsh start mgt3
 
