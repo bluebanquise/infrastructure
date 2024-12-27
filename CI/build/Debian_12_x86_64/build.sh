@@ -20,6 +20,7 @@ if [ "$1" == "all" ]; then
 podman run -it --rm -v ~/build/debian12/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build nyancat Debian 12
 #podman run -it --rm -v ~/build/debian12/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build conman Debian 12
 podman run -it --rm -v ~/build/debian12/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build prometheus Debian 12
+podman run -it --rm -v ~/build/debian12/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build atftp Debian 12
 # podman run -it --rm -v ~/build/debian12/x86_64/:/root/debbuild/DEBS debian_12_build ansible-cmdb Debian 12
 podman run -it --rm -v ~/build/debian12/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build slurm Debian 12
 podman run -it --rm -v ~/build/debian12/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build bluebanquise-ipxe Debian 12

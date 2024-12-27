@@ -20,6 +20,7 @@ if [ "$1" == "all" ]; then
 podman run --privileged -it --rm -v ~/build/ubuntu2404/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_24.04_build nyancat Ubuntu 24.04
 #podman run -it --rm -v ~/build/ubuntu2404/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_24.04_build conman Ubuntu 24.04
 podman run --privileged -it --rm -v ~/build/ubuntu2404/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_24.04_build prometheus Ubuntu 24.04
+podman run --privileged -it --rm -v ~/build/ubuntu2404/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_24.04_build atftp Ubuntu 24.04
 #podman run -it --rm -v ~/build/ubuntu2404/x86_64/:/root/debbuild/DEBS ubuntu_24.04_build ansible-cmdb Ubuntu 24.04
 podman run --privileged -it --rm -v ~/build/ubuntu2404/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_24.04_build slurm Ubuntu 24.04
 podman run --privileged -it --rm -v ~/build/ubuntu2404/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_24.04_build bluebanquise-ipxe Ubuntu 24.04
