@@ -26,7 +26,7 @@ fi
 cd $working_directory/build/atftp/
 cp $working_directory/sources/atftp-$atftp_version.tar.gz $working_directory/build/atftp/
 tar xvzf atftp-$atftp_version.tar.gz
-/usr/bin/cp -f $root_directory/atftp/* atftp-$atftp_version/
+eval $(which cp) -f $root_directory/atftp/* atftp-$atftp_version/
 rm -f atftp-$atftp_version/redhat/atftp.spec
 mv atftp-$atftp_version bluebanquise-atftp-$atftp_version
 tar cvzf atftp.tar.gz bluebanquise-atftp-$atftp_version
