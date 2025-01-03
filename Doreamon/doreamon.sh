@@ -284,7 +284,7 @@ EOF
 
         # Loop over os build
         ./engine.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
-        for os_target in el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
+        for os_target in el9 el8 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
             set_status $(echo p_${os_target}_x86_64) running 0
             ./engine.sh arch_list="x86_64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
             if [ $? -eq 0 ]; then
@@ -307,7 +307,7 @@ EOF
 
         # Loop over os build
         if [[ "$build_was_success" == "true" ]]; then
-            for os_target in el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
+            for os_target in el9 el8 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
                 set_status $(echo r_${os_target}_x86_64) running 0
                 ./engine.sh arch_list="x86_64" os_list="$os_target" steps="repositories" >> /tmp/doreamon_repositories_build_log 2>&1
                 if [ $? -eq 0 ]; then
