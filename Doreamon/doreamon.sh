@@ -231,7 +231,7 @@ EOF
 
         ## TUTORIALS
         echo "[Tuto] Starting tutorials build"
-        sudo sed -i "s|Tutorials\ last\ build\ attempt:.*|Tutorials last build attempt: $(date)<br>|" /var/www/html/index.html
+        set_status tuto running 1
         (
             set -x
             set -e
