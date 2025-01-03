@@ -16,6 +16,68 @@ git clone https://github.com/bluebanquise/infrastructure.git
 git clone https://github.com/bluebanquise/website.git
 cd ../
 
+
+set_status () {
+  # CSS buttons
+  bsuccess='\<a class=\"button is-success\"\> Success \<\/a\>'
+  berror='\<a class=\"button is-danger\"\> Error \<\/a\>'
+  bwaiting='\<a class=\"button is-info\"\> Waiting \<\/a\>'
+  brunning='\<a class=\"button is-primary is-loading\"\> Running \<\/a\>'
+  bspace='\&nbsp\;\&nbsp\;'
+  btable_pre='                \<td\>'
+  btable_app='<\/td\>'
+
+  target=$1
+  if [[ "$2" == "error" ]]; then
+    status="$berror"
+  elif [[ "$2" == "success" ]]; then
+    status=$bsuccess
+  elif [[ "$2" == "waiting" ]]; then
+    status=$bwaiting
+  elif [[ "$2" == "running" ]]; then
+    status=$brunning
+  elif [[ "$2" == "date" ]]; then
+    status=$(date)
+  fi
+  # if $3 == 0 then table
+  if [[ $3 == 0 ]]; then
+  sudo sed -i "s/^.*<\!--$target-->.*$/$btable_pre$status$btable_app<\!--$target-->/" /var/www/html/index.html
+  else
+  sudo sed -i "s/^.*<\!--$target-->.*$/$bspace$status<\!--$target-->/" /var/www/html/index.html
+  fi
+}
+
+set_status_debug () {
+  # CSS buttons
+  bsuccess='\<a class=\"button is-success\"\> Success \<\/a\>'
+  berror='\<a class=\"button is-danger\"\> Error \<\/a\>'
+  bwaiting='\<a class=\"button is-info\"\> Waiting \<\/a\>'
+  brunning='\<a class=\"button is-primary is-loading\"\> Running \<\/a\>'
+  bspace='\&nbsp\;\&nbsp\;'
+  btable_pre='                \<td\>'
+  btable_app='<\/td\>'
+
+  target=$1
+  if [[ "$2" == "error" ]]; then
+    status="$berror"
+  elif [[ "$2" == "success" ]]; then
+    status=$bsuccess
+  elif [[ "$2" == "waiting" ]]; then
+    status=$bwaiting
+  elif [[ "$2" == "running" ]]; then
+    status=$brunning
+  elif [[ "$2" == "date" ]]; then
+    status=$(date)
+  fi
+  # if $3 0 then table, 1 is 2 spaces
+  if [[ $3 == 0 ]]; then
+  cat index.html | sed "s/^.*<\!--$target-->.*$/$btable_pre$status$btable_app<\!--$target-->/"
+  elif [[ $3 == 1 ]]; then
+  cat index.html | sed "s/^.*<\!--$target-->.*$/$bspace$status<\!--$target-->/"
+  fi
+}
+
+
 # Main loop
 while [ 1 ]
 do
@@ -103,32 +165,47 @@ do
     if [ "$gits_website_update" -eq 1 ]; then
 
         echo "[Website] Starting website upload"
-        rm -Rf /dev/shm/website
-        cp -a gits/website /dev/shm
-        rm -Rf /dev/shm/website/.git
-        rm -f /dev/shm/website/.gitignore
-        rm -Rf /dev/shm/website/.git*
-        sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
+        set_status web running 1
+        set_status web_last_attempt date 1
+        (
+            set -x
+            set -e
+            rm -Rf /dev/shm/website
+            cp -a gits/website /dev/shm
+            rm -Rf /dev/shm/website/.git
+            rm -f /dev/shm/website/.gitignore
+            rm -Rf /dev/shm/website/.git*
+            sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
 put -r /dev/shm/website/bluebanquise/* /home/$website_user/bluebanquise/
 exit
 EOF
-        echo "[Website] Done."
-        echo "[Website] Forcing main bluebanquise refresh now."
-        gits_bluebanquise_update=1
+        )
+        if [ $? -eq 0 ]; then
+            echo "[Website] Done."
+            echo "[Website] Forcing main bluebanquise refresh now."
+            set_status web success 1
+            set_status web_last_success date 1
+            gits_bluebanquise_update=1
+        else
+            echo "[Website] ERROR."
+            set_status web error 1
+        fi
     fi
+
 
     if [ "$gits_bluebanquise_update" -eq 1 ]; then
 
         ## MAIN DOC
         echo "[Doc] Starting documentation build"
-        sudo sed -i "s|Documentation\ last\ build\ attempt:.*|Documentation last build attempt: $(date)<br>|" /var/www/html/index.html
-        rm -Rf /dev/shm/documentation
-        cp -a gits/bluebanquise/documentation /dev/shm
-        cd /dev/shm/documentation
-        make html > /tmp/doreamon_documentation_build_log 2>&1
-        
-        if [ $? -eq 0 ]; then
-            echo "[Doc] Build success !"
+        set_status doc running 1
+        set_status doc_last_attempt date 1
+        (
+            set -x
+            set -e
+            rm -Rf /dev/shm/documentation
+            cp -a gits/bluebanquise/documentation /dev/shm
+            cd /dev/shm/documentation
+            make html > /tmp/doreamon_documentation_build_log 2>&1
             echo "[Doc] Uploading documentation"
             lftp -u $website_user,$website_pass sftp://ssh.$website_host <<EOF
 rm -r /home/$website_user/bluebanquise/documentation
@@ -139,25 +216,29 @@ mkdir /home/$website_user/bluebanquise/documentation
 put -r /dev/shm/documentation/_build/html/* /home/$website_user/bluebanquise/documentation/
 exit
 EOF
-            sudo sed -i 's|Documentation\ build\ status:.*|Documentation build status: <div class="green-square"></div><br>|' /var/www/html/index.html
-            sudo sed -i "s|Documentation\ last\ successful\ build:.*|Documentation last successful build: $(date)<br>|" /var/www/html/index.html
+        )
+        if [ $? -eq 0 ]; then
+            echo "[Doc] Build success !"
+            set_status doc success 1
+            set_status doc_last_success date 1
         else
             echo "[Doc] Build failed !"
-            sudo sed -i 's|Documentation\ build\ status:.*|Documentation build status: <div class="red-square"></div><br>|' /var/www/html/index.html
+            set_status doc error 1
         fi
         echo "[Doc] Done."
         cd $CURRENT_DIR
 
+
         ## TUTORIALS
         echo "[Tuto] Starting tutorials build"
         sudo sed -i "s|Tutorials\ last\ build\ attempt:.*|Tutorials last build attempt: $(date)<br>|" /var/www/html/index.html
-        rm -Rf /dev/shm/tutorials
-        cp -a gits/bluebanquise/tutorials /dev/shm
-        cd /dev/shm/tutorials
-        mkdocs build > /tmp/doreamon_tutorials_build_log 2>&1
-
-        if [ $? -eq 0 ]; then
-            echo "[Tuto] Build success !"
+        (
+            set -x
+            set -e
+            rm -Rf /dev/shm/tutorials
+            cp -a gits/bluebanquise/tutorials /dev/shm
+            cd /dev/shm/tutorials
+            mkdocs build > /tmp/doreamon_tutorials_build_log 2>&1
             echo "[Tuto] Uploading Tutorials"
             lftp -u $website_user,$website_pass sftp://ssh.$website_host <<EOF
 rm -r /home/$website_user/bluebanquise/tutorials
@@ -168,11 +249,14 @@ mkdir /home/$website_user/bluebanquise/tutorials
 put -r /dev/shm/tutorials/site/* /home/$website_user/bluebanquise/tutorials/
 exit
 EOF
-            sudo sed -i 's|Tutorials\ build\ status:.*|Tutorials build status: <div class="green-square"></div><br>|' /var/www/html/index.html
-            sudo sed -i "s|Tutorials\ last\ successful\ build:.*|Tutorials last successful build: $(date)<br>|" /var/www/html/index.html
+        )
+        if [ $? -eq 0 ]; then
+            echo "[Tuto] Build success !"
+            set_status tuto success 1
+            set_status tuto_last_success date 1
         else
             echo "[Tuto] Build failed !"
-            sudo sed -i 's|Tutorials\ build\ status:.*|Tutorials build status: <div class="red-square"></div><br>|' /var/www/html/index.html
+            set_status tuto error 1
         fi
         echo "[Tuto] Done."
         cd $CURRENT_DIR
@@ -180,37 +264,103 @@ EOF
     fi
 
 
-
     if [ "$gits_infrastructure_update" -eq 1 ]; then
         echo "[Repo] Starting packages build"
-        sudo sed -i "s|Repositories\ last\ build\ attempt:.*|Repositories last build attempt: $(date)<br>|" /var/www/html/index.html
-        sudo sed -i 's|Repositories\ build\ status:.*|Repositories build status: <div class="blue-square"></div><br>|' /var/www/html/index.html
+        set_status pr running 1
+        set_status pr_last_attempt date 1
+
+        # Set all in waiting
+        for os_target in el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
+            set_status $(echo p_${os_target}_x86_64) waiting 0
+            set_status $(echo p_${os_target}_arm64) waiting 0
+        done
+        set_status upload waiting 1
+
+        # Prepare work
         cd $CURRENT_DIR/gits/infrastructure/CI/
-        ./engine.sh arch_list="x86_64 arm64 aarch64" os_list="el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12" steps="build repositories" > /tmp/doreamon_repositories_build_log 2>&1
-        if [ $? -eq 0 ]; then
+        echo $(date) > /tmp/doreamon_repositories_build_log
+        build_was_success="true"
+        repo_was_success="true"
+
+        # Loop over os build
+        ./engine.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
+        for os_target in el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
+            set_status $(echo p_${os_target}_x86_64) running 0
+            ./engine.sh arch_list="x86_64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
+            if [ $? -eq 0 ]; then
+                set_status $(echo p_${os_target}_x86_64) success 0
+            else
+                set_status $(echo p_${os_target}_x86_64) error 0
+                build_was_success="false"
+                break
+            fi
+            set_status $(echo p_${os_target}_arm64) running 0
+            ./engine.sh arch_list="arm64 aarch64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
+            if [ $? -eq 0 ]; then
+                set_status $(echo p_${os_target}_arm64) success 0
+            else
+                set_status $(echo p_${os_target}_arm64) error 0
+                build_was_success="false"
+                break
+            fi
+        done
+
+        # Loop over os build
+        if [[ "$build_was_success" == "true" ]]; then
+            for os_target in el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
+                set_status $(echo r_${os_target}_x86_64) running 0
+                ./engine.sh arch_list="x86_64" os_list="$os_target" steps="repositories" >> /tmp/doreamon_repositories_build_log 2>&1
+                if [ $? -eq 0 ]; then
+                    set_status $(echo r_${os_target}_x86_64) success 0
+                else
+                    set_status $(echo r_${os_target}_x86_64) error 0
+                    repo_was_success="false"
+                    break
+                fi
+                set_status $(echo r_${os_target}_arm64) running 0
+                ./engine.sh arch_list="arm64 aarch64" os_list="$os_target" steps="repositories" >> /tmp/doreamon_repositories_build_log 2>&1
+                if [ $? -eq 0 ]; then
+                    set_status $(echo r_${os_target}_arm64) success 0
+                else
+                    set_status $(echo r_${os_target}_arm64) error 0
+                    repo_was_success="false"
+                    break
+                fi
+            done
+        fi
+
+        if [[ "$build_was_success" == "true" ]] && [[ "$repo_was_success" == "true" ]]; then
             echo "[Repo] Build success !"
-
-            rm -Rf /tmp/distant-repo
-            mkdir /tmp/distant-repo
-            cp -a $HOME/CI/repositories/* /tmp/distant-repo/
-
-            lftp -u $website_user,$website_pass sftp://ssh.$website_host <<EOF
+            set_status upload running 1
+            (
+                set -x
+                set -e
+                rm -Rf /tmp/distant-repo
+                mkdir /tmp/distant-repo
+                cp -a $HOME/CI/repositories/* /tmp/distant-repo/
+                lftp -u $website_user,$website_pass sftp://ssh.$website_host <<EOF
 rm -r /home/$website_user/bluebanquise/repository/releases/latest
 exit
 EOF
-
-            sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
+                sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
 mkdir /home/$website_user/bluebanquise/repository/releases/latest
 put -r /tmp/distant-repo/* /home/$website_user/bluebanquise/repository/releases/latest/
 exit
 EOF
-
-            sudo sed -i 's|Repositories\ build\ status:.*|Repositories build status: <div class="green-square"></div><br>|' /var/www/html/index.html
-            sudo sed -i "s|Repositories\ last\ successful\ build:.*|Repositories last successful build: $(date)<br>|" /var/www/html/index.html
+            )
+            if [ $? -eq 0 ]; then
+                set_status upload success 1
+                set_status pr success 1
+                set_status pr_last_success date 1
+            else
+                set_status upload error 1
+                set_status pr error 1
+            fi
         else
             echo "[Repo] Build failed !"
-            sudo sed -i 's|Repositories\ build\ status:.*|Repositories build status: <div class="red-square"></div><br>|' /var/www/html/index.html
-        fi   
+            set_status pr error 1
+        fi
+        rm -Rf /tmp/distant-repo
         echo "[Repo] Done."
     fi
     cd $CURRENT_DIR

@@ -9,9 +9,6 @@ CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 # Introduce tags, that allows to prevent super long and stupid rebuilds
 ssh bluebanquise@x86_64_worker mkdir -p /tmp/tags
 ssh bluebanquise@aarch64_worker mkdir -p /tmp/tags
-# Clean cache, it was meant to be redone at each build pass
-ssh bluebanquise@x86_64_worker rm -Rf /tmp/cache/*
-ssh bluebanquise@aarch64_worker rm -Rf /tmp/cache/*
 
 ################################################################################
 #################### INIT STEP
@@ -26,6 +23,13 @@ do
 
    export "$KEY"="$VALUE"
 done
+
+# Clean cache, it was meant to be redone at each build pass
+if [ "$clean_cache" == 'yes' ]; then
+    ssh bluebanquise@x86_64_worker rm -Rf /tmp/cache/*
+    ssh bluebanquise@aarch64_worker rm -Rf /tmp/cache/*
+    exit 0
+fi
 
 if [ -z ${packages_list+x} ]; then
     packages_list="all"
