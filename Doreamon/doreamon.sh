@@ -276,7 +276,7 @@ EOF
         (
         set -x
         set -e
-        cd diskless
+        cd ../diskless
         ./engine.sh
 sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
 mkdir /home/$website_user/bluebanquise/diskless
