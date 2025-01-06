@@ -15,8 +15,8 @@ scp $CURRENT_DIR/* bluebanquise@x86_64_worker:/tmp
 scp $CURRENT_DIR/* bluebanquise@aarch64_worker:/tmp
 
 # Execute on remote host
-ssh bluebanquise@x86_64_worker /tmp/main.sh
-ssh bluebanquise@aarch64_worker /tmp/main.sh
+ssh bluebanquise@x86_64_worker "cd /tmp && ./main.sh"
+ssh bluebanquise@aarch64_worker "cd /tmp && ./main.sh"
 
 # Grab images from remote host
 scp bluebanquise@x86_64_worker:/tmp/*x86_64.tar.xz /tmp
