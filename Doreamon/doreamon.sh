@@ -269,6 +269,33 @@ EOF
     fi
 
 
+    if [ "$gits_infrastructure_update" -eq 1 ] || [ "$gits_diskless_update" -eq 1 ]; then
+        echo "[Diskless] Starting diskless"
+        set_status diskless running 1
+        set_status diskless_last_attempt date 1
+        (
+        set -x
+        set -e
+        cd diskless
+        ./engine.sh
+sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
+mkdir /home/$website_user/bluebanquise/diskless
+put -r /tmp/*x86_64.tar.xz /home/$website_user/bluebanquise/diskless
+put -r /tmp/*aarch64.tar.xz /home/$website_user/bluebanquise/diskless
+exit
+EOF
+        ) > /tmp/doreamon_diskless_build_log 2>&1
+        if [ $? -eq 0 ]; then
+            set_status diskless success 1
+            set_status diskless_last_success date 1
+        else
+            set_status diskless error 1
+        fi
+        echo "[Diskless] Done."
+    fi
+    cd $CURRENT_DIR
+
+
     if [ "$gits_infrastructure_update" -eq 1 ]; then
         echo "[Repo] Starting packages build"
         set_status pr running 1
@@ -367,32 +394,6 @@ EOF
         fi
         rm -Rf /tmp/distant-repo
         echo "[Repo] Done."
-    fi
-    cd $CURRENT_DIR
-
-    if [ "$gits_infrastructure_update" -eq 1 ] || [ "$gits_diskless_update" -eq 1 ]; then
-        echo "[Diskless] Starting diskless"
-        set_status diskless running 1
-        set_status diskless_last_attempt date 1
-        (
-        set -x
-        set -e
-        cd diskless
-        ./engine.sh
-sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-mkdir /home/$website_user/bluebanquise/diskless
-put -r /tmp/*x86_64.tar.xz /home/$website_user/bluebanquise/diskless
-put -r /tmp/*aarch64.tar.xz /home/$website_user/bluebanquise/diskless
-exit
-EOF
-        ) > /tmp/doreamon_diskless_build_log 2>&1
-        if [ $? -eq 0 ]; then
-            set_status diskless success 1
-            set_status diskless_last_success date 1
-        else
-            set_status diskless error 1
-        fi
-        echo "[Diskless] Done."
     fi
     cd $CURRENT_DIR
 
