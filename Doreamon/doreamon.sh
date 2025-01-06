@@ -85,6 +85,7 @@ do
     gits_bluebanquise_update=0
     gits_website_update=0
     gits_infrastructure_update=0
+    gits_diskless_update=0
     # Check if manual build requested
     if test -f "gits_bluebanquise_update"; then
         gits_bluebanquise_update=1
@@ -97,6 +98,10 @@ do
     if test -f "gits_infrastructure_update"; then
         gits_infrastructure_update=1
         rm -f gits_infrastructure_update
+    fi
+    if test -f "gits_diskless_update"; then
+        gits_diskless_update=1
+        rm -f gits_diskless_update
     fi
 
     # Check if any updates
@@ -362,6 +367,32 @@ EOF
         fi
         rm -Rf /tmp/distant-repo
         echo "[Repo] Done."
+    fi
+    cd $CURRENT_DIR
+
+    if [ "$gits_infrastructure_update" -eq 1 ] || [ "$gits_diskless_update" -eq 1 ]; then
+        echo "[Diskless] Starting diskless"
+        set_status diskless running 1
+        set_status diskless_last_attempt date 1
+        (
+        set -x
+        set -e
+        cd diskless
+        ./engine.sh
+sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
+mkdir /home/$website_user/bluebanquise/diskless
+put -r /tmp/*x86_64.tar.xz /home/$website_user/bluebanquise/diskless
+put -r /tmp/*aarch64.tar.xz /home/$website_user/bluebanquise/diskless
+exit
+EOF
+        ) > /tmp/doreamon_diskless_build_log 2>&1
+        if [ $? -eq 0 ]; then
+            set_status diskless success 1
+            set_status diskless_last_success date 1
+        else
+            set_status diskless error 1
+        fi
+        echo "[Diskless] Done."
     fi
     cd $CURRENT_DIR
 
