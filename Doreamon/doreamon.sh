@@ -271,8 +271,8 @@ EOF
 
     if [ "$gits_infrastructure_update" -eq 1 ] || [ "$gits_diskless_update" -eq 1 ]; then
         echo "[Diskless] Starting diskless"
-        set_status diskless running 1
-        set_status diskless_last_attempt date 1
+        set_status dimages running 1
+        set_status dimages_last_attempt date 1
         (
         set -x
         set -e
@@ -286,10 +286,10 @@ exit
 EOF
         ) > /tmp/doreamon_diskless_build_log 2>&1
         if [ $? -eq 0 ]; then
-            set_status diskless success 1
-            set_status diskless_last_success date 1
+            set_status dimages success 1
+            set_status dimages_last_success date 1
         else
-            set_status diskless error 1
+            set_status dimages error 1
         fi
         echo "[Diskless] Done."
     fi
