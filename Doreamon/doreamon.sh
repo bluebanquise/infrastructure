@@ -38,6 +38,8 @@ set_status () {
     status=$brunning
   elif [[ "$2" == "date" ]]; then
     status=$(date)
+  else
+    status=$2
   fi
   # if $3 == 0 then table
   if [[ $3 == 0 ]]; then
@@ -68,6 +70,8 @@ set_status_debug () {
     status=$brunning
   elif [[ "$2" == "date" ]]; then
     status=$(date)
+  else
+    status=$2
   fi
   # if $3 0 then table, 1 is 2 spaces
   if [[ $3 == 0 ]]; then
@@ -86,6 +90,10 @@ do
     gits_website_update=0
     gits_infrastructure_update=0
     gits_diskless_update=0
+
+    tag_bluebanquise="NA"
+    tag_infrastructure="NA"
+    tag_website="NA"
 
     # Check if any updates
     echo "[Gits] Starting check..."
@@ -109,6 +117,9 @@ do
         echo "[Gits] BlueBanquise Diverged !"
     fi
 
+    tag_bluebanquise=$(git describe --tags)
+    set_status bluebanquise_tag ${tag_bluebanquise} 1
+
     cd $CURRENT_DIR/gits/infrastructure
     git remote update
     UPSTREAM=${1:-'@{u}'}
@@ -128,6 +139,9 @@ do
         echo "[Gits] Infrastructure Diverged !"
     fi
 
+    tag_infrastructure=$(git describe --tags)
+    set_status infrastructure_tag ${tag_infrastructure} 1
+
     cd $CURRENT_DIR/gits/website
     git remote update
     UPSTREAM=${1:-'@{u}'}
@@ -146,6 +160,9 @@ do
     else
         echo "[Gits] Website Diverged !"
     fi
+
+    tag_website=$(git describe --tags)
+    set_status website_tag ${tag_website} 1
 
     cd $CURRENT_DIR
     echo "[Gits] Done."
@@ -242,6 +259,7 @@ EOF
         ## TUTORIALS
         echo "[Tuto] Starting tutorials build"
         set_status tuto running 1
+        set_status doc_last_attempt date 1
         (
             set -x
             set -e
