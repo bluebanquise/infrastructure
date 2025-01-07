@@ -139,7 +139,7 @@ do
         echo "[Gits] Infrastructure Diverged !"
     fi
 
-    tag_infrastructure=$(git describe --tags)
+    tag_infrastructure=$(git log --format="%H" -n 1)
     set_status infrastructure_tag ${tag_infrastructure} 1
 
     cd $CURRENT_DIR/gits/website
@@ -161,7 +161,7 @@ do
         echo "[Gits] Website Diverged !"
     fi
 
-    tag_website=$(git describe --tags)
+    tag_website=$(git log --format="%H" -n 1)
     set_status website_tag ${tag_website} 1
 
     cd $CURRENT_DIR
