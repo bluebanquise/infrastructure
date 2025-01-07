@@ -86,27 +86,6 @@ do
     gits_website_update=0
     gits_infrastructure_update=0
     gits_diskless_update=0
-    # Check if manual build requested
-    if test -f "gits_bluebanquise_update"; then
-        gits_bluebanquise_update=1
-	rm -f gits_bluebanquise_update
-    fi
-    if test -f "gits_website_update"; then
-        gits_website_update=1
-        rm -f gits_website_update
-    fi
-    if test -f "gits_infrastructure_update"; then
-        gits_infrastructure_update=1
-        rm -f gits_infrastructure_update
-    fi
-    if test -f "gits_no_infrastructure_update"; then
-        gits_infrastructure_update=0
-        rm -f gits_no_infrastructure_update
-    fi
-    if test -f "gits_diskless_update"; then
-        gits_diskless_update=1
-        rm -f gits_diskless_update
-    fi
 
     # Check if any updates
     echo "[Gits] Starting check..."
@@ -170,6 +149,28 @@ do
 
     cd $CURRENT_DIR
     echo "[Gits] Done."
+
+    # Check if manual build requested
+    if test -f "gits_bluebanquise_update"; then
+        gits_bluebanquise_update=1
+	rm -f gits_bluebanquise_update
+    fi
+    if test -f "gits_website_update"; then
+        gits_website_update=1
+        rm -f gits_website_update
+    fi
+    if test -f "gits_infrastructure_update"; then
+        gits_infrastructure_update=1
+        rm -f gits_infrastructure_update
+    fi
+    if test -f "gits_no_infrastructure_update"; then
+        gits_infrastructure_update=0
+        rm -f gits_no_infrastructure_update
+    fi
+    if test -f "gits_diskless_update"; then
+        gits_diskless_update=1
+        rm -f gits_diskless_update
+    fi
 
     if [ "$gits_website_update" -eq 1 ]; then
 
