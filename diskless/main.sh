@@ -12,7 +12,7 @@ do
 done
 
 # End up with images in /tmp like:
-# AlmaLinux_8.8_minimal_x86_64.tar.xz
-# AlmaLinux_9.2_minimal_x86_64.tar.xz
-# Rocky_Linux_8.8_minimal_x86_64.tar.xz
+# AlmaLinux_8.8_minimal_x86_64.tar.gz
+# AlmaLinux_9.2_minimal_x86_64.tar.gz
+# Rocky_Linux_8.8_minimal_x86_64.tar.gz
 

@@ -99,6 +99,10 @@ do
         gits_infrastructure_update=1
         rm -f gits_infrastructure_update
     fi
+    if test -f "gits_no_infrastructure_update"; then
+        gits_infrastructure_update=0
+        rm -f gits_no_infrastructure_update
+    fi
     if test -f "gits_diskless_update"; then
         gits_diskless_update=1
         rm -f gits_diskless_update
