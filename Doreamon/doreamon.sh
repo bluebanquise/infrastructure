@@ -303,8 +303,8 @@ EOF
         ./engine.sh
 sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
 mkdir /home/$website_user/bluebanquise/diskless
-put -r /tmp/*x86_64.tar.xz /home/$website_user/bluebanquise/diskless
-put -r /tmp/*aarch64.tar.xz /home/$website_user/bluebanquise/diskless
+put -r /tmp/*x86_64.tar.gz /home/$website_user/bluebanquise/diskless
+put -r /tmp/*aarch64.tar.gz /home/$website_user/bluebanquise/diskless
 exit
 EOF
         ) > /tmp/doreamon_diskless_build_log 2>&1
