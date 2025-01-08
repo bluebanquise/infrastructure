@@ -71,6 +71,7 @@ EOF
 
 cd /image
 shopt -s dotglob
+rm -f /tmp/${NAME}_${VERSION_ID}_minimal_$(uname -m).tar.gz
 tar -czf /tmp/${NAME}_${VERSION_ID}_minimal_$(uname -m).tar.gz *
 chmod 777 /tmp/${NAME}_${VERSION_ID}_minimal_$(uname -m).tar.gz
 shopt -u dotglob

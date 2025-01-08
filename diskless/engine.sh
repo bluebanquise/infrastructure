@@ -7,8 +7,8 @@ CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 # Assume remote user is bluebanquise user and remote home is /home/bluebanquise
 
 # Cleanup old images
-ssh bluebanquise@x86_64_worker sudo rm -f /tmp/*x86_64.tar.gz
-ssh bluebanquise@aarch64_worker sudo rm -f /tmp/*aarch64.tar.gz
+# ssh bluebanquise@x86_64_worker sudo rm -f /tmp/*x86_64.tar.gz
+# ssh bluebanquise@aarch64_worker sudo rm -f /tmp/*aarch64.tar.gz
 
 # Send files and run on distant target
 scp $CURRENT_DIR/* bluebanquise@x86_64_worker:/tmp
