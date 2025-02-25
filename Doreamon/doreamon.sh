@@ -90,6 +90,7 @@ do
     gits_website_update=0
     gits_infrastructure_update=0
     gits_diskless_update=0
+    disable_diskless_update=0
 
     tag_bluebanquise="NA"
     tag_infrastructure="NA"
@@ -187,6 +188,9 @@ do
     if test -f "gits_diskless_update"; then
         gits_diskless_update=1
         rm -f gits_diskless_update
+    fi
+    if test -f "disable_diskless_update"; then
+        disable_diskless_update=1
     fi
 
     if [ "$gits_website_update" -eq 1 ]; then
@@ -291,34 +295,6 @@ EOF
 
     fi
 
-
-    if [ "$gits_infrastructure_update" -eq 1 ] || [ "$gits_diskless_update" -eq 1 ]; then
-        echo "[Diskless] Starting diskless"
-        set_status dimages running 1
-        set_status dimages_last_attempt date 1
-        (
-        set -x
-        set -e
-        cd ../diskless
-        ./engine.sh
-sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-mkdir /home/$website_user/bluebanquise/diskless
-put -r /tmp/*x86_64.tar.gz /home/$website_user/bluebanquise/diskless
-put -r /tmp/*aarch64.tar.gz /home/$website_user/bluebanquise/diskless
-exit
-EOF
-        ) > /tmp/doreamon_diskless_build_log 2>&1
-        if [ $? -eq 0 ]; then
-            set_status dimages success 1
-            set_status dimages_last_success date 1
-        else
-            set_status dimages error 1
-        fi
-        echo "[Diskless] Done."
-    fi
-    cd $CURRENT_DIR
-
-
     if [ "$gits_infrastructure_update" -eq 1 ]; then
         echo "[Repo] Starting packages build"
         set_status pr running 1
@@ -417,6 +393,34 @@ EOF
         fi
         rm -Rf /tmp/distant-repo
         echo "[Repo] Done."
+    fi
+    cd $CURRENT_DIR
+
+    if [ "$gits_infrastructure_update" -eq 1 ] || [ "$gits_diskless_update" -eq 1 ]; then
+        if [ "$disable_diskless_update" -eq 0 ]; then
+            echo "[Diskless] Starting diskless"
+            set_status dimages running 1
+            set_status dimages_last_attempt date 1
+            (
+            set -x
+            set -e
+            cd ../diskless
+            ./engine.sh
+sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
+mkdir /home/$website_user/bluebanquise/diskless
+put -r /tmp/*x86_64.tar.gz /home/$website_user/bluebanquise/diskless
+put -r /tmp/*aarch64.tar.gz /home/$website_user/bluebanquise/diskless
+exit
+EOF
+            ) > /tmp/doreamon_diskless_build_log 2>&1
+            if [ $? -eq 0 ]; then
+                set_status dimages success 1
+                set_status dimages_last_success date 1
+            else
+                set_status dimages error 1
+            fi
+            echo "[Diskless] Done."
+        fi
     fi
     cd $CURRENT_DIR
 
