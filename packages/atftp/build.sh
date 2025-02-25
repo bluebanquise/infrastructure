@@ -40,8 +40,7 @@ if [ ! -f $tags_directory/atftp-$distribution-$distribution_version-$atftp_versi
     rm -f atftp-$atftp_version/redhat/atftp.spec
     mv atftp-$atftp_version bluebanquise-atftp-$atftp_version
     tar cvzf atftp.tar.gz bluebanquise-atftp-$atftp_version
-    rpmbuild -ta atftp.tar.gz --define "_software_version $atftp_version" --define "_lto_cflags %{nil}"
-
+    rpmbuild -ta atftp.tar.gz --target=$distribution_architecture --define "_software_version $atftp_version" --define "_lto_cflags %{nil}"
 
     if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
         cd /root
