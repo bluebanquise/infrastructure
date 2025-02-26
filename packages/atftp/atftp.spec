@@ -1,5 +1,5 @@
 %define is_debian_ubuntu %(grep -i -E "debian|ubuntu" /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-
+%define 
 
 Name: bluebanquise-atftp
 Summary: Advanced Trivial File Transfer Protocol (ATFTP) - TFTP server
@@ -50,23 +50,14 @@ chmod 644 ${RPM_BUILD_ROOT}/usr/lib/systemd/system/atftpd.service
 
 
 %files
-%if %is_debian_ubuntu
-%{_mandir}/man8/atftpd.8
-%{_mandir}/man8/in.tftpd.8
-%else
-%{_mandir}/man8/atftpd.8.gz
-%{_mandir}/man8/in.tftpd.8.gz
-%endif
+%{_mandir}/man8/*
 %{_sbindir}/atftpd
 %{_sbindir}/in.tftpd
 /usr/lib/systemd/system/atftpd.service
 
 
 %files client
-%if %is_debian_ubuntu
-%{_mandir}/man1/atftp.1
-%else
-%{_mandir}/man1/atftp.1.gz
+%{_mandir}/man1/*
 %endif
 %{_bindir}/atftp
 
