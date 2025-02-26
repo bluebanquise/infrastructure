@@ -57,7 +57,6 @@ chmod 644 ${RPM_BUILD_ROOT}/usr/lib/systemd/system/atftpd.service
 
 %files client
 %{_mandir}/man1/*
-%endif
 %{_bindir}/atftp
 
 
