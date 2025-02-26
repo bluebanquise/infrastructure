@@ -63,7 +63,11 @@ chmod 644 ${RPM_BUILD_ROOT}/usr/lib/systemd/system/atftpd.service
 
 
 %files client
+%if %is_debian_ubuntu
+%{_mandir}/man1/atftp.1
+%else
 %{_mandir}/man1/atftp.1.gz
+%endif
 %{_bindir}/atftp
 
 
