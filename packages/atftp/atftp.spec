@@ -1,5 +1,4 @@
 %define is_debian_ubuntu %(grep -i -E "debian|ubuntu" /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
-%define 
 
 Name: bluebanquise-atftp
 Summary: Advanced Trivial File Transfer Protocol (ATFTP) - TFTP server
