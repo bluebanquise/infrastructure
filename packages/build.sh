@@ -32,7 +32,7 @@ if [ "$distribution" == 'Debian' ] && [ $distribution_architecture == 'aarch64' 
 distribution_architecture=arm64
 fi
 
-if [ "$distribution" == 'shell' ]; then
+if [ "$1" == 'shell' ]; then
   /bin/bash -l
   exit 0
 fi
@@ -195,6 +195,7 @@ if [ "$1" == "dependencies" ]; then
         dnf config-manager --set-enabled crb
         dnf install freeipmi-devel mariadb-devel -y
         dnf groupinstall 'Development Tools' -y
+        dnf reinstall genisoimage -y
       fi
       if [ $distribution_architecture == 'aarch64' ]; then
         dnf install 'dnf-command(config-manager)' -y
@@ -203,6 +204,7 @@ if [ "$1" == "dependencies" ]; then
         dnf config-manager --set-enabled crb
         dnf install freeipmi-devel mariadb-devel -y
         dnf groupinstall 'Development Tools' -y
+        dnf reinstall genisoimage -y
       fi
     fi
     if [ $distribution_version -eq 10 ]; then
