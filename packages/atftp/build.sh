@@ -37,6 +37,9 @@ if [ ! -f $tags_directory/atftp-$distribution-$distribution_version-$atftp_versi
     cp $working_directory/sources/atftp-$atftp_version.tar.gz $working_directory/build/atftp/
     tar xvzf atftp-$atftp_version.tar.gz
     eval $(which cp) -f $root_directory/atftp/* atftp-$atftp_version/
+    cd atftp-$atftp_version/
+    ./autogen.sh
+    cd ../
     rm -f atftp-$atftp_version/redhat/atftp.spec
     mv atftp-$atftp_version bluebanquise-atftp-$atftp_version
     tar cvzf atftp.tar.gz bluebanquise-atftp-$atftp_version
