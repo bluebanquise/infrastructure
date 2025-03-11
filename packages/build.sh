@@ -20,7 +20,7 @@ echo "    .   'C/ |    |    |   |    |mrf  ,"
 echo "    \), .. .'OOO-'. ..'OOO'OOO-'. ..\(,"
 echo
 echo "  BlueBanquise packages builder"
-echo "    2024 Benoit Leveugle"
+echo "    2025 Benoit Leveugle"
 echo
 distribution=$2
 distribution_version=$3
@@ -30,6 +30,11 @@ distribution_architecture=arm64
 fi
 if [ "$distribution" == 'Debian' ] && [ $distribution_architecture == 'aarch64' ]; then
 distribution_architecture=arm64
+fi
+
+if [ "$distribution" == 'shell' ]; then
+  /bin/bash -l
+  exit 0
 fi
 
 echo " Settings set to $distribution $distribution_version $distribution_architecture"
