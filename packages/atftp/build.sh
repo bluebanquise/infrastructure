@@ -41,9 +41,9 @@ if [ ! -f $tags_directory/atftp-$distribution-$distribution_version-$atftp_versi
     ./autogen.sh
     cd ../
     rm -f atftp-$atftp_version/redhat/atftp.spec
-    mv atftp-$atftp_version bluebanquise-atftp-$atftp_version
-    tar cvzf atftp.tar.gz bluebanquise-atftp-$atftp_version
-    rpmbuild -ta atftp.tar.gz --target=$distribution_architecture --define "_software_version $atftp_version" --define "_lto_cflags %{nil}"
+    mv atftp-$atftp_version bluebanquise-atftp-$bluebanquise_atftp_version
+    tar cvzf atftp.tar.gz bluebanquise-atftp-$bluebanquise_atftp_version
+    rpmbuild -ta atftp.tar.gz --target=$distribution_architecture --define "_software_version $bluebanquise_atftp_version" --define "_lto_cflags %{nil}"
 
     if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
         cd /root
@@ -52,7 +52,7 @@ if [ ! -f $tags_directory/atftp-$distribution-$distribution_version-$atftp_versi
         mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     fi
     # Build success, tag it
-    touch $tags_directory/atftp-$distribution-$distribution_version-$atftp_version
+    touch $tags_directory/atftp-$distribution-$distribution_version-$bluebanquise_atftp_version
 
 fi
 

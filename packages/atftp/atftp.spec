@@ -64,8 +64,12 @@ chmod 644 ${RPM_BUILD_ROOT}/usr/lib/systemd/system/atftpd.service
 
 
 %post
-adduser --system -d /var/lib/tftpboot tftp || true
+useradd --system -d /var/lib/tftpboot tftp || true
+%if %is_debian_ubuntu
+usermod -a -G tftp www-data || true
+%else
 usermod -a -G tftp apache || true
+%endif
 
 %clean
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != '/' ] && rm -rf $RPM_BUILD_ROOT
