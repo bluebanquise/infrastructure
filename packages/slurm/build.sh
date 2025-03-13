@@ -24,26 +24,30 @@ if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_versi
     fi
 
     if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $distribution != "Debian" ]; then
-        rm -Rf $working_directory/build/munge
-        mkdir -p $working_directory/build/munge
-        cd $working_directory/build/munge
-        cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
-        cp $working_directory/sources/dun.gpg $working_directory/build/munge/dun.gpg
-        cp $working_directory/sources/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
-        rm -f /root/rpmbuild/RPMS/$distribution_architecture/munge*
-        rpmbuild -ta munge-$munge_version.tar.xz
+        if [ $distribution_version -ne 10 ]; then
+          rm -Rf $working_directory/build/munge
+          mkdir -p $working_directory/build/munge
+          cd $working_directory/build/munge
+          cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
+          cp $working_directory/sources/dun.gpg $working_directory/build/munge/dun.gpg
+          cp $working_directory/sources/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
+          rm -f /root/rpmbuild/RPMS/$distribution_architecture/munge*
 
-        # We need to install munge to build slurm
-        if [ $distribution_version -eq 8 ]; then
-        dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
-        fi
-        if [ $distribution_version -eq 9 ]; then
-        dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
-        fi
-        if [ $distribution_version -eq 7 ]; then
-        yum install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
+          rpmbuild -ta munge-$munge_version.tar.xz
+
+          # We need to install munge to build slurm
+          if [ $distribution_version -eq 8 ]; then
+          dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
+          fi
+          if [ $distribution_version -eq 9 ]; then
+          dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
+          fi
+          if [ $distribution_version -eq 7 ]; then
+          yum install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
+          fi
         fi
     fi
+
 
     # Build success, tag it
     touch $tags_directory/munge-$distribution-$distribution_version-$munge_version

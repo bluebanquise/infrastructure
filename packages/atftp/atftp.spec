@@ -1,14 +1,17 @@
-Name: atftp
+%define is_debian_ubuntu %(grep -i -E "debian|ubuntu" /etc/os-release >/dev/null; if test $? -gt 0; then echo 0; else echo 1; fi)
+
+Name: bluebanquise-atftp
 Summary: Advanced Trivial File Transfer Protocol (ATFTP) - TFTP server
 Group: System Environment/Daemons
 Version: %{_software_version}
 Release: 1
 License: GPL
 Vendor: Linux Networx Inc.
-Source: /usr/src/redhat/SOURCES/atftp.tar.gz
+Source: https://freefr.dl.sourceforge.net/project/atftp/atftp.tar.gz
 Buildroot: /var/tmp/atftp-buildroot
 Packager: Benoit Leveugle <benoit.leveugle@gmail.com>
 
+Obsoletes: atftp
 
 %description
 Multithreaded TFTP server implementing all options (option extension and
@@ -46,15 +49,14 @@ chmod 644 ${RPM_BUILD_ROOT}/usr/lib/systemd/system/atftpd.service
 
 
 %files
-%{_mandir}/man8/atftpd.8.gz
+%{_mandir}/man8/*
 %{_sbindir}/atftpd
-%{_mandir}/man8/in.tftpd.8.gz
 %{_sbindir}/in.tftpd
 /usr/lib/systemd/system/atftpd.service
 
 
 %files client
-%{_mandir}/man1/atftp.1.gz
+%{_mandir}/man1/*
 %{_bindir}/atftp
 
 

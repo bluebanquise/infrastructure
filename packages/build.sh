@@ -20,7 +20,7 @@ echo "    .   'C/ |    |    |   |    |mrf  ,"
 echo "    \), .. .'OOO-'. ..'OOO'OOO-'. ..\(,"
 echo
 echo "  BlueBanquise packages builder"
-echo "    2024 Benoit Leveugle"
+echo "    2025 Benoit Leveugle"
 echo
 distribution=$2
 distribution_version=$3
@@ -30,6 +30,11 @@ distribution_architecture=arm64
 fi
 if [ "$distribution" == 'Debian' ] && [ $distribution_architecture == 'aarch64' ]; then
 distribution_architecture=arm64
+fi
+
+if [ "$1" == 'shell' ]; then
+  /bin/bash -l
+  exit 0
 fi
 
 echo " Settings set to $distribution $distribution_version $distribution_architecture"
@@ -190,11 +195,32 @@ if [ "$1" == "dependencies" ]; then
         dnf config-manager --set-enabled crb
         dnf install freeipmi-devel mariadb-devel -y
         dnf groupinstall 'Development Tools' -y
+        dnf reinstall genisoimage -y
       fi
       if [ $distribution_architecture == 'aarch64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core epel-release -y
         dnf install kernel-headers make dbus-devel rpm-build genisoimage xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel libgenders-devel net-snmp-devel unzip -y
+        dnf config-manager --set-enabled crb
+        dnf install freeipmi-devel mariadb-devel -y
+        dnf groupinstall 'Development Tools' -y
+        dnf reinstall genisoimage -y
+      fi
+    fi
+    if [ $distribution_version -eq 10 ]; then
+      if [ $distribution_architecture == 'x86_64' ]; then
+        dnf install 'dnf-command(config-manager)' -y
+       /usr/bin/crb enable
+        dnf install dnf-plugins-core epel-release -y
+        dnf install kernel-headers make dbus-devel rpm-build xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel net-snmp-devel unzip munge munge-devel munge-libs -y
+        dnf config-manager --set-enabled crb
+        dnf install freeipmi-devel mariadb-devel -y
+        dnf groupinstall 'Development Tools' -y
+      fi
+      if [ $distribution_architecture == 'aarch64' ]; then
+        dnf install 'dnf-command(config-manager)' -y
+        dnf install dnf-plugins-core epel-release -y
+        dnf install kernel-headers make dbus-devel rpm-build xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel net-snmp-devel unzip munge munge-devel munge-libs -y
         dnf config-manager --set-enabled crb
         dnf install freeipmi-devel mariadb-devel -y
         dnf groupinstall 'Development Tools' -y
