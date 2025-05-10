@@ -226,6 +226,10 @@ EOF
 
     if [ "$gits_bluebanquise_update" -eq 1 ]; then
 
+	cd gits/bluebanquise
+	git pull
+	cd ../../
+
         ## MAIN DOC
         echo "[Doc] Starting documentation build"
         set_status doc running 1
@@ -359,6 +363,10 @@ EOF
                 fi
             done
         fi
+
+	# Make sure repositories will be readable online
+	find $HOME/CI/repositories -type f -exec chmod 0644 {} +
+	find $HOME/CI/repositories -type d -exec chmod 0755 {} +
 
         if [[ "$build_was_success" == "true" ]] && [[ "$repo_was_success" == "true" ]]; then
             echo "[Repo] Build success !"
