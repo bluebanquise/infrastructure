@@ -4,4 +4,4 @@ alertmanager_version=0.28.1
 ipmi_exporter_version=1.9.0
 node_exporter_version=1.9.1
 karma_version=0.121
-snmp_exporter_version=0.26.0
+snmp_exporter_version=0.29.0
