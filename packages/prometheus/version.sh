@@ -1,5 +1,5 @@
-prometheus_version=3.3.1
-prometheus_client_version=0.21.1
+prometheus_version=3.4.0
+prometheus_client_version=0.22.0
 alertmanager_version=0.28.1
 ipmi_exporter_version=1.10.0
 node_exporter_version=1.9.1
