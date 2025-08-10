@@ -1,12 +1,12 @@
 set -x
 # if [ "$1" == 'yes' ]; then
-podman run -it --rm -v /home/bluebanquise/repositories/el9/sources/bluebanquise/:/repo/ rockylinux/rockylinux:9 /bin/bash -c ' \
+docker run -it --rm -v /home/bluebanquise/repositories/el9/sources/bluebanquise/:/repo/ rockylinux/rockylinux:9 /bin/bash -c ' \
     set -x ; \
     dnf install -y createrepo ; \
     createrepo /repo/ ; \
     '
 # else
-# podman run -it --rm -v /home/bluebanquise/repositories/el8/sources/bluebanquise/:/repo/ rockylinux/rockylinux:8 /bin/bash -c ' \
+# docker run -it --rm -v /home/bluebanquise/repositories/el8/sources/bluebanquise/:/repo/ rockylinux/rockylinux:8 /bin/bash -c ' \
 #     set -x ; \
 #     dnf install -y wget yum-utils createrepo rsync ; \
 #     wget http://bluebanquise.com/repository/releases/latest/el8/sources/bluebanquise/bluebanquise.repo -P /etc/yum.repos.d/ ; \

@@ -3,11 +3,11 @@ set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 set +e
-podman images | grep centos_7_build
+docker images | grep centos_7_build
 if [ $? -ne 0 ]; then
   set -e
-  podman pull docker.io/centos:7
-  podman build --no-cache --tag centos_7_build -f $CURRENT_DIR/Dockerfile
+  docker pull docker.io/centos:7
+  docker build --no-cache --tag centos_7_build -f $CURRENT_DIR/Dockerfile
 fi
 set -e
 
@@ -17,18 +17,18 @@ fi
 mkdir -p ~/build/el7/aarch64/
 
 if [ "$1" == "all" ]; then
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build nyancat RedHat 7
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build conman RedHat 7
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build prometheus RedHat 7
-#podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build ansible-cmdb RedHat 7
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build slurm RedHat 7
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build atftp RedHat 7
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build bluebanquise-ipxe RedHat 7
-# podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build bluebanquise-tools RedHat 7
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build loki RedHat 7
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build alpine RedHat 7
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build clonezilla RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build nyancat RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build conman RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build prometheus RedHat 7
+#docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build ansible-cmdb RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build slurm RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build atftp RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build bluebanquise-ipxe RedHat 7
+# docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS centos_7_build bluebanquise-tools RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build loki RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build alpine RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build clonezilla RedHat 7
 
 else
-podman run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build $1 RedHat 7
+docker run -it --rm -v ~/build/el7/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp centos_7_build $1 RedHat 7
 fi

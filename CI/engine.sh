@@ -1,6 +1,17 @@
 set -e
 #set -x
 
+# ## Rappel pour moi
+# oxedions@pi3:~$ cat .ssh/config 
+# Host "x86_64_worker"
+#   Hostname "foo.bar.com"
+#   Port 443
+
+# Host "aarch64_worker"
+#   Hostname "localhost"
+#   Port 22
+
+
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # Assume aarch64_worker and x86_64_worker both resolve
