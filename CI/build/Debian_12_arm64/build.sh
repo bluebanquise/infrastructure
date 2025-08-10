@@ -7,7 +7,7 @@ docker images | grep debian_12_build
 if [ $? -ne 0 ]; then
   set -e
   docker pull docker.io/debian:12
-  docker build --no-cache --tag debian_12_build -f $CURRENT_DIR/Dockerfile
+  docker build --no-cache --tag debian_12_build -f $CURRENT_DIR/Dockerfile .
 fi
 set -e
 

@@ -7,7 +7,7 @@ docker images | grep centos_7_build
 if [ $? -ne 0 ]; then
   set -e
   docker pull docker.io/centos:7
-  docker build --no-cache --tag centos_7_build -f $CURRENT_DIR/Dockerfile
+  docker build --no-cache --tag centos_7_build -f $CURRENT_DIR/Dockerfile .
 fi
 set -e
 

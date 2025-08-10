@@ -7,7 +7,7 @@ docker images | grep rockylinux_9_build
 if [ $? -ne 0 ]; then
   set -e
   docker pull docker.io/rockylinux/rockylinux:9
-  docker build --no-cache --tag rockylinux_9_build -f $CURRENT_DIR/Dockerfile
+  docker build --no-cache --tag rockylinux_9_build -f $CURRENT_DIR/Dockerfile .
 fi
 set -e
 

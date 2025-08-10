@@ -7,7 +7,7 @@ docker images | grep opensuse_leap_15_build
 if [ $? -ne 0 ]; then
   set -e
   docker pull docker.io/opensuse/leap:15
-  docker build --no-cache --tag opensuse_leap_15_build -f $CURRENT_DIR/Dockerfile
+  docker build --no-cache --tag opensuse_leap_15_build -f $CURRENT_DIR/Dockerfile .
 fi
 set -e
 

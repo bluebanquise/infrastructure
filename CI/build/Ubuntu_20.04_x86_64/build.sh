@@ -7,7 +7,7 @@ docker images | grep ubuntu_20.04_build
 if [ $? -ne 0 ]; then
   set -e
   docker pull docker.io/ubuntu:20.04
-  docker build --no-cache --tag ubuntu_20.04_build -f $CURRENT_DIR/Dockerfile
+  docker build --no-cache --tag ubuntu_20.04_build -f $CURRENT_DIR/Dockerfile .
 fi
 set -e
 
