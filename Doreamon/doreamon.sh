@@ -6,8 +6,8 @@ pip3 install --upgrade sphinx sphinx-book-theme mkdocs mkdocs-material
 export PATH=$HOME/.local/bin:$PATH
 
 # Prepare html
-mkdir -p website
-cp index.html website/
+mkdir -p $HOME/website
+cp index.html $HOME/website/
 
 # Grab credentials
 source $HOME/credentials.sh
@@ -47,13 +47,13 @@ set_status () {
   fi
   # if $3 == 0 then table
   if [[ $3 == 0 ]]; then
-  sudo sed -i "s/^.*<\!--$target-->.*$/$btable_pre$status$btable_app<\!--$target-->/" website/index.html
+  sudo sed -i "s/^.*<\!--$target-->.*$/$btable_pre$status$btable_app<\!--$target-->/" $HOME/website/index.html
   else
-  sudo sed -i "s/^.*<\!--$target-->.*$/$bspace$status<\!--$target-->/" website/index.html
+  sudo sed -i "s/^.*<\!--$target-->.*$/$bspace$status<\!--$target-->/" $HOME/website/index.html
   fi
 
   sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-put website/index.html /home/$website_user/bluebanquise/infrastructure/index.html
+put $HOME/website/index.html /home/$website_user/bluebanquise/infrastructure/index.html
 exit
 EOF
 
