@@ -37,8 +37,8 @@ done
 
 # Clean cache, it was meant to be redone at each build pass
 if [ "$clean_cache" == 'yes' ]; then
-    ssh bluebanquise@x86_64_worker rm -Rf /tmp/cache/*
-    ssh bluebanquise@aarch64_worker rm -Rf /tmp/cache/*
+    ssh bluebanquise@x86_64_worker sudo rm -Rf /tmp/cache/*
+    ssh bluebanquise@aarch64_worker sudo rm -Rf /tmp/cache/*
     exit 0
 fi
 
