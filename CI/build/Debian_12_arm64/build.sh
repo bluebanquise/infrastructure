@@ -17,18 +17,18 @@ fi
 mkdir -p ~/build/debian12/arm64/
 
 if [ "$1" == "all" ]; then
-#docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build conman Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build nyancat Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build prometheus Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build atftp Debian 12
-# docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS debian_12_build ansible-cmdb Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build slurm Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build bluebanquise-ipxe Debian 12
-# docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS debian_12_build bluebanquise-tools Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build grubby Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build loki Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build clonezilla Debian 12
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build alpine Debian 12
+#docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build conman Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build nyancat Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build prometheus Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build atftp Debian 12
+# docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS debian_12_build ansible-cmdb Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build slurm Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build bluebanquise-ipxe Debian 12
+# docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS debian_12_build bluebanquise-tools Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build grubby Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build loki Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build clonezilla Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build alpine Debian 12
 else
-docker run -it --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build $1 Debian 12
+docker run --rm -v ~/build/debian12/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_12_build $1 Debian 12
 fi

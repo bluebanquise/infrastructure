@@ -2,6 +2,9 @@
 export PATH=$HOME/.local/bin:$PATH
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 set -x
+set -e
+python3 -m venv $HOME/pvenv
+source $HOME/pvenv/bin/activate
 pip3 install --upgrade sphinx sphinx-book-theme mkdocs mkdocs-material
 export PATH=$HOME/.local/bin:$PATH
 
@@ -15,13 +18,14 @@ source $HOME/credentials.sh
 # Prepare gits
 mkdir -p gits
 cd gits
-git clone https://github.com/bluebanquise/bluebanquise.git
-git clone https://github.com/bluebanquise/infrastructure.git
-git clone https://github.com/bluebanquise/website.git
+git clone https://github.com/bluebanquise/bluebanquise.git || echo "repo already exists"
+git clone https://github.com/bluebanquise/infrastructure.git || echo "repo already exists"
+git clone https://github.com/bluebanquise/website.git || echo "repo already exists"
 cd ../
 
 
 set_status () {
+ return 0
   # CSS buttons
   bsuccess='\<a class=\"button is-success\"\> Success \<\/a\>'
   berror='\<a class=\"button is-danger\"\> Error \<\/a\>'
@@ -52,10 +56,10 @@ set_status () {
   sudo sed -i "s/^.*<\!--$target-->.*$/$bspace$status<\!--$target-->/" $HOME/website/index.html
   fi
 
-  sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-put $HOME/website/index.html /home/$website_user/bluebanquise/infrastructure/index.html
-exit
-EOF
+#  sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
+#put $HOME/website/index.html /home/$website_user/bluebanquise/infrastructure/index.html
+#exit
+#EOF
 
 }
 
@@ -350,7 +354,7 @@ EOF
             fi
         done
 
-        # Loop over os build
+        # Loop over os repositories build
         if [[ "$build_was_success" == "true" ]]; then
             for os_target in el9 el8 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
                 set_status $(echo r_${os_target}_x86_64) running 0

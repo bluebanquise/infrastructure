@@ -17,19 +17,19 @@ fi
 mkdir -p ~/build/ubuntu2204/arm64/
 
 if [ "$1" == "all" ]; then
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build nyancat Ubuntu 22.04
-#docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build conman Ubuntu 22.04
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build prometheus Ubuntu 22.04
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build atftp Ubuntu 22.04
-# docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS ubuntu_22.04_build ansible-cmdb Ubuntu 22.04
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build slurm Ubuntu 22.04
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build bluebanquise-ipxe Ubuntu 22.04
-# docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS ubuntu_22.04_build bluebanquise-tools Ubuntu 22.04
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build grubby Ubuntu 22.04
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build loki Ubuntu 22.04
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build alpine Ubuntu 22.04
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build clonezilla Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build nyancat Ubuntu 22.04
+#docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build conman Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build prometheus Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build atftp Ubuntu 22.04
+# docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS ubuntu_22.04_build ansible-cmdb Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build slurm Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build bluebanquise-ipxe Ubuntu 22.04
+# docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS ubuntu_22.04_build bluebanquise-tools Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build grubby Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build loki Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build alpine Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build clonezilla Ubuntu 22.04
 
 else
-docker run -it --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build $1 Ubuntu 22.04
+docker run --rm -v ~/build/ubuntu2204/arm64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_22.04_build $1 Ubuntu 22.04
 fi

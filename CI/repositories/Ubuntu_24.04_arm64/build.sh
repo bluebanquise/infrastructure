@@ -1,6 +1,6 @@
 set -x
 # if [ "$1" == 'yes' ]; then
-podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2404/arm64/bluebanquise/:/repo/ ubuntu:24.04 /bin/bash -c ' \
+podman run --rm -v /home/bluebanquise/repositories/ubuntu2404/arm64/bluebanquise/:/repo/ ubuntu:24.04 /bin/bash -c ' \
     set -x ; \
     apt-get update ; \
     export DEBIAN_FRONTEND=noninteractive; \
@@ -21,7 +21,7 @@ podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2404/arm64/bluebanq
     reprepro -b /repo/repo/ list noble; \
     '
 # else
-# podman run -it --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/:/repo/ ubuntu:20.04 /bin/bash -c ' \
+# podman run --rm -v /home/bluebanquise/repositories/ubuntu2004/arm64/bluebanquise/:/repo/ ubuntu:20.04 /bin/bash -c ' \
 #     set -x ; \
 #     apt-get update ; \
 #     apt-get install -y wget dpkg-dev apt-mirror rsync ; \

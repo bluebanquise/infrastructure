@@ -22,17 +22,17 @@ fi
 mkdir -p ~/build/el8/sources/
 
 if [ "$1" == "all" ]; then
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build nyancat RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build conman RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build atftp RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build bluebanquise-ipxe RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build slurm RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build prometheus RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build loki RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build alpine RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build clonezilla RedHat 8
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build memtest86plus RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build nyancat RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build conman RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build atftp RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build bluebanquise-ipxe RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build slurm RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build prometheus RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build loki RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build alpine RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build clonezilla RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build memtest86plus RedHat 8
 
 else
-docker run -it --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build $1 RedHat 8
+docker run --rm -v ~/build/el8/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el8/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_8_build $1 RedHat 8
 fi

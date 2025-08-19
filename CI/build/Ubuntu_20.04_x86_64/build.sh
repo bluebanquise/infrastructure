@@ -17,20 +17,20 @@ fi
 mkdir -p ~/build/ubuntu2004/x86_64/
 
 if [ "$1" == "all" ]; then
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build nyancat Ubuntu 20.04
-#docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build conman Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build prometheus Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build atftp Ubuntu 20.04
-#docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build ansible-cmdb Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build slurm Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build bluebanquise-ipxe Ubuntu 20.04
-#docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build bluebanquise-tools Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build grubby Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build loki Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build alpine Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build clonezilla Ubuntu 20.04
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build memtest86plus Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build nyancat Ubuntu 20.04
+#docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build conman Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build prometheus Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build atftp Ubuntu 20.04
+#docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build ansible-cmdb Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build slurm Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build bluebanquise-ipxe Ubuntu 20.04
+#docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS ubuntu_20.04_build bluebanquise-tools Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build grubby Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build loki Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build alpine Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build clonezilla Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build memtest86plus Ubuntu 20.04
 
 else
-docker run -it --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build $1 Ubuntu 20.04
+docker run --rm -v ~/build/ubuntu2004/x86_64/:/root/debbuild/DEBS -v /tmp:/tmp ubuntu_20.04_build $1 Ubuntu 20.04
 fi

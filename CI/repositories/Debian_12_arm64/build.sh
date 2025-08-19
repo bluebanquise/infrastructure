@@ -1,6 +1,6 @@
 set -x
 # if [ "$1" == 'yes' ]; then
-docker run -it --rm -v /home/bluebanquise/repositories/debian12/arm64/bluebanquise/:/repo/ debian:12 /bin/bash -c ' \
+docker run --rm -v /home/bluebanquise/repositories/debian12/arm64/bluebanquise/:/repo/ debian:12 /bin/bash -c ' \
     set -x ; \
     apt-get update ; \
     export DEBIAN_FRONTEND=noninteractive; \

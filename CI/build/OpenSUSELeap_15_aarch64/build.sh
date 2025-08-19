@@ -22,19 +22,19 @@ fi
 mkdir -p ~/build/lp15/sources/
 
 if [ "$1" == "all" ]; then
-docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build nyancat opensuse_leap 15
-#docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build conman opensuse_leap 15
-# docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build ansible-cmdb opensuse_leap 15
-# docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build atftp opensuse_leap 15
-docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build bluebanquise-ipxe opensuse_leap 15
-docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build atftp opensuse_leap 15
-# docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build bluebanquise-tools opensuse_leap 15
-# docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build slurm opensuse_leap 15
-docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build prometheus opensuse_leap 15
-docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build loki opensuse_leap 15
-docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build clonezilla opensuse_leap 15
-docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build alpine opensuse_leap 15
+docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build nyancat opensuse_leap 15
+#docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build conman opensuse_leap 15
+# docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build ansible-cmdb opensuse_leap 15
+# docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build atftp opensuse_leap 15
+docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build bluebanquise-ipxe opensuse_leap 15
+docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build atftp opensuse_leap 15
+# docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ opensuse_leap_15_build bluebanquise-tools opensuse_leap 15
+# docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build slurm opensuse_leap 15
+docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build prometheus opensuse_leap 15
+docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build loki opensuse_leap 15
+docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build clonezilla opensuse_leap 15
+docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp opensuse_leap_15_build alpine opensuse_leap 15
 
 else
-docker run -it --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp  opensuse_leap_15_build $1 opensuse_leap 15
+docker run --rm -v ~/build/lp15/aarch64/:/usr/src/packages/RPMS/ -v ~/build/lp15/sources/:/usr/src/packages/SRPMS/ -v /tmp:/tmp  opensuse_leap_15_build $1 opensuse_leap 15
 fi

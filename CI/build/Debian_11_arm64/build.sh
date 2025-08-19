@@ -17,18 +17,18 @@ fi
 mkdir -p ~/build/debian11/arm64/
 
 if [ "$1" == "all" ]; then
-#docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build conman Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build nyancat Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build atftp Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build prometheus Debian 11
-# docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS debian_11_build ansible-cmdb Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build slurm Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build bluebanquise-ipxe Debian 11
-# docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS debian_11_build bluebanquise-tools Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build grubby Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build loki Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build clonezilla Debian 11
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build alpine Debian 11
+#docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build conman Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build nyancat Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build atftp Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build prometheus Debian 11
+# docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS debian_11_build ansible-cmdb Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build slurm Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build bluebanquise-ipxe Debian 11
+# docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS debian_11_build bluebanquise-tools Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build grubby Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build loki Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build clonezilla Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build alpine Debian 11
 else
-docker run -it --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build $1 Debian 11
+docker run --rm -v ~/build/debian11/arm64/:/root/debbuild/DEBS -v /tmp:/tmp debian_11_build $1 Debian 11
 fi

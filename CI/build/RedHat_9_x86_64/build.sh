@@ -22,18 +22,18 @@ fi
 mkdir -p ~/build/el9/sources/
 
 if [ "$1" == "all" ]; then
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build nyancat RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build conman RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build powerman RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build atftp RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build bluebanquise-ipxe RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build slurm RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build prometheus RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build alpine RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build loki RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build clonezilla RedHat 9
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build memtest86plus RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build nyancat RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build conman RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build powerman RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build atftp RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build bluebanquise-ipxe RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build slurm RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build prometheus RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build alpine RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build loki RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build clonezilla RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build memtest86plus RedHat 9
 
 else
-docker run -it --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build $1 RedHat 9
+docker run --rm -v ~/build/el9/x86_64/:/root/rpmbuild/RPMS/ -v ~/build/el9/sources/:/root/rpmbuild/SRPMS/ -v /tmp:/tmp rockylinux_9_build $1 RedHat 9
 fi
