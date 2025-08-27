@@ -2,7 +2,7 @@ set -e
 #set -x
 
 # For me
-# docker run --privileged --rm tonistiigi/binfmt --install arm64
+docker run --privileged --rm tonistiigi/binfmt --install arm64
 
 # Custom docker cache folder
 # oxedions@prima:~/gits/infrastructure$ sudo systemctl restart docker
@@ -36,7 +36,7 @@ done
 
 # Clean cache, it was meant to be redone at each build pass
 if [ "$clean_cache" == 'yes' ]; then
-    rm -Rf $HOME/cache/*
+    rm -Rf $HOME/CI/tmp/cache/*
 fi
 
 if [ -z ${packages_list+x} ]; then
@@ -233,13 +233,13 @@ if echo $steps | grep -q "build"; then
             ## Debian_12_x86_64
             cp -a $CURRENT_DIR/build/Debian_12_x86_64/ $HOME/CI/Build_Debian_12_x86_64/
             $HOME/CI/Build_Debian_12_x86_64/build.sh $packages_list
-            cp -a $HOME/CI/build/debian12/x86_64/* $HOME/CI/build/debian12/x86_64/
+            #cp -a $HOME/CI/build/debian12/x86_64/* $HOME/CI/build/debian12/x86_64/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## Debian_12_arm64
             cp -a $CURRENT_DIR/build/Debian_12_arm64/ $HOME/CI/Build_Debian_12_arm64/
             $HOME/CI/Build_Debian_12_arm64/build.sh $packages_list "--platform linux/arm64"
-            cp -a $HOME/CI/build/debian12/arm64/* $HOME/CI/build/debian12/arm64/
+            #cp -a $HOME/CI/build/debian12/arm64/* $HOME/CI/build/debian12/arm64/
         fi
     fi
 
