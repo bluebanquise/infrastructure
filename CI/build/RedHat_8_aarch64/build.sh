@@ -16,21 +16,27 @@ rm -Rf ~/build/el8/aarch64/
 fi
 mkdir -p ~/build/el8/aarch64/
 
+if [ -z ${2+x} ]; then
+  PLATFORM=""
+else
+  PLATFORM=$2
+fi
+
 if [ "$1" == "all" ]; then
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build nyancat RedHat 8
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build conman RedHat 8
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build prometheus RedHat 8
-# docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build ansible-cmdb RedHat 8
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build slurm RedHat 8
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build atftp RedHat 8
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build bluebanquise-ipxe RedHat 8
-# docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build bluebanquise-tools RedHat 8
-# docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build ssh-wait RedHat 8
-# docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build colour_text RedHat 8
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build alpine RedHat 8
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build loki RedHat 8
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build clonezilla RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build nyancat RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build conman RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build prometheus RedHat 8
+# docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build ansible-cmdb RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build slurm RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build atftp RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build bluebanquise-ipxe RedHat 8
+# docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build bluebanquise-tools RedHat 8
+# docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build ssh-wait RedHat 8
+# docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS rockylinux_8_build colour_text RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build alpine RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build loki RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build clonezilla RedHat 8
 
 else
-docker run --rm -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build $1 RedHat 8
+docker run --rm $PLATFORM -v ~/build/el8/aarch64/:/root/rpmbuild/RPMS -v /tmp:/tmp rockylinux_8_build $1 RedHat 8
 fi
