@@ -81,9 +81,12 @@ else
     echo "Steps: $steps"
 fi
 
+if [ "$clean_build_repo" == 'yes' ]; then
+    sudo rm -Rf $HOME/CI/build* $HOME/CI/build $HOME/CI/repositories* $HOME/CI/repositories
+fi
+
 if [ "$clean_all" == 'yes' ]; then
-    rm -Rf $HOME/CI/
-    rm -Rf $HOME/CI/build* $HOME/CI/build $HOME/CI/repositories* $HOME/CI/repositories
+    sudo rm -Rf $HOME/CI/
 fi
 
 mkdir -p $HOME/CI/
