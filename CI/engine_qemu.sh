@@ -16,7 +16,9 @@ set -e
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # Introduce tags, that allows to prevent super long and stupid rebuilds
-mkdir -p $/tags
+mkdir -p $HOME/CI/tmp/tags/
+mkdir -p $HOME/CI/tmp/wd/
+mkdir -p $HOME/CI/tmp/cache/
 
 ################################################################################
 #################### INIT STEP

@@ -42,9 +42,9 @@ echo " Settings set to $distribution $distribution_version $distribution_archite
 echo " Creating working directory..."
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 root_directory=$SCRIPT_DIR
-working_directory=$HOME/wd/
-cache_directory=$HOME/cache/
-tags_directory=$HOME/tags/
+working_directory=/tmp/wd/
+cache_directory=/tmp/cache/
+tags_directory=/tmp/tags/
 echo " Working directory: $working_directory"
 mkdir -p $working_directory
 echo " root directory: $root_directory"
