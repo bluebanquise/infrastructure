@@ -1,6 +1,6 @@
 set -x
 # if [ "$1" == 'yes' ]; then
-docker run --rm -v /home/bluebanquise/repositories/debian11/x86_64/bluebanquise/:/repo/ debian:11 /bin/bash -c ' \
+docker run --rm -v $HOME/CI/repositories/debian11/x86_64/bluebanquise/:/repo/ debian:11 /bin/bash -c ' \
     set -x ; \
     apt-get update ; \
     export DEBIAN_FRONTEND=noninteractive; \
@@ -21,7 +21,7 @@ docker run --rm -v /home/bluebanquise/repositories/debian11/x86_64/bluebanquise/
     reprepro -b /repo/repo/ list bullseye; \
     '
 # else
-# docker run --rm -v /home/bluebanquise/repositories/debian11/x86_64/bluebanquise/:/repo/ debian:11 /bin/bash -c ' \
+# docker run --rm -v $HOME/CI/repositories/debian11/x86_64/bluebanquise/:/repo/ debian:11 /bin/bash -c ' \
 #     set -x ; \
 #     apt update ; \
 #     apt install -y wget dpkg-dev apt-mirror rsync ; \

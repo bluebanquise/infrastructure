@@ -10,10 +10,10 @@ else
   PLATFORM=$2
 fi
 
-docker images | grep debian_12_build
+docker images | grep debian_12_build_arm64
 if [ $? -ne 0 ]; then
   set -e
-  docker build $PLATFORM --no-cache --tag debian_12_build -f $CURRENT_DIR/Dockerfile .
+  docker build $PLATFORM --no-cache --tag debian_12_build_arm64 -f $CURRENT_DIR/Dockerfile .
 fi
 set -e
 
@@ -24,18 +24,18 @@ mkdir -p $HOME/CI/build/debian12/arm64/
 
 
 if [ "$1" == "all" ]; then
-#docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build conman Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp -v $HOME/ debian_12_build nyancat Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build prometheus Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build atftp Debian 12
-# docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS debian_12_build ansible-cmdb Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build slurm Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build bluebanquise-ipxe Debian 12
-# docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS debian_12_build bluebanquise-tools Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build grubby Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build loki Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build clonezilla Debian 12
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build alpine Debian 12
+#docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 conman Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp -v $HOME/ debian_12_build_arm64 nyancat Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 prometheus Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 atftp Debian 12
+# docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS debian_12_build_arm64 ansible-cmdb Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 slurm Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 bluebanquise-ipxe Debian 12
+# docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS debian_12_build_arm64 bluebanquise-tools Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 grubby Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 loki Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 clonezilla Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 alpine Debian 12
 else
-docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build $1 Debian 12
+docker run --rm $PLATFORM -v $HOME/CI/build/debian12/arm64/:/root/debbuild/DEBS -v $HOME/CI/tmp/:/tmp debian_12_build_arm64 $1 Debian 12
 fi
