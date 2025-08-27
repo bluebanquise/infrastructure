@@ -26,7 +26,7 @@ if [ ! -f $tags_directory/conman-$distribution-$distribution_version-$conman_ver
     fi
 
     # Build success, tag it
-    touch $tags_directory/conman-$distribution-$distribution_version-$conman_version
+    touch $tags_directory/conman-$distribution-$distribution_version-$conman_version-$(uname -p)
 
 fi
 

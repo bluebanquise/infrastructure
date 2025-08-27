@@ -29,7 +29,7 @@ if [ ! -f $tags_directory/alpine-$distribution-$distribution_version-$alpine_ver
         mv *.deb /root/debbuild/DEBS/noarch/
     fi
     # Build success, tag it
-    touch $tags_directory/alpine-$distribution-$distribution_version-$alpine_version
+    touch $tags_directory/alpine-$distribution-$distribution_version-$alpine_version-$(uname -p)
 
 fi
 set +x

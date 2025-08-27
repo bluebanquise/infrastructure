@@ -25,7 +25,7 @@ if [ ! -f $tags_directory/memtest86plus-$distribution-$distribution_version-$mem
     fi
 
     # Build success, tag it
-    touch $tags_directory/memtest86plus-$distribution-$distribution_version-$memtest86plus_version
+    touch $tags_directory/memtest86plus-$distribution-$distribution_version-$memtest86plus_version-$(uname -p)
 
 fi
 

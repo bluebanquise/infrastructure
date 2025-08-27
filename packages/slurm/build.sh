@@ -50,7 +50,7 @@ if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_versi
 
 
     # Build success, tag it
-    touch $tags_directory/munge-$distribution-$distribution_version-$munge_version
+    touch $tags_directory/munge-$distribution-$distribution_version-$munge_version-$(uname -p)
 
 #fi
 
@@ -126,7 +126,7 @@ if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_versi
     # fi
 
     # Build success, tag it
-    touch $tags_directory/slurm-$distribution-$distribution_version-$slurm_version
+    touch $tags_directory/slurm-$distribution-$distribution_version-$slurm_version-$(uname -p)
 
 fi
 

@@ -88,7 +88,7 @@ if [ ! -f $tags_directory/prometheus-$distribution-$distribution_version-$promet
     fi
 
     # Build success, tag it
-    touch $tags_directory/prometheus-$distribution-$distribution_version-$prometheus_version-$prometheus_client_version-$alertmanager_version-$ipmi_exporter_version-$node_exporter_version-$karma_version-$snmp_exporter_version
+    touch $tags_directory/prometheus-$distribution-$distribution_version-$prometheus_version-$prometheus_client_version-$alertmanager_version-$ipmi_exporter_version-$node_exporter_version-$karma_version-$snmp_exporter_version-$(uname -p)
 
 fi
 

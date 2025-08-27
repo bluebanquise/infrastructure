@@ -25,7 +25,7 @@ if [ ! -f $tags_directory/clonezilla-$distribution-$distribution_version-$clonez
         mv *.deb /root/debbuild/DEBS/noarch/
     fi
     # Build success, tag it
-    touch $tags_directory/clonezilla-$distribution-$distribution_version-$clonezilla_version
+    touch $tags_directory/clonezilla-$distribution-$distribution_version-$clonezilla_version-$(uname -p)
 
 fi
 

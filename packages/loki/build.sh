@@ -37,6 +37,6 @@ if [ ! -f $tags_directory/loki-$distribution-$distribution_version-$loki_version
         mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     fi
     # Build success, tag it
-    touch $tags_directory/loki-$distribution-$distribution_version-$loki_version
+    touch $tags_directory/loki-$distribution-$distribution_version-$loki_version-$(uname -p)
 
 fi

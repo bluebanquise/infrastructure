@@ -28,7 +28,7 @@ if [ ! -f $tags_directory/grubby-$distribution-$distribution_version-$grubby_ver
         mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     fi
     # Build success, tag it
-    touch $tags_directory/grubby-$distribution-$distribution_version-$grubby_version
+    touch $tags_directory/grubby-$distribution-$distribution_version-$grubby_version-$(uname -p)
 
 fi
 

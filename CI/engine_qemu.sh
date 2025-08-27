@@ -83,7 +83,7 @@ fi
 
 if [ "$clean_all" == 'yes' ]; then
     rm -Rf $HOME/CI/
-    rm -Rf $HOME/Build* $HOME/build $HOME/CI/repositories* $HOME/CI/repositories
+    rm -Rf $HOME/CI/build* $HOME/CI/build $HOME/CI/repositories* $HOME/CI/repositories
 fi
 
 mkdir -p $HOME/CI/
@@ -109,14 +109,14 @@ if echo $steps | grep -q "build"; then
             ## RedHat_9_x86_64
             cp -a $CURRENT_DIR/build/RedHat_9_x86_64/ $HOME/CI/Build_RedHat_9_x86_64/
             $HOME/CI/Build_RedHat_9_x86_64/build.sh $packages_list
-            cp -a $HOME/build/el9/x86_64/* $HOME/CI/build/el9/x86_64/
-            cp -a $HOME/build/el9/sources/* $HOME/CI/build/el9/sources/
+            cp -a $HOME/CI/build/el9/x86_64/* $HOME/CI/build/el9/x86_64/
+            cp -a $HOME/CI/build/el9/sources/* $HOME/CI/build/el9/sources/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## RedHat_9_aarch64
             cp -a $CURRENT_DIR/build/RedHat_9_aarch64/ $HOME/CI/Build_RedHat_9_aarch64/
             $HOME/CI/Build_RedHat_9_aarch64/build.sh $packages_list "--platform linux/arm64"
-            cp -a $HOME/build/el9/aarch64/* $HOME/CI/build/el9/aarch64/
+            cp -a $HOME/CI/build/el9/aarch64/* $HOME/CI/build/el9/aarch64/
         fi
     fi
 
@@ -125,13 +125,13 @@ if echo $steps | grep -q "build"; then
             ## Ubuntu_22.04_x86_64
             cp -a $CURRENT_DIR/build/Ubuntu_22.04_x86_64/ $HOME/CI/Build_Ubuntu_22.04_x86_64/
             $HOME/CI/Build_Ubuntu_22.04_x86_64/build.sh $packages_list
-            cp -a $HOME/build/ubuntu2204/x86_64/* $HOME/CI/build/ubuntu2204/x86_64/
+            cp -a $HOME/CI/build/ubuntu2204/x86_64/* $HOME/CI/build/ubuntu2204/x86_64/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## Ubuntu_22.04_arm64
             cp -a $CURRENT_DIR/build/Ubuntu_22.04_arm64/ $HOME/CI/Build_Ubuntu_22.04_arm64/
             $HOME/CI/Build_Ubuntu_22.04_arm64/build.sh $packages_list
-            cp -a $HOME/build/ubuntu2204/arm64/* $HOME/CI/build/ubuntu2204/arm64/
+            cp -a $HOME/CI/build/ubuntu2204/arm64/* $HOME/CI/build/ubuntu2204/arm64/
         fi
     fi
 
@@ -140,13 +140,13 @@ if echo $steps | grep -q "build"; then
             ## Ubuntu_24.04_x86_64
             cp -a $CURRENT_DIR/build/Ubuntu_24.04_x86_64/ $HOME/CI/Build_Ubuntu_24.04_x86_64/
             $HOME/CI/Build_Ubuntu_24.04_x86_64/build.sh $packages_list
-            cp -a $HOME/build/ubuntu2404/x86_64/* $HOME/CI/build/ubuntu2404/x86_64/
+            cp -a $HOME/CI/build/ubuntu2404/x86_64/* $HOME/CI/build/ubuntu2404/x86_64/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## Ubuntu_24.04_arm64
             cp -a $CURRENT_DIR/build/Ubuntu_24.04_arm64/ $HOME/CI/Build_Ubuntu_24.04_arm64/
             $HOME/CI/Build_Ubuntu_24.04_arm64/build.sh $packages_list
-            cp -a $HOME/build/ubuntu2404/arm64/* $HOME/CI/build/ubuntu2404/arm64/
+            cp -a $HOME/CI/build/ubuntu2404/arm64/* $HOME/CI/build/ubuntu2404/arm64/
         fi
     fi
 
@@ -155,14 +155,14 @@ if echo $steps | grep -q "build"; then
             ## RedHat_7_x86_64
             cp -a $CURRENT_DIR/build/RedHat_7_x86_64/ $HOME/CI/Build_RedHat_7_x86_64/
             $HOME/CI/Build_RedHat_7_x86_64/build.sh $packages_list
-            cp -a $HOME/build/el7/x86_64/* $HOME/CI/build/el7/x86_64/
-            cp -a $HOME/build/el7/sources/* $HOME/CI/build/el7/sources/
+            cp -a $HOME/CI/build/el7/x86_64/* $HOME/CI/build/el7/x86_64/
+            cp -a $HOME/CI/build/el7/sources/* $HOME/CI/build/el7/sources/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## RedHat_7_aarch64
             cp -a $CURRENT_DIR/build/RedHat_7_aarch64/ $HOME/CI/Build_RedHat_7_aarch64/
             $HOME/CI/Build_RedHat_7_aarch64/build.sh $packages_list
-            cp -a $HOME/build/el7/aarch64/* $HOME/CI/build/el7/aarch64/
+            cp -a $HOME/CI/build/el7/aarch64/* $HOME/CI/build/el7/aarch64/
         fi
     fi
 
@@ -171,14 +171,14 @@ if echo $steps | grep -q "build"; then
             ## RedHat_8_x86_64
             cp -a $CURRENT_DIR/build/RedHat_8_x86_64/ $HOME/CI/Build_RedHat_8_x86_64/
             $HOME/CI/Build_RedHat_8_x86_64/build.sh $packages_list
-            cp -a $HOME/build/el8/x86_64/* $HOME/CI/build/el8/x86_64/
-            cp -a $HOME/build/el8/sources/* $HOME/CI/build/el8/sources/
+            cp -a $HOME/CI/build/el8/x86_64/* $HOME/CI/build/el8/x86_64/
+            cp -a $HOME/CI/build/el8/sources/* $HOME/CI/build/el8/sources/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## RedHat_8_aarch64
             cp -a $CURRENT_DIR/build/RedHat_8_aarch64/ $HOME/CI/Build_RedHat_8_aarch64/
             $HOME/CI/Build_RedHat_8_aarch64/build.sh $packages_list
-            cp -a $HOME/build/el8/aarch64/* $HOME/CI/build/el8/aarch64/
+            cp -a $HOME/CI/build/el8/aarch64/* $HOME/CI/build/el8/aarch64/
         fi
     fi
 
@@ -187,14 +187,14 @@ if echo $steps | grep -q "build"; then
             ## OpenSuse Leap 15
             cp -a $CURRENT_DIR/build/OpenSUSELeap_15_x86_64/ $HOME/CI/Build_OpenSUSELeap_15_x86_64/
             $HOME/CI/Build_OpenSUSELeap_15_x86_64/build.sh $packages_list
-            cp -a $HOME/build/lp15/x86_64/* $HOME/CI/build/lp15/x86_64/
-            cp -a $HOME/build/lp15/sources/* $HOME/CI/build/lp15/sources/
+            cp -a $HOME/CI/build/lp15/x86_64/* $HOME/CI/build/lp15/x86_64/
+            cp -a $HOME/CI/build/lp15/sources/* $HOME/CI/build/lp15/sources/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## OpenSuse Leap 15
             cp -a $CURRENT_DIR/build/OpenSUSELeap_15_aarch64/ $HOME/CI/Build_OpenSUSELeap_15_aarch64/
             $HOME/CI/Build_OpenSUSELeap_15_aarch64/build.sh $packages_list
-            cp -a $HOME/build/lp15/aarch64/* $HOME/CI/build/lp15/aarch64/
+            cp -a $HOME/CI/build/lp15/aarch64/* $HOME/CI/build/lp15/aarch64/
         fi
     fi
 
@@ -203,13 +203,13 @@ if echo $steps | grep -q "build"; then
             ## Ubuntu_20.04_x86_64
             cp -a $CURRENT_DIR/build/Ubuntu_20.04_x86_64/ $HOME/CI/Build_Ubuntu_20.04_x86_64/
             $HOME/CI/Build_Ubuntu_20.04_x86_64/build.sh $packages_list
-            cp -a $HOME/build/ubuntu2004/x86_64/* $HOME/CI/build/ubuntu2004/x86_64/
+            cp -a $HOME/CI/build/ubuntu2004/x86_64/* $HOME/CI/build/ubuntu2004/x86_64/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## Ubuntu_20.04_arm64
             cp -a $CURRENT_DIR/build/Ubuntu_20.04_arm64/ $HOME/CI/Build_Ubuntu_20.04_arm64/
             $HOME/CI/Build_Ubuntu_20.04_arm64/build.sh $packages_list
-            cp -a $HOME/build/ubuntu2004/arm64/* $HOME/CI/build/ubuntu2004/arm64/
+            cp -a $HOME/CI/build/ubuntu2004/arm64/* $HOME/CI/build/ubuntu2004/arm64/
         fi
     fi
 
@@ -218,13 +218,13 @@ if echo $steps | grep -q "build"; then
             ## Debian_11_x86_64
             cp -a $CURRENT_DIR/build/Debian_11_x86_64/ $HOME/CI/Build_Debian_11_x86_64/
             $HOME/CI/Build_Debian_11_x86_64/build.sh $packages_list
-            cp -a $HOME/build/debian11/x86_64/* $HOME/CI/build/debian11/x86_64/
+            cp -a $HOME/CI/build/debian11/x86_64/* $HOME/CI/build/debian11/x86_64/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## Debian_11_arm64
             cp -a $CURRENT_DIR/build/Debian_11_arm64/ $HOME/CI/Build_Debian_11_arm64/
             $HOME/CI/Build_Debian_11_arm64/build.sh $packages_list
-            cp -a $HOME/build/debian11/arm64/* $HOME/CI/build/debian11/arm64/
+            cp -a $HOME/CI/build/debian11/arm64/* $HOME/CI/build/debian11/arm64/
         fi
     fi
 
@@ -233,13 +233,13 @@ if echo $steps | grep -q "build"; then
             ## Debian_12_x86_64
             cp -a $CURRENT_DIR/build/Debian_12_x86_64/ $HOME/CI/Build_Debian_12_x86_64/
             $HOME/CI/Build_Debian_12_x86_64/build.sh $packages_list
-            cp -a $HOME/build/debian12/x86_64/* $HOME/CI/build/debian12/x86_64/
+            cp -a $HOME/CI/build/debian12/x86_64/* $HOME/CI/build/debian12/x86_64/
         fi
         if echo $arch_list | grep -q -E "aarch64|arm64"; then
             ## Debian_12_arm64
             cp -a $CURRENT_DIR/build/Debian_12_arm64/ $HOME/CI/Build_Debian_12_arm64/
             $HOME/CI/Build_Debian_12_arm64/build.sh $packages_list "--platform linux/arm64"
-            cp -a $HOME/build/debian12/arm64/* $HOME/CI/build/debian12/arm64/
+            cp -a $HOME/CI/build/debian12/arm64/* $HOME/CI/build/debian12/arm64/
         fi
     fi
 

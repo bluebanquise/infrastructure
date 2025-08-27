@@ -26,7 +26,7 @@ if [ ! -f $tags_directory/powerman-$distribution-$distribution_version-$powerman
     fi
 
     # Build success, tag it
-    touch $tags_directory/powerman-$distribution-$distribution_version-$powerman_version
+    touch $tags_directory/powerman-$distribution-$distribution_version-$powerman_version-$(uname -p)
 
 fi
 

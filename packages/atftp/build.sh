@@ -52,7 +52,7 @@ if [ ! -f $tags_directory/atftp-$distribution-$distribution_version-$atftp_versi
         mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     fi
     # Build success, tag it
-    touch $tags_directory/atftp-$distribution-$distribution_version-$bluebanquise_atftp_version
+    touch $tags_directory/atftp-$distribution-$distribution_version-$bluebanquise_atftp_version-$(uname -p)
 
 fi
 

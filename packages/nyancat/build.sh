@@ -25,7 +25,7 @@ if [ ! -f $tags_directory/nyancat-$distribution-$distribution_version-$nyancat_v
     fi
 
     # Build success, tag it
-    touch $tags_directory/nyancat-$distribution-$distribution_version-$nyancat_version
+    touch $tags_directory/nyancat-$distribution-$distribution_version-$nyancat_version-$(uname -p)
 
 fi
 
