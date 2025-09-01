@@ -4,7 +4,7 @@ CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 source $CURRENT_DIR/version.sh
 source $CURRENT_DIR/../common.sh
 
-package_path="$(package_path_calc)"
+package_path_calc
 
 if [ ! -f $package_path ]; then
 

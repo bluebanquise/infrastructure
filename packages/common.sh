@@ -17,6 +17,6 @@ package_path_calc() {
     exit 1
     fi
 
-    return $package_path
+    echo "Package path calculated: $package_path"
 
 }
