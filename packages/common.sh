@@ -17,6 +17,6 @@ package_path_calc() {
     exit 1
     fi
 
-    return package_path
+    return $package_path
 
 }
