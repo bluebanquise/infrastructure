@@ -1,7 +1,7 @@
 set -e
-#set -x
+set -x
 
-# For me
+# Enable QEMU
 docker run --privileged --rm tonistiigi/binfmt --install arm64
 
 # Custom docker cache folder
@@ -16,7 +16,6 @@ docker run --privileged --rm tonistiigi/binfmt --install arm64
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # Introduce tags, that allows to prevent super long and stupid rebuilds
-mkdir -p $HOME/CI/tmp/tags/
 mkdir -p $HOME/CI/tmp/wd/
 mkdir -p $HOME/CI/tmp/cache/
 
@@ -41,20 +40,21 @@ fi
 
 if [ -z ${packages_list+x} ]; then
     packages_list="all"
+    packages_list_for_ipxe=$packages_list
     echo "No packages list passed as argument, will generate all."
 else
     echo "Packages list to be generated: $packages_list"
 fi
 
 if [ -z ${arch_list+x} ]; then
-    arch_list="x86_64 aarch64 arm64"
+    arch_list="all"
     echo "No arch list passed as argument, will generate all."
 else
     echo "Arch list to be generated: $arch_list"
 fi
 
 if [ -z ${os_list+x} ]; then
-    os_list="el7 el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12"
+    os_list="all"
     echo "No os list passed as argument, will generate all."
 else
     echo "OS list to be generated: $os_list"
@@ -81,7 +81,7 @@ else
     echo "Steps: $steps"
 fi
 
-if [ "$clean_build" != 'no' ]; then
+if [ "$clean_build" == 'yes' ]; then
     # Clean builds since it requires sudo, so better ask at the beggining
     sudo rm -Rf $HOME/CI/build
 fi
@@ -92,170 +92,71 @@ fi
 
 mkdir -p $HOME/CI/
 mkdir -p $HOME/CI/logs/
-mkdir -p $HOME/CI/build/{el7,el8,el9,lp15}/{x86_64,aarch64,sources}/
-mkdir -p $HOME/CI/build/{debian11,debian12}/{x86_64,arm64}/
-mkdir -p $HOME/CI/build/{ubuntu2004,ubuntu2204,ubuntu2404}/{x86_64,arm64}/
-mkdir -p $HOME/CI/repositories/{el7,el8,el9,lp15}/{x86_64,aarch64,sources}/bluebanquise/
-mkdir -p $HOME/CI/repositories/{debian11,debian12}/{x86_64,arm64}/bluebanquise/
-mkdir -p $HOME/CI/repositories/{deb11,deb12}/{x86_64,arm64}/bluebanquise/
-mkdir -p $HOME/CI/repositories/{u20,u22,u24}/{x86_64,arm64}/bluebanquise/
-
+mkdir -p $HOME/CI/build/{el8,el9,el10,lp15}/{x86_64,aarch64,sources}/
+mkdir -p $HOME/CI/build/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/
+mkdir -p $HOME/CI/repositories/{el8,el9,el10,lp15}/{x86_64,aarch64,sources}/bluebanquise/
+mkdir -p $HOME/CI/repositories/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/bluebanquise/
 
 ################################################################################
 #################### BUILDS
 ####
 
-if echo $steps | grep -q "build"; then
-
-    # We need EL9 first, aka recent GCC, to build cached files
-    if echo $os_list | grep -q "el9"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## RedHat_9_x86_64
-            cp -a $CURRENT_DIR/build/RedHat_9_x86_64/ $HOME/CI/Build_RedHat_9_x86_64/
-            $HOME/CI/Build_RedHat_9_x86_64/build.sh $packages_list
-            #cp -a $HOME/CI/build/el9/x86_64/* $HOME/CI/build/el9/x86_64/
-            #cp -a $HOME/CI/build/el9/sources/* $HOME/CI/build/el9/sources/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## RedHat_9_aarch64
-            cp -a $CURRENT_DIR/build/RedHat_9_aarch64/ $HOME/CI/Build_RedHat_9_aarch64/
-            $HOME/CI/Build_RedHat_9_aarch64/build.sh $packages_list "--platform linux/arm64"
-            #cp -a $HOME/CI/build/el9/aarch64/* $HOME/CI/build/el9/aarch64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "ubuntu2204"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## Ubuntu_22.04_x86_64
-            cp -a $CURRENT_DIR/build/Ubuntu_22.04_x86_64/ $HOME/CI/Build_Ubuntu_22.04_x86_64/
-            $HOME/CI/Build_Ubuntu_22.04_x86_64/build.sh $packages_list
-            #cp -a $HOME/CI/build/ubuntu2204/x86_64/* $HOME/CI/build/ubuntu2204/x86_64/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## Ubuntu_22.04_arm64
-            cp -a $CURRENT_DIR/build/Ubuntu_22.04_arm64/ $HOME/CI/Build_Ubuntu_22.04_arm64/
-            $HOME/CI/Build_Ubuntu_22.04_arm64/build.sh $packages_list
-            #cp -a $HOME/CI/build/ubuntu2204/arm64/* $HOME/CI/build/ubuntu2204/arm64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "ubuntu2404"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## Ubuntu_24.04_x86_64
-            cp -a $CURRENT_DIR/build/Ubuntu_24.04_x86_64/ $HOME/CI/Build_Ubuntu_24.04_x86_64/
-            $HOME/CI/Build_Ubuntu_24.04_x86_64/build.sh $packages_list
-            #cp -a $HOME/CI/build/ubuntu2404/x86_64/* $HOME/CI/build/ubuntu2404/x86_64/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## Ubuntu_24.04_arm64
-            cp -a $CURRENT_DIR/build/Ubuntu_24.04_arm64/ $HOME/CI/Build_Ubuntu_24.04_arm64/
-            $HOME/CI/Build_Ubuntu_24.04_arm64/build.sh $packages_list
-            #cp -a $HOME/CI/build/ubuntu2404/arm64/* $HOME/CI/build/ubuntu2404/arm64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "el7"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## RedHat_7_x86_64
-            cp -a $CURRENT_DIR/build/RedHat_7_x86_64/ $HOME/CI/Build_RedHat_7_x86_64/
-            $HOME/CI/Build_RedHat_7_x86_64/build.sh $packages_list
-            #cp -a $HOME/CI/build/el7/x86_64/* $HOME/CI/build/el7/x86_64/
-            #cp -a $HOME/CI/build/el7/sources/* $HOME/CI/build/el7/sources/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## RedHat_7_aarch64
-            cp -a $CURRENT_DIR/build/RedHat_7_aarch64/ $HOME/CI/Build_RedHat_7_aarch64/
-            $HOME/CI/Build_RedHat_7_aarch64/build.sh $packages_list
-            #cp -a $HOME/CI/build/el7/aarch64/* $HOME/CI/build/el7/aarch64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "el8"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## RedHat_8_x86_64
-            cp -a $CURRENT_DIR/build/RedHat_8_x86_64/ $HOME/CI/Build_RedHat_8_x86_64/
-            $HOME/CI/Build_RedHat_8_x86_64/build.sh $packages_list
-            # cp -a $HOME/CI/build/el8/x86_64/* $HOME/CI/build/el8/x86_64/
-            # cp -a $HOME/CI/build/el8/sources/* $HOME/CI/build/el8/sources/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## RedHat_8_aarch64
-            cp -a $CURRENT_DIR/build/RedHat_8_aarch64/ $HOME/CI/Build_RedHat_8_aarch64/
-            $HOME/CI/Build_RedHat_8_aarch64/build.sh $packages_list
-            # cp -a $HOME/CI/build/el8/aarch64/* $HOME/CI/build/el8/aarch64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "lp15"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## OpenSuse Leap 15
-            cp -a $CURRENT_DIR/build/OpenSUSELeap_15_x86_64/ $HOME/CI/Build_OpenSUSELeap_15_x86_64/
-            $HOME/CI/Build_OpenSUSELeap_15_x86_64/build.sh $packages_list
-            # cp -a $HOME/CI/build/lp15/x86_64/* $HOME/CI/build/lp15/x86_64/
-            # cp -a $HOME/CI/build/lp15/sources/* $HOME/CI/build/lp15/sources/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## OpenSuse Leap 15
-            cp -a $CURRENT_DIR/build/OpenSUSELeap_15_aarch64/ $HOME/CI/Build_OpenSUSELeap_15_aarch64/
-            $HOME/CI/Build_OpenSUSELeap_15_aarch64/build.sh $packages_list
-            # cp -a $HOME/CI/build/lp15/aarch64/* $HOME/CI/build/lp15/aarch64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "ubuntu2004"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## Ubuntu_20.04_x86_64
-            cp -a $CURRENT_DIR/build/Ubuntu_20.04_x86_64/ $HOME/CI/Build_Ubuntu_20.04_x86_64/
-            $HOME/CI/Build_Ubuntu_20.04_x86_64/build.sh $packages_list
-            # cp -a $HOME/CI/build/ubuntu2004/x86_64/* $HOME/CI/build/ubuntu2004/x86_64/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## Ubuntu_20.04_arm64
-            cp -a $CURRENT_DIR/build/Ubuntu_20.04_arm64/ $HOME/CI/Build_Ubuntu_20.04_arm64/
-            $HOME/CI/Build_Ubuntu_20.04_arm64/build.sh $packages_list
-            # cp -a $HOME/CI/build/ubuntu2004/arm64/* $HOME/CI/build/ubuntu2004/arm64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "debian11"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## Debian_11_x86_64
-            cp -a $CURRENT_DIR/build/Debian_11_x86_64/ $HOME/CI/Build_Debian_11_x86_64/
-            $HOME/CI/Build_Debian_11_x86_64/build.sh $packages_list
-            # cp -a $HOME/CI/build/debian11/x86_64/* $HOME/CI/build/debian11/x86_64/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## Debian_11_arm64
-            cp -a $CURRENT_DIR/build/Debian_11_arm64/ $HOME/CI/Build_Debian_11_arm64/
-            $HOME/CI/Build_Debian_11_arm64/build.sh $packages_list
-            # cp -a $HOME/CI/build/debian11/arm64/* $HOME/CI/build/debian11/arm64/
-        fi
-    fi
-
-    if echo $os_list | grep -q "debian12"; then
-        if echo $arch_list | grep -q "x86_64"; then
-            ## Debian_12_x86_64
-            cp -a $CURRENT_DIR/build/Debian_12_x86_64/ $HOME/CI/Build_Debian_12_x86_64/
-            $HOME/CI/Build_Debian_12_x86_64/build.sh $packages_list
-            #cp -a $HOME/CI/build/debian12/x86_64/* $HOME/CI/build/debian12/x86_64/
-        fi
-        if echo $arch_list | grep -q -E "aarch64|arm64"; then
-            ## Debian_12_arm64
-            cp -a $CURRENT_DIR/build/Debian_12_arm64/ $HOME/CI/Build_Debian_12_arm64/
-            $HOME/CI/Build_Debian_12_arm64/build.sh $packages_list "--platform linux/arm64"
-            #cp -a $HOME/CI/build/debian12/arm64/* $HOME/CI/build/debian12/arm64/
-        fi
-    fi
-
+if [ "$os_list" == "all" ]; then
+    os_list="el8,el9,el10,lp15,u20,u22,u24,deb11,deb12,deb13"
 fi
+
+if echo $steps | grep -q "build"; then
+    for os_name in $(echo $os_list | sed 's/,/ /g'); do
+
+        # If default request, get packages to be built for this OS
+        if [ "$packages_list" == "all" ]; then
+            packages_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $5}')
+        fi
+        if [ "$arch_list" == "all" ]; then
+            archs_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $2}')
+        fi
+        os_distribution_name=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $3}')
+        os_distribution_version_major=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $4}')
+
+        for cpu_arch in $(echo $archs_list | sed 's/,/ /g'); do
+
+            # For now I build on amd64 CPU, might need to update that later
+            if [ "$cpu_arch" == "arm64" ] || [ "$cpu_arch" == "aarch64" ] ; then
+                PLATFORM="--platform linux/arm64"
+            else
+                PLATFORM=""
+            fi
+
+            # Check if base image already exists, if not build it
+            set +e
+            docker images | grep $os_name-build-$cpu_arch
+            if [ $? -ne 0 ]; then
+                set -e
+                docker build $PLATFORM --no-cache --tag $os_name-build-$cpu_arch -f $CURRENT_DIR/build/$os_name/Dockerfile $CURRENT_DIR/build/$os_name/
+            fi
+            set -e
+
+            # Now build packages
+            mkdir -p $HOME/CI/build/$os_name/$cpu_arch/
+            for package in $(echo $packages_list | sed 's/,/ /g'); do
+                docker run --rm $PLATFORM -v $HOME/CI/build/$os_name/:/root/rpmbuild/RPMS/ -v $HOME/CI/tmp/:/tmp $os_name-build-$cpu_arch $package $os_distribution_name $os_distribution_version_major
+            done
+        done
+    done
+fi
+echo "ALL DONE"
+exit O
 
 ################################################################################
 #################### AGGREGATE IPXE PACKAGES
 ####
 if echo $steps | grep -q "repos"; then
-# CROSS packages between archs for iPXE roms
+    # CROSS packages between archs for iPXE roms
+    if echo $packages_list_for_ipxe | grep -q "ipxe" || echo $packages_list_for_ipxe | grep -q "all" ; then
+    for os_name in $(echo $os_list | sed 's/,/ /g'); do
 
-    if echo $packages_list | grep -q "ipxe" || echo $packages_list | grep -q "all" ; then
+
+    
 
         if echo $os_list | grep -q "el7"; then
             cp $HOME/CI/build/el7/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm $HOME/CI/build/el7/aarch64/noarch/ ; \
