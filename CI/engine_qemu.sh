@@ -97,6 +97,8 @@ mkdir -p $HOME/CI/build/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/
 mkdir -p $HOME/CI/repositories/{el8,el9,el10,lp15}/{x86_64,aarch64,sources}/bluebanquise/
 mkdir -p $HOME/CI/repositories/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/bluebanquise/
 
+rsync -av $CURRENT_DIR/repositories/tree/* $HOME/CI/repositories/
+
 ################################################################################
 #################### BUILDS
 ####
@@ -105,19 +107,27 @@ if [ "$os_list" == "all" ]; then
     os_list="el8,el9,el10,lp15,u20,u22,u24,deb11,deb12,deb13"
 fi
 
-if echo $steps | grep -q "build"; then
-    for os_name in $(echo $os_list | sed 's/,/ /g'); do
+for os_name in $(echo $os_list | sed 's/,/ /g'); do
 
-        # If default request, get packages to be built for this OS
-        if [ "$packages_list" == "all" ]; then
-            packages_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $5}')
-        fi
-        if [ "$arch_list" == "all" ]; then
-            archs_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $2}')
-        fi
-        os_distribution_name=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $3}')
-        os_distribution_version_major=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $4}')
+    # If default request, get packages to be built for this OS
+    if [ "$packages_list" == "all" ]; then
+        packages_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $5}')
+    fi
+    if [ "$arch_list" == "all" ]; then
+        archs_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $2}')
+    fi
+    os_distribution_name=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $3}')
+    os_distribution_version_major=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $4}')
+    os_package_format=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $6}')
 
+    if [ "$os_package_format" == "RPM" ]; then
+        internal_build_path="/root/rpmbuild/RPMS/"
+    else
+        internal_build_path="/root/debbuild/DEBS/"
+    fi
+
+    #### BUILD
+    if echo $steps | grep -q "build"; then
         for cpu_arch in $(echo $archs_list | sed 's/,/ /g'); do
 
             # For now I build on amd64 CPU, might need to update that later
@@ -135,28 +145,96 @@ if echo $steps | grep -q "build"; then
                 docker build $PLATFORM --no-cache --tag $os_name-build-$cpu_arch -f $CURRENT_DIR/build/$os_name/Dockerfile $CURRENT_DIR/build/$os_name/
             fi
             set -e
-
             # Now build packages
             mkdir -p $HOME/CI/build/$os_name/$cpu_arch/
             for package in $(echo $packages_list | sed 's/,/ /g'); do
-                docker run --rm $PLATFORM -v $HOME/CI/build/$os_name/:/root/rpmbuild/RPMS/ -v $HOME/CI/tmp/:/tmp $os_name-build-$cpu_arch $package $os_distribution_name $os_distribution_version_major
+                docker run --rm $PLATFORM -v $HOME/CI/build/$os_name/:$internal_build_path -v $HOME/CI/tmp/:/tmp $os_name-build-$cpu_arch $package $os_distribution_name $os_distribution_version_major
             done
+
         done
-    done
-fi
+    fi
+
+    #### REPOS
+    if echo $steps | grep -q "repos"; then
+
+        # Cross iPXE roms
+        if [ "$os_package_format" == "RPM" ]; then
+            $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm $HOME/CI/build/$os_name/aarch64/noarch/
+            $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/memtest86plus*.rpm $HOME/CI/build/$os_name/aarch64/noarch/
+            $(which cp) -f $HOME/CI/build/$os_name/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm $HOME/CI/build/$os_name/x86_64/noarch/
+        else
+            $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb $HOME/CI/build/$os_name/arm64/noarch/
+            $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/memtest86plus*.deb $HOME/CI/build/$os_name/arm64/noarch/
+            $(which cp) -f $HOME/CI/build/$os_name/arm64/noarch/bluebanquise-ipxe-arm64*.deb $HOME/CI/build/$os_name/x86_64/noarch/
+        fi
+
+        for cpu_arch in $(echo $archs_list | sed 's/,/ /g'); do
+
+            # For now I build on amd64 CPU, might need to update that later
+            if [ "$cpu_arch" == "arm64" ] || [ "$cpu_arch" == "aarch64" ] ; then
+                PLATFORM="--platform linux/arm64"
+            else
+                PLATFORM=""
+            fi
+
+            # Build repo
+            repos_path=$HOME/CI/repositories/$os_name/$cpu_arch/bluebanquise/packages/
+            mkdir -p $repos_path
+            $(which cp) -af $HOME/CI/build/$os_name/$cpu_arch/* $repos_path
+            source $CURRENT_DIR/repositories/$os_name/build.sh $repos_path # $reset_repos
+
+        done
+    fi
+
+done
+
 echo "ALL DONE"
 exit O
 
+
 ################################################################################
-#################### AGGREGATE IPXE PACKAGES
+#################### REPOS
 ####
 if echo $steps | grep -q "repos"; then
-    # CROSS packages between archs for iPXE roms
-    if echo $packages_list_for_ipxe | grep -q "ipxe" || echo $packages_list_for_ipxe | grep -q "all" ; then
+
     for os_name in $(echo $os_list | sed 's/,/ /g'); do
 
+        mkdir -p $HOME/CI/repositories/$os_name/$cpu_arch/bluebanquise/packages/
 
-    
+    if echo $os_list | grep -q "el9"; then
+        if echo $arch_list | grep -q -E "x86_64"; then
+            mkdir -p $HOME/CI/repositories/el9/x86_64/bluebanquise/packages/
+            rm -Rf $HOME/CI/repositories/el9/x86_64/bluebanquise/packages/*
+            cp -a $HOME/CI/build/el9/x86_64/x86_64/ $HOME/CI/repositories/el9/x86_64/bluebanquise/packages/
+            cp -a $CURRENT_DIR/repositories/RedHat_9_x86_64/ $HOME/CI/repositories_RedHat_9_x86_64/
+            $HOME/CI/repositories_RedHat_9_x86_64/build.sh $reset_repos
+            cp -a $HOME/CI/repositories/el9/x86_64/bluebanquise/* $HOME/CI/repositories/el9/x86_64/bluebanquise/
+        fi
+        if echo $arch_list | grep -q -E "aarch64|arm64"; then
+            mkdir -p $HOME/CI/repositories/el9/aarch64/bluebanquise/packages/
+            rm -Rf $HOME/CI/repositories/el9/aarch64/bluebanquise/packages/*
+            cp -a $HOME/CI/build/el9/aarch64/aarch64/ $HOME/CI/repositories/el9/aarch64/bluebanquise/packages/
+            cp -a $CURRENT_DIR/repositories/RedHat_9_aarch64/ $HOME/CI/repositories_RedHat_9_aarch64/
+            $HOME/CI/repositories_RedHat_9_aarch64/build.sh $reset_repos
+            cp -a $HOME/CI/repositories/el9/aarch64/bluebanquise/* $HOME/CI/repositories/el9/aarch64/bluebanquise/
+        fi
+    fi
+
+
+fi
+
+
+
+
+
+
+
+
+    # CROSS packages between archs for iPXE roms
+    if echo $packages_list_for_ipxe | grep -q "ipxe" || echo $packages_list_for_ipxe | grep -q "all" ; then
+        for os_name in $(echo $os_list | sed 's/,/ /g'); do
+
+
 
         if echo $os_list | grep -q "el7"; then
             cp $HOME/CI/build/el7/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm $HOME/CI/build/el7/aarch64/noarch/ ; \

@@ -2,20 +2,23 @@ set -x
 
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
+
+package_path_calc
 
 
-if [ "$distribution" == 'RedHat' ]; then
-    if [ $distribution_version -eq 7 ]; then
-        if [ $distribution_architecture == 'aarch64' ]; then
-            # scl enable devtoolset-7 bash
-        yum install centos-release-scl -y
-        yum install devtoolset-7 -y
-        set +e
-        source scl_source enable devtoolset-7
-        set -e
-        fi
-    fi
-fi
+# if [ "$distribution" == 'RedHat' ]; then
+#     if [ $distribution_version -eq 7 ]; then
+#         if [ $distribution_architecture == 'aarch64' ]; then
+#             # scl enable devtoolset-7 bash
+#         yum install centos-release-scl -y
+#         yum install devtoolset-7 -y
+#         set +e
+#         source scl_source enable devtoolset-7
+#         set -e
+#         fi
+#     fi
+# fi
 
 # iPXE
 if [ ! -f $working_directory/sources/ipxe/README ]; then
@@ -235,6 +238,7 @@ mkdir -p $working_directory/build/ipxe/
 cp -a $cache_directory/ipxe/* $working_directory/build/ipxe/
 
 cd $working_directory/build/ipxe/
+bluebanquise_ipxe_version=$package_version
 export bluebanquise_ipxe_version=$bluebanquise_ipxe_version.$bluebanquise_ipxe_release
 mkdir bluebanquise-ipxe-$ipxe_arch-$bluebanquise_ipxe_version
 cp $root_directory/bluebanquise-ipxe/bluebanquise-ipxe-$ipxe_arch.spec bluebanquise-ipxe-$ipxe_arch-$bluebanquise_ipxe_version
