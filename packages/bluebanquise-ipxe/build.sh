@@ -50,8 +50,8 @@ fi
 
 # If cache folder does not exist, create it and build all files
 # If exists, then skip build and package bins directly
-if [ ! -d "$cache_directory/ipxe" ]; then
-    mkdir -p $cache_directory/ipxe
+if [ ! -d "$cache_directory/ipxe-$distribution_architecture" ]; then
+    mkdir -p $cache_directory/ipxe-$distribution_architecture
 
     rm -Rf $working_directory/build/ipxe/
     mkdir -p $working_directory/build/ipxe/
@@ -233,14 +233,14 @@ if [ ! -d "$cache_directory/ipxe" ]; then
 
     ###############################################################################################
 
-    cp -a $working_directory/build/ipxe/* $cache_directory/ipxe/
+    cp -a $working_directory/build/ipxe/* $cache_directory/ipxe-$distribution_architecture/
 
 fi # End of build step
 # From now, files were either fresh built, either we import them from cache
 
 rm -Rf $working_directory/build/ipxe/
 mkdir -p $working_directory/build/ipxe/
-cp -a $cache_directory/ipxe/* $working_directory/build/ipxe/
+cp -a $cache_directory/ipxe-$distribution_architecture/* $working_directory/build/ipxe/
 
 cd $working_directory/build/ipxe/
 bluebanquise_ipxe_version=$package_version
