@@ -6,6 +6,11 @@ source $CURRENT_DIR/../common.sh
 
 package_path_calc
 
+ls /tmp
+ls /tmp/wd
+ls /tmp/cache
+du /tmp/
+
 
 # if [ "$distribution" == 'RedHat' ]; then
 #     if [ $distribution_version -eq 7 ]; then
