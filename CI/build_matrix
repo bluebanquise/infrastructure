@@ -1,3 +1,3 @@
 OS    CPU_ARCHS        OS_DIST  OS_VERSION   PACKAGES                    PACKAGES_FORMAT
 el9   x86_64,aarch64   RedHat   9            nyancat,bluebanquise-ipxe   RPM
-u24   x86_64,aarch64   Ubuntu   20.04        nyancat,bluebanquise-ipxe   DEB
+u24   x86_64,arm64   Ubuntu   20.04        nyancat,bluebanquise-ipxe   DEB
