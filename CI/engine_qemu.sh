@@ -165,16 +165,16 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
     #### REPOS
     if echo $steps | grep -q "repos"; then
 
-        # Cross iPXE roms
-        if [ "$os_package_format" == "RPM" ]; then
-            $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm $HOME/CI/build/$os_name/aarch64/noarch/
-            $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/memtest86plus*.rpm $HOME/CI/build/$os_name/aarch64/noarch/
-            $(which cp) -f $HOME/CI/build/$os_name/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm $HOME/CI/build/$os_name/x86_64/noarch/
-        else
-            $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb $HOME/CI/build/$os_name/arm64/noarch/
-            $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/memtest86plus*.deb $HOME/CI/build/$os_name/arm64/noarch/
-            $(which cp) -f $HOME/CI/build/$os_name/arm64/noarch/bluebanquise-ipxe-arm64*.deb $HOME/CI/build/$os_name/x86_64/noarch/
-        fi
+        # # Cross iPXE roms
+        # if [ "$os_package_format" == "RPM" ]; then
+        #     $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/bluebanquise-ipxe-x86_64*.rpm $HOME/CI/build/$os_name/aarch64/noarch/
+        #     $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/memtest86plus*.rpm $HOME/CI/build/$os_name/aarch64/noarch/
+        #     $(which cp) -f $HOME/CI/build/$os_name/aarch64/noarch/bluebanquise-ipxe-arm64*.rpm $HOME/CI/build/$os_name/x86_64/noarch/
+        # else
+        #     $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/bluebanquise-ipxe-x86-64*.deb $HOME/CI/build/$os_name/arm64/noarch/
+        #     $(which cp) -f $HOME/CI/build/$os_name/x86_64/noarch/memtest86plus*.deb $HOME/CI/build/$os_name/arm64/noarch/
+        #     $(which cp) -f $HOME/CI/build/$os_name/arm64/noarch/bluebanquise-ipxe-arm64*.deb $HOME/CI/build/$os_name/x86_64/noarch/
+        # fi
 
         for cpu_arch in $(echo $archs_list | sed 's/,/ /g'); do
 
@@ -188,7 +188,8 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
             # Build repo
             repos_path=$HOME/CI/repositories/$os_name/$cpu_arch/bluebanquise/packages/
             mkdir -p $repos_path
-            $(which cp) -af $HOME/CI/build/$os_name/$cpu_arch/* $repos_path
+            $(which cp) -af $HOME/CI/build/$os_name/$cpu_arch $repos_path
+            $(which cp) -af $HOME/CI/build/$os_name/noarch $repos_path
             source $CURRENT_DIR/repositories/$os_name/build.sh $repos_path # $reset_repos
 
         done
