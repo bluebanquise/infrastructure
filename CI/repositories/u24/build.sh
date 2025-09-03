@@ -1,6 +1,6 @@
 set -x
 #if [ "$1" == 'yes' ]; then
-podman run --rm -v $HOME/CI/repositories/ubuntu2404/x86_64/bluebanquise/:/repo/ ubuntu:24.04 /bin/bash -c ' \
+podman run --rm $PLATFORM -v $1:/repo/ ubuntu:24.04 /bin/bash -c ' \
     set -x ; \
     apt-get update ; \
     export DEBIAN_FRONTEND=noninteractive; \
