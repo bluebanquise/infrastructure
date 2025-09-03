@@ -19,6 +19,14 @@ CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 mkdir -p $HOME/CI/tmp/wd/
 mkdir -p $HOME/CI/tmp/cache/
 
+mkdir -p $HOME/CI/tmp/cache/ipxe-arm
+cd $HOME/CI/tmp/cache/
+rm -f ipxe-arm64
+rm -f ipxe-aarch64
+ln -s ipxe-arm ipxe-aarch64
+ln -s ipxe-arm ipxe-arm64
+cd $CURRENT_DIR
+
 ################################################################################
 #################### INIT STEP
 ####
