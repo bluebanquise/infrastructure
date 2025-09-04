@@ -4,5 +4,4 @@ RUN mkdir /infra
 RUN git clone https://github.com/bluebanquise/infrastructure.git /infra
 RUN chmod +x /infra/auto_builder.sh
 RUN /infra/auto_builder.sh dependencies RedHat 9
-RUN dnf install -y createrepo
 ENTRYPOINT ["/infra/auto_builder.sh"]

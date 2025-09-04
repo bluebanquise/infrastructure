@@ -2,8 +2,7 @@ set -x
 # if [ "$1" == 'yes' ]; then
 docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     set -x ; \
-    dnf install -y createrepo ; \
-    createrepo /repo/ ; \
+    createrepo /repo/
     '
 # else
 # docker run --rm -v $HOME/CI/repositories/el8/x86_64/bluebanquise/:/repo/ rockylinux/rockylinux:8 /bin/bash -c ' \

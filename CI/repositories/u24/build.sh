@@ -2,9 +2,6 @@ set -x
 #if [ "$1" == 'yes' ]; then
 docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     set -x ; \
-    apt-get update ; \
-    export DEBIAN_FRONTEND=noninteractive; \
-    apt-get install -y dpkg-dev reprepro; \
     cd /repo/; \
     rm -Rf repo; \
     mkdir repo && cd repo && mkdir conf -p; \
