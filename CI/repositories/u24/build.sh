@@ -2,6 +2,7 @@ set -x
 #if [ "$1" == 'yes' ]; then
 docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     set -x ; \
+    [ "$(uname -m)" == "x86_64" ] && export cpu_arch="x86_64" || export cpu_arch="arm64"; \
     cd /repo/; \
     rm -Rf repo; \
     mkdir repo && cd repo && mkdir conf -p; \
@@ -9,9 +10,8 @@ docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     echo "Label: bluebanquise" >> conf/distributions; \
     echo "Codename: noble" >> conf/distributions; \
     echo "Suite: stable" >> conf/distributions; \
-    echo "Architectures: amd64" >> conf/distributions; \
+    echo "Architectures: $cpu_arch" >> conf/distributions; \
     echo "Components: main" >> conf/distributions; \
-    [ "$(uname -m)" == "x86_64" ] && export cpu_arch="x86_64" || export cpu_arch="arm64"; \
     cd /repo/$cpu_arch/; \
     reprepro -b /repo/repo/ includedeb noble *.deb; \
     cd ../noarch/; \
