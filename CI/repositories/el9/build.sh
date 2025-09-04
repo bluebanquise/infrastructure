@@ -1,6 +1,6 @@
 set -x
 # if [ "$1" == 'yes' ]; then
-docker run --rm $PLATFORM -v $1:/repo/ rockylinux/rockylinux:9 /bin/bash -c ' \
+docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     set -x ; \
     dnf install -y createrepo ; \
     createrepo /repo/ ; \

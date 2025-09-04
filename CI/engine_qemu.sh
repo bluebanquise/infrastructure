@@ -185,12 +185,21 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
                 PLATFORM=""
             fi
 
+            # Check if base image already exists, if not build it
+            set +e
+            docker images | grep $os_name-build-$cpu_arch
+            if [ $? -ne 0 ]; then
+                set -e
+                docker build $PLATFORM --no-cache --tag $os_name-build-$cpu_arch -f $CURRENT_DIR/build/$os_name/Dockerfile $CURRENT_DIR/build/$os_name/
+            fi
+            set -e
+
             # Build repo
             repos_path=$HOME/CI/repositories/$os_name/$cpu_arch/bluebanquise/packages/
             mkdir -p $repos_path
             $(which cp) -af $HOME/CI/build/$os_name/$cpu_arch $repos_path
             $(which cp) -af $HOME/CI/build/$os_name/noarch $repos_path
-            source $CURRENT_DIR/repositories/$os_name/build.sh $repos_path # $reset_repos
+            source $CURRENT_DIR/repositories/$os_name/build.sh $repos_path $os_name-build-$cpu_arch # $reset_repos
 
         done
     fi

@@ -1,6 +1,6 @@
 set -x
 #if [ "$1" == 'yes' ]; then
-docker run --rm $PLATFORM -v $1:/repo/ ubuntu:24.04 /bin/bash -c ' \
+docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     set -x ; \
     apt-get update ; \
     export DEBIAN_FRONTEND=noninteractive; \
@@ -15,7 +15,7 @@ docker run --rm $PLATFORM -v $1:/repo/ ubuntu:24.04 /bin/bash -c ' \
     echo "Architectures: amd64" >> conf/distributions; \
     echo "Components: main" >> conf/distributions; \
     [ "$(uname -m)" == "x86_64" ] && export cpu_arch="x86_64" || export cpu_arch="arm64"; \
-    cd /repo/packages/$cpu_arch/; \
+    cd /repo/$cpu_arch/; \
     reprepro -b /repo/repo/ includedeb noble *.deb; \
     cd ../noarch/; \
     reprepro -b /repo/repo/ includedeb noble *.deb; \
