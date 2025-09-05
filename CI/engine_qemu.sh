@@ -20,6 +20,7 @@ mkdir -p $HOME/CI/tmp/wd/
 mkdir -p $HOME/CI/tmp/cache/
 
 mkdir -p $HOME/CI/tmp/cache/ipxe-arm
+mkdir -p $HOME/CI/tmp/cache/ipxe-x86_64
 cd $HOME/CI/tmp/cache/
 rm -f ipxe-arm64
 rm -f ipxe-aarch64

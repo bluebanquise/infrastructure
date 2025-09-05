@@ -50,7 +50,7 @@ fi
 
 # If cache folder does not exist, create it and build all files
 # If exists, then skip build and package bins directly
-if [ ! -d "$cache_directory/ipxe-$distribution_architecture" ]; then
+if [ ! -d "$cache_directory/ipxe-$distribution_architecture/bin" ]; then
     mkdir -p $cache_directory/ipxe-$distribution_architecture
 
     rm -Rf $working_directory/build/ipxe/
