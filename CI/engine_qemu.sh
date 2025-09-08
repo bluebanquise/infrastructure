@@ -101,9 +101,9 @@ fi
 
 mkdir -p $HOME/CI/
 mkdir -p $HOME/CI/logs/
-mkdir -p $HOME/CI/build/{el8,el9,el10,lp15}/{x86_64,aarch64,sources}/
+mkdir -p $HOME/CI/build/{el8,el9,el10,osl15}/{x86_64,aarch64,sources}/
 mkdir -p $HOME/CI/build/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/
-mkdir -p $HOME/CI/repositories/{el8,el9,el10,lp15}/{x86_64,aarch64,sources}/bluebanquise/
+mkdir -p $HOME/CI/repositories/{el8,el9,el10,osl15}/{x86_64,aarch64,sources}/bluebanquise/
 mkdir -p $HOME/CI/repositories/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/bluebanquise/
 
 rsync -av $CURRENT_DIR/repositories/tree/* $HOME/CI/repositories/
@@ -113,7 +113,7 @@ rsync -av $CURRENT_DIR/repositories/tree/* $HOME/CI/repositories/
 ####
 
 if [ "$os_list" == "all" ]; then
-    os_list="el9,el8,el10,lp15,u20,u22,u24,deb11,deb12,deb13"
+    os_list="el9,el8,el10,osl15,u20,u22,u24,deb11,deb12,deb13"
 fi
 
 for os_name in $(echo $os_list | sed 's/,/ /g'); do
