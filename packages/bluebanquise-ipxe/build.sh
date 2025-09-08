@@ -267,6 +267,9 @@ elif [ "$distribution" == "Debian" ]; then
     if [ "$distribution_version" == "12" ]; then
     rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release 1" --define "dist .debian12"
     fi
+    if [ "$distribution_version" == "13" ]; then
+    rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release 1" --define "dist .debian13"
+    fi
 else
     rpmbuild -ta bluebanquise-ipxe-$ipxe_arch.tar.gz --target=noarch --define "_software_version $bluebanquise_ipxe_version" --define "_software_release 1"
 fi
