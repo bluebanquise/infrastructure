@@ -231,7 +231,6 @@ if [ "$1" == "dependencies" ]; then
         dnf config-manager --set-enabled crb
         dnf install dnf-plugins-core epel-release -y
         dnf install kernel-headers make dbus-devel rpm-build xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel net-snmp-devel unzip munge munge-devel munge-libs -y
-        dnf config-manager --set-enabled crb
         dnf install freeipmi-devel mariadb-devel -y
         dnf groupinstall 'Development Tools' -y
       fi
