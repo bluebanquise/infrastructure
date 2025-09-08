@@ -227,7 +227,8 @@ if [ "$1" == "dependencies" ]; then
     if [ $distribution_version -eq 10 ]; then
       if [ $distribution_architecture == 'x86_64' ]; then
         dnf install 'dnf-command(config-manager)' -y
-       /usr/bin/crb enable
+        dnf install subscription-manager -y
+        dnf config-manager --set-enabled crb
         dnf install dnf-plugins-core epel-release -y
         dnf install kernel-headers make dbus-devel rpm-build xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel net-snmp-devel unzip munge munge-devel munge-libs -y
         dnf config-manager --set-enabled crb
@@ -236,9 +237,10 @@ if [ "$1" == "dependencies" ]; then
       fi
       if [ $distribution_architecture == 'aarch64' ]; then
         dnf install 'dnf-command(config-manager)' -y
+        dnf install subscription-manager -y
+        dnf config-manager --set-enabled crb
         dnf install dnf-plugins-core epel-release -y
         dnf install kernel-headers make dbus-devel rpm-build xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel net-snmp-devel unzip munge munge-devel munge-libs -y
-        dnf config-manager --set-enabled crb
         dnf install freeipmi-devel mariadb-devel -y
         dnf groupinstall 'Development Tools' -y
       fi
