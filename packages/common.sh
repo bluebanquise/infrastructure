@@ -11,7 +11,7 @@ package_path_calc() {
         elif [ $distribution_architecture == 'arm64' ]; then
             package_distribution_architecture='arm64'
         fi
-        package_path=/root/debbuild/DEBS/$package_distribution_architecture/$package_name-$package_version-2.$package_distribution_architecture.rpm
+        package_path=/root/debbuild/DEBS/$package_distribution_architecture/$package_name-$package_version-2.$package_distribution_architecture.deb
     else
     echo "Error, unknown distribution!"
     exit 1
