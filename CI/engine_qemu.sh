@@ -120,17 +120,21 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
 
     # If default request, get packages to be built for this OS
     if [ "$packages_list" == "all" ]; then
-        packages_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $5}')
+        packages_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $6}')
     fi
     if [ "$arch_list" == "all" ]; then
         archs_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $2}')
     fi
     os_distribution_name=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $3}')
     os_distribution_version_major=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $4}')
-    os_package_format=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $6}')
+    os_package_format=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $5}')
 
     if [ "$os_package_format" == "RPM" ]; then
-        internal_build_path="/root/rpmbuild/RPMS/"
+        if [ "$os_distribution_name" == "opensuse_leap" ]; then
+            internal_build_path="/usr/src/packages/RPMS/"
+        else
+            internal_build_path="/root/rpmbuild/RPMS/"
+        fi
     else
         internal_build_path="/root/debbuild/DEBS/"
     fi
