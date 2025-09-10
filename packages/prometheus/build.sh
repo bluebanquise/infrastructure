@@ -19,21 +19,6 @@ rm -Rf $working_directory/build/prometheus
 mkdir -p $working_directory/build/prometheus
 cd $working_directory/build/prometheus
 
-package_version=$prometheus_version
-package_name=prometheus
-package_path_calc
-if [ ! -f $package_path ]; then
-  cp -a $root_directory/prometheus/prometheus $working_directory/build/prometheus/prometheus
-  cd $working_directory
-
-  mv prometheus prometheus-$prometheus_version
-  tar cvzf prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz prometheus-$prometheus_version
-  rpmbuild -ta prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $prometheus_version" --define "_software_architecture $prometheus_arch"
-  if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
-    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-*
-    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
-  fi
-fi
 
 package_version=$prometheus_client_version
 package_name=prometheus_client
@@ -57,6 +42,22 @@ if [ ! -f $package_path ]; then
   rpmbuild -ta prometheus_client-$prometheus_client_version.tar.gz
   if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/prometheus_client-*
+    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
+  fi
+fi
+
+cd $working_directory/build/prometheus
+
+package_version=$prometheus_version
+package_name=prometheus
+package_path_calc
+if [ ! -f $package_path ]; then
+  cp -a $root_directory/prometheus/prometheus $working_directory/build/prometheus/prometheus
+  mv prometheus prometheus-$prometheus_version
+  tar cvzf prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz prometheus-$prometheus_version
+  rpmbuild -ta prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $prometheus_version" --define "_software_architecture $prometheus_arch"
+  if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
+    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-*
     mv *.deb /root/debbuild/DEBS/$distribution_architecture/
   fi
 fi
