@@ -1,8 +1,14 @@
 set -x
+
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
 
-if [ ! -f $tags_directory/conman-$distribution-$distribution_version-$conman_version ]; then
+package_path_calc
+
+conman_version=$package_version
+
+if [ ! -f $package_path ]; then
 
     rm -Rf $working_directory/build/conman
     mkdir -p $working_directory/build/conman
@@ -25,9 +31,4 @@ if [ ! -f $tags_directory/conman-$distribution-$distribution_version-$conman_ver
         mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     fi
 
-    # Build success, tag it
-    touch $tags_directory/conman-$distribution-$distribution_version-$conman_version-$(uname -p)
-
 fi
-
-set +x

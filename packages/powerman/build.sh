@@ -1,7 +1,13 @@
+set -x
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
 
-if [ ! -f $tags_directory/powerman-$distribution-$distribution_version-$powerman_version ]; then
+package_path_calc
+
+powerman_version=$package_version
+
+if [ ! -f $package_path ]; then
 
     set -x
     if [ ! -f $working_directory/sources/powerman-$powerman_version.tar.gz ]; then

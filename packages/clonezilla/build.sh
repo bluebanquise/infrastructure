@@ -1,8 +1,14 @@
+set -x
+
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
 
-if [ ! -f $tags_directory/clonezilla-$distribution-$distribution_version-$clonezilla_version ]; then
+package_path_calc
 
+clonezilla_version=$package_version
+
+if [ ! -f $package_path ]; then
     set -x
     if [ ! -f $working_directory/sources/$clonezilla_iso ]; then
         wget -P $working_directory/sources/ $clonezilla_iso_url
@@ -24,9 +30,6 @@ if [ ! -f $tags_directory/clonezilla-$distribution-$distribution_version-$clonez
         mkdir -p /root/debbuild/DEBS/noarch/
         mv *.deb /root/debbuild/DEBS/noarch/
     fi
-    # Build success, tag it
-    touch $tags_directory/clonezilla-$distribution-$distribution_version-$clonezilla_version-$(uname -p)
-
+    
 fi
 
-set +x

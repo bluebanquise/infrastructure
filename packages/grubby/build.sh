@@ -2,8 +2,13 @@ set -x
 
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
 
-if [ ! -f $tags_directory/grubby-$distribution-$distribution_version-$grubby_version ]; then
+package_path_calc
+
+grubby_version=$package_version
+
+if [ ! -f $package_path ]; then
 
     if [ ! -f $working_directory/sources/grubby-$grubby_version.tar.gz ]; then
         wget -P $working_directory/sources/ https://github.com/rhboot/grubby/archive/refs/tags/$grubby_version.tar.gz
@@ -27,9 +32,5 @@ if [ ! -f $tags_directory/grubby-$distribution-$distribution_version-$grubby_ver
         mkdir -p /root/debbuild/DEBS/$distribution_architecture/
         mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     fi
-    # Build success, tag it
-    touch $tags_directory/grubby-$distribution-$distribution_version-$grubby_version-$(uname -p)
 
 fi
-
-set +x

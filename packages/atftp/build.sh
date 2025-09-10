@@ -2,22 +2,17 @@ set -x
 
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
 
-if [ ! -f $tags_directory/atftp-$distribution-$distribution_version-$atftp_version ]; then
+package_path_calc
 
+atftp_version=$package_version
 
-    #if [ $distribution_version -eq 7 ]; then
-    #    if [ -f /usr/bin/aclocal-1.16 ]; then
-    #       echo link exist, skipping
-    #    else
+if [ ! -f $package_path ]; then
+
     if [[ ! -f /usr/bin/aclocal-1.16 ]]; then ln -s /usr/bin/aclocal /usr/bin/aclocal-1.16; fi
     if [[ ! -f /usr/bin/autoconf-1.16 ]]; then ln -s /usr/bin/autoconf /usr/bin/autoconf-1.16; fi
     if [[ ! -f /usr/bin/automake-1.16 ]]; then ln -s /usr/bin/automake /usr/bin/automake-1.16; fi
-
-            #ln -s /usr/bin/autoconf /usr/bin/autoconf-1.16
-            #ln -s /usr/bin/automake /usr/bin/automake-1.16
-    #    fi
-    #fi
 
     rm -Rf $working_directory/build/atftp
     mkdir -p $working_directory/build/atftp/
@@ -29,6 +24,9 @@ if [ ! -f $tags_directory/atftp-$distribution-$distribution_version-$atftp_versi
     # If Debian 12, patch brp-compress
     if [ "$distribution" == 'Debian' ]; then
       if [ "$distribution_version" == "12" ]; then
+    sed -i '1 s/^.*$/#!\/bin\/bash/' /usr/lib/rpm/brp-compress
+      fi
+      if [ "$distribution_version" == "13" ]; then
     sed -i '1 s/^.*$/#!\/bin\/bash/' /usr/lib/rpm/brp-compress
       fi
     fi
@@ -51,9 +49,5 @@ if [ ! -f $tags_directory/atftp-$distribution-$distribution_version-$atftp_versi
         mkdir -p /root/debbuild/DEBS/$distribution_architecture/
         mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     fi
-    # Build success, tag it
-    touch $tags_directory/atftp-$distribution-$distribution_version-$bluebanquise_atftp_version-$(uname -p)
 
 fi
-
-set +x

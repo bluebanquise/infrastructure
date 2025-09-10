@@ -1,7 +1,14 @@
+set -x
+
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
 
-if [ ! -f $tags_directory/alpine-$distribution-$distribution_version-$alpine_version ]; then
+package_path_calc
+
+alpine_version=$package_version
+
+if [ ! -f $package_path ]; then
 
     set -x
     if [ ! -f $working_directory/sources/alpine-netboot-$alpine_version-aarch64.tar.gz ]; then
@@ -28,8 +35,5 @@ if [ ! -f $tags_directory/alpine-$distribution-$distribution_version-$alpine_ver
         mkdir -p /root/debbuild/DEBS/noarch/
         mv *.deb /root/debbuild/DEBS/noarch/
     fi
-    # Build success, tag it
-    touch $tags_directory/alpine-$distribution-$distribution_version-$alpine_version-$(uname -p)
 
 fi
-set +x

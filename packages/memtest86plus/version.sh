@@ -1,1 +1,2 @@
-memtest86plus_version=7.00
+package_version=7.00
+package_name=memtest86plus

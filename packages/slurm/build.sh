@@ -1,68 +1,64 @@
 set -x
-
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
 
 ###### MUNGE
 
-# Munge only needs to be built on RHEL systems, it is provided by all distributions in native repos.
+# Munge only needs to be built on RHEL systems, it is provided by all other distributions in native repos.
+if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $distribution != "Debian" ]; then
 
-#if [ ! -f $tags_directory/munge-$distribution-$distribution_version-$munge_version ]; then
-if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_version ]; then
+    package_version=$munge_version
+    package_name=munge
+    package_path_calc
 
+    if [ ! -f $package_path ]; then
 
-    if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz ]; then
-        wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
-    fi
-
-    if [ ! -f $working_directory/sources/dun.gpg ]; then
-        wget -P $working_directory/sources/ https://github.com/dun.gpg
-    fi
-
-    if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz.asc ]; then
-        wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc
-    fi
-
-    if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $distribution != "Debian" ]; then
-        if [ $distribution_version -ne 10 ]; then
-          rm -Rf $working_directory/build/munge
-          mkdir -p $working_directory/build/munge
-          cd $working_directory/build/munge
-          cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
-          cp $working_directory/sources/dun.gpg $working_directory/build/munge/dun.gpg
-          cp $working_directory/sources/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
-          rm -f /root/rpmbuild/RPMS/$distribution_architecture/munge*
-
-          rpmbuild -ta munge-$munge_version.tar.xz
-
-          # We need to install munge to build slurm
-          if [ $distribution_version -eq 8 ]; then
-          dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
-          fi
-          if [ $distribution_version -eq 9 ]; then
-          dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
-          fi
-          if [ $distribution_version -eq 7 ]; then
-          yum install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
-          fi
+        if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz ]; then
+            wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
         fi
+
+        if [ ! -f $working_directory/sources/dun.gpg ]; then
+            wget -P $working_directory/sources/ https://github.com/dun.gpg
+        fi
+
+        if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz.asc ]; then
+            wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc
+        fi
+
+        rm -Rf $working_directory/build/munge
+        mkdir -p $working_directory/build/munge
+        cd $working_directory/build/munge
+        cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
+        cp $working_directory/sources/dun.gpg $working_directory/build/munge/dun.gpg
+        cp $working_directory/sources/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
+        rm -f /root/rpmbuild/RPMS/$distribution_architecture/munge*
+        rpmbuild -ta munge-$munge_version.tar.xz
+
     fi
-
-
-    # Build success, tag it
-    touch $tags_directory/munge-$distribution-$distribution_version-$munge_version-$(uname -p)
-
-#fi
+fi
 
 ###### SLURM
 
 # Since 23.11, it is possible to build slurm packages natively with deb mechanism.
 
+package_version=$slurm_version
+package_name=slurm
+if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
+package_name=slurm-smd
+fi
+package_path_calc
+
+if [ ! -f $package_path ]; then
+
+    if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $distribution != "Debian" ]; then
+        # We need to install munge to build slurm on RHEL
+        dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
+    fi
 
     if [ ! -f $working_directory/sources/slurm-$slurm_version.tar.bz2 ]; then
         wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-$slurm_version.tar.bz2
     fi
-
 
     rm -Rf $working_directory/build/slurm
     mkdir -p $working_directory/build/slurm
@@ -125,9 +121,4 @@ if [ ! -f $tags_directory/slurm-$distribution-$distribution_version-$slurm_versi
     #     mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     # fi
 
-    # Build success, tag it
-    touch $tags_directory/slurm-$distribution-$distribution_version-$slurm_version-$(uname -p)
-
 fi
-
-set +x

@@ -1,9 +1,14 @@
-#!/bin/bash
+set -x
 
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $CURRENT_DIR/version.sh
+source $CURRENT_DIR/../common.sh
 
-if [ ! -f $tags_directory/loki-$distribution-$distribution_version-$loki_version ]; then
+package_path_calc
+
+loki_version=$package_version
+
+if [ ! -f $package_path ]; then
 
     if [ $distribution_architecture == 'x86_64' ]; then
       loki_arch=amd64
@@ -36,7 +41,5 @@ if [ ! -f $tags_directory/loki-$distribution-$distribution_version-$loki_version
         mkdir -p /root/debbuild/DEBS/$distribution_architecture/
         mv *.deb /root/debbuild/DEBS/$distribution_architecture/
     fi
-    # Build success, tag it
-    touch $tags_directory/loki-$distribution-$distribution_version-$loki_version-$(uname -p)
 
 fi
