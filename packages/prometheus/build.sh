@@ -15,11 +15,17 @@ if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
   mkdir -p /root/debbuild/DEBS/$distribution_architecture/
 fi
 
+rm -Rf $working_directory/build/prometheus
+mkdir -p $working_directory/build/prometheus
+cd $working_directory/build/prometheus
+
 package_version=$prometheus_version
 package_name=prometheus
 package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/prometheus $working_directory/build/prometheus/prometheus
+  cd $working_directory
+
   mv prometheus prometheus-$prometheus_version
   tar cvzf prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz prometheus-$prometheus_version
   rpmbuild -ta prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $prometheus_version" --define "_software_architecture $prometheus_arch"
@@ -125,3 +131,4 @@ if [ ! -f $package_path ]; then
   fi
 fi
 
+cd $CURRENT_DIR
