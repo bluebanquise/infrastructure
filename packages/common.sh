@@ -6,7 +6,7 @@ package_path_calc() {
     elif [ "$distribution" == 'opensuse_leap' ]; then
         package_path=/root/rpmbuild/RPMS/$distribution_architecture/$package_name-$package_version-1.$distribution_architecture.rpm
     elif [ $distribution == 'Ubuntu' ] || [ $distribution == 'Debian' ]; then
-        if [ -z ${package_native_architecture+x} ];
+        if [ -z ${package_native_architecture+x} ]; then
             if [ $distribution_architecture == 'x86_64' ]; then
                 package_distribution_architecture='amd64'
             elif [ $distribution_architecture == 'arm64' ]; then
