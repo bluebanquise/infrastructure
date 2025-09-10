@@ -8,9 +8,9 @@ package_ipxe_path_calc() {
 
     if [ "$distribution" == 'RedHat' ]; then
         package_os_name="el$distribution_version"  # el8, el9, etc
-        package_path=/root/rpmbuild/RPMS/noarch/$package_name-$distribution_architecture-$package_version.$bluebanquise_ipxe_release-1.$package_os_name.noarch.rpm
+        package_path=/root/rpmbuild/RPMS/noarch/$package_name-$distribution_architecture-$package_version.$bluebanquise_ipxe_release-1.noarch.rpm
     elif [ "$distribution" == 'opensuse_leap' ]; then
-        package_path=/root/rpmbuild/RPMS/noarch/$package_name-$distribution_architecture-$package_version.$bluebanquise_ipxe_release-1.$package_os_name.noarch.rpm
+        package_path=/root/rpmbuild/RPMS/noarch/$package_name-$distribution_architecture-$package_version.$bluebanquise_ipxe_release-1.noarch.rpm
     elif [ $distribution == 'Ubuntu' ] || [ $distribution == 'Debian' ]; then
         if [ $distribution_architecture == 'x86_64' ]; then
             package_distribution_architecture='x86-64'
