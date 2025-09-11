@@ -6,7 +6,7 @@ source $CURRENT_DIR/../common.sh
 
 package_path_calc
 
-atftp_version=$package_version
+atftp_version=$atftp_remote_version
 
 if [ ! -f $package_path ]; then
 
