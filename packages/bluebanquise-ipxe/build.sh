@@ -8,8 +8,8 @@ source $CURRENT_DIR/../common.sh
 package_ipxe_path_calc() {
 
     if [ $distribution_architecture == 'x86_64' ]; then
-        package_distribution_architecture='x86-64'
-    elif [ $distribution_architecture == 'arm64' ]; then
+        package_distribution_architecture='x86_64'
+    elif [ $distribution_architecture == 'arm64' ] || [ $distribution_architecture == 'aarch64' ]; then
         package_distribution_architecture='arm64'
     fi
 
