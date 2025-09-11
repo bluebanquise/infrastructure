@@ -10,7 +10,7 @@
 
 Name:		conman
 Version:	%{_software_version}
-Release:	7
+Release:  7%{?dist}
 
 Summary:	ConMan: The Console Manager
 Group:		Applications/System
