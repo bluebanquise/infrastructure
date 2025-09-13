@@ -13,8 +13,12 @@ package_path_calc() {
         else
             f_package_sub_version=1
         fi
-        package_os_name="el$distribution_version"  # el8, el9, etc
-        package_path=/root/rpmbuild/RPMS/$package_distribution_architecture/$package_name-$package_version-$f_package_sub_version.$package_os_name.$package_distribution_architecture.rpm
+        if [[ "$package_no_os_name" == "true" ]]; then
+            package_os_name=""
+        else
+            package_os_name=".el$distribution_version"  # el8, el9, etc
+        fi
+        package_path=/root/rpmbuild/RPMS/$package_distribution_architecture/$package_name-$package_version-$f_package_sub_version$package_os_name.$package_distribution_architecture.rpm
     elif [[ "$distribution" == 'opensuse_leap' ]]; then
         if [[ "$package_native_architecture" == "noarch" ]]; then
             package_distribution_architecture="noarch"

@@ -23,6 +23,7 @@ cd $working_directory/build/prometheus
 package_version=$prometheus_client_version
 package_name=prometheus_client
 package_native_architecture=noarch
+package_no_os_name="true"
 package_path_calc
 if [ ! -f $package_path ]; then
   if [ ! -f $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz ]; then
@@ -50,6 +51,7 @@ if [ ! -f $package_path ]; then
 fi
 
 unset package_native_architecture
+unset package_no_os_name
 cd $working_directory/build/prometheus
 
 package_version=$prometheus_version
