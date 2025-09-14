@@ -30,7 +30,7 @@ package_path_calc() {
         else
             f_package_sub_version=1
         fi
-        package_path=/root/rpmbuild/RPMS/$package_distribution_architecture/$package_name-$package_version-$f_package_sub_version.$package_distribution_architecture.rpm
+        package_path=/usr/src/packages/RPMS/$package_distribution_architecture/$package_name-$package_version-$f_package_sub_version.$package_distribution_architecture.rpm
     elif [[ $distribution == 'Ubuntu' ]] || [[ $distribution == 'Debian' ]]; then
         if [[ "$package_native_architecture" == "noarch" ]]; then
             package_distribution_architecture="noarch"
