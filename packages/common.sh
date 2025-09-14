@@ -49,7 +49,8 @@ package_path_calc() {
         else
             f_package_sub_version=2
         fi
-        package_path=/root/debbuild/DEBS/$package_folder_architecture/$package_name\_$package_version-$f_package_sub_version\_$package_distribution_architecture.deb
+        f_package_name=$(echo $package_name | sed 's/_/-/g')
+        package_path=/root/debbuild/DEBS/$package_folder_architecture/$f_package_name\_$package_version-$f_package_sub_version\_$package_distribution_architecture.deb
     else
     echo "Error, unknown distribution!"
     exit 1
