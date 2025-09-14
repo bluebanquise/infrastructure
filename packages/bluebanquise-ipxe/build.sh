@@ -7,19 +7,30 @@ source $CURRENT_DIR/../common.sh
 
 package_ipxe_path_calc() {
 
-    if [ $distribution_architecture == 'x86_64' ]; then
-        package_distribution_architecture='x86_64'
-    elif [ $distribution_architecture == 'arm64' ] || [ $distribution_architecture == 'aarch64' ]; then
-        package_distribution_architecture='arm64'
-    fi
+
 
     if [ "$distribution" == 'RedHat' ]; then
+        if [ $distribution_architecture == 'x86_64' ]; then
+            package_distribution_architecture='x86_64'
+        elif [ $distribution_architecture == 'arm64' ] || [ $distribution_architecture == 'aarch64' ]; then
+            package_distribution_architecture='arm64'
+        fi
         package_os_name="el$distribution_version"  # el8, el9, etc
         package_path=/root/rpmbuild/RPMS/noarch/$package_name-$package_distribution_architecture-$package_version.$bluebanquise_ipxe_release-1.noarch.rpm
     elif [ "$distribution" == 'opensuse_leap' ]; then
+        if [ $distribution_architecture == 'x86_64' ]; then
+            package_distribution_architecture='x86_64'
+        elif [ $distribution_architecture == 'arm64' ] || [ $distribution_architecture == 'aarch64' ]; then
+            package_distribution_architecture='arm64'
+        fi
         package_path=/usr/src/packages/RPMS/noarch/$package_name-$package_distribution_architecture-$package_version.$bluebanquise_ipxe_release-1.noarch.rpm
     elif [ $distribution == 'Ubuntu' ] || [ $distribution == 'Debian' ]; then
-        package_path=$(echo "/root/debbuild/DEBS/noarch/$package_name-$package_distribution_architecture\_$package_version.$bluebanquise_ipxe_release-2_all.deb")
+        if [ $distribution_architecture == 'x86_64' ]; then
+            package_distribution_architecture='x86-64'
+        elif [ $distribution_architecture == 'arm64' ] || [ $distribution_architecture == 'aarch64' ]; then
+            package_distribution_architecture='arm64'
+        fi
+        package_path=$(echo "/root/debbuild/DEBS/noarch/$package_name-${package_distribution_architecture}_${package_version}.$bluebanquise_ipxe_release-2_all.deb")
     else
     echo "Error, unknown distribution!"
     exit 1
