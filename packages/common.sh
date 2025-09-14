@@ -33,7 +33,8 @@ package_path_calc() {
         package_path=/usr/src/packages/RPMS/$package_distribution_architecture/$package_name-$package_version-$f_package_sub_version.$package_distribution_architecture.rpm
     elif [[ $distribution == 'Ubuntu' ]] || [[ $distribution == 'Debian' ]]; then
         if [[ "$package_native_architecture" == "noarch" ]]; then
-            package_distribution_architecture="noarch"
+            package_distribution_architecture="all"
+            package_folder_architecture='noarch'
         else
             if [[ $distribution_architecture == 'x86_64' ]]; then
                 package_distribution_architecture='amd64'
@@ -48,7 +49,7 @@ package_path_calc() {
         else
             f_package_sub_version=2
         fi
-        package_path=/root/debbuild/DEBS/$package_folder_architecture/$package_name-$package_version\_$f_package_sub_version.$package_distribution_architecture.deb
+        package_path=/root/debbuild/DEBS/$package_folder_architecture/$package_name\_$package_version.$f_package_sub_version\_$package_distribution_architecture.deb
     else
     echo "Error, unknown distribution!"
     exit 1
