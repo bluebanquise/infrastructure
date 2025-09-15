@@ -104,7 +104,12 @@ mkdir -p $HOME/CI/logs/
 mkdir -p $HOME/CI/build/{el8,el9,el10,osl15}/{x86_64,aarch64,sources}/
 mkdir -p $HOME/CI/build/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/
 mkdir -p $HOME/CI/repositories/{el8,el9,el10,osl15}/{x86_64,aarch64,sources}/bluebanquise/
-mkdir -p $HOME/CI/repositories/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/bluebanquise/
+mkdir -p $HOME/CI/repositories/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,aarch64}/bluebanquise/
+for os in u20 u22 u24 deb11 deb12 deb13; do
+   cd $HOME/CI/repositories/$os/
+   ln -s aarch64 arm64
+done
+cd $CURRENT_DIR
 
 rsync -av $CURRENT_DIR/repositories/tree/* $HOME/CI/repositories/
 
