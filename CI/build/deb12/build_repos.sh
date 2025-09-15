@@ -17,4 +17,8 @@ docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     cd ../noarch/; \
     reprepro -b /repo/repo/ includedeb bookworm *.deb; \
     reprepro -b /repo/repo/ list bookworm; \
+    rm -Rf /repo/$folder_cpu_arch
+    rm -Rf /repo/noarch
+    mv /repo/repo/* /repo
+    rm -Rf /repo/repo
     '

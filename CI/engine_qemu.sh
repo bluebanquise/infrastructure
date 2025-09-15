@@ -197,14 +197,6 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
             $(which cp) -af $HOME/CI/build/$os_name/noarch $repos_path
             source $CURRENT_DIR/build/$os_name/build_repos.sh $repos_path $os_name-repos-$cpu_arch # $reset_repos
 
-            # Clean temporary files for deb and move them upper, rpm don't clone them so we keep them in place
-            if [ "$os_package_format" == "DEB" ]; then
-                rm -Rf $repos_path/$cpu_arch
-                rm -Rf $repos_path/noarch
-                mv $repos_path/repo/* $repos_path/
-                rm -Rf $repos_path/repo
-            fi
-
         done
     fi
 
