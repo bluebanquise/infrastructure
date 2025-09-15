@@ -175,8 +175,10 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
             # For now I build on amd64 CPU, might need to update that later
             if [ "$cpu_arch" == "arm64" ] || [ "$cpu_arch" == "aarch64" ] ; then
                 PLATFORM="--platform linux/arm64"
+                repo_cpu_arch="aarch64"
             else
                 PLATFORM=""
+                repo_cpu_arch="x86_64"
             fi
 
             # Check if base image already exists, if not build it
@@ -189,7 +191,7 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
             set -e
 
             # Build repo
-            repos_path=$HOME/CI/repositories/$os_name/$cpu_arch/bluebanquise/
+            repos_path=$HOME/CI/repositories/$os_name/$repo_cpu_arch/bluebanquise/
             mkdir -p $repos_path
             $(which cp) -af $HOME/CI/build/$os_name/$cpu_arch $repos_path
             $(which cp) -af $HOME/CI/build/$os_name/noarch $repos_path
