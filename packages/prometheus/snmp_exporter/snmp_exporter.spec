@@ -15,8 +15,8 @@
   %endif
 %endif
 
-Name:     snmp_exporter
-Summary:  snmp_exporter
+Name:     prometheus-snmp-exporter
+Summary:  prometheus-snmp-exporter
 Release:  1%{?dist}
 Version:  %{_software_version}
 License:  apache-2.0
@@ -24,6 +24,8 @@ Group:    System Environment/Base
 Source:   https://github.com/prometheus/snmp_exporter/releases/download/v%{_software_version}/snmp_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
+
+Obsoletes: snmp_exporter
 
 %define debug_package %{nil}
 

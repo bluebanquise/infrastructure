@@ -15,8 +15,8 @@
   %endif
 %endif
 
-Name:     node_exporter
-Summary:  node_exporter
+Name:     prometheus-node-exporter
+Summary:  prometheus-node-exporter
 Release:  1%{?dist}
 Version:  %{_software_version}
 License:  apache-2.0
@@ -24,6 +24,8 @@ Group:    System Environment/Base
 Source:   https://github.com/prometheus/node_exporter/releases/download/v%{_software_version}/node_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
+
+Obsoletes: node_exporter
 
 %define debug_package %{nil}
 

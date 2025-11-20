@@ -118,7 +118,8 @@ rsync -av $CURRENT_DIR/repositories/tree/* $HOME/CI/repositories/
 ####
 
 if [ "$os_list" == "all" ]; then
-    os_list="el9,el8,el10,osl15,u20,u22,u24,deb11,deb12,deb13"
+#    os_list="el9,el8,el10,osl15,u20,u22,u24,deb11,deb12,deb13"
+    os_list="el9,el8,el10,osl15,u22,u24,deb12,deb13"
 fi
 
 for os_name in $(echo $os_list | sed 's/,/ /g'); do

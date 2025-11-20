@@ -15,8 +15,8 @@
   %endif
 %endif
 
-Name:     alertmanager
-Summary:  alertmanager
+Name:     prometheus-alertmanager
+Summary:  prometheus-alertmanager
 Release:  1%{?dist}
 Version:  %{_software_version}
 License:  apache-2.0
@@ -24,6 +24,8 @@ Group:    System Environment/Base
 Source:   https://github.com/prometheus/alertmanager/releases/download/v%{_software_version}/alertmanager-%{_software_version}.linux-%{_software_architecture}.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
+
+Obsoletes: alertmanager
 
 %define debug_package %{nil}
 
