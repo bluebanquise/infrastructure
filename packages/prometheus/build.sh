@@ -25,30 +25,30 @@ package_name=prometheus_client
 package_native_architecture=noarch
 package_no_os_name="true"
 package_path_calc
-if [ ! -f $package_path ]; then
-  if [ ! -f $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz ]; then
-    cd /tmp
-    wget -nc -P $working_directory/sources/ https://github.com/prometheus/client_python/archive/v$prometheus_client_version.tar.gz
-    mv $working_directory/sources/v$prometheus_client_version.tar.gz $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz
-  fi
-  cp $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz .
-  tar xvzf prometheus_client-$prometheus_client_version.tar.gz
-  cd client_python-$prometheus_client_version
-  python3 setup.py bdist_rpm --spec-only
-#  sed -i 's/\/bin\/bash/\/bin\/bash\nexit 0\n/' /usr/lib/rpm/brp-python-bytecompile
-#  sed -i 's/setup.py/setup.py --no-compile/' dist/prometheus_client.spec
-#  sed -i '1s/^/%undefine __brp_python_bytecompile\n/' dist/prometheus_client.spec 
-  cd ..
-  mv client_python-$prometheus_client_version prometheus_client-$prometheus_client_version
-  tar cvzf prometheus_client-$prometheus_client_version.tar.gz prometheus_client-$prometheus_client_version
-  rpmbuild -ta prometheus_client-$prometheus_client_version.tar.gz
-  if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
-    cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/prometheus_client-*
-    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
-    cd $working_directory/build/prometheus
-  fi
-fi
+# if [ ! -f $package_path ]; then
+#   if [ ! -f $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz ]; then
+#     cd /tmp
+#     wget -nc -P $working_directory/sources/ https://github.com/prometheus/client_python/archive/v$prometheus_client_version.tar.gz
+#     mv $working_directory/sources/v$prometheus_client_version.tar.gz $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz
+#   fi
+#   cp $working_directory/sources/prometheus_client-$prometheus_client_version.tar.gz .
+#   tar xvzf prometheus_client-$prometheus_client_version.tar.gz
+#   cd client_python-$prometheus_client_version
+#   python3 setup.py bdist_rpm --spec-only
+# #  sed -i 's/\/bin\/bash/\/bin\/bash\nexit 0\n/' /usr/lib/rpm/brp-python-bytecompile
+# #  sed -i 's/setup.py/setup.py --no-compile/' dist/prometheus_client.spec
+# #  sed -i '1s/^/%undefine __brp_python_bytecompile\n/' dist/prometheus_client.spec 
+#   cd ..
+#   mv client_python-$prometheus_client_version prometheus_client-$prometheus_client_version
+#   tar cvzf prometheus_client-$prometheus_client_version.tar.gz prometheus_client-$prometheus_client_version
+#   rpmbuild -ta prometheus_client-$prometheus_client_version.tar.gz
+#   if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
+#     cd /root
+#     alien --to-deb --scripts /root/rpmbuild/RPMS/noarch/prometheus_client-*
+#     mv *.deb /root/debbuild/DEBS/$distribution_architecture/
+#     cd $working_directory/build/prometheus
+#   fi
+# fi
 
 unset package_native_architecture
 unset package_no_os_name
