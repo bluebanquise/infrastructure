@@ -301,7 +301,7 @@ EOF
         repo_was_success="true"
 
         # Loop over os build
-        ./engine_qemu.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
+        #./engine_qemu.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
         for os_target in el9 el8 el10 osl15 u22 u24 deb12 deb13; do
             set_status $(echo p_${os_target}_x86_64) running 0
             ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1

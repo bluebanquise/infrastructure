@@ -24,8 +24,8 @@ mkdir -p $HOME/CI/tmp/cache/ipxe-x86_64
 cd $HOME/CI/tmp/cache/
 rm -f ipxe-arm64
 rm -f ipxe-aarch64
-ln -s ipxe-arm ipxe-aarch64
-ln -s ipxe-arm ipxe-arm64
+ln -sf ipxe-arm ipxe-aarch64
+ln -sf ipxe-arm ipxe-arm64
 cd $CURRENT_DIR
 
 ################################################################################
@@ -107,7 +107,7 @@ mkdir -p $HOME/CI/repositories/{el8,el9,el10,osl15}/{x86_64,aarch64,sources}/blu
 mkdir -p $HOME/CI/repositories/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,aarch64}/bluebanquise/
 for os in u20 u22 u24 deb11 deb12 deb13; do
    cd $HOME/CI/repositories/$os/
-   ln -s aarch64 arm64
+   ln -sf aarch64 arm64
 done
 cd $CURRENT_DIR
 
@@ -130,6 +130,8 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
     fi
     if [ "$arch_list" == "all" ]; then
         archs_list=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $2}')
+    else
+	archs_list=$arch_list
     fi
     os_distribution_name=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $3}')
     os_distribution_version_major=$(cat $CURRENT_DIR/build_matrix | grep $os_name | awk -F ' ' '{print $4}')
