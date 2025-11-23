@@ -20,7 +20,6 @@ mkdir -p gits
 cd gits
 git clone https://github.com/bluebanquise/bluebanquise.git || echo "repo already exists"
 git clone https://github.com/bluebanquise/infrastructure.git || echo "repo already exists"
-git clone https://github.com/bluebanquise/website.git || echo "repo already exists"
 cd ../
 
 
@@ -101,7 +100,6 @@ while [ 1 ]
 do
 
     gits_bluebanquise_update=0
-    gits_website_update=0
     gits_infrastructure_update=0
     gits_diskless_update=0
     disable_diskless_update=0
@@ -157,28 +155,6 @@ do
     tag_infrastructure=$(git log --format="%H" -n 1)
     set_status infrastructure_tag ${tag_infrastructure} 1
 
-    cd $CURRENT_DIR/gits/website
-    git remote update
-    UPSTREAM=${1:-'@{u}'}
-    LOCAL=$(git rev-parse @)
-    REMOTE=$(git rev-parse "$UPSTREAM")
-    BASE=$(git merge-base @ "$UPSTREAM")
-
-    if [ $LOCAL = $REMOTE ]; then
-        echo "[Gits] Website Up-to-date"
-    elif [ $LOCAL = $BASE ]; then
-        echo "[Gits] Website Need to pull"
-        git pull
-        gits_website_update=1
-    elif [ $REMOTE = $BASE ]; then
-        echo "[Gits] Website Need to push"
-    else
-        echo "[Gits] Website Diverged !"
-    fi
-
-    tag_website=$(git log --format="%H" -n 1)
-    set_status website_tag ${tag_website} 1
-
     cd $CURRENT_DIR
     echo "[Gits] Done."
 
@@ -186,10 +162,6 @@ do
     if test -f "gits_bluebanquise_update"; then
         gits_bluebanquise_update=1
 	rm -f gits_bluebanquise_update
-    fi
-    if test -f "gits_website_update"; then
-        gits_website_update=1
-        rm -f gits_website_update
     fi
     if test -f "gits_infrastructure_update"; then
         gits_infrastructure_update=1
@@ -207,7 +179,7 @@ do
         disable_diskless_update=1
     fi
 
-    if [ "$gits_website_update" -eq 1 ]; then
+    if [ "$gits_bluebanquise_update" -eq 1 ]; then
 
         echo "[Website] Starting website upload"
         set_status web running 1
@@ -216,10 +188,7 @@ do
             set -x
             set -e
             rm -Rf /dev/shm/website
-            cp -a gits/website /dev/shm
-            rm -Rf /dev/shm/website/.git
-            rm -f /dev/shm/website/.gitignore
-            rm -Rf /dev/shm/website/.git*
+            cp -a gits/bluebanquise/website /dev/shm
             sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
 put -r /dev/shm/website/bluebanquise/* /home/$website_user/bluebanquise/
 exit
@@ -332,10 +301,10 @@ EOF
         repo_was_success="true"
 
         # Loop over os build
-        ./engine.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
-        for os_target in el9 el8 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
+        ./engine_qemu.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
+        for os_target in el9 el8 el10 osl15 u22 u24 deb12 deb13; do
             set_status $(echo p_${os_target}_x86_64) running 0
-            ./engine.sh arch_list="x86_64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
+            ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
             if [ $? -eq 0 ]; then
                 set_status $(echo p_${os_target}_x86_64) success 0
             else
@@ -344,7 +313,7 @@ EOF
                 break
             fi
             set_status $(echo p_${os_target}_arm64) running 0
-            ./engine.sh arch_list="arm64 aarch64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
+            ./engine_qemu.sh arch_list="arm64 aarch64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
             if [ $? -eq 0 ]; then
                 set_status $(echo p_${os_target}_arm64) success 0
             else
@@ -382,6 +351,13 @@ EOF
 	find $HOME/CI/repositories -type f -exec chmod 0644 {} +
 	find $HOME/CI/repositories -type d -exec chmod 0755 {} +
 
+    # Last step, scan for security
+    clamscan -r $HOME/CI/repositories >> /tmp/doreamon_repositories_build_log
+    if [ $? -eq 0 ]; then
+        echo "FATAL, THREAD FOUND!!"
+        exit 1
+    fi
+
         if [[ "$build_was_success" == "true" ]] && [[ "$repo_was_success" == "true" ]]; then
             echo "[Repo] Build success !"
             set_status upload running 1
@@ -418,32 +394,32 @@ EOF
     fi
     cd $CURRENT_DIR
 
-    if [ "$gits_infrastructure_update" -eq 1 ] || [ "$gits_diskless_update" -eq 1 ]; then
-        if [ "$disable_diskless_update" -eq 0 ]; then
-            echo "[Diskless] Starting diskless"
-            set_status dimages running 1
-            set_status dimages_last_attempt date 1
-            (
-            set -x
-            set -e
-            cd ../diskless
-            ./engine.sh
-sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
-mkdir /home/$website_user/bluebanquise/diskless
-put -r /tmp/*x86_64.tar.gz /home/$website_user/bluebanquise/diskless
-put -r /tmp/*aarch64.tar.gz /home/$website_user/bluebanquise/diskless
-exit
-EOF
-            ) > /tmp/doreamon_diskless_build_log 2>&1
-            if [ $? -eq 0 ]; then
-                set_status dimages success 1
-                set_status dimages_last_success date 1
-            else
-                set_status dimages error 1
-            fi
-            echo "[Diskless] Done."
-        fi
-    fi
+#     if [ "$gits_infrastructure_update" -eq 1 ] || [ "$gits_diskless_update" -eq 1 ]; then
+#         if [ "$disable_diskless_update" -eq 0 ]; then
+#             echo "[Diskless] Starting diskless"
+#             set_status dimages running 1
+#             set_status dimages_last_attempt date 1
+#             (
+#             set -x
+#             set -e
+#             cd ../diskless
+#             ./engine.sh
+# sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
+# mkdir /home/$website_user/bluebanquise/diskless
+# put -r /tmp/*x86_64.tar.gz /home/$website_user/bluebanquise/diskless
+# put -r /tmp/*aarch64.tar.gz /home/$website_user/bluebanquise/diskless
+# exit
+# EOF
+#             ) > /tmp/doreamon_diskless_build_log 2>&1
+#             if [ $? -eq 0 ]; then
+#                 set_status dimages success 1
+#                 set_status dimages_last_success date 1
+#             else
+#                 set_status dimages error 1
+#             fi
+#             echo "[Diskless] Done."
+#         fi
+#     fi
     cd $CURRENT_DIR
 
     echo "[ALL] Pass done, entering sleep."

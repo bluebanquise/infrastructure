@@ -209,7 +209,5 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
 done
 
 set -e
-# Last step, scan for security
-clamscan -r $HOME/CI/repositories
 
 echo "ALL DONE"
