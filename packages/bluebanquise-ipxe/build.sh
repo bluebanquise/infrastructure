@@ -157,13 +157,13 @@ if [ ! -f $package_path ]; then
 
         ############################################################################################### STANDARD
         if [ $distribution_architecture == 'x86_64' ]; then
-            make -j bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+            make -j 8 bin/undionly.kpxe EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
         fi
-        make -j bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
-        make -j bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
-        make -j bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
-        #        make -j bin/ipxe.iso EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
-        #        make -j bin/ipxe.usb EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+        #        make -j 8 bin/ipxe.iso EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
+        #        make -j 8 bin/ipxe.usb EMBED=bluebanquise_standard.ipxe DEBUG=$debug_flags
 
         if [ $distribution_architecture == 'x86_64' ]; then
             rm -Rf /dev/shm/efiiso/efi/boot
@@ -184,13 +184,13 @@ if [ ! -f $package_path ]; then
 
         ############################################################################################### DHCPRETRY
         if [ $distribution_architecture == 'x86_64' ]; then
-            make -j bin/undionly.kpxe EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+            make -j 8 bin/undionly.kpxe EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
         fi
-        make -j bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
-        make -j bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
-        make -j bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
-        #        make -j bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
-        #        make -j bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        #        make -j 8 bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        #        make -j 8 bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
 
         if [ $distribution_architecture == 'x86_64' ]; then
             rm -Rf /dev/shm/efiiso/efi/boot
@@ -211,13 +211,13 @@ if [ ! -f $package_path ]; then
 
         ############################################################################################### allretry
         if [ $distribution_architecture == 'x86_64' ]; then
-            make -j bin/undionly.kpxe EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+            make -j 8 bin/undionly.kpxe EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
         fi
-        make -j bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
-        make -j bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
-        make -j bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
-        #        make -j bin/ipxe.iso EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
-        #        make -j bin/ipxe.usb EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+        #        make -j 8 bin/ipxe.iso EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
+        #        make -j 8 bin/ipxe.usb EMBED=bluebanquise_allretry.ipxe DEBUG=$debug_flags
 
         if [ $distribution_architecture == 'x86_64' ]; then
             rm -Rf /dev/shm/efiiso/efi/boot
@@ -238,13 +238,13 @@ if [ ! -f $package_path ]; then
 
         ############################################################################################### NOSHELL
         if [ $distribution_architecture == 'x86_64' ]; then
-            make -j bin/undionly.kpxe EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
+            make -j 8 bin/undionly.kpxe EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
         fi
-        make -j bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
-        make -j bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
-        make -j bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
-        #        make -j bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
-        #        make -j bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/ipxe.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/snponly.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
+        make -j 8 bin-$ipxe_arch-efi/snp.efi EMBED=bluebanquise_noshell.ipxe DEBUG=$debug_flags
+        #        make -j 8 bin/ipxe.iso EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
+        #        make -j 8 bin/ipxe.usb EMBED=bluebanquise_dhcpretry.ipxe DEBUG=$debug_flags
 
         if [ $distribution_architecture == 'x86_64' ]; then
             rm -Rf /dev/shm/efiiso/efi/boot
