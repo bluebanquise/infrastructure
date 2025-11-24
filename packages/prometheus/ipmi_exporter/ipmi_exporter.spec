@@ -21,7 +21,7 @@ Release:  1%{?dist}
 Version:  %{_software_version}
 License:  apache-2.0
 Group:    System Environment/Base
-Source:   https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/prometheus-ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
+Source:   https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/prometheus-ipmi-exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 URL:      https://github.com/prometheus
 Packager: Oxedions <oxedions@gmail.com>
 
