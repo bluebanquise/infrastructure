@@ -76,7 +76,7 @@ package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/alertmanager $working_directory/build/prometheus/alertmanager
   mv alertmanager prometheus-alertmanager-$alertmanager_version
-  tar cvzf prometheus-alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz alertmanager-$alertmanager_version
+  tar cvzf prometheus-alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz prometheus-alertmanager-$alertmanager_version
   rpmbuild -ta prometheus-alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $alertmanager_version" --define "_software_architecture $prometheus_arch"
   if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
@@ -92,7 +92,7 @@ package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/node_exporter $working_directory/build/prometheus/node_exporter
   mv node_exporter prometheus-node_exporter-$node_exporter_version
-  tar cvzf prometheus-node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz node_exporter-$node_exporter_version
+  tar cvzf prometheus-node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz prometheus-node_exporter-$node_exporter_version
   rpmbuild -ta prometheus-node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $node_exporter_version" --define "_software_architecture $prometheus_arch"
   if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
@@ -108,7 +108,7 @@ package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
   mv ipmi_exporter prometheus-ipmi_exporter-$ipmi_exporter_version
-  tar cvzf prometheus-ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz ipmi_exporter-$ipmi_exporter_version
+  tar cvzf prometheus-ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz prometheus-ipmi_exporter-$ipmi_exporter_version
   rpmbuild -ta prometheus-ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $ipmi_exporter_version" --define "_software_architecture $prometheus_arch"
   if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
@@ -124,7 +124,7 @@ package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
   mv snmp_exporter prometheus-snmp_exporter-$snmp_exporter_version
-  tar cvzf prometheus-snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz snmp_exporter-$snmp_exporter_version
+  tar cvzf prometheus-snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz prometheus-snmp_exporter-$snmp_exporter_version
   rpmbuild -ta prometheus-snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $snmp_exporter_version" --define "_software_architecture $prometheus_arch"
   if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
