@@ -32,9 +32,9 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $d
         cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
         cp $working_directory/sources/dun.gpg $working_directory/build/munge/dun.gpg
         cp $working_directory/sources/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
-        tar xvJf munge-0.5.16.tar.xz
-        sed -i 's/%if 0%{?fedora} < 36/%if (0%{?rhel} \&\& 0%{?rhel} < 10) || (0%{?fedora} \&\& 0%{?fedora} < 36)/' munge-0.5.16/munge.spec
-        tar cJvf munge-0.5.16.tar.xz munge-0.5.16
+        tar xvJf munge-$munge_version.tar.xz
+        sed -i 's/%if 0%{?fedora} < 36/%if (0%{?rhel} \&\& 0%{?rhel} < 10) || (0%{?fedora} \&\& 0%{?fedora} < 36)/' munge-$munge_version/munge.spec
+        tar cJvf munge-$munge_version.tar.xz munge-$munge_version
         # rm -f /root/rpmbuild/RPMS/$distribution_architecture/munge*
         rpmbuild -ta munge-$munge_version.tar.xz
 
