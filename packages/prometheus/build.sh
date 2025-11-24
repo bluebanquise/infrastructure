@@ -71,7 +71,7 @@ if [ ! -f $package_path ]; then
 fi
 
 package_version=$alertmanager_version
-package_name=alertmanager
+package_name=prometheus-alertmanager
 package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/alertmanager $working_directory/build/prometheus/alertmanager
@@ -87,7 +87,7 @@ if [ ! -f $package_path ]; then
 fi
 
 package_version=$node_exporter_version
-package_name=node_exporter
+package_name=prometheus-node-exporter
 package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/node_exporter $working_directory/build/prometheus/node_exporter
@@ -103,7 +103,7 @@ if [ ! -f $package_path ]; then
 fi
 
 package_version=$ipmi_exporter_version
-package_name=ipmi_exporter
+package_name=prometheus-ipmi-exporter
 package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
@@ -119,7 +119,7 @@ if [ ! -f $package_path ]; then
 fi
 
 package_version=$snmp_exporter_version
-package_name=snmp_exporter
+package_name=prometheus-snmp-exporter
 package_path_calc
 if [ ! -f $package_path ]; then
   cp -a $root_directory/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
