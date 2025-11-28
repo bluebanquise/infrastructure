@@ -3,6 +3,7 @@ export PATH=$HOME/.local/bin:$PATH
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 set -x
 set -e
+
 python3 -m venv $HOME/pvenv
 source $HOME/pvenv/bin/activate
 pip3 install --upgrade sphinx sphinx-book-theme mkdocs mkdocs-material
@@ -296,7 +297,7 @@ EOF
 
         # Prepare work
         cd $CURRENT_DIR/gits/infrastructure/CI/
-        echo $(date) > /tmp/doreamon_repositories_build_log
+        echo $(date) > $HOME/doreamon_repositories_build_log
         build_was_success="true"
         repo_was_success="true"
 
@@ -304,7 +305,7 @@ EOF
         #./engine_qemu.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
         for os_target in el9 el8 el10 osl15 u22 u24 deb12 deb13; do
             set_status $(echo p_${os_target}_x86_64) running 0
-            ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
+            ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
             if [ $? -eq 0 ]; then
                 set_status $(echo p_${os_target}_x86_64) success 0
             else
@@ -313,7 +314,7 @@ EOF
                 break
             fi
             set_status $(echo p_${os_target}_arm64) running 0
-            ./engine_qemu.sh arch_list="arm64 aarch64" os_list="$os_target" steps="build" >> /tmp/doreamon_repositories_build_log 2>&1
+            ./engine_qemu.sh arch_list="arm64 aarch64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
             if [ $? -eq 0 ]; then
                 set_status $(echo p_${os_target}_arm64) success 0
             else
@@ -325,9 +326,9 @@ EOF
 
         # Loop over os repositories build
         if [[ "$build_was_success" == "true" ]]; then
-            for os_target in el9 el8 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
+            for os_target in el9 el8 el10 osl15 u22 u24 deb12 deb13; do
                 set_status $(echo r_${os_target}_x86_64) running 0
-                ./engine.sh arch_list="x86_64" os_list="$os_target" steps="repositories" >> /tmp/doreamon_repositories_build_log 2>&1
+                ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
                 if [ $? -eq 0 ]; then
                     set_status $(echo r_${os_target}_x86_64) success 0
                 else
@@ -336,7 +337,7 @@ EOF
                     break
                 fi
                 set_status $(echo r_${os_target}_arm64) running 0
-                ./engine.sh arch_list="arm64 aarch64" os_list="$os_target" steps="repositories" >> /tmp/doreamon_repositories_build_log 2>&1
+                ./engine_qemu.sh arch_list="arm64 aarch64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
                 if [ $? -eq 0 ]; then
                     set_status $(echo r_${os_target}_arm64) success 0
                 else
@@ -352,12 +353,18 @@ EOF
 	find $HOME/CI/repositories -type d -exec chmod 0755 {} +
 
     # Last step, scan for security
+    #
+    sudo systemctl stop clamav-freshclam
+    sudo freshclam
+    sudo systemctl start clamav-freshclam
+    #
     clamscan -r $HOME/CI/repositories >> /tmp/doreamon_repositories_build_log
     if [ $? -eq 0 ]; then
         echo "FATAL, THREAD FOUND!!"
         exit 1
     fi
 
+        build_was_success="false" # TO REMOVE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         if [[ "$build_was_success" == "true" ]] && [[ "$repo_was_success" == "true" ]]; then
             echo "[Repo] Build success !"
             set_status upload running 1
