@@ -314,7 +314,7 @@ EOF
                 break
             fi
             set_status $(echo p_${os_target}_arm64) running 0
-            ./engine_qemu.sh arch_list="arm64 aarch64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
+            ./engine_qemu.sh arch_list="aarch64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
             if [ $? -eq 0 ]; then
                 set_status $(echo p_${os_target}_arm64) success 0
             else
@@ -337,7 +337,7 @@ EOF
                     break
                 fi
                 set_status $(echo r_${os_target}_arm64) running 0
-                ./engine_qemu.sh arch_list="arm64 aarch64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
+                ./engine_qemu.sh arch_list="aarch64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
                 if [ $? -eq 0 ]; then
                     set_status $(echo r_${os_target}_arm64) success 0
                 else
@@ -349,8 +349,8 @@ EOF
         fi
 
 	# Make sure repositories will be readable online
-	find $HOME/CI/repositories -type f -exec chmod 0644 {} +
-	find $HOME/CI/repositories -type d -exec chmod 0755 {} +
+	sudo find $HOME/CI/repositories -type f -exec chmod 0644 {} +
+	sudo find $HOME/CI/repositories -type d -exec chmod 0755 {} +
 
     # Last step, scan for security
     #

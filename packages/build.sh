@@ -26,10 +26,10 @@ distribution=$2
 distribution_version=$3
 distribution_architecture=$(uname --m)
 if [ "$distribution" == 'Ubuntu' ] && [ $distribution_architecture == 'aarch64' ]; then
-distribution_architecture=arm64
+distribution_architecture=aarch64
 fi
 if [ "$distribution" == 'Debian' ] && [ $distribution_architecture == 'aarch64' ]; then
-distribution_architecture=arm64
+distribution_architecture=aarch64
 fi
 
 if [ "$1" == 'shell' ]; then
@@ -87,7 +87,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install libpmix-dev libpmix2 libpmix-bin equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'arm64' ]; then
+      if [ $distribution_architecture == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -104,7 +104,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install libpmix-dev libpmix2 libpmix-bin equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'arm64' ]; then
+      if [ $distribution_architecture == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -121,7 +121,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install libpmix-dev libpmix2 libpmix-bin equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'arm64' ]; then
+      if [ $distribution_architecture == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -140,7 +140,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'arm64' ]; then
+      if [ $distribution_architecture == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -157,7 +157,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'arm64' ]; then
+      if [ $distribution_architecture == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -174,7 +174,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'arm64' ]; then
+      if [ $distribution_architecture == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive

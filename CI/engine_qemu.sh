@@ -101,14 +101,9 @@ fi
 
 mkdir -p $HOME/CI/
 mkdir -p $HOME/CI/logs/
-mkdir -p $HOME/CI/build/{el8,el9,el10,osl15}/{x86_64,aarch64,sources}/
-mkdir -p $HOME/CI/build/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,arm64}/
-mkdir -p $HOME/CI/repositories/{el8,el9,el10,osl15}/{x86_64,aarch64,sources}/bluebanquise/
-mkdir -p $HOME/CI/repositories/{u20,u22,u24,deb11,deb12,deb13}/{x86_64,aarch64}/bluebanquise/
-for os in u20 u22 u24 deb11 deb12 deb13; do
-   cd $HOME/CI/repositories/$os/
-   ln -sf aarch64 arm64
-done
+mkdir -p $HOME/CI/build/{el9,el10,osl15,u22,u24,deb12,deb13}/{x86_64,aarch64,sources}/
+mkdir -p $HOME/CI/repositories/{el9,el10,osl15,u22,u24,deb12,deb13}/{x86_64,aarch64}/bluebanquise/
+
 cd $CURRENT_DIR
 
 rsync -av $CURRENT_DIR/repositories/tree/* $HOME/CI/repositories/
@@ -152,7 +147,7 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
         for cpu_arch in $(echo $archs_list | sed 's/,/ /g'); do
 
             # For now I build on amd64 CPU, might need to update that later
-            if [ "$cpu_arch" == "arm64" ] || [ "$cpu_arch" == "aarch64" ] ; then
+            if [ "$cpu_arch" == "aarch64" ] ; then
                 PLATFORM="--platform linux/arm64"
             else
                 PLATFORM=""
@@ -181,12 +176,10 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
         for cpu_arch in $(echo $archs_list | sed 's/,/ /g'); do
 
             # For now I build on amd64 CPU, might need to update that later
-            if [ "$cpu_arch" == "arm64" ] || [ "$cpu_arch" == "aarch64" ] ; then
+            if [ "$cpu_arch" == "aarch64" ] ; then
                 PLATFORM="--platform linux/arm64"
-                repo_cpu_arch="aarch64"
             else
                 PLATFORM=""
-                repo_cpu_arch="x86_64"
             fi
 
             # Check if base image already exists, if not build it
@@ -199,7 +192,7 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
             set -e
 
             # Build repo
-            repos_path=$HOME/CI/repositories/$os_name/$repo_cpu_arch/bluebanquise/
+            repos_path=$HOME/CI/repositories/$os_name/$cpu_arch/bluebanquise/
             mkdir -p $repos_path
             $(which cp) -af $HOME/CI/build/$os_name/$cpu_arch $repos_path
             $(which cp) -af $HOME/CI/build/$os_name/noarch $repos_path
