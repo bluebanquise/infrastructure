@@ -2,7 +2,7 @@ set -x
 docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     set -x ; \
     [ "$(uname -m)" == "x86_64" ] && export cpu_arch="amd64" || export cpu_arch="arm64"; \
-    [ "$(uname -m)" == "x86_64" ] && export folder_cpu_arch="x86_64" || export folder_cpu_arch="arm64"; \
+    [ "$(uname -m)" == "x86_64" ] && export folder_cpu_arch="x86_64" || export folder_cpu_arch="aarch64"; \
     cd /repo/; \
     rm -Rf repo; \
     mkdir repo && cd repo && mkdir conf -p; \
