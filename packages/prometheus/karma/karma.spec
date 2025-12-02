@@ -45,8 +45,8 @@ wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://githu
 tar xvzf karma-linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/bin/
-cp -a karma-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/karma
+mkdir -p $RPM_BUILD_ROOT/usr/bin/
+cp -a karma-linux-%{_software_architecture} $RPM_BUILD_ROOT/usr/bin/karma
 
 %pre
 
@@ -58,4 +58,4 @@ cp -a karma-linux-%{_software_architecture} $RPM_BUILD_ROOT/bin/karma
 
 %files
 %defattr(-,root,root,-)
-/bin/karma
+/usr/bin/karma

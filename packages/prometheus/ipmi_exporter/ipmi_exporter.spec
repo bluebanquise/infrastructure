@@ -47,8 +47,8 @@ wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://githu
 tar xvzf ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
-mkdir -p $RPM_BUILD_ROOT/bin/
-cp -a ipmi_exporter-%{_software_version}.linux-%{_software_architecture}/ipmi_exporter $RPM_BUILD_ROOT/bin/
+mkdir -p $RPM_BUILD_ROOT/usr/bin/
+cp -a ipmi_exporter-%{_software_version}.linux-%{_software_architecture}/ipmi_exporter $RPM_BUILD_ROOT/usr/bin/
 
 %pre
 
@@ -60,4 +60,4 @@ cp -a ipmi_exporter-%{_software_version}.linux-%{_software_architecture}/ipmi_ex
 
 %files
 %defattr(-,root,root,-)
-/bin/ipmi_exporter
+/usr/bin/ipmi_exporter
