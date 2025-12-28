@@ -10,6 +10,8 @@ Packager:      oxedions <oxedions@gmail.com>
 %define debug_package %{nil}
 %define __brp_mangle_shebangs /usr/bin/true
 
+%define _buildshell /bin/bash
+
 %description
 Bluebanquise stack python virtual environment
 
