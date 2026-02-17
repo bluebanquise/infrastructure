@@ -65,10 +65,10 @@ Memtest86plus
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/
-cd build64
+cd build/x86_64/
 make
-cp memtest.bin $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.bin
-cp memtest.efi $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.efi
+cp mt86plus $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.bin
+cp mt86plus $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.efi
 
 %files
 %defattr(-,root,root,-)
