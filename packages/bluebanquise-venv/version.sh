@@ -1,2 +1,2 @@
 package_name='bluebanquise-venv'
-package_version=1.0.0
+package_version=1.0.1
