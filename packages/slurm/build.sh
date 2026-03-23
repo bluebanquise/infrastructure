@@ -41,6 +41,15 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $d
     fi
 fi
 
+# ###### Http Parser
+# # Only for RHEL because RedHat is too lazy to provide it...
+#   if [ "$distribution" == 'RedHat' ]; then
+#     if [ $distribution_version -eq 10 ]; then
+
+#         git clone --depth 1 --single-branch -b v2.9.4 https://github.com/nodejs/http-parser.git http_parser
+        
+
+
 ###### SLURM
 
 # Since 23.11, it is possible to build slurm packages natively with deb mechanism.
@@ -114,7 +123,7 @@ if [ ! -f $package_path ]; then
     #     tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
     # fi
 
-        rpmbuild -ta --target=$distribution_architecture slurm-$slurm_version.tar.bz2
+        rpmbuild -ta --target=$distribution_architecture slurm-$slurm_version.tar.bz2 --with mysql --with slurmrestd --with jwt
     fi
 
     # if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then

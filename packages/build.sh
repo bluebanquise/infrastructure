@@ -172,14 +172,14 @@ if [ "$1" == "dependencies" ]; then
         export DEBIAN_FRONTEND=noninteractive
         apt-get install -y libdbus-1-dev python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-amd64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi unzip xorriso python3-venv
         # Possibly missing python3-mysqldb libmysqld-dev
-        apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
+        apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev libjwt-dev jwt libhttp-parser-dev libhttp-parser2.9 libjson-c-dev libjson-c5 -y
       fi
       if [ $distribution_architecture == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
         apt-get install -y libdbus-1-dev python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-arm64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi unzip xorriso python3-venv
-        apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
+        apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev libjwt-dev jwt libhttp-parser-dev libhttp-parser2.9 libjson-c-dev libjson-c5 -y
       fi
     fi
 
@@ -210,7 +210,7 @@ if [ "$1" == "dependencies" ]; then
         dnf install dnf-plugins-core epel-release -y
         dnf install kernel-headers make dbus-devel rpm-build genisoimage xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel libgenders-devel net-snmp-devel unzip -y 
         dnf config-manager --set-enabled crb
-        dnf install freeipmi-devel mariadb-devel -y
+        dnf install freeipmi-devel mariadb-devel libjwt libjwt-devel -y
         dnf groupinstall 'Development Tools' -y
         dnf reinstall genisoimage -y
       fi
