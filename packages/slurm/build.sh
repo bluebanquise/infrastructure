@@ -123,7 +123,8 @@ if [ ! -f $package_path ]; then
     #     tar cjvf slurm-$slurm_version.tar.bz2 slurm-$slurm_version
     # fi
 
-        rpmbuild -ta --target=$distribution_architecture slurm-$slurm_version.tar.bz2 --with mysql --with slurmrestd --with jwt
+        rpmbuild -ta --target=$distribution_architecture slurm-$slurm_version.tar.bz2 --with mysql 
+        # --with slurmrestd --with jwt
     fi
 
     # if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
