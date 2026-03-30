@@ -19,6 +19,6 @@ docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     reprepro -b /repo/repo/ list noble; \
     rm -Rf /repo/$folder_cpu_arch
     rm -Rf /repo/noarch
-    $(which cp) -f /repo/repo/* /repo
+    $(which cp) -rf /repo/repo/* /repo
     rm -Rf /repo/repo
     '
