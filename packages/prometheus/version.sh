@@ -5,3 +5,4 @@ ipmi_exporter_version=1.10.1
 node_exporter_version=1.10.2
 karma_version=0.122
 snmp_exporter_version=0.29.0
+modbus_exporter_version="v0.4.1-43-g05ffeb88"
