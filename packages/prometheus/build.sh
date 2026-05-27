@@ -142,6 +142,10 @@ package_version=$modbus_exporter_version
 package_name=prometheus-modbus-exporter
 package_path_calc
 if [ ! -f $package_path ]; then
+
+  export PATH=/usr/local/go/bin:$PATH
+  go version
+
   cp -a $root_directory/prometheus/modbus_exporter $working_directory/build/prometheus/modbus_exporter
   mv modbus_exporter prometheus-modbus-exporter-$modbus_exporter_version
   tar cvzf prometheus-modbus-exporter-$modbus_exporter_version.linux-$prometheus_arch.tar.gz prometheus-modbus-exporter-$modbus_exporter_version
