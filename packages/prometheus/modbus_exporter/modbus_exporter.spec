@@ -10,7 +10,7 @@ Source0:       https://github.com/RichiH/modbus_exporter/releases/download/v%{_s
 URL:           https://github.com/RichiH/modbus_exporter
 Packager:      Oxedions <oxedions@gmail.com>
 
-BuildRequires: golang>=1.23.0
+#BuildRequires: golang>=1.23.0
 
 %description
 modbus_exporter for the BlueBanquise stack
