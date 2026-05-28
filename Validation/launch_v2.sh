@@ -8,9 +8,29 @@ LAUNCH_CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null 
 #newgrp kvm
 #newgrp libvirt
 #trap "kill -9 $(ps -ax | grep 'http.server 8000' | sed 2d | awk -F ' ' '{print $1}')" EXIT
+
+
 echo "Starting test."
 set -e
 source values.sh
+
+# CONFIGURE Virtual NETWORK
+if (( $STEP < 1 )); then
+    set -x
+    echo " Setup networks."
+    echo "  - Creating VMs private network."
+    set +e
+    virsh net-list --all | grep private_network
+    if [ $? -ne 0 ]; then
+        set -e
+        virsh net-define $CURRENT_DIR/../vms/private_network.xml
+    virsh net-start private_network
+    fi
+    set -e
+fi
+
+exit
+
 if (( $STEP < 1 )); then
     source steps/01_setup_networks.sh
 fi
