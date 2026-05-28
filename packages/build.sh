@@ -76,20 +76,20 @@ if [ "$1" == "dependencies" ]; then
 
   if [ "$distribution" == 'opensuse_leap' ]; then
     if [[ "$distribution_version" == "15" ]]; then
-      zypper -n install dbus-1-devel gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build tar wget python3 python3-setuptools unzip xorriso
+      zypper --allow-downgrade -n install dbus-1-devel gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build tar wget python3 python3-setuptools unzip xorriso
       if [ $distribution_architecture == 'x86_64' ]; then
-         zypper -n install grub2-x86_64-efi
+         zypper --allow-downgrade -n install grub2-x86_64-efi
       fi
       if [ $distribution_architecture == 'aarch64' ]; then
-         zypper -n install grub2-arm64-efi
+         zypper --allow-downgrade -n install grub2-arm64-efi
       fi
     fi
   elif [ "$distribution" == 'SLES' ]; then
     if [[ "$distribution_version" =~ ^12\. ]]; then
         # no munge RPMs!!
-        zypper -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi freeipmi freeipmi-devel libmysqlclient-devel mariadb mariadb-client rpm-build unzip xorriso
+        zypper --allow-downgrade -n install gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi freeipmi freeipmi-devel libmysqlclient-devel mariadb mariadb-client rpm-build unzip xorriso
     elif [[ "$distribution_version" =~ ^15\. ]]; then
-        zypper -n install dbus-1-devel gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build unzip xorriso
+        zypper --allow-downgrade -n install dbus-1-devel gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build unzip xorriso
     fi
 
   elif [ "$distribution" == 'Debian' ]; then
