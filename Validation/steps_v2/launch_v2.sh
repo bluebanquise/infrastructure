@@ -1,5 +1,7 @@
 echo
 LAUNCH_CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 #sudo apt-get update && sudo apt-get install -y qemu-kvm virt-manager libvirt-daemon-system virtinst libvirt-clients bridge-utils
 #sudo systemctl enable libvirtd
 #sudo systemctl start libvirtd
@@ -27,7 +29,7 @@ if (( $STEP < 1 )); then
     virsh net-list --all | grep private_network
     if [ $? -ne 0 ]; then
         set -e
-        virsh net-define $CURRENT_DIR/../vms/private_network.xml
+        virsh net-define $CURRENT_DIR/vms/private_network.xml
     virsh net-start private_network
     fi
     set -e
@@ -37,7 +39,7 @@ if (( $STEP < 2 )); then
 
     echo " 02 Start http server."
     echo "   - Grabing isos"
-    cd $CURRENT_DIR/../http
+    cd $CURRENT_DIR/http
     wget -nc https://releases.ubuntu.com/24.04/ubuntu-24.04.4-live-server-amd64.iso
     #wget -nc https://releases.ubuntu.com/20.04/ubuntu-20.04.5-live-server-amd64.iso
     echo "   - Extracting boot files"
@@ -62,9 +64,9 @@ if (( $STEP < 3 )); then
     echo " 03 Bootstrap mgt1."
 
     # Inject host ssh key into user-data
-    rm -f $CURRENT_DIR/../http/user-data
-    cp $CURRENT_DIR/../http/user-data.template $CURRENT_DIR/../http/user-data
-    echo "          - $(cat $HOME/.ssh/id_ed25519.pub)" >> $CURRENT_DIR/../http/user-data
+    rm -f $CURRENT_DIR/http/user-data
+    cp $CURRENT_DIR/http/user-data.template $CURRENT_DIR/http/user-data
+    echo "          - $(cat $HOME/.ssh/id_ed25519.pub)" >> $CURRENT_DIR/http/user-data
 
     sudo mkdir -p /data/images
     CUSER=$USER
