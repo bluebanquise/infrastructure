@@ -11,6 +11,9 @@ set user-class BlueBanquise
 
 sleep 4
 
+echo Network configuration detected
+ifstat
+
 ifconf --configurator dhcp || shell
 
 echo

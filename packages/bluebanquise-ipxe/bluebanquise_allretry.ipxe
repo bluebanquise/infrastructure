@@ -10,7 +10,10 @@ cpair 0
 
 set user-class BlueBanquise
 
-sleep 2
+sleep 4
+
+echo Network configuration detected
+ifstat
 
 :retry
 echo Trying to get an ip from DHCP, looping until get one...
