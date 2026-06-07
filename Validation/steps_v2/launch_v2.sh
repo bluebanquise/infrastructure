@@ -39,6 +39,7 @@ if (( $STEP < 2 )); then
 
     echo " 02 Start http server."
     echo "   - Grabing isos"
+    mkdir -p $CURRENT_DIR/http
     cd $CURRENT_DIR/http
     wget -nc https://releases.ubuntu.com/24.04/ubuntu-24.04.4-live-server-amd64.iso
     #wget -nc https://releases.ubuntu.com/20.04/ubuntu-20.04.5-live-server-amd64.iso
