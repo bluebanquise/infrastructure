@@ -51,7 +51,7 @@ if (( $STEP < 2 )); then
     cp -a /bbmnt/casper/vmlinuz . && chmod 666 vmlinuz
     (
     set -x
-    cd $CURRENT_DIR/../http
+    cd $CURRENT_DIR/http
     ps -ax | grep 'python3 -m http.server 8000'
 #    if [ $? -eq 1 ]; then
        python3 -m http.server 8000 > http_server.log 2>&1
@@ -66,7 +66,9 @@ if (( $STEP < 3 )); then
 
     # Inject host ssh key into user-data
     rm -f $CURRENT_DIR/http/user-data
-    cp $CURRENT_DIR/http/user-data.template $CURRENT_DIR/http/user-data
+    rm -f $CURRENT_DIR/http/meta-data
+    cp $CURRENT_DIR/user-data.template $CURRENT_DIR/http/user-data
+    cp $CURRENT_DIR/meta-data $CURRENT_DIR/http/meta-data
     echo "          - $(cat $HOME/.ssh/id_ed25519.pub)" >> $CURRENT_DIR/http/user-data
 
     sudo mkdir -p /data/images
@@ -77,7 +79,7 @@ if (( $STEP < 3 )); then
     virsh destroy mgt1 && echo "mgt1 destroyed" || echo "mgt1 not found, skipping"
     virsh undefine mgt1 && echo "mgt1 undefined" || echo "mgt1 not found, skipping"
 
-    virt-install --os-variant ubuntu24.04 --name=mgt1 --ram=8192 --vcpus=4 --check mac_in_use=off --noreboot --disk path=/data/images/mgt1_2.qcow2,bus=virtio,size=24 --network bridge=virbr0,mac=52:54:00:fa:12:01 --network bridge=virbr1,mac=52:54:00:fa:12:02 --install kernel=http://$host_ip:8000/vmlinuz,initrd=http://$host_ip:8000/initrd,kernel_args_overwrite=yes,kernel_args="root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://$host_ip:8000/ubuntu-24.04.4-live-server-amd64.iso autoinstall ds=nocloud-net;s=http://$host_ip:8000/"
+    virt-install --os-variant ubuntu24.04 --name=mgt1 --ram=12000 --vcpus=4 --check mac_in_use=off --noreboot --disk path=/data/images/mgt1_2.qcow2,bus=virtio,size=24 --network bridge=virbr0,mac=52:54:00:fa:12:01 --network bridge=virbr1,mac=52:54:00:fa:12:02 --install kernel=http://$host_ip:8000/vmlinuz,initrd=http://$host_ip:8000/initrd,kernel_args_overwrite=yes,kernel_args="root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://$host_ip:8000/ubuntu-24.04.4-live-server-amd64.iso autoinstall ds=nocloud-net;s=http://$host_ip:8000/"
 
     # Reduce memory once installed, no need for more
     virsh setmem mgt1 2G --config
