@@ -10,6 +10,11 @@ Packager:      oxedions <oxedions@gmail.com>
 %define debug_package %{nil}
 %define __brp_mangle_shebangs /usr/bin/true
 
+# Disable auto dependency/provides scanning for the venv
+%global __requires_exclude_from ^/opt/bluebanquise/bluebanquise_venv/.*$
+%global __provides_exclude_from ^/opt/bluebanquise/bluebanquise_venv/.*$
+
+%global __python_requires %{nil}
 %define _buildshell /bin/bash
 
 %description

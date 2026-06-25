@@ -14,6 +14,8 @@ sleep 4
 echo Network configuration detected
 ifstat
 
+set timeout 45000
+
 ifconf --configurator dhcp || shell
 
 echo

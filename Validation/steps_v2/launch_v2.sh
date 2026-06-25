@@ -126,9 +126,184 @@ EOF
 fi
 
 
+export mgt1_ip=$(virsh net-dhcp-leases default | grep '52:54:00:fa:12:01' | tail -1 | awk -F ' ' '{print $5}' | sed 's/\/24//')
+
+if (( $STEP < 6 )); then
+
+  # Bootstrap BlueBanquise
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip wget https://raw.githubusercontent.com/bluebanquise/bluebanquise/master/bootstrap/online_bootstrap.sh
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip chmod +x online_bootstrap.sh
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip ./online_bootstrap.sh --silent
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null generic@$mgt1_ip 'cat .ssh/authorized_keys | sudo tee -a /var/lib/bluebanquise/.ssh/authorized_keys'
+
+  # From now, we work as bluebanquise sudo user
+  ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip hostname
+  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r $CURRENT_DIR/validation bluebanquise@$mgt1_ip:/var/lib/bluebanquise/
+fi
+
+if (( $STEP < 7 )); then
+
+    remote_pubkey=$(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip /bin/echo \$\(cat /var/lib/bluebanquise/.ssh/id_ed25519.pub\))
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+set -x
+cd validation/inventories/
+echo os_admin_ssh_keys=[\"$remote_pubkey\"] >> hosts_root_mgmt
+echo 127.0.0.1 mgt1 | sudo tee -a /etc/hosts
+ssh -o StrictHostKeyChecking=no mgt1 hostname
+EOF
+
+# #OS_ADMIN_SSH_KEYS
+
+# [os_dynamic]
+# c001
+# c002
+# # Add here the needed os parameters per cycle
+
+
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sudo curl http://bluebanquise.com/repository/releases/latest/u24/x86_64/bluebanquise/bluebanquise.list --output /etc/apt/sources.list.d/bluebanquise.list
+sudo apt update
+EOF
+fi
+
+if (( $STEP < 8 )); then
+# Validation step
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+source /var/lib/bluebanquise/ansible_venv/bin/activate
+cd validation/ 
+export ANSIBLE_JINJA2_EXTENSIONS=jinja2.ext.loopcontrols,jinja2.ext.do
+ansible-playbook playbooks/managements.yml -i inventories --limit mgt1 -b
+EOF
+if [ $? -eq 0 ]; then
+  echo SUCCESS deploying mgt1
+else
+  echo FAILED deploying mgt1
+  exit 1
+fi
+
+fi
+
+
 #####################################################################################################
-########## DEPLOY DEBIAN 13 CLUSTER
+########## DEPLOY EL 10 CLUSTER
 #########################
+
+
+if (( $STEP < 20 )); then
+
+cd $CURRENT_DIR/http
+wget -nc https://download.rockylinux.org/pub/rocky/10/isos/x86_64/Rocky-10.2-x86_64-dvd1.iso
+cd $CURRENT_DIR
+
+ssh -o StrictHostKeyChecking=no bluebanquise@$mgt1_ip wget -nc http://$host_ip:8000/Rocky-10.2-x86_64-dvd1.iso
+
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+set -x
+sudo mkdir -p /var/www/html/pxe/netboots/redhat/10/x86_64/iso
+sudo mount /var/lib/bluebanquise/Rocky-10.2-x86_64-dvd1.iso /var/www/html/pxe/netboots/redhat/10/x86_64/iso
+export PYTHONPATH=$mgt1_PYTHONPATH
+sudo bluebanquise-bootset -n mgt2 -b osdeploy
+EOF
+
+virsh destroy mgt2 && echo "mgt2 destroyed" || echo "mgt2 not found, skipping"
+virsh undefine mgt2 && echo "mgt2 undefined" || echo "mgt2 not found, skipping"
+virt-install --name=mgt2 --os-variant rhel8-unknown --ram=10000 --vcpus=4 --noreboot --disk path=/var/lib/libvirt/images/mgt2.qcow2,bus=virtio,size=10 --network bridge=virbr1,52:54:00:fa:00:02 --pxe
+virsh setmem mgt2 2G --config
+virsh start mgt2
+fi
+
+if (( $STEP < 21 )); then
+
+# Validation step
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J bluebanquise@$mgt1_ip <<EOF
+ssh-keygen -f "/var/lib/bluebanquise/.ssh/known_hosts" -R mgt2
+/tmp/waitforssh.sh bluebanquise@mgt2
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+ssh -o StrictHostKeyChecking=no mgt2 hostname
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+ssh -o StrictHostKeyChecking=no mgt2 sudo curl http://bluebanquise.com/repository/releases/latest/el10/x86_64/bluebanquise/bluebanquise.repo --output /etc/yum.repos.d/bluebanquise.repo
+EOF
+set +e
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+set -x
+#sleep 200 # wait for network to stabilize
+ssh -o StrictHostKeyChecking=no mgt2 'sudo dnf install wget -y && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && sudo dnf install epel-release-latest-10.noarch.rpm -y && sudo dnf update -y && sudo reboot -h now
+'
+EOF
+set -e
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+/tmp/waitforssh.sh bluebanquise@mgt2
+EOF
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+
+scp -o StrictHostKeyChecking=no mgt2 -r /var/lib/bluebanquise/validation mgt2:/var/lib/bluebanquise/
+ssh -o StrictHostKeyChecking=no mgt2 <<EOOF
+wget https://raw.githubusercontent.com/bluebanquise/bluebanquise/master/bootstrap/configure_environment.sh
+chmod +x configure_environment.sh
+configure_environment.sh
+EOOF
+ssh -o StrictHostKeyChecking=no mgt2 <<EOOF
+source /var/lib/bluebanquise/ansible_venv/bin/activate
+cd validation/ 
+sed -i 's/"services_ip":"10.10.0.1"/"services_ip":"10.10.0.2"/' hosts_root_mgmt
+ssh_public_key=$(cat /var/lib/bluebanquise/.ssh/id_ed25519.pub)
+
+cat <<EOOOF >> hosts_too_mgmt
+os_admin_ssh_keys=[\"$(cat $HOME/.ssh/id_ed25519.pub)\"]
+
+[os_rhel10:vars]
+os_operating_system={'distribution':"redhat", 'distribution_version':"10", 'distribution_major_version':"10" }
+
+
+
+export ANSIBLE_JINJA2_EXTENSIONS=jinja2.ext.loopcontrols,jinja2.ext.do
+ansible-playbook playbooks/managements.yml -i inventories --limit mgt2 -b
+EOOF
+
+
+
+source /var/lib/bluebanquise/ansible_venv/bin/activate
+cd validation/inventories/
+export ANSIBLE_VARS_ENABLED=ansible.builtin.host_group_vars,bluebanquise.commons.core
+export ANSIBLE_JINJA2_EXTENSIONS=jinja2.ext.loopcontrols,jinja2.ext.do
+ansible-playbook ../playbooks/managements.yml -i minimal_extended --limit mgt2 -b
+EOF
+if [ $? -eq 0 ]; then
+  echo SUCCESS deploying RHEL 8 on mgt2
+else
+  echo FAILED deploying RHEL 8 on mgt2
+  exit 1
+fi
+
+# Cleaning
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null bluebanquise@$mgt1_ip <<EOF
+sudo umount /var/www/html/pxe/netboots/redhat/10/x86_64/iso
+rm Rocky-10.2-x86_64-dvd1.iso
+EOF
+virsh shutdown mgt2
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 exit

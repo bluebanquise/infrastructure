@@ -17,6 +17,7 @@ ifstat
 
 :retry
 echo Trying to get an ip from DHCP, looping until get one...
+set timeout 45000
 ifconf --configurator dhcp || goto retry
 
 echo

@@ -1,0 +1,52 @@
+[all]
+mgt1 network_interfaces="[{'ip4':'10.10.0.1', 'mac':'52:54:00:fa:12:02', 'network':'net-admin', 'interface':'enp2s0', 'never_default4':'true'}]"
+c001 network_interfaces="[{'ip4':'10.10.3.1', 'mac':'1a:2b:3c:4d:2e:9f', 'network':'net-admin', 'interface':'enp1s0'}]"
+c002 network_interfaces="[{'ip4':'10.10.3.2', 'mac':'1a:2b:3c:4d:3e:9f', 'network':'net-admin', 'interface':'enp1s0'}]"
+
+[os_rhel10]
+mgt2 network_interfaces="[{'ip4':'10.10.0.2', 'mac':'52:54:00:fa:00:02', 'network':'net-admin', 'interface':'enp1s0'}]"
+[os_rhel10:vars]
+os_operating_system={'distribution':"redhat", 'distribution_version':"10", 'distribution_major_version':"10" }
+
+[os_rhel9]
+mgt3 network_interfaces="[{'ip4':'10.10.0.3', 'mac':'52:54:00:fa:00:03', 'network':'net-admin', 'interface':'enp1s0'}]"
+[os_rhel9:vars]
+os_operating_system={'distribution':"redhat", 'distribution_version':"9", 'distribution_major_version':"9" }
+
+[os_ubuntu24]
+mgt4 network_interfaces="[{'ip4':'10.10.0.4', 'mac':'52:54:00:fa:00:04', 'network':'net-admin', 'interface':'enp1s0'}]"
+[os_ubuntu24:vars]
+os_operating_system={'distribution':"ubuntu", 'distribution_version':"24.04", 'distribution_major_version':"24" }
+
+[os_opensuseleap15]
+mgt5 network_interfaces="[{'ip4':'10.10.0.5', 'mac':'52:54:00:fa:00:05', 'network':'net-admin', 'interface':'enp1s0'}]"
+[os_opensuseleap15:vars]
+os_operating_system={'distribution':"opensuse", 'distribution_version':"15", 'distribution_major_version':"15" }
+
+[os_debian13]
+mgt6 network_interfaces="[{'ip4':'10.10.0.6', 'mac':'52:54:00:fa:00:07', 'network':'net-admin', 'interface':'enp1s0'}]"
+[os_debian12:vars]
+os_operating_system={'distribution':"debian", 'distribution_version':"13", 'distribution_major_version':"13" }
+os_partitioning="d-i partman-auto/disk string /dev/vda\nd-i partman-auto/method string regular\nd-i partman-auto/choose_recipe select atomic\nd-i partman-auto/init_automatically_partition select Guided - use entire disk\n"
+
+[fn_management]
+mgt[1:6]
+
+[fn_compute]
+c001
+c002
+
+[hw_all]
+mgt[1:6]
+c001
+c002
+[hw_all:vars]
+hw_equipment_type="server"
+
+[all:vars]
+# Define unique network settings
+networks={'net-admin':{'subnet':"10.10.0.0", 'prefix':"16", 'gateway':"10.10.0.1", "services_ip":"10.10.0.1" }}
+dns_server_dnssec_enable=False
+dns_server_dnssec_validation=False
+dns_server_recursion=True
+dns_server_forwarders=['8.8.8.8', '8.8.4.4']
