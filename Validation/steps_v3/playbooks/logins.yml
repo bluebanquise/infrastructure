@@ -1,0 +1,31 @@
+---
+- name: Login node stack
+  hosts: fn_login
+  roles:
+    - role: bluebanquise.infrastructure.repositories
+      tags: repositories
+    - role: bluebanquise.infrastructure.set_hostname
+      tags: set_hostname
+    - role: bluebanquise.infrastructure.nic
+      tags: nic
+    - role: bluebanquise.infrastructure.hosts_file
+      tags: hosts_file
+    - role: bluebanquise.infrastructure.dns_client
+      tags: dns_client
+    - role: bluebanquise.infrastructure.time
+      tags: time
+      vars:
+        time_profile: client
+    - role: bluebanquise.infrastructure.firewall
+      tags: firewall
+    - role: bluebanquise.infrastructure.nfs
+      tags: nfs
+      vars:
+        nfs_profile:
+          - client
+    - role: bluebanquise.infrastructure.slurm
+      tags: slurm
+      vars:
+        slurm_profile: submitter
+    - role: bluebanquise.infrastructure.users
+      tags: users

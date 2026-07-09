@@ -1,0 +1,12 @@
+---
+slurm_cluster_name: bluebanquise
+slurm_controller_hostname: mgt
+slurm_enable_accounting: false
+# slurm_munge_key_b64 injected at runtime by 11_bootstrap_bb_on_mgmt.sh
+slurm_partitions_list:
+  - computes_groups:
+      - fn_compute
+    partition_name: all
+    partition_configuration:
+      State: UP
+      Default: "YES"

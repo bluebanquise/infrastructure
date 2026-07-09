@@ -1,0 +1,61 @@
+[all]
+# mgt1 — permanent Ubuntu 24.04 bootstrap host.
+# enp1s0 = virbr0 (DHCP from libvirt), enp2s0 = virbr1 (10.10.0.1).
+mgt1 network_interfaces="[{'ip4':'10.10.0.1','mac':'52:54:00:fa:12:02','network':'net-admin','interface':'enp2s0','never_default4':'true'}]"
+
+# Per-distro cluster management VMs (PXE-deployed by mgt1 via virbr1).
+# Only the virbr1 NIC is declared here; the virbr2 NIC is configured later
+# by BlueBanquise on the mgmt VM itself using the cluster inventory.
+mgmt_rhel9   network_interfaces="[{'ip4':'10.10.0.21','mac':'52:54:00:bb:09:01','network':'net-admin','interface':'enp1s0'}]"
+mgmt_rhel10  network_interfaces="[{'ip4':'10.10.0.22','mac':'52:54:00:bb:10:01','network':'net-admin','interface':'enp1s0'}]"
+mgmt_ubuntu24 network_interfaces="[{'ip4':'10.10.0.23','mac':'52:54:00:bb:24:01','network':'net-admin','interface':'enp1s0'}]"
+mgmt_debian13 network_interfaces="[{'ip4':'10.10.0.24','mac':'52:54:00:bb:13:01','network':'net-admin','interface':'enp1s0'}]"
+
+[fn_management]
+mgt1
+
+[fn_cluster_mgmt]
+mgmt_rhel9
+mgmt_rhel10
+mgmt_ubuntu24
+mgmt_debian13
+
+[os_ubuntu24]
+mgt1
+mgmt_ubuntu24
+[os_ubuntu24:vars]
+os_operating_system={'distribution':'ubuntu','distribution_version':'24.04','distribution_major_version':'24'}
+
+[os_rhel9]
+mgmt_rhel9
+[os_rhel9:vars]
+os_operating_system={'distribution':'redhat','distribution_version':'9','distribution_major_version':'9'}
+
+[os_rhel10]
+mgmt_rhel10
+[os_rhel10:vars]
+os_operating_system={'distribution':'redhat','distribution_version':'10','distribution_major_version':'10'}
+
+[os_debian13]
+mgmt_debian13
+[os_debian13:vars]
+os_operating_system={'distribution':'debian','distribution_version':'13','distribution_major_version':'13'}
+os_partitioning="d-i partman-auto/disk string /dev/vda\nd-i partman-auto/method string regular\nd-i partman-auto/choose_recipe select atomic\nd-i partman-auto/init_automatically_partition select Guided - use entire disk\n"
+
+[hw_all]
+mgt1
+mgmt_rhel9
+mgmt_rhel10
+mgmt_ubuntu24
+mgmt_debian13
+[hw_all:vars]
+hw_equipment_type="server"
+
+[all:vars]
+networks={'net-admin':{'subnet':'10.10.0.0','prefix':'16','gateway':'10.10.0.1','services_ip':'10.10.0.1'}}
+os_operating_system={'distribution':'ubuntu','distribution_version':'24.04','distribution_major_version':'24'}
+dns_server_dnssec_enable=False
+dns_server_dnssec_validation=False
+dns_server_recursion=True
+dns_server_forwarders=['8.8.8.8','8.8.4.4']
+# os_admin_ssh_keys injected at runtime by 04_deploy_bb_on_mgt1.sh

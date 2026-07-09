@@ -1,0 +1,4 @@
+<network ipv6='no'>
+  <name>cluster_network</name>
+  <bridge name="virbr2" stp="on" delay="0"/>
+</network>

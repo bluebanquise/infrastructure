@@ -1,0 +1,40 @@
+[all]
+mgt    network_interfaces="[{'ip4':'10.20.0.1','mac':'52:54:00:cc:24:01','network':'net-cluster','interface':'enp2s0'}]"
+login1 network_interfaces="[{'ip4':'10.20.0.2','mac':'52:54:00:cc:00:10','network':'net-cluster','interface':'enp1s0'}]"
+c001   network_interfaces="[{'ip4':'10.20.0.3','mac':'52:54:00:cc:00:11','network':'net-cluster','interface':'enp1s0'}]"
+c002   network_interfaces="[{'ip4':'10.20.0.4','mac':'52:54:00:cc:00:12','network':'net-cluster','interface':'enp1s0'}]"
+
+[fn_management]
+mgt
+
+[fn_login]
+login1
+
+[fn_compute]
+c001
+c002
+
+[os_ubuntu24]
+mgt
+login1
+c001
+c002
+[os_ubuntu24:vars]
+os_operating_system={'distribution':'ubuntu','distribution_version':'24.04','distribution_major_version':'24'}
+
+[hw_all]
+mgt
+login1
+c001
+c002
+[hw_all:vars]
+hw_equipment_type="server"
+
+[all:vars]
+networks={'net-cluster':{'subnet':'10.20.0.0','prefix':'16','gateway':'10.20.0.1','services_ip':'10.20.0.1'}}
+os_operating_system={'distribution':'ubuntu','distribution_version':'24.04','distribution_major_version':'24'}
+dns_server_dnssec_enable=False
+dns_server_dnssec_validation=False
+dns_server_recursion=True
+dns_server_forwarders=['8.8.8.8','8.8.4.4']
+# os_admin_ssh_keys injected at runtime by 11_bootstrap_bb_on_mgmt.sh

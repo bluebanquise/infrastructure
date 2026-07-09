@@ -1,0 +1,20 @@
+---
+nfs_shares:
+  - export: /home
+    server: mgt
+    mount: /home
+    clients_groups:
+      - fn_login
+      - fn_compute
+    network: net-cluster
+    export_options: "rw,sync,no_root_squash"
+    mount_options: "rw,nfsvers=4.2,bg"
+  - export: /opt/software
+    server: mgt
+    mount: /opt/software
+    clients_groups:
+      - fn_login
+      - fn_compute
+    network: net-cluster
+    export_options: "ro,async,no_root_squash"
+    mount_options: "ro,nfsvers=4.2,bg"
