@@ -23,7 +23,7 @@ EOF
             done
             sleep 30
             for node in login1 c001 c002; do
-                $SSH_MGMT "/tmp/waitforssh.sh bluebanquise@$node"
+                $SSH_MGMT "/usr/local/bin/waitforssh.sh bluebanquise@$node"
             done
             ;;
         ubuntu24|debian13)
@@ -34,6 +34,21 @@ EOF
             ;;
     esac
 
+    # ansible-playbook (unlike the ssh calls above, which pass
+    # StrictHostKeyChecking=no + UserKnownHostsFile=/dev/null and so never
+    # record anything) uses the bluebanquise user's real known_hosts with
+    # default-strict checking — login1/c001/c002 have never had a real
+    # first-contact connection recorded, so it fails "Host key verification
+    # failed" on its very first attempt (same failure class as mgt1's and the
+    # mgmt VM's own self-loopback, fixed elsewhere; this path was missed).
+    # Seed all three before the first ansible-playbook run needs them.
+    log "  Seeding login1/c001/c002 host keys in known_hosts ..."
+    for node in login1 c001 c002; do
+        $SSH_MGMT \
+            "ssh-keygen -f ~/.ssh/known_hosts -R $node 2>/dev/null; \
+             ssh -o StrictHostKeyChecking=accept-new bluebanquise@$node true"
+    done
+
     # Deploy login node stack.
     log "  Running logins.yml --limit login1 ..."
     $SSH_MGMT << 'EOF'
@@ -41,7 +56,7 @@ set -e
 source /var/lib/bluebanquise/ansible_venv/bin/activate
 export ANSIBLE_CONFIG=/var/lib/bluebanquise/bluebanquise/ansible.cfg
 cd /var/lib/bluebanquise
-ansible-playbook playbooks/logins.yml -i cluster --limit login1 -b
+ansible-playbook playbooks/logins.yml -i cluster_inventory --limit login1 -b
 EOF
 
     if [ $? -eq 0 ]; then
@@ -58,7 +73,7 @@ set -e
 source /var/lib/bluebanquise/ansible_venv/bin/activate
 export ANSIBLE_CONFIG=/var/lib/bluebanquise/bluebanquise/ansible.cfg
 cd /var/lib/bluebanquise
-ansible-playbook playbooks/computes.yml -i cluster --limit c001,c002 -b
+ansible-playbook playbooks/computes.yml -i cluster_inventory --limit c001,c002 -b
 EOF
 
     if [ $? -eq 0 ]; then

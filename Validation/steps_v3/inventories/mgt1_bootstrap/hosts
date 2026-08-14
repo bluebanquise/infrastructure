@@ -50,12 +50,16 @@ mgmt_ubuntu24
 mgmt_debian13
 [hw_all:vars]
 hw_equipment_type="server"
+hw_console="console=tty0 console=ttyS0,115200n8"
 
 [all:vars]
-networks={'net-admin':{'subnet':'10.10.0.0','prefix':'16','gateway':'10.10.0.1','services_ip':'10.10.0.1'}}
+networks={'net-admin':{'subnet':'10.10.0.0','prefix':'16','gateway4':'10.10.0.1','services_ip':'10.10.0.1','firewall_zone':'internal'}}
+firewall_zones=[{'zone':'internal','services_enabled':['dhcp','tftp','http','dns'],'ports_enabled':['7770/tcp'],'masquerade':True}]
 os_operating_system={'distribution':'ubuntu','distribution_version':'24.04','distribution_major_version':'24'}
 dns_server_dnssec_enable=False
 dns_server_dnssec_validation=False
 dns_server_recursion=True
 dns_server_forwarders=['8.8.8.8','8.8.4.4']
+slurm_controller_hostname=mgt1
+slurm_partitions_list=[]
 # os_admin_ssh_keys injected at runtime by 04_deploy_bb_on_mgt1.sh

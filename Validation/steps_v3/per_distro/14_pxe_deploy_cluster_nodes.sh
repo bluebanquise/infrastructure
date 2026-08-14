@@ -27,7 +27,7 @@ deploy_node() {
     virt-install \
         --name="$node" \
         --os-variant="$OS_VARIANT" \
-        --ram=4096 \
+        --ram=12000 \
         --vcpus=2 \
         --noreboot \
         --disk path=/var/lib/libvirt/images/"$node".qcow2,bus=virtio,size=15 \
@@ -35,7 +35,10 @@ deploy_node() {
         --pxe \
         $BOOT_FLAGS
 
-    virsh setmem "$node" 2G --config
+    # 12000M was only needed for the install/provisioning boot (--ram above).
+    # Drop to 4000M before the disk boot (2026-08-09, explicit request — 12000M
+    # is provisioning-only, not a steady-state runtime requirement).
+    virsh setmem "$node" 4000M --config
     virsh start "$node"
 }
 
@@ -52,7 +55,7 @@ if (( STEP < 14 )); then
 
     for node in login1 c001 c002; do
         $SSH_MGMT "ssh-keygen -f /var/lib/bluebanquise/.ssh/known_hosts -R $node 2>/dev/null || true"
-        $SSH_MGMT "/tmp/waitforssh.sh bluebanquise@$node"
+        $SSH_MGMT "/usr/local/bin/waitforssh.sh bluebanquise@$node"
         log "  $node is up."
     done
 

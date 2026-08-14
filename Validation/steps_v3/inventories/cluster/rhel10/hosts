@@ -1,5 +1,5 @@
 [all]
-mgt    network_interfaces="[{'ip4':'10.20.0.1','mac':'52:54:00:cc:10:01','network':'net-cluster','interface':'enp2s0'}]"
+mgt    network_interfaces="[{'ip4':'10.20.0.1','mac':'52:54:00:cc:10:01','network':'net-cluster','interface':'enp2s0','never_default4':'true'}]"
 login1 network_interfaces="[{'ip4':'10.20.0.2','mac':'52:54:00:cc:00:10','network':'net-cluster','interface':'enp1s0'}]"
 c001   network_interfaces="[{'ip4':'10.20.0.3','mac':'52:54:00:cc:00:11','network':'net-cluster','interface':'enp1s0'}]"
 c002   network_interfaces="[{'ip4':'10.20.0.4','mac':'52:54:00:cc:00:12','network':'net-cluster','interface':'enp1s0'}]"
@@ -29,9 +29,12 @@ c001
 c002
 [hw_all:vars]
 hw_equipment_type="server"
+hw_specs={'cpu':{'cores':2}}
 
 [all:vars]
-networks={'net-cluster':{'subnet':'10.20.0.0','prefix':'16','gateway':'10.20.0.1','services_ip':'10.20.0.1'}}
+networks={'net-cluster':{'subnet':'10.20.0.0','prefix':'16','gateway4':'10.20.0.1','services_ip':'10.20.0.1','firewall_zone':'internal'}}
+os_firewall=true
+bb_services_firewall_zone=internal
 os_operating_system={'distribution':'redhat','distribution_version':'10','distribution_major_version':'10'}
 dns_server_dnssec_enable=False
 dns_server_dnssec_validation=False
