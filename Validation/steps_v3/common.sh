@@ -2,6 +2,12 @@
 # Per-distro configuration and shared helpers.
 # Sourced by every per_distro step script.
 
+# libvirt picks system vs. session URI by UID, not by libvirt group membership —
+# a plain `virsh`/`virt-install` run as a non-root user silently connects to
+# qemu:///session (spawning an unprivileged per-user libvirtd with no bridge
+# capability) unless told otherwise. Force system mode for every script here.
+export LIBVIRT_DEFAULT_URI=qemu:///system
+
 # ---------------------------------------------------------------------------
 # Per-distro static configuration
 # ---------------------------------------------------------------------------
@@ -35,17 +41,29 @@ DISTRO_MGMT_MAC_VIRBR2[debian13]=52:54:00:cc:13:01
 
 # ISO filenames (downloaded to http/ on the host).
 declare -A DISTRO_ISO_NAME
-DISTRO_ISO_NAME[rhel9]=AlmaLinux-9-latest-x86_64-dvd.iso
-DISTRO_ISO_NAME[rhel10]=AlmaLinux-10-latest-x86_64-dvd.iso
-DISTRO_ISO_NAME[ubuntu24]=ubuntu-24.04-live-server-amd64.iso
+DISTRO_ISO_NAME[rhel9]=Rocky-9-latest-x86_64-dvd.iso
+DISTRO_ISO_NAME[rhel10]=Rocky-10-latest-x86_64-dvd.iso
+DISTRO_ISO_NAME[ubuntu24]=ubuntu-24.04.4-live-server-amd64.iso
 DISTRO_ISO_NAME[debian13]=debian-testing-amd64-netinst.iso
 
 # ISO download URLs.
 declare -A DISTRO_ISO_URL
-DISTRO_ISO_URL[rhel9]=https://repo.almalinux.org/almalinux/9/isos/x86_64/AlmaLinux-9-latest-x86_64-dvd.iso
-DISTRO_ISO_URL[rhel10]=https://repo.almalinux.org/almalinux/10/isos/x86_64/AlmaLinux-10-latest-x86_64-dvd.iso
-DISTRO_ISO_URL[ubuntu24]=https://releases.ubuntu.com/24.04/ubuntu-24.04-live-server-amd64.iso
+DISTRO_ISO_URL[rhel9]=https://dl.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9-latest-x86_64-dvd.iso
+DISTRO_ISO_URL[rhel10]=https://dl.rockylinux.org/pub/rocky/10/isos/x86_64/Rocky-10-latest-x86_64-dvd.iso
+DISTRO_ISO_URL[ubuntu24]=https://releases.ubuntu.com/24.04.4/ubuntu-24.04.4-live-server-amd64.iso
 DISTRO_ISO_URL[debian13]=https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/amd64/iso-cd/debian-testing-amd64-netinst.iso
+
+# netboot_id, as keyed in pxe_stack's own netboots_installer.yml (files/
+# netboots_installer.yml), used with `bluebanquise-netboots-installer`.
+declare -A DISTRO_NETBOOT_ID
+DISTRO_NETBOOT_ID[rhel9]=rhel_9
+DISTRO_NETBOOT_ID[rhel10]=rhel_10
+DISTRO_NETBOOT_ID[ubuntu24]=ubuntu_24.04
+DISTRO_NETBOOT_ID[debian13]=debian_13
+
+# Architecture for bluebanquise-netboots-installer — fixed, this validation
+# effort only ever targets x86_64.
+DISTRO_NETBOOT_ARCH=x86_64
 
 # virt-install --os-variant value.
 declare -A DISTRO_OS_VARIANT
@@ -54,16 +72,23 @@ DISTRO_OS_VARIANT[rhel10]=rhel8-unknown
 DISTRO_OS_VARIANT[ubuntu24]=ubuntu24.04
 DISTRO_OS_VARIANT[debian13]=debian12
 
-# Extra virt-install boot flags (EFI for RHEL, empty for others).
+# Extra virt-install boot flags. RHEL9/10 initially looked like they needed
+# legacy BIOS to avoid "Initramfs unpacking failed: invalid magic at start of
+# compressed archive" panics on their large (~200MB+) installer initrd — but
+# the real root cause (2026-08-07) was menu.ipxe.j2 leaking a "stage_report"
+# resident image (imgfetch'd, never imgfree'd) that got bundled into the
+# initrd payload at boot time; fixed there, independent of firmware mode.
+# rhel9 stays on legacy BIOS as the already-validated config; rhel10 is back
+# on EFI so both boot paths get exercised now that the actual fix is in.
 declare -A DISTRO_BOOT_FLAGS
-DISTRO_BOOT_FLAGS[rhel9]="--boot firmware=efi,firmware.feature0.enabled=no,firmware.feature0.name=secure-boot"
+DISTRO_BOOT_FLAGS[rhel9]=""
 DISTRO_BOOT_FLAGS[rhel10]="--boot firmware=efi,firmware.feature0.enabled=no,firmware.feature0.name=secure-boot"
 DISTRO_BOOT_FLAGS[ubuntu24]=""
 DISTRO_BOOT_FLAGS[debian13]=""
 
-# Extra virsh undefine flags (RHEL needs --nvram for EFI).
+# Extra virsh undefine flags (--nvram only applies to EFI domains).
 declare -A DISTRO_UNDEFINE_FLAGS
-DISTRO_UNDEFINE_FLAGS[rhel9]=--nvram
+DISTRO_UNDEFINE_FLAGS[rhel9]=""
 DISTRO_UNDEFINE_FLAGS[rhel10]=--nvram
 DISTRO_UNDEFINE_FLAGS[ubuntu24]=""
 DISTRO_UNDEFINE_FLAGS[debian13]=""
@@ -76,10 +101,14 @@ DISTRO_INITIAL_USER[ubuntu24]=bluebanquise
 DISTRO_INITIAL_USER[debian13]=bluebanquise
 
 # Pre-bootstrap commands run on the mgmt VM before online_bootstrap.sh.
-# These install EPEL on RHEL and update packages everywhere.
+# These install EPEL on RHEL and update packages everywhere. wget is also
+# installed explicitly on RHEL — the minimal Rocky DVD kickstart doesn't ship
+# it, but per_distro/11's very next step (online_bootstrap.sh download) uses
+# it unconditionally (real live failure, 2026-08-09: "wget: command not
+# found"). Ubuntu/Debian cloud/live images ship wget by default already.
 declare -A DISTRO_PRE_BOOTSTRAP
-DISTRO_PRE_BOOTSTRAP[rhel9]='sudo dnf install -y epel-release && sudo dnf update -y'
-DISTRO_PRE_BOOTSTRAP[rhel10]='sudo dnf install -y epel-release && sudo dnf update -y'
+DISTRO_PRE_BOOTSTRAP[rhel9]='sudo dnf install -y epel-release wget && sudo dnf update -y'
+DISTRO_PRE_BOOTSTRAP[rhel10]='sudo dnf install -y epel-release wget && sudo dnf update -y'
 DISTRO_PRE_BOOTSTRAP[ubuntu24]='sudo DEBIAN_FRONTEND=noninteractive apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y'
 DISTRO_PRE_BOOTSTRAP[debian13]='sudo DEBIAN_FRONTEND=noninteractive apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y'
 

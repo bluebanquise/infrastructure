@@ -4,10 +4,12 @@
   roles:
     - role: bluebanquise.infrastructure.repositories
       tags: repositories
-    - role: bluebanquise.infrastructure.set_hostname
-      tags: set_hostname
+    - role: bluebanquise.infrastructure.local_configuration
+      tags: local_configuration
     - role: bluebanquise.infrastructure.nic
       tags: nic
+    - role: bluebanquise.infrastructure.firewall
+      tags: firewall
     - role: bluebanquise.infrastructure.hosts_file
       tags: hosts_file
     - role: bluebanquise.infrastructure.dns_client
@@ -16,8 +18,6 @@
       tags: time
       vars:
         time_profile: client
-    - role: bluebanquise.infrastructure.firewall
-      tags: firewall
     - role: bluebanquise.infrastructure.nfs
       tags: nfs
       vars:

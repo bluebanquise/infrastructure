@@ -7,7 +7,7 @@ export HOST_IP=192.168.122.1
 export HOST_HTTP_PORT=8000
 
 # BlueBanquise git branch to install on all management VMs.
-export BB_BRANCH=master
+export BB_BRANCH=BB-UMMON-1
 
 # libvirt network names.
 export VIRBR1_NETWORK=private_network

@@ -27,15 +27,29 @@ virsh destroy "$VM_NAME" 2>/dev/null && log "  $VM_NAME destroyed." || true
 virsh undefine "$VM_NAME" $UNDEFINE_FLAGS 2>/dev/null && log "  $VM_NAME undefined." || true
 sudo rm -f /var/lib/libvirt/images/"$VM_NAME".qcow2
 
-# Unmount ISO on mgt1 and remove it.
+# Remove the netboot from mgt1 via the official tool, then remove our own
+# uploaded ISO copy manually (the tool's own copy, made during `install`
+# inside the managed netboot tree, is already gone once uninstall runs — this
+# is the *separate* staging copy per_distro/10 uploaded to /var/lib/bluebanquise/).
+# Only mgt1 needs this: the mgmt VM's own netboot install (for login1/c001/
+# c002) disappears for free when its whole disk image is deleted above.
+NETBOOT_ID=${DISTRO_NETBOOT_ID[$distro]}
 $SSH_MGT1 << EOF || true
 set +e
+PYTHONPATH=\$(pip3 show ClusterShell 2>/dev/null | grep Location | awk '{print \$2}')
+export PYTHONPATH=\$PYTHONPATH
+# Defensive: a netboot set up by the old raw-mount approach (pre-2026-08-11)
+# leaves an active loop mount under the netboot tree's iso/ subdir, which
+# would make the tool's own rmtree fail with "Device or resource busy".
+# Harmless no-op once every distro has gone through the new tool-based
+# install path (nothing will ever be mounted there again).
 case "$distro" in
-    rhel9)   sudo umount /var/www/html/pxe/netboots/redhat/9/x86_64/iso ;;
-    rhel10)  sudo umount /var/www/html/pxe/netboots/redhat/10/x86_64/iso ;;
-    ubuntu24) sudo umount /var/www/html/pxe/netboots/ubuntu/24.04/x86_64/iso ;;
-    debian13) sudo umount /var/www/html/pxe/netboots/debian/13/x86_64/iso ;;
+    rhel9)   sudo umount /var/www/html/pxe/netboots/redhat/9/x86_64/iso 2>/dev/null || true ;;
+    rhel10)  sudo umount /var/www/html/pxe/netboots/redhat/10/x86_64/iso 2>/dev/null || true ;;
+    ubuntu24) sudo umount /var/www/html/pxe/netboots/ubuntu/24.04/x86_64/iso 2>/dev/null || true ;;
+    debian13) sudo umount /var/www/html/pxe/netboots/debian/13/x86_64/iso 2>/dev/null || true ;;
 esac
+sudo bluebanquise-netboots-installer uninstall $NETBOOT_ID $DISTRO_NETBOOT_ARCH -q
 rm -f /var/lib/bluebanquise/$ISO_NAME
 EOF
 
