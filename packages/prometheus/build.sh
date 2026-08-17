@@ -138,25 +138,25 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "Debian" ]; then
   fi
 fi
 
-package_version=$modbus_exporter_version
-package_name=prometheus-modbus-exporter
-package_path_calc
-if [ ! -f $package_path ]; then
+# package_version=$modbus_exporter_version
+# package_name=prometheus-modbus-exporter
+# package_path_calc
+# if [ ! -f $package_path ]; then
 
-  export PATH=/usr/local/go/bin:$PATH
-  go version
+#   export PATH=/usr/local/go/bin:$PATH
+#   go version
 
-  cp -a $root_directory/prometheus/modbus_exporter $working_directory/build/prometheus/modbus_exporter
-  mv modbus_exporter prometheus-modbus-exporter-$modbus_exporter_version
-  tar cvzf prometheus-modbus-exporter-$modbus_exporter_version.linux-$prometheus_arch.tar.gz prometheus-modbus-exporter-$modbus_exporter_version
-  rpmbuild -ta prometheus-modbus-exporter-$modbus_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $modbus_exporter_version" --define "_software_architecture $prometheus_arch"
-  if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
-    cd /root
-    alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-modbus-exporter-*
-    mv *.deb /root/debbuild/DEBS/$distribution_architecture/
-    cd $working_directory/build/prometheus
-  fi
-fi
+#   cp -a $root_directory/prometheus/modbus_exporter $working_directory/build/prometheus/modbus_exporter
+#   mv modbus_exporter prometheus-modbus-exporter-$modbus_exporter_version
+#   tar cvzf prometheus-modbus-exporter-$modbus_exporter_version.linux-$prometheus_arch.tar.gz prometheus-modbus-exporter-$modbus_exporter_version
+#   rpmbuild -ta prometheus-modbus-exporter-$modbus_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $modbus_exporter_version" --define "_software_architecture $prometheus_arch"
+#   if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
+#     cd /root
+#     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-modbus-exporter-*
+#     mv *.deb /root/debbuild/DEBS/$distribution_architecture/
+#     cd $working_directory/build/prometheus
+#   fi
+# fi
 
 package_version=$karma_version
 package_name=karma
