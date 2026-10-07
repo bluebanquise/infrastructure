@@ -289,7 +289,7 @@ EOF
         set_status pr_last_attempt date 1
 
         # Set all in waiting
-        for os_target in el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 debian11 debian12; do
+        for os_target in el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 ubuntu2604 debian11 debian12; do
             set_status $(echo p_${os_target}_x86_64) waiting 0
             set_status $(echo p_${os_target}_arm64) waiting 0
         done
@@ -303,7 +303,7 @@ EOF
 
         # Loop over os build
         #./engine_qemu.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
-        for os_target in el9 el8 el10 osl15 u22 u24 deb12 deb13; do
+        for os_target in el9 el8 el10 osl15 u22 u24 u26 deb12 deb13; do
             set_status $(echo p_${os_target}_x86_64) running 0
             ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
             if [ $? -eq 0 ]; then
@@ -326,7 +326,7 @@ EOF
 
         # Loop over os repositories build
         if [[ "$build_was_success" == "true" ]]; then
-            for os_target in el9 el8 el10 osl15 u22 u24 deb12 deb13; do
+            for os_target in el9 el8 el10 osl15 u22 u24 u26 deb12 deb13; do
                 set_status $(echo r_${os_target}_x86_64) running 0
                 ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
                 if [ $? -eq 0 ]; then
@@ -364,7 +364,7 @@ EOF
         exit 1
     fi
 
-        build_was_success="false" # TO REMOVE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        #build_was_success="false" # TO REMOVE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         if [[ "$build_was_success" == "true" ]] && [[ "$repo_was_success" == "true" ]]; then
             echo "[Repo] Build success !"
             set_status upload running 1

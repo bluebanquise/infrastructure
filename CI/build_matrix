@@ -6,6 +6,7 @@ osl15 x86_64,aarch64   opensuse_leap   15           RPM                bluebanqu
 u20   x86_64,arm64     Ubuntu          20.04        DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
 u22   x86_64,arm64     Ubuntu          22.04        DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
 u24   x86_64,arm64     Ubuntu          24.04        DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
+u26   x86_64,arm64     Ubuntu          26.04        DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
 deb11 x86_64,arm64     Debian          11           DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
 deb12 x86_64,arm64     Debian          12           DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
 deb13 x86_64,arm64     Debian          13           DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
