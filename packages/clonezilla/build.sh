@@ -11,7 +11,7 @@ clonezilla_version=$package_version
 if [ ! -f $package_path ]; then
     set -x
     if [ ! -f $working_directory/sources/$clonezilla_iso ]; then
-        wget -P $working_directory/sources/ $clonezilla_iso_url
+        wget -O $working_directory/sources/$clonezilla_iso "$clonezilla_iso_url"
     fi
 
     rm -Rf $working_directory/build/clonezilla
