@@ -13,10 +13,10 @@ docker run --rm $PLATFORM -v $1:/repo/ $2 /bin/bash -c ' \
     echo "Architectures: $cpu_arch" >> conf/distributions; \
     echo "Components: main" >> conf/distributions; \
     cd /repo/$folder_cpu_arch/; \
-    reprepro -b /repo/repo/ includedeb noble *.deb; \
+    reprepro -b /repo/repo/ includedeb resolute *.deb; \
     cd ../noarch/; \
-    reprepro -b /repo/repo/ includedeb noble *.deb; \
-    reprepro -b /repo/repo/ list noble; \
+    reprepro -b /repo/repo/ includedeb resolute *.deb; \
+    reprepro -b /repo/repo/ list resolute; \
     rm -Rf /repo/$folder_cpu_arch
     rm -Rf /repo/noarch
     $(which cp) -rf /repo/repo/* /repo

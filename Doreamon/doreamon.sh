@@ -303,25 +303,30 @@ EOF
 
         # Loop over os build
         #./engine_qemu.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
+        pids=()
+
         for os_target in el9 el10 osl15 u24 u26 deb13; do
-            set_status $(echo p_${os_target}_x86_64) running 0
-            ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
-            if [ $? -eq 0 ]; then
-                set_status $(echo p_${os_target}_x86_64) success 0
-            else
-                set_status $(echo p_${os_target}_x86_64) error 0
-                build_was_success="false"
-                break
-            fi
-            set_status $(echo p_${os_target}_arm64) running 0
-            ./engine_qemu.sh arch_list="aarch64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
-            if [ $? -eq 0 ]; then
-                set_status $(echo p_${os_target}_arm64) success 0
-            else
-                set_status $(echo p_${os_target}_arm64) error 0
-                build_was_success="false"
-                break
-            fi
+            (
+                set -e
+                set_status $(echo p_${os_target}_x86_64) running 0
+                ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
+                if [ $? -eq 0 ]; then
+                    set_status $(echo p_${os_target}_x86_64) success 0
+                else
+                    set_status $(echo p_${os_target}_x86_64) error 0
+                    build_was_success="false"
+                    break
+                fi
+                set_status $(echo p_${os_target}_arm64) running 0
+                ./engine_qemu.sh arch_list="aarch64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
+                if [ $? -eq 0 ]; then
+                    set_status $(echo p_${os_target}_arm64) success 0
+                else
+                    set_status $(echo p_${os_target}_arm64) error 0
+                    build_was_success="false"
+                    break
+                fi
+            )
         done
 
         # Loop over os repositories build
@@ -364,7 +369,7 @@ EOF
         exit 1
     fi
 
-        #build_was_success="false" # TO REMOVE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        build_was_success="false" # TO REMOVE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         if [[ "$build_was_success" == "true" ]] && [[ "$repo_was_success" == "true" ]]; then
             echo "[Repo] Build success !"
             set_status upload running 1
