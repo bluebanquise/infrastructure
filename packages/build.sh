@@ -25,10 +25,10 @@ echo
 distribution=$2
 distribution_version=$3
 distribution_architecture=$(uname --m)
-if [ "$distribution" == 'Ubuntu' ] && [ $distribution_architecture == 'aarch64' ]; then
+if [ "$distribution" == 'Ubuntu' ] && [ "$distribution_architecture" == 'aarch64' ]; then
 distribution_architecture=aarch64
 fi
-if [ "$distribution" == 'Debian' ] && [ $distribution_architecture == 'aarch64' ]; then
+if [ "$distribution" == 'Debian' ] && [ "$distribution_architecture" == 'aarch64' ]; then
 distribution_architecture=aarch64
 fi
 
@@ -50,22 +50,23 @@ mkdir -p $working_directory
 echo " root directory: $root_directory"
 
 echo " Creating source directory..."
-mkdir -p $working_directory/sources/
+mkdir -p "${working_directory}/sources/"
 
 echo " Sourcing parameters."
-source $root_directory/parameters.conf
+source "${root_directory}/parameters.conf"
 
 install_go() {
 
-  if [ $distribution_architecture == 'x86_64' ]; then
-    wget https://go.dev/dl/go1.26.3.linux-amd64.tar.gz
-    tar -C /usr/local -xzvf go1.26.3.linux-amd64.tar.gz
-    rm go1.26.3.linux-amd64.tar.gz
+  go_version="go1.27.3"
+  if [ "$distribution_architecture" == 'x86_64' ]; then
+    wget "https://go.dev/dl/${go_version}.linux-amd64.tar.gz"
+    tar -C /usr/local -xzvf "${go_version}.linux-amd64.tar.gz"
+    rm "${go_version}.linux-amd64.tar.gz"
   fi
-  if [ $distribution_architecture == 'aarch64' ]; then
-    wget https://go.dev/dl/go1.26.3.linux-arm64.tar.gz
-    tar -C /usr/local -xzvf go1.26.3.linux-arm64.tar.gz
-    rm go1.26.3.linux-arm64.tar.gz
+  if [ "$distribution_architecture" == 'aarch64' ]; then
+    wget "https://go.dev/dl/${go_version}.linux-arm64.tar.gz"
+    tar -C /usr/local -xzvf "${go_version}.linux-arm64.tar.gz"
+    rm "${go_version}.linux-arm64.tar.gz"
   fi
 
 }
@@ -77,10 +78,10 @@ if [ "$1" == "dependencies" ]; then
   if [ "$distribution" == 'opensuse_leap' ]; then
     if [[ "$distribution_version" == "15" ]]; then
       zypper --non-interactive install -y --allow-downgrade dbus-1-devel gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build tar wget python3 python3-setuptools unzip xorriso
-      if [ $distribution_architecture == 'x86_64' ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
          zypper --non-interactive install -y --allow-downgrade grub2-x86_64-efi
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
          zypper --non-interactive install -y --allow-downgrade grub2-arm64-efi
       fi
     fi
@@ -94,7 +95,7 @@ if [ "$1" == "dependencies" ]; then
 
   elif [ "$distribution" == 'Debian' ]; then
     if [ "$distribution_version" == "11" ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         echo "%_arch x86_64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -102,7 +103,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install libpmix-dev libpmix2 libpmix-bin equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -111,7 +112,7 @@ if [ "$1" == "dependencies" ]; then
       fi
     fi
     if [ "$distribution_version" == "12" ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         echo "%_arch x86_64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -119,7 +120,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install libpmix-dev libpmix2 libpmix-bin equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -128,7 +129,7 @@ if [ "$1" == "dependencies" ]; then
       fi
     fi
     if [ "$distribution_version" == "13" ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         echo "%_arch x86_64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -136,7 +137,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install libpmix-dev libpmix2 libpmix-bin equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -147,7 +148,7 @@ if [ "$1" == "dependencies" ]; then
 
   elif [ "$distribution" == 'Ubuntu' ]; then
     if [ "$distribution_version" == "20.04" ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         echo "%_arch x86_64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -155,7 +156,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -164,7 +165,7 @@ if [ "$1" == "dependencies" ]; then
       fi
     fi
     if [ "$distribution_version" == "22.04" ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         echo "%_arch x86_64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -172,7 +173,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -181,7 +182,7 @@ if [ "$1" == "dependencies" ]; then
       fi
     fi
     if [ "$distribution_version" == "24.04" ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         echo "%_arch x86_64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -189,7 +190,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev libjwt-dev jwt libhttp-parser-dev libhttp-parser2.9 libjson-c-dev libjson-c5 -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -198,7 +199,7 @@ if [ "$1" == "dependencies" ]; then
       fi
     fi
     if [ "$distribution_version" == "26.04" ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         echo "%_arch x86_64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -206,7 +207,7 @@ if [ "$1" == "dependencies" ]; then
         # Possibly missing python3-mysqldb libmysqld-dev
         apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev libjwt-dev jwt libhttp-parser-dev libhttp-parser2.9 libjson-c-dev libjson-c5 -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         echo "%_arch arm64" > ~/.rpmmacros
         apt-get update
         export DEBIAN_FRONTEND=noninteractive
@@ -216,8 +217,8 @@ if [ "$1" == "dependencies" ]; then
     fi
 
   elif [ "$distribution" == 'RedHat' ]; then
-    if [ $distribution_version -eq 8 ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+    if [ "$distribution_version" -eq 8 ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core -y
         # dnf install gcc-toolset-11* -y
@@ -226,7 +227,7 @@ if [ "$1" == "dependencies" ]; then
         dnf install freeipmi-devel -y
         dnf groupinstall 'Development Tools' -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core -y
         # dnf install gcc-toolset-11* -y
@@ -236,8 +237,8 @@ if [ "$1" == "dependencies" ]; then
         dnf groupinstall 'Development Tools' -y
       fi
     fi
-    if [ $distribution_version -eq 9 ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+    if [ "$distribution_version" -eq 9 ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core epel-release -y
         dnf install kernel-headers make dbus-devel rpm-build genisoimage xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel libgenders-devel net-snmp-devel unzip -y 
@@ -246,7 +247,7 @@ if [ "$1" == "dependencies" ]; then
         dnf groupinstall 'Development Tools' -y
         dnf reinstall genisoimage -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install dnf-plugins-core epel-release -y
         dnf install kernel-headers make dbus-devel rpm-build genisoimage xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel libgenders-devel net-snmp-devel unzip -y
@@ -256,8 +257,8 @@ if [ "$1" == "dependencies" ]; then
         dnf reinstall genisoimage -y
       fi
     fi
-    if [ $distribution_version -eq 10 ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+    if [ "$distribution_version" -eq 10 ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install subscription-manager -y
         dnf config-manager --set-enabled crb
@@ -266,7 +267,7 @@ if [ "$1" == "dependencies" ]; then
         dnf install freeipmi-devel mariadb-devel -y
         dnf groupinstall 'Development Tools' -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         dnf install 'dnf-command(config-manager)' -y
         dnf install subscription-manager -y
         dnf config-manager --set-enabled crb
@@ -276,13 +277,13 @@ if [ "$1" == "dependencies" ]; then
         dnf groupinstall 'Development Tools' -y
       fi
     fi
-    if [ $distribution_version -eq 7 ]; then
-      if [ $distribution_architecture == 'x86_64' ]; then
+    if [ "$distribution_version" -eq 7 ]; then
+      if [ "$distribution_architecture" == 'x86_64' ]; then
         yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-x64-modules gcc mariadb mariadb-devel wget git gcc-c++ python-setuptools python3-setuptools net-snmp-devel curl-devel freeipmi-devel bc rsync xorriso flex bison unzip -y
         yum install centos-release-scl -y
         yum install devtoolset-7 -y
       fi
-      if [ $distribution_architecture == 'aarch64' ]; then
+      if [ "$distribution_architecture" == 'aarch64' ]; then
         yum install make rpm-build genisoimage xz xz-devel automake autoconf python36 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb mariadb-devel wget git gcc-c++ python-setuptools python3-setuptools net-snmp-devel curl-devel freeipmi-devel bc rsync xorriso flex bison unzip -y
         yum install centos-release-scl -y
         yum install devtoolset-7 -y
@@ -319,7 +320,7 @@ fi
 
 # # Sepcial loads
 # if [ "$distribution" == 'RedHat' ]; then
-#   if [ $distribution_version -eq 8 ]; then
+#   if [ "$distribution_version" -eq 8 ]; then
 # source /opt/rh/gcc-toolset-11/enable
 #   fi
 # fi
@@ -329,6 +330,6 @@ set -e
 if [ -z ${1+x} ] || [ -z ${2+x} ] || [ -z ${3+x} ]; then
   echo "Missing arguments, exiting"
 else
-  source $root_directory/$1/build.sh
+  source "${root_directory}/${1}/build.sh"
 fi
 exit 0
