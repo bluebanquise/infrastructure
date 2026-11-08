@@ -369,23 +369,23 @@ EOF
         exit 1
     fi
 
-        build_was_success="false" # TO REMOVE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        # build_was_success="false" # TO REMOVE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         if [[ "$build_was_success" == "true" ]] && [[ "$repo_was_success" == "true" ]]; then
             echo "[Repo] Build success !"
             set_status upload running 1
             (
                 set -x
                 set -e
-                rm -Rf /tmp/distant-repo
-                mkdir /tmp/distant-repo
-                cp -a $HOME/CI/repositories/* /tmp/distant-repo/
+                # rm -Rf /tmp/distant-repo
+                # mkdir /tmp/distant-repo
+                # cp -a $HOME/CI/repositories/* /tmp/distant-repo/
                 lftp -u $website_user,$website_pass sftp://ssh.$website_host <<EOF
 rm -r /home/$website_user/bluebanquise/repository/releases/latest
 exit
 EOF
                 sshpass -p "$website_pass" sftp $website_user@ftp.$website_host <<EOF
 mkdir /home/$website_user/bluebanquise/repository/releases/latest
-put -r /tmp/distant-repo/* /home/$website_user/bluebanquise/repository/releases/latest/
+put -r $HOME/CI/repositories/* /home/$website_user/bluebanquise/repository/releases/latest/
 exit
 EOF
             )
