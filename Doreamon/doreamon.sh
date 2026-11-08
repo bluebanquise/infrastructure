@@ -305,7 +305,7 @@ EOF
         #./engine_qemu.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
         pids=()
 
-        for os_target in el9 el10 osl15 u24 u26 deb13; do
+        for os_target in el9 el10 osl16 u24 u26 deb13; do
             (
                 set -e
                 set_status $(echo p_${os_target}_x86_64) running 0
@@ -331,7 +331,7 @@ EOF
 
         # Loop over os repositories build
         if [[ "$build_was_success" == "true" ]]; then
-            for os_target in el9 el10 osl15 u24 u26 deb13; do
+            for os_target in el9 el10 osl16 u24 u26 deb13; do
                 set_status $(echo r_${os_target}_x86_64) running 0
                 ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
                 if [ $? -eq 0 ]; then

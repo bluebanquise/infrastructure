@@ -3,6 +3,7 @@ el9   x86_64,aarch64   RedHat          9            RPM                bluebanqu
 el8   x86_64,aarch64   RedHat          8            RPM                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,conman,loki,alpine,clonezilla,memtest86plus
 el10  x86_64,aarch64   RedHat          10           RPM                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,conman,loki,alpine,clonezilla,memtest86plus
 osl15 x86_64,aarch64   opensuse_leap   15           RPM                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,loki,alpine,clonezilla,memtest86plus
+osl16 x86_64,aarch64   opensuse_leap   16           RPM                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,loki,alpine,clonezilla,memtest86plus
 u20   x86_64,arm64     Ubuntu          20.04        DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
 u22   x86_64,arm64     Ubuntu          22.04        DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
 u24   x86_64,arm64     Ubuntu          24.04        DEB                bluebanquise-venv,nyancat,bluebanquise-ipxe,prometheus,atftp,slurm,grubby,loki,alpine,clonezilla,memtest86plus
