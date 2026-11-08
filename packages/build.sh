@@ -84,6 +84,15 @@ if [ "$1" == "dependencies" ]; then
          zypper --non-interactive install -y --allow-downgrade grub2-arm64-efi
       fi
     fi
+    if [[ "$distribution_version" == "16" ]]; then
+      zypper --non-interactive install -y --allow-downgrade dbus-1-devel gcc rpm-build make mkisofs xz xz-devel automake autoconf bzip2 openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2 grub2-x86_64-efi munge munge-devel freeipmi freeipmi-devel  mariadb mariadb-client libmariadb-devel libmariadb3 rpm-build tar wget python3 python3-setuptools unzip xorriso
+      if [ $distribution_architecture == 'x86_64' ]; then
+         zypper --non-interactive install -y --allow-downgrade grub2-x86_64-efi
+      fi
+      if [ $distribution_architecture == 'aarch64' ]; then
+         zypper --non-interactive install -y --allow-downgrade grub2-arm64-efi
+      fi
+    fi
   elif [ "$distribution" == 'SLES' ]; then
     if [[ "$distribution_version" =~ ^12\. ]]; then
         # no munge RPMs!!
