@@ -1,0 +1,56 @@
+# Preseed for the mgmt VM, Debian 13. Injected in the installer initrd as
+# /preseed.cfg by virt-install (--initrd-inject), read automatically by d-i.
+# @...@ placeholders are replaced by per_distro/10_install_mgmt.sh.
+d-i debian-installer/locale string en_US.UTF-8
+d-i keyboard-configuration/xkb-keymap select us
+
+# Uplink only (DHCP from libvirt). The cluster NIC is left to BlueBanquise's
+# nic role, as on a real first management server.
+d-i netcfg/choose_interface select @UPLINK_INTERFACE@
+d-i netcfg/get_hostname string @HOSTNAME@
+d-i netcfg/get_domain string
+d-i netcfg/hostname string @HOSTNAME@
+
+d-i mirror/country string manual
+d-i mirror/http/hostname string deb.debian.org
+d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
+
+d-i passwd/root-login boolean false
+d-i passwd/user-fullname string @USER@
+d-i passwd/username string @USER@
+d-i passwd/user-password-crypted password @PASSWORD_HASH@
+
+d-i clock-setup/utc boolean true
+d-i time/zone string Etc/UTC
+d-i clock-setup/ntp boolean true
+
+d-i partman-auto/disk string /dev/vda
+d-i partman-auto/method string regular
+d-i partman-auto/choose_recipe select atomic
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+d-i partman-efi/non_efi_system boolean true
+
+d-i apt-setup/disable-cdrom-entries boolean true
+tasksel tasksel/first multiselect standard, ssh-server
+d-i pkgsel/include string sudo curl
+d-i pkgsel/upgrade select none
+popularity-contest popularity-contest/participate boolean false
+
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/bootdev string /dev/vda
+
+d-i preseed/late_command string \
+    mkdir -p /target/home/@USER@/.ssh; \
+    echo "@SSH_KEY@" > /target/home/@USER@/.ssh/authorized_keys; \
+    chmod 700 /target/home/@USER@/.ssh; \
+    chmod 600 /target/home/@USER@/.ssh/authorized_keys; \
+    in-target chown -R @USER@:@USER@ /home/@USER@/.ssh; \
+    echo '@USER@ ALL=(ALL:ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/@USER@; \
+    chmod 440 /target/etc/sudoers.d/@USER@
+
+d-i finish-install/reboot_in_progress note
+d-i debian-installer/exit/poweroff boolean true

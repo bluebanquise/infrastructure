@@ -1,0 +1,26 @@
+<!-- Uplink of the validation mgmt VMs: NAT to internet, like an admin's
+     uplink. Own network (not libvirt's default) so that its DNS can forward
+     to public resolvers: the hypervisor's router DNS is unreliable.
+     Fixed IP per mgmt VM, by MAC (must match steps_v4/common.sh): the nic role
+     switches the VM to NetworkManager, whose DHCP client id differs from
+     systemd-networkd's one, and a lease by client id would change its IP. -->
+<network>
+  <name>validation_uplink</name>
+  <forward mode='nat'/>
+  <bridge name='virbr3' stp='on' delay='0'/>
+  <dns>
+    <forwarder addr='1.1.1.1'/>
+    <forwarder addr='9.9.9.9'/>
+  </dns>
+  <ip address='192.168.123.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.123.100' end='192.168.123.254'/>
+      <host mac='52:54:00:bb:09:01' ip='192.168.123.9'/>
+      <host mac='52:54:00:bb:10:01' ip='192.168.123.10'/>
+      <host mac='52:54:00:bb:13:01' ip='192.168.123.13'/>
+      <host mac='52:54:00:bb:16:01' ip='192.168.123.16'/>
+      <host mac='52:54:00:bb:24:01' ip='192.168.123.24'/>
+      <host mac='52:54:00:bb:26:01' ip='192.168.123.26'/>
+    </dhcp>
+  </ip>
+</network>
