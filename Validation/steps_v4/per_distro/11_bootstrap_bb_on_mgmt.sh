@@ -39,10 +39,15 @@ if (( STEP < 11 )); then
     # applied. Prepared on the host (a minimal OS has no git yet).
     BB_TREE=$(mktemp -d)
     git clone -q --depth 1 https://github.com/bluebanquise/bluebanquise.git "$BB_TREE/bluebanquise"
+    # A patch already merged in master is skipped (and can then be deleted).
     for patch in "$CURRENT_DIR"/../patches/*.patch; do
         [ -f "$patch" ] || continue
-        log "  Applying $(basename "$patch") ..."
-        git -C "$BB_TREE/bluebanquise" apply "$patch"
+        if git -C "$BB_TREE/bluebanquise" apply --reverse --check "$patch" 2>/dev/null; then
+            log "  $(basename "$patch") already in master, skipped."
+        else
+            log "  Applying $(basename "$patch") ..."
+            git -C "$BB_TREE/bluebanquise" apply "$patch"
+        fi
     done
     # Copied as files (a minimal OS may have no tar).
     rm -rf "$BB_TREE/bluebanquise/.git"
