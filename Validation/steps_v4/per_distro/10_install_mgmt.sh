@@ -143,6 +143,6 @@ if (( STEP < 10 )); then
     log "  Waiting for SSH on $INSTALL_USER@$MGMT_IP ..."
     timeout 600 "$CURRENT_DIR/../functions/waitforssh.sh" "$INSTALL_USER@$MGMT_IP"
 
-    log "  $VM_NAME is up at $MGMT_IP, hostname: $($SSH_INSTALL hostname)."
+    log "  $VM_NAME is up at $MGMT_IP, hostname: $($SSH_INSTALL uname -n)."
     STEP=10
 fi

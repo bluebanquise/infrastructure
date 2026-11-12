@@ -98,7 +98,7 @@ if (( STEP < 11 )); then
 
     # Ansible reaches the mgmt VM itself as "mgt".
     $SSH_MGMT "grep -q ' mgt$' /etc/hosts || echo '127.0.0.1 mgt' | sudo tee -a /etc/hosts"
-    $SSH_MGMT "ssh-keygen -f ~/.ssh/known_hosts -R mgt 2>/dev/null; ssh -o StrictHostKeyChecking=accept-new mgt hostname"
+    $SSH_MGMT "ssh-keygen -f ~/.ssh/known_hosts -R mgt 2>/dev/null; ssh -o StrictHostKeyChecking=accept-new mgt uname -n"
 
     log "  BlueBanquise bootstrap on $distro mgmt VM complete."
     STEP=11

@@ -1,0 +1,24 @@
+diff --git a/collections/infrastructure/roles/nfs/vars/Suse.yml b/collections/infrastructure/roles/nfs/vars/Suse.yml
+index c630e76..e94a18f 100644
+--- a/collections/infrastructure/roles/nfs/vars/Suse.yml
++++ b/collections/infrastructure/roles/nfs/vars/Suse.yml
+@@ -4,5 +4,5 @@ nfs_client_packages_to_install:
+ nfs_server_packages_to_install:
+   - nfs-utils
+ nfs_server_services_to_start:
+-  - nfsserver
++  - nfs-server
+   - rpcbind
+diff --git a/collections/infrastructure/roles/pxe_stack/vars/Suse.yml b/collections/infrastructure/roles/pxe_stack/vars/Suse.yml
+index bafca66..61c4c65 100644
+--- a/collections/infrastructure/roles/pxe_stack/vars/Suse.yml
++++ b/collections/infrastructure/roles/pxe_stack/vars/Suse.yml
+@@ -20,7 +20,7 @@ pxe_stack_default_tftp_service: tftp.socket
+ pxe_stack_diskless_packages_to_install:
+   - nfs-utils
+ pxe_stack_diskless_services_to_start:
+-  - nfsserver
++  - nfs-server
+   - rpcbind
+ pxe_stack_diskless_firewall_services_to_add:
+   - nfs

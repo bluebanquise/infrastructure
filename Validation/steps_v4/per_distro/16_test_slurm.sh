@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Validate the cluster end to end: as testuser on login1, run
-#   srun --nodes=2 --ntasks-per-node=1 hostname
+#   srun --nodes=2 --ntasks-per-node=1 uname -n
 # and check that both c001 and c002 answered. Needs DHCP/DNS/NFS homes/
 # users/munge/Slurm all working together.
 
@@ -26,7 +26,7 @@ if (( STEP < 16 )); then
     fi
 
     log "  Running srun as testuser on login1 ..."
-    SRUN_OUTPUT=$($SSH_MGMT "ssh login1 'sudo su - testuser -c \"srun --nodes=2 --ntasks-per-node=1 hostname\"'")
+    SRUN_OUTPUT=$($SSH_MGMT "ssh login1 'sudo su - testuser -c \"srun --nodes=2 --ntasks-per-node=1 uname -n\"'")
     echo "$SRUN_OUTPUT"
 
     if echo "$SRUN_OUTPUT" | grep -q "^c001" && echo "$SRUN_OUTPUT" | grep -q "^c002"; then

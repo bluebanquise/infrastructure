@@ -1,0 +1,44 @@
+diff --git a/collections/infrastructure/roles/slurm/vars/Suse.yml b/collections/infrastructure/roles/slurm/vars/Suse.yml
+index c0dc608..7e7d396 100644
+--- a/collections/infrastructure/roles/slurm/vars/Suse.yml
++++ b/collections/infrastructure/roles/slurm/vars/Suse.yml
+@@ -8,7 +8,7 @@ slurm_packages_to_install:
+     - libmunge2
+     - slurm
+     - slurm-devel
+-    # - slurm-slurmctld
++    - slurm-slurmctld
+   accounting:
+     - slurm-slurmdbd
+     - python3-mysqlclient
+@@ -22,7 +22,7 @@ slurm_packages_to_install:
+     - libmunge2
+     - slurm
+     - slurm-devel
+-    # - slurm-slurmd
++    - slurm-slurmd
+   submitter:
+     - munge
+     - libmunge2
+diff --git a/collections/infrastructure/roles/slurm/vars/Suse_16.yml b/collections/infrastructure/roles/slurm/vars/Suse_16.yml
+index d6ba197..392ea32 100644
+--- a/collections/infrastructure/roles/slurm/vars/Suse_16.yml
++++ b/collections/infrastructure/roles/slurm/vars/Suse_16.yml
+@@ -8,7 +8,7 @@ slurm_packages_to_install:
+     - libmunge2
+     - slurm
+     - slurm-devel
+-    # - slurm-slurmctld
++    - slurm-slurmctld
+   accounting:
+     - slurm-slurmdbd
+     - python313-PyMySQL
+@@ -21,7 +21,7 @@ slurm_packages_to_install:
+     - libmunge2
+     - slurm
+     - slurm-devel
+-    # - slurm-slurmd
++    - slurm-slurmd
+   submitter:
+     - munge
+     - libmunge2
