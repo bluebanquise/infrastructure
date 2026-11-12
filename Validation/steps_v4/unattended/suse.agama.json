@@ -1,0 +1,41 @@
+{
+  "product": {
+    "id": "openSUSE_Leap"
+  },
+  "localization": {
+    "language": "en_US.UTF-8",
+    "keyboard": "us",
+    "timezone": "Europe/Brussels"
+  },
+  "user": {
+    "fullName": "@USER@",
+    "userName": "@USER@",
+    "hashedPassword": true,
+    "password": "@PASSWORD_HASH@"
+  },
+  "storage": {
+    "drives": [
+      {
+        "search": "/dev/vda",
+        "partitions": [
+          { "generate": "default" }
+        ]
+      }
+    ],
+    "boot": {
+      "configure": true
+    }
+  },
+  "software": {
+    "packages": ["openssh-server", "sudo", "curl"]
+  },
+  "scripts": {
+    "post": [
+      {
+        "name": "validation-system",
+        "chroot": true,
+        "content": "#!/bin/sh -x\necho '@HOSTNAME@' > /etc/hostname\nsystemctl enable sshd\nmkdir -p /home/@USER@/.ssh\necho '@SSH_KEY@' > /home/@USER@/.ssh/authorized_keys\nchmod 700 /home/@USER@/.ssh\nchmod 600 /home/@USER@/.ssh/authorized_keys\nchown -R @USER@: /home/@USER@/.ssh\necho '@USER@ ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/@USER@\nchmod 440 /etc/sudoers.d/@USER@\n"
+      }
+    ]
+  }
+}

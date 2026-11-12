@@ -1,0 +1,6 @@
+---
+bb_repositories:
+  - name: bluebanquise
+    repo: https://bluebanquise.com/repository/releases/latest/osl16/x86_64/bluebanquise/
+    disable_gpg_check: true
+    state: present

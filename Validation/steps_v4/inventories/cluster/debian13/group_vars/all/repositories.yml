@@ -1,0 +1,8 @@
+---
+# Debian 13: deb822 format, trusted as BlueBanquise repositories are not signed.
+bb_repositories:
+  - name: bluebanquise
+    uris: https://bluebanquise.com/repository/releases/latest/deb13/x86_64/bluebanquise/
+    suites: trixie
+    components: main
+    trusted: true

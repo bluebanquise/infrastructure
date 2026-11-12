@@ -1,0 +1,38 @@
+#cloud-config
+# Autoinstall for the mgmt VM, Ubuntu 24.04 and 26.04. On a CIDATA seed CD-ROM
+# (cloud-init NoCloud), installation source is the live-server ISO.
+# @...@ placeholders are replaced by per_distro/10_install_mgmt.sh.
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  timezone: Etc/UTC
+  identity:
+    hostname: @HOSTNAME@
+    username: @USER@
+    password: "@PASSWORD_HASH@"
+  ssh:
+    install-server: true
+    allow-pw: false
+    authorized-keys:
+      - "@SSH_KEY@"
+  # Uplink only (DHCP from libvirt). The cluster NIC is left to BlueBanquise's
+  # nic role, as on a real first management server.
+  network:
+    version: 2
+    ethernets:
+      uplink:
+        match:
+          macaddress: "@MAC_UPLINK@"
+        dhcp4: true
+  # Whole disk, no LVM (the default LVM layout only uses half of the disk).
+  storage:
+    layout:
+      name: direct
+  packages:
+    - curl
+  late-commands:
+    - echo '@USER@ ALL=(ALL:ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/@USER@
+    - chmod 440 /target/etc/sudoers.d/@USER@
+  shutdown: poweroff
