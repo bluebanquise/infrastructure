@@ -1,0 +1,8 @@
+---
+bb_repositories:
+  - name: epel
+    baseurl: https://dl.fedoraproject.org/pub/epel/9/Everything/$basearch/
+    gpgcheck: false
+  - name: bluebanquise
+    baseurl: https://bluebanquise.com/repository/releases/latest/el9/x86_64/bluebanquise/
+    gpgcheck: false

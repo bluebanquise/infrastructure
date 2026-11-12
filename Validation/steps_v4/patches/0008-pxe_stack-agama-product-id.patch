@@ -1,0 +1,26 @@
+diff --git a/collections/infrastructure/roles/pxe_stack/README.md b/collections/infrastructure/roles/pxe_stack/README.md
+index 7fc85153..7e097a1b 100644
+--- a/collections/infrastructure/roles/pxe_stack/README.md
++++ b/collections/infrastructure/roles/pxe_stack/README.md
+@@ -469,7 +469,7 @@ os_operating_system:
+ The node boots the installer with `root=live:<iso>/LiveOS/squashfs.img inst.install_url=<iso>/install
+ inst.auto=<profile>` (see `osdeploy/opensuse_16.ipxe`), installs, and reboots. The profile sets:
+ 
+-* the product (`Leap_16.0`), language, keyboard and time zone,
++* the product (`openSUSE_Leap`), language, keyboard and time zone,
+ * the root password and ssh keys (`pxe_stack_enable_root: true`), or the sudo user (first user of the installer, its
+   uid, gid and home are then set by a post installation script) with its ssh keys and sudoers rule,
+ * packages (`openssh-server`, `sudo`, `curl`, plus `os_autoinstall_packages`) and `os_autoinstall_custom_repositories`,
+diff --git a/collections/infrastructure/roles/pxe_stack/templates/Suse/agama.json.j2 b/collections/infrastructure/roles/pxe_stack/templates/Suse/agama.json.j2
+index 61dcf084..503d263f 100644
+--- a/collections/infrastructure/roles/pxe_stack/templates/Suse/agama.json.j2
++++ b/collections/infrastructure/roles/pxe_stack/templates/Suse/agama.json.j2
+@@ -95,7 +95,7 @@ done
+ {% endfor %}
+ 
+ {% set profile = {
+-  'product': {'id': 'Leap_16.0'},
++  'product': {'id': 'openSUSE_Leap'},
+   'localization': {
+     'language': equipment['os']['os_system_language'] | default(pxe_stack_os_system_language),
+     'keyboard': (equipment['os']['os_keyboard_layout'] | default(pxe_stack_os_keyboard_layout)) | lower,

@@ -1,0 +1,11 @@
+---
+# mgt is the gateway of the cluster nodes: forward net-cluster (zone internal)
+# to its uplink (zone public, firewalld default zone), with NAT.
+firewall_policies:
+  - name: internal-to-public
+    ingress_zones:
+      - internal
+    egress_zones:
+      - public
+    target: ACCEPT
+    masquerade: true

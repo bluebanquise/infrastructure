@@ -1,0 +1,9 @@
+---
+users:
+  - name: testuser
+    uid: 1500
+    gid: 1500
+    home: /home/testuser
+    shell: /bin/bash
+    comment: "BlueBanquise validation test user"
+    password: "!"
