@@ -26,7 +26,7 @@ git checkout v%{_software_version}
 
 %build
 cd %{builddir}/%{name}
-go build -o modbus_exporter modbus_exporter.go
+make
 
 %install
 #rm -rf %{buildroot}
