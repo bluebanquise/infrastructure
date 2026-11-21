@@ -8,6 +8,8 @@ if [ $distribution_architecture == 'x86_64' ]; then
   prometheus_arch=amd64
 elif [ $distribution_architecture == 'aarch64' ] || [ $distribution_architecture == 'arm64' ]; then
   prometheus_arch=arm64
+elif [ $distribution_architecture == 'riscv64' ]; then
+  prometheus_arch=riscv64
 fi
 
 if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
@@ -161,7 +163,8 @@ fi
 package_version=$karma_version
 package_name=karma
 package_path_calc
-if [ ! -f $package_path ]; then
+# karma publishes no riscv64 binary (checked up to v0.134), skip it there
+if [ ! -f $package_path ] && [ $distribution_architecture != 'riscv64' ]; then
   cp -a $root_directory/prometheus/karma $working_directory/build/prometheus/karma
   mv karma karma-$karma_version
   tar cvzf karma-linux-$prometheus_arch.tar.gz karma-$karma_version

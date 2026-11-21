@@ -86,18 +86,8 @@ if [ ! -f $package_path ]; then
         tar xjvf slurm-$slurm_version.tar.bz2
         cd slurm-$slurm_version
         mk-build-deps -i debian/control
-        if [ $distribution_architecture == 'arm64' ]; then
-            if [ $distribution == "Debian" ]; then
-                sed -i 's/--with-pmix/--with-pmix=\/usr\/lib\/aarch64-linux-gnu\/pmix2\//' debian/rules
-            fi
-            if [ $distribution == "Ubuntu" ]; then
-                if [ "$distribution_version" == "24.04" ] || [ "$distribution_version" == "22.04" ]; then
-                    sed -i 's/--with-pmix/--with-pmix=\/usr\/lib\/aarch64-linux-gnu\/pmix2\//' debian/rules
-                else
-                    sed -i 's/--with-pmix/--with-pmix=\/usr\/lib\/aarch64-linux-gnu\/pmix\//' debian/rules
-                fi
-            fi
-        fi
+        # No per-arch PMIx path needed: slurm's configure asks pkg-config for the
+        # PMIx prefix (/usr/lib/<multiarch>/pmix2), on every architecture.
         debuild -b -uc -us
         cd ../
         mkdir -p /root/debbuild/DEBS/$distribution_architecture/

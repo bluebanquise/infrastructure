@@ -8,7 +8,8 @@ package_path_calc
 
 loki_version=$package_version
 
-if [ ! -f $package_path ]; then
+# Loki 3.x publishes no riscv64 binary (only the 4.0 release candidates do), skip it there
+if [ ! -f $package_path ] && [ $distribution_architecture != 'riscv64' ]; then
 
     if [ $distribution_architecture == 'x86_64' ]; then
       loki_arch=amd64

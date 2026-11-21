@@ -67,6 +67,11 @@ install_go() {
     tar -C /usr/local -xzvf go1.26.3.linux-arm64.tar.gz
     rm go1.26.3.linux-arm64.tar.gz
   fi
+  if [ $distribution_architecture == 'riscv64' ]; then
+    wget https://go.dev/dl/go1.26.3.linux-riscv64.tar.gz
+    tar -C /usr/local -xzvf go1.26.3.linux-riscv64.tar.gz
+    rm go1.26.3.linux-riscv64.tar.gz
+  fi
 
 }
 
@@ -152,6 +157,16 @@ if [ "$1" == "dependencies" ]; then
         apt-get install -y libdbus-1-dev python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-arm64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi xz-utils unzip xorriso python3-venv
         apt-get install libpmix-dev libpmix2 libpmix-bin equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
       fi
+      if [ $distribution_architecture == 'riscv64' ]; then
+        echo "%_arch riscv64" > ~/.rpmmacros
+        apt-get update
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get install -y libdbus-1-dev python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-riscv64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi xz-utils unzip xorriso python3-venv
+        apt-get install libpmix-dev libpmix2 libpmix-bin equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev -y
+        # No riscv64 wheels on PyPI for cryptography, bcrypt, cffi, pynacl, pyyaml:
+        # bluebanquise-venv compiles them, which needs Rust and the C headers.
+        apt-get install -y rustc cargo libffi-dev python3-dev pkg-config
+      fi
     fi
 
   elif [ "$distribution" == 'Ubuntu' ]; then
@@ -222,6 +237,16 @@ if [ "$1" == "dependencies" ]; then
         apt-get install -y libdbus-1-dev python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-arm64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi unzip xorriso python3-venv
         apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev libjwt-dev jwt libhttp-parser-dev libhttp-parser2.9 libjson-c-dev libjson-c5 -y
       fi
+      if [ $distribution_architecture == 'riscv64' ]; then
+        echo "%_arch riscv64" > ~/.rpmmacros
+        apt-get update
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get install -y libdbus-1-dev python3-pip bison flex  liblzma-dev mkisofs rpm alien grub-efi-riscv64 libpopt-dev libblkid-dev munge libmunge-dev libmunge2  libreadline-dev libextutils-makemaker-cpanfile-perl libpam0g-dev mariadb-common mariadb-server libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3-setuptools bc rsync build-essential git wget libfreeipmi-dev freeipmi-common freeipmi unzip xorriso python3-venv
+        apt-get install equivs build-essential fakeroot devscripts libmunge-dev libncurses-dev po-debconf python3 libgtk2.0-dev libpam0g-dev libperl-dev liblua5.3-dev libhwloc-dev dh-exec librrd-dev libipmimonitoring-dev hdf5-helpers libfreeipmi-dev libhdf5-dev man2html-base libcurl4-openssl-dev libpmix-dev libhttp-parser-dev libyaml-dev libjson-c-dev libjwt-dev liblz4-dev bash-completion libdbus-1-dev librdkafka-dev libjwt-dev jwt libhttp-parser-dev libhttp-parser2.9 libjson-c-dev libjson-c5 -y
+        # No riscv64 wheels on PyPI for cryptography, bcrypt, cffi, pynacl, pyyaml:
+        # bluebanquise-venv compiles them, which needs Rust and the C headers.
+        apt-get install -y rustc cargo libffi-dev python3-dev pkg-config
+      fi
     fi
 
   elif [ "$distribution" == 'RedHat' ]; then
@@ -283,6 +308,19 @@ if [ "$1" == "dependencies" ]; then
         dnf install kernel-headers make dbus-devel rpm-build xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-aa64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel net-snmp-devel unzip munge munge-devel munge-libs -y
         dnf install freeipmi-devel mariadb-devel -y
         dnf groupinstall 'Development Tools' -y
+      fi
+      if [ $distribution_architecture == 'riscv64' ]; then
+        dnf install 'dnf-command(config-manager)' -y
+        dnf install subscription-manager -y
+        dnf config-manager --set-enabled crb
+        # EPEL is not built for riscv64, everything needed is in BaseOS/AppStream/CRB
+        dnf install dnf-plugins-core -y
+        dnf install kernel-headers make dbus-devel rpm-build xz xz-devel automake autoconf python3 bzip2-devel openssl-devel zlib-devel readline-devel pam-devel perl-ExtUtils-MakeMaker grub2-tools-extra grub2-efi-riscv64-modules gcc mariadb dnf-plugins-core curl-devel net-snmp-devel wget bc rsync xorriso procps-ng python3-setuptools curl-devel net-snmp-devel unzip munge munge-devel munge-libs -y
+        dnf install freeipmi-devel mariadb-devel -y
+        dnf groupinstall 'Development Tools' -y
+        # No riscv64 wheels on PyPI for cryptography, bcrypt, cffi, pynacl, pyyaml:
+        # bluebanquise-venv compiles them, which needs Rust and the C headers.
+        dnf install rust cargo libffi-devel python3-devel -y
       fi
     fi
     if [ $distribution_version -eq 7 ]; then

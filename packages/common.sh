@@ -42,6 +42,9 @@ package_path_calc() {
             elif [[ $distribution_architecture == 'arm64' ]] || [[ $distribution_architecture == 'aarch64' ]]; then
                 package_distribution_architecture='arm64'
                 package_folder_architecture='aarch64'
+            elif [[ $distribution_architecture == 'riscv64' ]]; then
+                package_distribution_architecture='riscv64'
+                package_folder_architecture='riscv64'
             fi
         fi
         if [[ $package_sub_version =~ [0-9] ]]; then

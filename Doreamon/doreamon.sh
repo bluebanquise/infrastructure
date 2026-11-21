@@ -97,6 +97,9 @@ set_status_debug () {
 
 
 # Main loop
+# Every step below checks its own exit code ($? or if), so do not let set -e
+# kill the whole daemon on the first failed build or upload.
+set +e
 while [ 1 ]
 do
 
@@ -306,27 +309,36 @@ EOF
         pids=()
 
         for os_target in el9 el10 osl16 u24 u26 deb13; do
-            (
-                set -e
-                set_status $(echo p_${os_target}_x86_64) running 0
-                ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
+            set_status $(echo p_${os_target}_x86_64) running 0
+            ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
+            if [ $? -eq 0 ]; then
+                set_status $(echo p_${os_target}_x86_64) success 0
+            else
+                set_status $(echo p_${os_target}_x86_64) error 0
+                build_was_success="false"
+                break
+            fi
+            set_status $(echo p_${os_target}_arm64) running 0
+            ./engine_qemu.sh arch_list="aarch64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
+            if [ $? -eq 0 ]; then
+                set_status $(echo p_${os_target}_arm64) success 0
+            else
+                set_status $(echo p_${os_target}_arm64) error 0
+                build_was_success="false"
+                break
+            fi
+            # riscv64 only for an OS that lists it in build_matrix
+            if grep "^$os_target " build_matrix | grep -q riscv64; then
+                set_status $(echo p_${os_target}_riscv64) running 0
+                ./engine_qemu.sh arch_list="riscv64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
                 if [ $? -eq 0 ]; then
-                    set_status $(echo p_${os_target}_x86_64) success 0
+                    set_status $(echo p_${os_target}_riscv64) success 0
                 else
-                    set_status $(echo p_${os_target}_x86_64) error 0
+                    set_status $(echo p_${os_target}_riscv64) error 0
                     build_was_success="false"
                     break
                 fi
-                set_status $(echo p_${os_target}_arm64) running 0
-                ./engine_qemu.sh arch_list="aarch64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
-                if [ $? -eq 0 ]; then
-                    set_status $(echo p_${os_target}_arm64) success 0
-                else
-                    set_status $(echo p_${os_target}_arm64) error 0
-                    build_was_success="false"
-                    break
-                fi
-            )
+            fi
         done
 
         # Loop over os repositories build
@@ -349,6 +361,18 @@ EOF
                     set_status $(echo r_${os_target}_arm64) error 0
                     repo_was_success="false"
                     break
+                fi
+                # riscv64 only for an OS that lists it in build_matrix
+                if grep "^$os_target " build_matrix | grep -q riscv64; then
+                    set_status $(echo r_${os_target}_riscv64) running 0
+                    ./engine_qemu.sh arch_list="riscv64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
+                    if [ $? -eq 0 ]; then
+                        set_status $(echo r_${os_target}_riscv64) success 0
+                    else
+                        set_status $(echo r_${os_target}_riscv64) error 0
+                        repo_was_success="false"
+                        break
+                    fi
                 fi
             done
         fi

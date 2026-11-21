@@ -1,8 +1,9 @@
+#!/bin/bash
 set -e
 set -x
 
 # Enable QEMU
-docker run --privileged --rm tonistiigi/binfmt --install arm64
+docker run --privileged --rm tonistiigi/binfmt --install arm64,riscv64
 
 # Custom docker cache folder
 # oxedions@prima:~/gits/infrastructure$ sudo systemctl restart docker
@@ -19,14 +20,6 @@ CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd 
 mkdir -p $HOME/CI/tmp/wd/
 mkdir -p $HOME/CI/tmp/cache/
 
-mkdir -p $HOME/CI/tmp/cache/ipxe-arm
-mkdir -p $HOME/CI/tmp/cache/ipxe-x86_64
-cd $HOME/CI/tmp/cache/
-rm -f ipxe-arm64
-rm -f ipxe-aarch64
-ln -sf ipxe-arm ipxe-aarch64
-ln -sf ipxe-arm ipxe-arm64
-cd $CURRENT_DIR
 
 ################################################################################
 #################### INIT STEP
@@ -103,6 +96,8 @@ mkdir -p $HOME/CI/
 mkdir -p $HOME/CI/logs/
 mkdir -p $HOME/CI/build/{el9,el10,osl15,osl16,u22,u24,u26,deb12,deb13}/{x86_64,aarch64,sources}/
 mkdir -p $HOME/CI/repositories/{el9,el10,osl15,osl16,u22,u24,u26,deb12,deb13}/{x86_64,aarch64}/bluebanquise/
+mkdir -p $HOME/CI/build/{el10,u26,deb13}/riscv64/
+mkdir -p $HOME/CI/repositories/{el10,u26,deb13}/riscv64/bluebanquise/
 
 cd $CURRENT_DIR
 
@@ -146,9 +141,11 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
     if echo $steps | grep -q "build"; then
         for cpu_arch in $(echo $archs_list | sed 's/,/ /g'); do
 
-            # For now I build on amd64 CPU, might need to update that later
+            # For now I build on amd64 CPU, other archs are emulated by QEMU
             if [ "$cpu_arch" == "aarch64" ] ; then
                 PLATFORM="--platform linux/arm64"
+            elif [ "$cpu_arch" == "riscv64" ] ; then
+                PLATFORM="--platform linux/riscv64"
             else
                 PLATFORM=""
             fi
@@ -175,9 +172,11 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
 
         for cpu_arch in $(echo $archs_list | sed 's/,/ /g'); do
 
-            # For now I build on amd64 CPU, might need to update that later
+            # For now I build on amd64 CPU, other archs are emulated by QEMU
             if [ "$cpu_arch" == "aarch64" ] ; then
                 PLATFORM="--platform linux/arm64"
+            elif [ "$cpu_arch" == "riscv64" ] ; then
+                PLATFORM="--platform linux/riscv64"
             else
                 PLATFORM=""
             fi
