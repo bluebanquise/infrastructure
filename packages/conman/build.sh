@@ -13,12 +13,10 @@ if [ ! -f $package_path ]; then
     rm -Rf $working_directory/build/conman
     mkdir -p $working_directory/build/conman
 
-    if [ ! -f $working_directory/sources/conman-$conman_version.tar.xz ]; then
-      wget -P $working_directory/sources/ https://github.com/dun/conman/releases/download/conman-$conman_version/conman-$conman_version.tar.xz
-    fi
+    download_locked https://github.com/dun/conman/releases/download/conman-$conman_version/conman-$conman_version.tar.xz conman-$conman_version.tar.xz
 
     cd $working_directory/build/conman
-    cp $working_directory/sources/conman-$conman_version.tar.xz $working_directory/build/conman
+    cp $sources_directory/conman-$conman_version.tar.xz $working_directory/build/conman
     tar xJvf conman-$conman_version.tar.xz
     $(which cp) -af $root_directory/conman/* conman-$conman_version/
     tar cvJf conman-$conman_version.tar.xz conman-$conman_version

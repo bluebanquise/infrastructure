@@ -64,3 +64,19 @@ package_path_calc() {
     echo "[ < < DEBUG > > ]"
 
 }
+
+
+# Download a source or binary once into $sources_directory, shared by all builds.
+# Parallel builds wanting the same file wait on its lock: the first one downloads,
+# the others then find the file. Downloading to .part then renaming means a failed
+# download never leaves a truncated file behind.
+# Usage: download_locked <url> <file name> [extra wget arguments]
+download_locked() {
+    (
+        flock 9
+        if [ ! -f $sources_directory/$2 ]; then
+            wget --timeout=30 --tries=5 --retry-connrefused --waitretry=30 "${@:3}" -O $sources_directory/$2.part "$1"
+            mv $sources_directory/$2.part $sources_directory/$2
+        fi
+    ) 9>$sources_directory/$2.lock
+}

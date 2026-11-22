@@ -42,8 +42,8 @@
   %define http_path /var/www/html/
 %endif
 
-Name:          memtest86plus
-Summary:       memtest86plus
+Name:          memtest86plus-%{_memtest86plus_arch}
+Summary:       memtest86plus for %{_memtest86plus_arch} nodes
 Version:       %{_software_version}
 Release:       1%{?dist}
 License:       GPL
@@ -59,18 +59,22 @@ License: GPL-2.0 (https://github.com/memtest86plus/memtest86plus)
 Memtest86plus
 
 %prep
-%setup -q
+# The sources folder keeps the upstream name, not the per-arch package name
+%setup -q -n memtest86plus-%{version}
 
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/
-cd build/x86_64/
+# One folder per target arch, like iPXE (pxe/bin/<arch>/)
+mkdir -p $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/%{_memtest86plus_arch}/
+cd build/%{_memtest86plus_build_dir}/
 make
-cp mt86plus $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.bin
-cp mt86plus $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/memtest.efi
+# The x86_64 image boots both from legacy BIOS and from EFI, the arm64 one from EFI only
+%if "%{_memtest86plus_arch}" == "x86_64"
+cp mt86plus $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/%{_memtest86plus_arch}/memtest.bin
+%endif
+cp mt86plus $RPM_BUILD_ROOT/%{http_path}/pxe/tools/memtest86plus/%{_memtest86plus_arch}/memtest.efi
 
 %files
 %defattr(-,root,root,-)
-%{http_path}/pxe/tools/memtest86plus/memtest.bin
-%{http_path}/pxe/tools/memtest86plus/memtest.efi
+%{http_path}/pxe/tools/memtest86plus/%{_memtest86plus_arch}/

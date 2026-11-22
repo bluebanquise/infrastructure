@@ -36,12 +36,11 @@ Loki is a horizontally-scalable, highly-available, multi-tenant log aggregation 
 
 %install
 
-# Download files (binaries)
-cd /tmp
-wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/grafana/loki/releases/download/v%{_software_version}/loki-linux-%{_software_architecture}.zip
+# Binaries are downloaded by build.sh into the sources folder shared by all builds,
+# and extracted here, in this build's own folder.
 
 # Extract
-unzip -o loki-linux-%{_software_architecture}.zip
+unzip -o %{_sources_directory}/loki-%{_software_version}-linux-%{_software_architecture}.zip
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/bin/

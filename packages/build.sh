@@ -42,11 +42,15 @@ echo " Settings set to $distribution $distribution_version $distribution_archite
 echo " Creating working directory..."
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 root_directory=$SCRIPT_DIR
-working_directory=/tmp/wd/
+# engine_qemu.sh passes one working directory per OS/arch (/tmp/wd_<os>_<arch>/),
+# so parallel builds never share build folders. /tmp/wd/ is the default for manual runs.
+working_directory=${working_directory:-/tmp/wd/}
+# Downloaded sources and binaries are shared by all builds, see download_locked in common.sh
+sources_directory=/tmp/sources/
 cache_directory=/tmp/cache/
 tags_directory=/tmp/tags/
 echo " Working directory: $working_directory"
-mkdir -p $working_directory
+mkdir -p $working_directory $sources_directory
 echo " root directory: $root_directory"
 
 echo " Creating source directory..."
@@ -377,5 +381,9 @@ if [ -z ${1+x} ] || [ -z ${2+x} ] || [ -z ${3+x} ]; then
   echo "Missing arguments, exiting"
 else
   source $root_directory/$1/build.sh
+  # Build trees are never reused (each package starts with rm -Rf build/<package>):
+  # remove them so 15 parallel work directories stay small. A failed build stops
+  # before this line (set -e) and keeps its tree for debugging.
+  rm -Rf $working_directory/build/
 fi
 exit 0

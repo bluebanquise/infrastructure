@@ -39,12 +39,11 @@ ipmi_exporter for the BlueBanquise stack
 
 %install
 
-# Download files (binaries)
-cd /tmp
-wget -nc --timeout=10 --tries=5 --retry-connrefused --waitretry=30 https://github.com/soundcloud/ipmi_exporter/releases/download/v%{_software_version}/ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
+# Binaries are downloaded by build.sh into the sources folder shared by all builds,
+# and extracted here, in this build's own folder.
 
 # Extract
-tar xvzf ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
+tar xvzf %{_sources_directory}/ipmi_exporter-%{_software_version}.linux-%{_software_architecture}.tar.gz
 
 # Populate binaries
 mkdir -p $RPM_BUILD_ROOT/usr/bin/

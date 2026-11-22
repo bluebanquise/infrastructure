@@ -96,6 +96,33 @@ set_status_debug () {
 }
 
 
+# Run one engine step (build or repositories) for every OS/arch couple in parallel,
+# wait for all of them, and store each result in result[<step>_<couple>].
+# $2 is the set_status prefix. Returns 1 if any couple failed.
+declare -A result
+run_step_parallel () {
+    local step=$1
+    local status_prefix=$2
+    local failed=0
+    local -A pids
+    for couple in $couples; do
+        set_status ${status_prefix}_$couple running 0
+        ./engine_qemu.sh os_list="${couple%%_*}" arch_list="${couple#*_}" steps="$step" >> $HOME/doreamon_repositories_build_log_$couple 2>&1 &
+        pids[$couple]=$!
+    done
+    for couple in $couples; do
+        if wait ${pids[$couple]}; then
+            result[${step}_$couple]="success"
+            set_status ${status_prefix}_$couple success 0
+        else
+            result[${step}_$couple]="FAILED"
+            set_status ${status_prefix}_$couple error 0
+            failed=1
+        fi
+    done
+    return $failed
+}
+
 # Main loop
 # Every step below checks its own exit code ($? or if), so do not let set -e
 # kill the whole daemon on the first failed build or upload.
@@ -291,90 +318,45 @@ EOF
         set_status pr running 1
         set_status pr_last_attempt date 1
 
-        # Set all in waiting
-        for os_target in el8 el9 lp15 ubuntu2004 ubuntu2204 ubuntu2404 ubuntu2604 debian11 debian12; do
-            set_status $(echo p_${os_target}_x86_64) waiting 0
-            set_status $(echo p_${os_target}_arm64) waiting 0
+        cd $CURRENT_DIR/gits/infrastructure/CI/
+
+        # OS/arch couples to build, archs taken from build_matrix
+        couples=""
+        for os_target in el9 el10 osl16 u24 u26 deb13; do
+            for cpu_arch in $(grep "^$os_target " build_matrix | awk '{print $2}' | sed 's/,/ /g'); do
+                couples="$couples ${os_target}_${cpu_arch}"
+            done
+        done
+
+        # One log per couple, reset at each pass
+        for couple in $couples; do
+            echo $(date) > $HOME/doreamon_repositories_build_log_$couple
+            set_status p_$couple waiting 0
+            set_status r_$couple waiting 0
         done
         set_status upload waiting 1
 
-        # Prepare work
-        cd $CURRENT_DIR/gits/infrastructure/CI/
-        echo $(date) > $HOME/doreamon_repositories_build_log
         build_was_success="true"
         repo_was_success="true"
-
-        # Loop over os build
-        #./engine_qemu.sh clean_cache="yes" >> /tmp/doreamon_repositories_build_log 2>&1
-        pids=()
-
-        for os_target in el9 el10 osl16 u24 u26 deb13; do
-            set_status $(echo p_${os_target}_x86_64) running 0
-            ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
-            if [ $? -eq 0 ]; then
-                set_status $(echo p_${os_target}_x86_64) success 0
-            else
-                set_status $(echo p_${os_target}_x86_64) error 0
-                build_was_success="false"
-                break
-            fi
-            set_status $(echo p_${os_target}_arm64) running 0
-            ./engine_qemu.sh arch_list="aarch64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
-            if [ $? -eq 0 ]; then
-                set_status $(echo p_${os_target}_arm64) success 0
-            else
-                set_status $(echo p_${os_target}_arm64) error 0
-                build_was_success="false"
-                break
-            fi
-            # riscv64 only for an OS that lists it in build_matrix
-            if grep "^$os_target " build_matrix | grep -q riscv64; then
-                set_status $(echo p_${os_target}_riscv64) running 0
-                ./engine_qemu.sh arch_list="riscv64" os_list="$os_target" steps="build" >> $HOME/doreamon_repositories_build_log 2>&1
-                if [ $? -eq 0 ]; then
-                    set_status $(echo p_${os_target}_riscv64) success 0
-                else
-                    set_status $(echo p_${os_target}_riscv64) error 0
-                    build_was_success="false"
-                    break
-                fi
-            fi
-        done
-
-        # Loop over os repositories build
+        result=()
+        run_step_parallel build p || build_was_success="false"
+        # Repositories copy the noarch packages made by the x86_64 builds: wait for all builds first
         if [[ "$build_was_success" == "true" ]]; then
-            for os_target in el9 el10 osl16 u24 u26 deb13; do
-                set_status $(echo r_${os_target}_x86_64) running 0
-                ./engine_qemu.sh arch_list="x86_64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
-                if [ $? -eq 0 ]; then
-                    set_status $(echo r_${os_target}_x86_64) success 0
-                else
-                    set_status $(echo r_${os_target}_x86_64) error 0
-                    repo_was_success="false"
-                    break
-                fi
-                set_status $(echo r_${os_target}_arm64) running 0
-                ./engine_qemu.sh arch_list="aarch64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
-                if [ $? -eq 0 ]; then
-                    set_status $(echo r_${os_target}_arm64) success 0
-                else
-                    set_status $(echo r_${os_target}_arm64) error 0
-                    repo_was_success="false"
-                    break
-                fi
-                # riscv64 only for an OS that lists it in build_matrix
-                if grep "^$os_target " build_matrix | grep -q riscv64; then
-                    set_status $(echo r_${os_target}_riscv64) running 0
-                    ./engine_qemu.sh arch_list="riscv64" os_list="$os_target" steps="repositories" >> $HOME/doreamon_repositories_build_log 2>&1
-                    if [ $? -eq 0 ]; then
-                        set_status $(echo r_${os_target}_riscv64) success 0
-                    else
-                        set_status $(echo r_${os_target}_riscv64) error 0
-                        repo_was_success="false"
-                        break
-                    fi
-                fi
-            done
+            run_step_parallel repositories r || repo_was_success="false"
+        fi
+
+        set +x
+        echo "[Repo] Recap, logs in $HOME/doreamon_repositories_build_log_<os>_<arch>"
+        printf "%-16s %-10s %-12s\n" "OS_ARCH" "BUILD" "REPOSITORIES"
+        for couple in $couples; do
+            printf "%-16s %-10s %-12s\n" $couple ${result[build_$couple]} ${result[repositories_$couple]:-skipped}
+        done
+        set -x
+
+        if [[ "$build_was_success" != "true" ]] || [[ "$repo_was_success" != "true" ]]; then
+            echo "[Repo] At least one OS/arch failed, stopping Doreamon."
+            set_status pr error 1
+            exit 1
         fi
 
 	# Make sure repositories will be readable online

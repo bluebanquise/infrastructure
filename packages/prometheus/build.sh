@@ -66,7 +66,8 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "Debian" ]; then
     cp -a $root_directory/prometheus/prometheus $working_directory/build/prometheus/prometheus
     mv prometheus prometheus-$prometheus_version
     tar cvzf prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz prometheus-$prometheus_version
-    rpmbuild -ta prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $prometheus_version" --define "_software_architecture $prometheus_arch"
+    download_locked https://github.com/prometheus/prometheus/releases/download/v$prometheus_version/prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz
+    rpmbuild -ta prometheus-$prometheus_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $prometheus_version" --define "_software_architecture $prometheus_arch" --define "_sources_directory $sources_directory"
     if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
       cd /root
       alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-*
@@ -82,7 +83,8 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "Debian" ]; then
     cp -a $root_directory/prometheus/alertmanager $working_directory/build/prometheus/alertmanager
     mv alertmanager prometheus-alertmanager-$alertmanager_version
     tar cvzf prometheus-alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz prometheus-alertmanager-$alertmanager_version
-    rpmbuild -ta prometheus-alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $alertmanager_version" --define "_software_architecture $prometheus_arch"
+    download_locked https://github.com/prometheus/alertmanager/releases/download/v$alertmanager_version/alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz
+    rpmbuild -ta prometheus-alertmanager-$alertmanager_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $alertmanager_version" --define "_software_architecture $prometheus_arch" --define "_sources_directory $sources_directory"
     if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
       cd /root
       alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-alertmanager-*
@@ -98,7 +100,8 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "Debian" ]; then
     cp -a $root_directory/prometheus/node_exporter $working_directory/build/prometheus/node_exporter
     mv node_exporter prometheus-node-exporter-$node_exporter_version
     tar cvzf prometheus-node-exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz prometheus-node-exporter-$node_exporter_version
-    rpmbuild -ta prometheus-node-exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $node_exporter_version" --define "_software_architecture $prometheus_arch"
+    download_locked https://github.com/prometheus/node_exporter/releases/download/v$node_exporter_version/node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz node_exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz
+    rpmbuild -ta prometheus-node-exporter-$node_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $node_exporter_version" --define "_software_architecture $prometheus_arch" --define "_sources_directory $sources_directory"
     if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
       cd /root
       alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-node-exporter-*
@@ -114,7 +117,8 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "Debian" ]; then
     cp -a $root_directory/prometheus/ipmi_exporter $working_directory/build/prometheus/ipmi_exporter
     mv ipmi_exporter prometheus-ipmi-exporter-$ipmi_exporter_version
     tar cvzf prometheus-ipmi-exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz prometheus-ipmi-exporter-$ipmi_exporter_version
-    rpmbuild -ta prometheus-ipmi-exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $ipmi_exporter_version" --define "_software_architecture $prometheus_arch"
+    download_locked https://github.com/soundcloud/ipmi_exporter/releases/download/v$ipmi_exporter_version/ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz ipmi_exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz
+    rpmbuild -ta prometheus-ipmi-exporter-$ipmi_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $ipmi_exporter_version" --define "_software_architecture $prometheus_arch" --define "_sources_directory $sources_directory"
     if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
       cd /root
       alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-ipmi-exporter-*
@@ -130,7 +134,8 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "Debian" ]; then
     cp -a $root_directory/prometheus/snmp_exporter $working_directory/build/prometheus/snmp_exporter
     mv snmp_exporter prometheus-snmp-exporter-$snmp_exporter_version
     tar cvzf prometheus-snmp-exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz prometheus-snmp-exporter-$snmp_exporter_version
-    rpmbuild -ta prometheus-snmp-exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $snmp_exporter_version" --define "_software_architecture $prometheus_arch"
+    download_locked https://github.com/prometheus/snmp_exporter/releases/download/v$snmp_exporter_version/snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz snmp_exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz
+    rpmbuild -ta prometheus-snmp-exporter-$snmp_exporter_version.linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $snmp_exporter_version" --define "_software_architecture $prometheus_arch" --define "_sources_directory $sources_directory"
     if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
       cd /root
       alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/prometheus-snmp-exporter-*
@@ -168,7 +173,8 @@ if [ ! -f $package_path ] && [ $distribution_architecture != 'riscv64' ]; then
   cp -a $root_directory/prometheus/karma $working_directory/build/prometheus/karma
   mv karma karma-$karma_version
   tar cvzf karma-linux-$prometheus_arch.tar.gz karma-$karma_version
-  rpmbuild -ta karma-linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $karma_version" --define "_software_architecture $prometheus_arch"
+  download_locked https://github.com/prymitive/karma/releases/download/v$karma_version/karma-linux-$prometheus_arch.tar.gz karma-$karma_version-linux-$prometheus_arch.tar.gz
+  rpmbuild -ta karma-linux-$prometheus_arch.tar.gz --target=$distribution_architecture --define "_software_version $karma_version" --define "_software_architecture $prometheus_arch" --define "_sources_directory $sources_directory"
   if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
     cd /root
     alien --to-deb --scripts /root/rpmbuild/RPMS/$distribution_architecture/karma-*

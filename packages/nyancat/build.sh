@@ -8,14 +8,11 @@ package_path_calc
 
 if [ ! -f $package_path ]; then
 
-    if [ ! -f $working_directory/sources/nyancat-$package_version.tar.gz ]; then
-        wget -P $working_directory/sources/ https://github.com/klange/nyancat/archive/$package_version.tar.gz
-        mv $working_directory/sources/$package_version.tar.gz $working_directory/sources/nyancat-$package_version.tar.gz
-    fi
+    download_locked https://github.com/klange/nyancat/archive/$package_version.tar.gz nyancat-$package_version.tar.gz
     rm -Rf $working_directory/build/nyancat
     mkdir -p $working_directory/build/nyancat
     cd $working_directory/build/nyancat
-    cp $working_directory/sources/nyancat-$package_version.tar.gz .
+    cp $sources_directory/nyancat-$package_version.tar.gz .
     tar xvzf nyancat-$package_version.tar.gz
     $(which cp) -af $root_directory/nyancat/* nyancat-$package_version/
     tar cvzf nyancat.tar.gz nyancat-$package_version

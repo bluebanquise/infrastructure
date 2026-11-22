@@ -14,24 +14,18 @@ if [ $distribution != "Ubuntu" ] && [ $distribution != "opensuse_leap" ] && [ $d
 
     if [ ! -f $package_path ]; then
 
-        if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz ]; then
-            wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz
-        fi
+        download_locked https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz munge-$munge_version.tar.xz
 
-        if [ ! -f $working_directory/sources/dun.gpg ]; then
-            wget -P $working_directory/sources/ https://github.com/dun.gpg
-        fi
+        download_locked https://github.com/dun.gpg dun.gpg
 
-        if [ ! -f $working_directory/sources/munge-$munge_version.tar.xz.asc ]; then
-            wget -P $working_directory/sources/ https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc
-        fi
+        download_locked https://github.com/dun/munge/releases/download/munge-$munge_version/munge-$munge_version.tar.xz.asc munge-$munge_version.tar.xz.asc
 
         rm -Rf $working_directory/build/munge
         mkdir -p $working_directory/build/munge
         cd $working_directory/build/munge
-        cp $working_directory/sources/munge-$munge_version.tar.xz $working_directory/build/munge/
-        cp $working_directory/sources/dun.gpg $working_directory/build/munge/dun.gpg
-        cp $working_directory/sources/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
+        cp $sources_directory/munge-$munge_version.tar.xz $working_directory/build/munge/
+        cp $sources_directory/dun.gpg $working_directory/build/munge/dun.gpg
+        cp $sources_directory/munge-$munge_version.tar.xz.asc $working_directory/build/munge/munge-$munge_version.tar.xz.asc
         tar xvJf munge-$munge_version.tar.xz
         sed -i 's/%if 0%{?fedora} < 36/%if (0%{?rhel} \&\& 0%{?rhel} < 10) || (0%{?fedora} \&\& 0%{?fedora} < 36)/' munge-$munge_version/munge.spec
         tar cJvf munge-$munge_version.tar.xz munge-$munge_version
@@ -68,14 +62,12 @@ if [ ! -f $package_path ]; then
         dnf install /root/rpmbuild/RPMS/$distribution_architecture/munge* -y
     fi
 
-    if [ ! -f $working_directory/sources/slurm-$slurm_version.tar.bz2 ]; then
-        wget -P $working_directory/sources/ https://download.schedmd.com/slurm/slurm-$slurm_version.tar.bz2
-    fi
+    download_locked https://download.schedmd.com/slurm/slurm-$slurm_version.tar.bz2 slurm-$slurm_version.tar.bz2
 
     rm -Rf $working_directory/build/slurm
     mkdir -p $working_directory/build/slurm
     cd $working_directory/build/slurm
-    cp  $working_directory/sources/slurm-$slurm_version.tar.bz2 $working_directory/build/slurm
+    cp  $sources_directory/slurm-$slurm_version.tar.bz2 $working_directory/build/slurm
     #        tar xjvf slurm-$slurm_version.tar.bz2
     #        sed -i '1s/^/%global _hardened_ldflags\ "-Wl,-z,lazy"\n/' slurm-$slurm_version/slurm.spec
     #        sed -i '1s/^/%global _hardened_cflags\ "-Wl,-z,lazy"\n/' slurm-$slurm_version/slurm.spec

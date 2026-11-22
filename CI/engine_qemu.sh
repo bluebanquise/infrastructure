@@ -16,8 +16,9 @@ docker run --privileged --rm tonistiigi/binfmt --install arm64,riscv64
 
 CURRENT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-# Introduce tags, that allows to prevent super long and stupid rebuilds
-mkdir -p $HOME/CI/tmp/wd/
+# Shared /tmp of all build containers: one wd_<os>_<arch>/ per build, plus sources/
+# where downloads are shared (see download_locked in packages/common.sh)
+mkdir -p $HOME/CI/tmp/sources/
 mkdir -p $HOME/CI/tmp/cache/
 
 
@@ -161,7 +162,7 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
             # Now build packages
             mkdir -p $HOME/CI/build/$os_name/$cpu_arch/
             for package in $(echo $packages_list | sed 's/,/ /g'); do
-                docker run --rm $PLATFORM -v $HOME/CI/build/$os_name/:$internal_build_path -v $HOME/CI/tmp/:/tmp $os_name-build-$cpu_arch $package $os_distribution_name $os_distribution_version_major
+                docker run --rm $PLATFORM -v $HOME/CI/build/$os_name/:$internal_build_path -v $HOME/CI/tmp/:/tmp -e working_directory=/tmp/wd_${os_name}_${cpu_arch}/ $os_name-build-$cpu_arch $package $os_distribution_name $os_distribution_version_major
             done
 
         done

@@ -24,7 +24,8 @@ if [ ! -f $package_path ] && [ $distribution_architecture != 'riscv64' ]; then
     $(which cp) -af $root_directory/loki/loki/* loki-$loki_version/
     tar cvzf loki.tar.gz loki-$loki_version
 
-    rpmbuild -ta loki.tar.gz --target=$distribution_architecture --define "_software_version $loki_version" --define "_software_architecture $loki_arch"
+    download_locked https://github.com/grafana/loki/releases/download/v$loki_version/loki-linux-$loki_arch.zip loki-$loki_version-linux-$loki_arch.zip
+    rpmbuild -ta loki.tar.gz --target=$distribution_architecture --define "_software_version $loki_version" --define "_software_architecture $loki_arch" --define "_sources_directory $sources_directory"
 
     rm -Rf $working_directory/build/promtail
     mkdir -p $working_directory/build/promtail
@@ -33,7 +34,8 @@ if [ ! -f $package_path ] && [ $distribution_architecture != 'riscv64' ]; then
     $(which cp) -af $root_directory/loki/promtail/* promtail-$loki_version/
     tar cvzf promtail.tar.gz promtail-$loki_version
 
-    rpmbuild -ta promtail.tar.gz --target=$distribution_architecture --define "_software_version $loki_version" --define "_software_architecture $loki_arch"
+    download_locked https://github.com/grafana/loki/releases/download/v$loki_version/promtail-linux-$loki_arch.zip promtail-$loki_version-linux-$loki_arch.zip
+    rpmbuild -ta promtail.tar.gz --target=$distribution_architecture --define "_software_version $loki_version" --define "_software_architecture $loki_arch" --define "_sources_directory $sources_directory"
 
     if [ $distribution == "Ubuntu" ] || [ $distribution == "Debian" ]; then
         cd /root
