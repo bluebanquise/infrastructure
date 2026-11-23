@@ -162,7 +162,11 @@ for os_name in $(echo $os_list | sed 's/,/ /g'); do
             # Now build packages
             mkdir -p $HOME/CI/build/$os_name/$cpu_arch/
             for package in $(echo $packages_list | sed 's/,/ /g'); do
-                docker run --rm $PLATFORM -v $HOME/CI/build/$os_name/:$internal_build_path -v $HOME/CI/tmp/:/tmp -e working_directory=/tmp/wd_${os_name}_${cpu_arch}/ $os_name-build-$cpu_arch $package $os_distribution_name $os_distribution_version_major
+                # Run this checkout's packages/ (read-only), not the image's copy: the image
+                # entrypoint (auto_builder.sh) does a git pull, and when that pull failed (network)
+                # the build silently ran the stale code baked into the image. Now every container
+                # of a pass runs the commit this engine runs, without needing GitHub for the code.
+                docker run --rm $PLATFORM -v $HOME/CI/build/$os_name/:$internal_build_path -v $HOME/CI/tmp/:/tmp -v $CURRENT_DIR/../packages/:/infra/packages/:ro -e working_directory=/tmp/wd_${os_name}_${cpu_arch}/ --entrypoint /infra/packages/build.sh $os_name-build-$cpu_arch $package $os_distribution_name $os_distribution_version_major
             done
 
         done

@@ -61,6 +61,9 @@ Memtest86plus
 %prep
 # The sources folder keeps the upstream name, not the per-arch package name
 %setup -q -n memtest86plus-%{version}
+# EL9 binutils (2.35) does not know the ARMv8.2 register name id_aa64mmfr2_el1:
+# use its generic encoding, which assembles to the same instruction everywhere
+sed -i 's/id_aa64mmfr2_el1/S3_0_C0_C7_2/g' system/cache.h system/aarch64/cpuinfo.c
 
 %build
 
